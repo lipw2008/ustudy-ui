@@ -1,0 +1,6 @@
+.ngx-datatable.material .datatable-body-cell {
+	border: 1px solid #ddd;
+}
+.ngx-datatable .datatable-header .datatable-header-cell .datatable-checkbox {
+	display: none;
+}
