@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef }  from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { IStudent } from './student';
 import { StudentService } from './student.service';
@@ -22,7 +23,7 @@ export class AddStudentComponent implements OnInit {
 	
 	types = [];
 		
-    constructor(private _studentService: StudentService, public fb: FormBuilder) {
+    constructor(private _studentService: StudentService, public fb: FormBuilder, private router: Router) {
 
     }
 	
@@ -49,9 +50,12 @@ export class AddStudentComponent implements OnInit {
 		const req = new XMLHttpRequest();
 		req.open('POST', 'http://localhost:8080/services/info/add/student');
 		req.setRequestHeader("Content-type", "application/json");
+		var that = this;
 		req.onreadystatechange = function() {
 			if (req.readyState == 4 && req.status == 201) {
 				alert("添加成功");
+				//go back to the student list page
+				that.router.navigate(['student']);
 			} else if (req.readyState == 4 && req.status != 201) {
 				alert("添加失败！");
 			}
