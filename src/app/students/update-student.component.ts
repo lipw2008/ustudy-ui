@@ -1,12 +1,12 @@
 import { Component, OnInit, ElementRef }  from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { IStudent } from './student';
 import { StudentService } from './student.service';
 
 @Component({
-    templateUrl: 'app/students/update-student.component.html'
+    templateUrl: 'update-student.component.html'
 })
 
 export class UpdateStudentComponent implements OnInit {
@@ -25,7 +25,7 @@ export class UpdateStudentComponent implements OnInit {
 	
 	id = "";
 		
-    constructor(private _studentService: StudentService, public fb: FormBuilder, public route: ActivatedRoute) {
+    constructor(private _studentService: StudentService, public fb: FormBuilder, public route: ActivatedRoute, private router: Router) {
 		
     }
 	
@@ -49,13 +49,18 @@ export class UpdateStudentComponent implements OnInit {
 		student.type = this.updateForm.controls.typeName.value;
 		student.isTemp = this.updateForm.controls.isTemp.value;
 		const req = new XMLHttpRequest();
-		req.open('POST', "http://localhost:8080/services/info/update/student/" + this.id);
+		req.open('POST', "http://47.92.53.57:8080/services/info/update/student/" + this.id);
 		req.setRequestHeader("Content-type", "application/json");
+		var that = this;
 		req.onreadystatechange = function() {
 			if (req.readyState == 4 && req.status == 200) {
 				alert("修改成功");
+				//go back to the student list page
+				that.router.navigate(['student']);
 			} else if (req.readyState == 4 && req.status != 200) {
 				alert("修改失败！");
+				//go back to the student list page
+				that.router.navigate(['student']);
 			}
 		}
 		req.send(JSON.stringify(student));

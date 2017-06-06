@@ -5,7 +5,7 @@ import { IStudent } from './student';
 import { StudentService } from './student.service';
 
 @Component({
-    templateUrl: 'app/students/student-list.component.html'
+    templateUrl: 'student-list.component.html'
 })
 
 export class StudentListComponent implements OnInit {
@@ -66,7 +66,7 @@ export class StudentListComponent implements OnInit {
 	
 	fetch(cb) {
 		const req = new XMLHttpRequest();
-		req.open('GET', 'http://localhost:8080/services/info/list/student/0');
+		req.open('GET', 'http://47.92.53.57:8080/services/info/list/student/0');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));
@@ -110,7 +110,7 @@ export class StudentListComponent implements OnInit {
 	
 	remove(ids) {
 		const req = new XMLHttpRequest();
-		req.open('POST', 'http://localhost:8080/services/info/delete/student');
+		req.open('POST', 'http://47.92.53.57:8080/services/info/delete/student');
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {

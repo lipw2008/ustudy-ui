@@ -6,7 +6,7 @@ import { IStudent } from './student';
 import { StudentService } from './student.service';
 
 @Component({
-    templateUrl: 'app/students/add-student.component.html'
+    templateUrl: 'add-student.component.html'
 })
 
 export class AddStudentComponent implements OnInit {
@@ -48,7 +48,7 @@ export class AddStudentComponent implements OnInit {
 		student.isTemp = this.addForm.controls.isTemp.value;
 		
 		const req = new XMLHttpRequest();
-		req.open('POST', 'http://localhost:8080/services/info/add/student');
+		req.open('POST', 'http://47.92.53.57:8080/services/info/add/student');
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {
@@ -58,6 +58,8 @@ export class AddStudentComponent implements OnInit {
 				that.router.navigate(['student']);
 			} else if (req.readyState == 4 && req.status != 201) {
 				alert("添加失败！");
+				//go back to the student list page
+				that.router.navigate(['student']);
 			}
 		}
 		req.send(JSON.stringify(student));
