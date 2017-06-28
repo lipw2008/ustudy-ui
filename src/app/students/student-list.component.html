@@ -3,7 +3,7 @@
 	        <!-- 检索 start -->
 	        <div class="row search-wrap">
 	            <div class="col-sm-12 col-lg-9">
-	                <form [formGroup]="searchForm" (ngSubmit)="search($event)" id="searchForm" method="post" class="form-inline" action="#">
+	                <form [formGroup]="searchForm" id="searchForm" method="post" class="form-inline" action="#">
 						<div class="input-group" >
 						    <span class="input-group-addon">年级</span>
 	                        <select class="form-control" formControlName="gradeName" id="gradeFilterValue" [(ngModel)]="grade">
