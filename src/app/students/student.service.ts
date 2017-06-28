@@ -44,7 +44,18 @@ export class StudentService {
 	getTypes(): string[] {
 		return this.types;
 	}
-	
+
+    getDefaultStudent(): IStudent {
+        return {
+            "studentId" : "",
+            "studentName" : "",
+            "grade" : "",
+            "class" : "",
+            "type" : "",
+            "isTemp" : false
+	    }
+    }
+
     private handleError(error: Response) {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console

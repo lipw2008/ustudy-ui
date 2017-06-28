@@ -14,19 +14,19 @@
                         <div class="form-group">
                             <label for="studentName" class="col-sm-3 control-label">姓名：</label>
                             <div class="col-sm-6">
-                                <input formControlName="studentName" type="text" class="form-control" id="studentName" name="studentName" placeholder="请输入姓名" required data-bv-notempty-message="姓名不能为空">
+                                <input formControlName="studentName" type="text" class="form-control" id="studentName" name="studentName" [(ngModel)]="student.studentName" placeholder="请输入姓名" required data-bv-notempty-message="姓名不能为空">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="studentId" class="col-sm-3 control-label">学籍号：</label>
                             <div class="col-sm-6">
-                                <input formControlName="studentId" type="text" class="form-control" id="studentId" name="studentId" placeholder="请输入学籍号" required data-bv-notempty-message="学籍号不能为空">
+                                <input formControlName="studentId" type="text" class="form-control" id="studentId" name="studentId" [(ngModel)]="student.studentId" placeholder="请输入学籍号" required data-bv-notempty-message="学籍号不能为空">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="grade" class="col-sm-3 control-label">年级：</label>
                             <div class="col-sm-6">
-                                <select formControlName="gradeName" class="form-control" id="grade" name="grade" required data-bv-notempty-message="年级不能为空">
+                                <select formControlName="gradeName" class="form-control" id="grade" name="grade" [(ngModel)]="student.grade" required data-bv-notempty-message="年级不能为空">
                                     <option value="">请选择年级</option>
 									<option *ngFor="let grade of grades" [value]="grade">{{grade}}</option>	
                                 </select>
@@ -35,35 +35,29 @@
                         <div class="form-group">
                             <label for="class" class="col-sm-3 control-label">班级：</label>
                             <div class="col-sm-6">
-                                <select formControlName="className" class="form-control" id="class" name="class" required data-bv-notempty-message="班级不能为空">
+                                <select formControlName="className" class="form-control" id="class" name="class" [(ngModel)]="student.class" required data-bv-notempty-message="班级不能为空">
                                     <option value="">请选择班级</option>
                                     <option *ngFor="let class of classes" [value]="class">{{class}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-6" >
+                            <div class="col-sm-offset-3 col-sm-6" *ngFor="let type of types">
                                 <label >
-                                    <input formControlName="typeName" type="radio" value="普通"> 普通
-                                </label>
-                                <label >
-                                    <input formControlName="typeName" type="radio" value="体育"> 体育
-                                </label>
-                                <label >
-                                    <input formControlName="typeName" type="radio" value="艺术"> 艺术
+                                    <input formControlName="typeName" [(ngModel)]="student.type" type="radio" value="{{type}}"> {{type}}
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
                                 <label class="checkbox-inline">
-                                    <input formControlName="isTemp" type="checkbox" id="temporaryStudent" name="temporaryStudent"> 借读生
+                                    <input formControlName="isTemp" type="checkbox" id="temporaryStudent" name="temporaryStudent" [checked]="student.isTemp" (change)="student.isTemp = !student.isTemp"> 借读生
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer text-center">
-                        <button type="reset" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="reset" class="btn btn-default" (click)="cancel($event)">取消</button>
                         <button type="submit" class="btn btn-primary">保存</button>
                     </div>
                 </form>

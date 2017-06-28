@@ -6,29 +6,29 @@
 	                <form [formGroup]="searchForm" (ngSubmit)="search($event)" id="searchForm" method="post" class="form-inline" action="#">
 						<div class="input-group" >
 						    <span class="input-group-addon">年级</span>
-	                        <select class="form-control" id="gradeFilterValue">
+	                        <select class="form-control" formControlName="gradeName" id="gradeFilterValue" [(ngModel)]="grade">
 								<option value=""></option>
 	                            <option *ngFor="let grade of grades">{{grade}}</option>
 	                        </select>
 						</div>
 						<div class="input-group">
 						    <span class="input-group-addon">班级</span>
-	                        <select class="form-control" id="classFilterValue">
+	                        <select class="form-control" formControlName="className" id="classFilterValue" [(ngModel)]="class">
 	                            <option value=""></option>
 								<option *ngFor="let class of classes">{{class}}</option>
 	                        </select>
 						</div>
 						<div class="input-group">
 						    <span class="input-group-addon">专业</span>
-	                        <select class="form-control" id="typeFilterValue">
+	                        <select class="form-control" formControlName="type" id="typeFilterValue" [(ngModel)]="studentType">
 	                            <option value=""></option>
 								<option *ngFor="let type of types">{{type}}</option>
 	                        </select>
 						</div>
 				        <div class="input-group">
-				            <input type="text" class="form-control" id="studentNameFilterValue" name="userName" placeholder="请输入姓名">
+				            <input type="text" class="form-control" formControlName="studentName" id="studentNameFilterValue" [(ngModel)]="studentName" placeholder="请输入姓名">
 				            <span class="input-group-btn">
-				                <button type="button" class="btn btn-default" (click)='updateFilter($event)'>查询</button>
+				                <button type="button" class="btn btn-default" (click)='filter($event)'>查询</button>
 				            </span>
 				        </div>
 	                </form>

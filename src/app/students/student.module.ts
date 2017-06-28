@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule} from '@angular/router';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import { StudentListComponent } from './student-list.component';
@@ -22,6 +22,7 @@ import { StudentService } from './student.service';
 	  { path: 'updateStudent', component: UpdateStudentComponent }
     ]),
 	ReactiveFormsModule,
+  FormsModule,
 	HttpModule
   ],
   declarations: [

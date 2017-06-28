@@ -13,12 +13,11 @@ import { StudentModule } from './students/student.module';
 @NgModule({
   imports: [
     BrowserModule,
-	NgxDatatableModule,
+	  NgxDatatableModule,
     HttpModule,
     RouterModule.forRoot([
       { path: 'student', component: StudentListComponent },
-      { path: '', redirectTo: 'student', pathMatch: 'full' }//,
-//      { path: '**', redirectTo: 'student', pathMatch: 'full' }
+      { path: '', redirectTo: 'student', pathMatch: 'full' }
     ]),
 	StudentModule
   ],
