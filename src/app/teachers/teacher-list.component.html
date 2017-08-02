@@ -1,0 +1,80 @@
+        <!-- 内容 start -->
+        <div class="container">
+	        <!-- 检索 start -->
+	        <div class="row search-wrap">
+	            <div class="col-sm-12 col-lg-9">
+	                <form [formGroup]="searchForm" id="searchForm" method="post" class="form-inline" action="#">
+						<div class="input-group" >
+						    <span class="input-group-addon">年级</span>
+	                        <select class="form-control" formControlName="grade" id="gradeFilterValue" [(ngModel)]="grade">
+								<option value=""></option>
+	                            <option *ngFor="let grade of grades">{{grade}}</option>
+	                        </select>
+						</div>
+						<div class="input-group">
+						    <span class="input-group-addon">学科</span>
+	                        <select class="form-control" formControlName="subject" id="subjectFilterValue" [(ngModel)]="subject">
+	                            <option value=""></option>
+								<option *ngFor="let subject of subjects">{{subject}}</option>
+	                        </select>
+						</div>
+						<div class="input-group">
+						    <span class="input-group-addon">账号</span>
+	                        <select class="form-control" formControlName="type" id="typeFilterValue" [(ngModel)]="type">
+	                            <option value=""></option>
+								<option *ngFor="let type of types">{{type}}</option>
+	                        </select>
+						</div>
+				        <div class="input-group">
+				            <input type="text" class="form-control" formControlName="teacherNameId" id="teacherNameIdFilterValue" [(ngModel)]="teacherNameId" placeholder="请输入教师姓名或手机号">
+				            <span class="input-group-btn">
+				                <button type="button" class="btn btn-default" (click)='filter($event)'>查询</button>
+				            </span>
+				        </div>
+	                </form>
+	            </div>
+	            <div class="col-sm-12 col-lg-3 text-right">
+		            <div class="btn-group btn-group-justified" role="group" aria-label="button group">
+					    <a href="addTeacher" id="addTeacherInfoBtn" href="#" class="btn btn-default" title="添加教师信息">添加教师</a>
+					    <a (click)='removeTeacher($event)' class="btn btn-default" title="删除教师信息">删除教师</a>
+					    <a href="#" class="btn btn-default" title="批量导入学生信息">批量导入</a>
+					    <a href="#" class="btn btn-default" title="发送短信">发送短信</a>
+					</div>
+				</div>
+	        </div>
+	        <!-- 检索 end -->
+			<br/>
+			<!-- 表格 start -->
+			<div>
+				  <ngx-datatable
+				    style="width: 100%"
+					class="material striped"
+					[rows]="rows"
+					[columns]="columns"
+					[columnMode]="'force'"
+					[headerHeight]="50"
+					[footerHeight]="50"
+					[rowHeight]="50"
+					[selected]="selected"
+					[selectionType]="'checkbox'"
+					[limit]="10">
+					<ngx-datatable-column
+					[headerCheckboxable]="true"
+					[checkboxable]="true">					
+					</ngx-datatable-column>
+					<ngx-datatable-column prop="teacherName" name="姓名"></ngx-datatable-column>
+					<ngx-datatable-column prop="teacherId" name="电话"></ngx-datatable-column>
+					<ngx-datatable-column prop="subject" name="学科"></ngx-datatable-column>
+					<ngx-datatable-column prop="classes" name="授课班级"></ngx-datatable-column>
+					<ngx-datatable-column prop="type" name="账号类型"></ngx-datatable-column>
+					<ngx-datatable-column name="操作">
+						<ng-template let-row="row" ngx-datatable-cell-template>
+							<a [routerLink]="['/updateTeacher', row]" id="updateTeacherInfoBtn" href="#" class="btn btn-default" title="修改">修改</a>
+							<a id="stopTeacherInfoBtn" href="#" class="btn btn-default" title="停用">停用</a>
+						</ng-template>
+					</ngx-datatable-column>
+				  </ngx-datatable>
+			</div>
+			<!-- 表格 end -->
+        </div>
+        <!-- 内容 end -->			
