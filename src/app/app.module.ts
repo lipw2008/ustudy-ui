@@ -6,9 +6,11 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent }  from './app.component';
 import { StudentListComponent }  from './students/student-list.component';
+import { TeacherListComponent }  from './teachers/teacher-list.component';
 
 /* Feature Modules */
 import { StudentModule } from './students/student.module';
+import { TeacherModule } from './teachers/teacher.module';
 
 @NgModule({
   imports: [
@@ -17,9 +19,11 @@ import { StudentModule } from './students/student.module';
     HttpModule,
     RouterModule.forRoot([
       { path: 'student', component: StudentListComponent },
+      { path: 'teacher', component: TeacherListComponent },
       { path: '', redirectTo: 'student', pathMatch: 'full' }
     ]),
-	StudentModule
+	StudentModule,
+  TeacherModule
   ],
   declarations: [
     AppComponent
