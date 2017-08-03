@@ -2,40 +2,39 @@ import { Component, OnInit, ElementRef }  from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { IStudent } from './student';
-import { StudentService } from './student.service';
+import { ITeacher } from './teacher';
+import { TeacherService } from './teacher.service';
 
 @Component({
-    templateUrl: 'update-student.component.html'
+    templateUrl: 'update-teacher.component.html'
 })
 
-export class UpdateStudentComponent implements OnInit {
+export class UpdateTeacherComponent implements OnInit {
 
 	public updateForm : FormGroup;
 	
     errorMessage: string;
 
-    student: IStudent = {
-		"studentId" : "",
-		"studentName" : "",
+    teacher: ITeacher = {
+		"teacherId" : "",
+		"teacherName" : "",
 		"grade" : "",
-		"class" : "",
-		"type" : "",
-		"isTemp" : false
+		"subject" : "",
+		"type" : ""
 	};
 
 	grades = [];
 	
-	classes = [];
+	subjects = [];
 	
 	types = [];
 	
-    constructor(private _studentService: StudentService, public fb: FormBuilder, public route: ActivatedRoute, private router: Router) {
+    constructor(private _teacherService: TeacherService, public fb: FormBuilder, public route: ActivatedRoute, private router: Router) {
 		
     }
 	
 	cancel(event) {
-		this.router.navigate(['student']);
+		this.router.navigate(['teacher']);
 	}
 
 	update(event) {
@@ -45,47 +44,39 @@ export class UpdateStudentComponent implements OnInit {
 		}
 		
 		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/infocen/student/update");
+		req.open('POST', "http://47.92.53.57:8080/infocen/teacher/update");
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {
 			if (req.readyState == 4 && req.status == 200) {
 				alert("修改成功");
-				//go back to the student list page
-				that.router.navigate(['student']);
+				//go back to the teacher list page
+				that.router.navigate(['teacher']);
 			} else if (req.readyState == 4 && req.status != 200) {
 				alert("修改失败！");
-				//go back to the student list page
-				that.router.navigate(['student']);
+				//go back to the teacher list page
+				that.router.navigate(['teacher']);
 			}
 		}
-		req.send(JSON.stringify(this.student));
+		req.send(JSON.stringify(this.teacher));
 	}
 		
     ngOnInit(): void {
 		this.updateForm = this.fb.group({
-			studentId: ["", Validators.required],
-			studentName: ["", Validators.required],
-			gradeName: ["", Validators.required],
-			className: ["", Validators.required],
-			typeName: ["", Validators.required],
-			isTemp: [false]
+			teacherId: ["", Validators.required],
+			teacherName: ["", Validators.required],
+			grade: ["", Validators.required],
+			subject: ["", Validators.required],
+			type: ["", Validators.required]
 		});
-		this.student.studentId = this.route.snapshot.params.studentId;
-		this.student.studentName = this.route.snapshot.params.studentName;
-		this.student.grade = this.route.snapshot.params.grade;
-		this.student.class = this.route.snapshot.params.class;
-		this.student.type = this.route.snapshot.params.type;
-		this.student.isTemp = this.route.snapshot.params.isTemp === "false" ? false : true;
-		this.student.id = this.route.snapshot.params.id;
-        this.grades = this._studentService.getGrades();
-        this.classes = this._studentService.getClasses();
-        this.types = this._studentService.getTypes();
-//		$('#addStudentInfoForm').bootstrapValidator();
-//		var $form = $('#addStudentInfoForm');
-//        $form.bootstrapValidator();
-//		$(':reset').click(function() {
-//            $form.data('bootstrapValidator').resetForm(true);
-//        });
+		this.teacher.teacherId = this.route.snapshot.params.teacherId;
+		this.teacher.teacherName = this.route.snapshot.params.teacherName;
+		this.teacher.grade = this.route.snapshot.params.grade;
+		this.teacher.subject = this.route.snapshot.params.subject;
+		this.teacher.type = this.route.snapshot.params.type;
+		this.teacher.id = this.route.snapshot.params.id;
+        this.grades = this._teacherService.getGrades();
+        this.subjects = this._teacherService.getSubjects();
+        this.types = this._teacherService.getTypes();
     }
 }

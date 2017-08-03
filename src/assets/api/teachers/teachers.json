@@ -1,0 +1,38 @@
+[
+    {
+        "id": "001",
+        "teacherId": "13455556666",
+        "teacherName": "张老师",
+        "type": "任课老师",
+        "subject": "语文",
+        "grade": "高一",
+        "classes": [{"c":"1"},{"c":"2"},{"c":"3"},{"c":"4"},{"c":"5"}]
+    },
+        {
+        "id": "002",
+        "teacherId": "13899990000",
+        "teacherName": "李老师",
+        "type": "学科组长",
+        "subject": "数学",
+        "grade": "高二",
+        "classes": [{"c":"1"},{"c":"2"},{"c":"3"}]
+    },
+        {
+        "id": "003",
+        "teacherId": "13977777777",
+        "teacherName": "王校长",
+        "type": "校长",
+        "subject": "英语",
+        "grade": "高三",
+        "classes": []
+    },
+        {
+        "id": "004",
+        "teacherId": "13622222222",
+        "teacherName": "高老师",
+        "type": "年级主任",
+        "subject": "历史",
+        "grade": "高一",
+        "classes": [{"c":"1"},{"c":"2"},{"c":"3"},{"c":"4"}]
+    }
+]

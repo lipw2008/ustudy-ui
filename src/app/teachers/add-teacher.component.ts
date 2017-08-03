@@ -2,40 +2,39 @@ import { Component, OnInit, ElementRef }  from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { IStudent } from './student';
-import { StudentService } from './student.service';
+import { ITeacher } from './teacher';
+import { TeacherService } from './teacher.service';
 
 @Component({
-    templateUrl: 'add-student.component.html'
+    templateUrl: 'add-teacher.component.html'
 })
 
-export class AddStudentComponent implements OnInit {
+export class AddTeacherComponent implements OnInit {
 
 	public addForm : FormGroup;
     
 	errorMessage: string;
 
-    student: IStudent = {
-		"studentId" : "",
-		"studentName" : "",
+    teacher: ITeacher = {
+		"teacherId" : "",
+		"teacherName" : "",
 		"grade" : "",
-		"class" : "",
-		"type" : "",
-		"isTemp" : false
+		"subject" : "",
+		"type" : ""
 	};
 
 	grades = [];
 	
-	classes = [];
+	subjects = [];
 	
 	types = [];
 		
-    constructor(private _studentService: StudentService, public fb: FormBuilder, private router: Router) {
+    constructor(private _teacherService: TeacherService, public fb: FormBuilder, private router: Router) {
 
     }
 	
 	cancel(event) {
-		this.router.navigate(['student']);
+		this.router.navigate(['teacher']);
 	}
 
 	add(event) {
@@ -45,37 +44,36 @@ export class AddStudentComponent implements OnInit {
 		}
 		
 		const req = new XMLHttpRequest();
-		req.open('POST', 'http://47.92.53.57:8080/infocen/student/add');
+		req.open('POST', 'http://47.92.53.57:8080/infocen/teacher/add');
 		req.setRequestHeader("Content-type", "application/json");
 		var t = this;
 		req.onreadystatechange = function() {
 			if (req.readyState == 4 && req.status == 200) {
 				alert("添加成功");
-				//go back to the student list page
-				t.router.navigate(['student']);
+				//go back to the teacher list page
+				t.router.navigate(['teacher']);
 			} else if (req.readyState == 4 && req.status != 200) {
 				alert("添加失败！");
-				//go back to the student list page
-				t.router.navigate(['student']);
+				//go back to the teacher list page
+				t.router.navigate(['teacher']);
 			}
 		}
-		req.send(JSON.stringify(this.student));
+		req.send(JSON.stringify(this.teacher));
 	}
 		
     ngOnInit(): void {
-		this.student = this._studentService.getDefaultStudent();
+		this.teacher = this._teacherService.getDefaultTeacher();
 
 		this.addForm = this.fb.group({
-			studentId: ["", Validators.required],
-			studentName: ["", Validators.required],
-			gradeName: ["", Validators.required],
-			className: ["", Validators.required],
-			typeName: ["", Validators.required],
-			isTemp: [false, Validators.required]
+			teacherId: ["", Validators.required],
+			teacherName: ["", Validators.required],
+			grade: ["", Validators.required],
+			subject: ["", Validators.required],
+			type: ["", Validators.required]
 		});
 
-        this.grades = this._studentService.getGrades();
-        this.classes = this._studentService.getClasses();
-        this.types = this._studentService.getTypes();
+        this.grades = this._teacherService.getGrades();
+        this.subjects = this._teacherService.getSubjects();
+        this.types = this._teacherService.getTypes();
     }
 }

@@ -60,6 +60,17 @@ export class TeacherListComponent implements OnInit {
 		this.fetch((data) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
+			for(var t of data) {
+				if (t.classes.length >0) {
+					var s = "";
+					for (var c of t.classes) {
+						s += t.grade + "(" + c.c + ") ";
+					}
+					t.classes = s;
+				} else {
+					t.classes = "";
+				}
+			}
 			this.temp = [...data];
 			this.rows = data;
 		});		
@@ -67,7 +78,8 @@ export class TeacherListComponent implements OnInit {
 	
 	fetch(cb) {
 		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/infocen/teacher/list/0');
+		//req.open('GET', 'http://47.92.53.57:8080/infocen/teacher/list/0');
+		req.open('GET', 'assets/api/teachers/teachers.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));

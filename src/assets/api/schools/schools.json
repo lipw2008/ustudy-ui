@@ -1,0 +1,132 @@
+[
+    {
+        "id": "001",
+        "schoolId": "001",
+        "schoolName": "西安一中",
+        "type": "高中",
+        "province": "陕西",
+        "city": "西安",
+        "district": "长安区",
+        "grades": [
+            {
+                "name": "高一",
+                "subjects": [
+                    {
+                        "subject": "语文"
+                    },
+                    {
+                        "subject": "数学"
+                    },
+                    {
+                        "subject": "英语"
+                    },
+                    {
+                        "subject": "体育"
+                    },
+                    {
+                        "subject": "音乐"
+                    }
+                ],
+                "numOfClasses": 5
+            },
+            {
+                "name": "高二",
+                "subjects": [
+                    {
+                        "subject": "语文"
+                    },
+                    {
+                        "subject": "数学"
+                    },
+                    {
+                        "subject": "英语"
+                    },
+                    {
+                        "subject": "体育"
+                    }
+                ],
+                "numOfClasses": 5
+            },
+            {
+                "name": "高三",
+                "subjects": [
+                    {
+                        "subject": "语文"
+                    },
+                    {
+                        "subject": "数学"
+                    },
+                    {
+                        "subject": "英语"
+                    }
+                ],
+                "numOfClasses": 5
+            }
+        ]
+    },
+    {
+        "id": "002",
+        "schoolId": "002",
+        "schoolName": "雁塔四中",
+        "type": "初中",
+        "province": "陕西",
+        "city": "西安",
+        "district": "雁塔区",
+        "grades": [
+            {
+                "name": "初一",
+                "subjects": [
+                    {
+                        "subject": "语文"
+                    },
+                    {
+                        "subject": "数学"
+                    },
+                    {
+                        "subject": "英语"
+                    },
+                    {
+                        "subject": "体育"
+                    },
+                    {
+                        "subject": "音乐"
+                    }
+                ],
+                "numOfClasses": 6
+            },
+            {
+                "name": "初二",
+                "subjects": [
+                    {
+                        "subject": "语文"
+                    },
+                    {
+                        "subject": "数学"
+                    },
+                    {
+                        "subject": "英语"
+                    },
+                    {
+                        "subject": "体育"
+                    }
+                ],
+                "numOfClasses": 6
+            },
+            {
+                "name": "初三",
+                "subjects": [
+                    {
+                        "subject": "语文"
+                    },
+                    {
+                        "subject": "数学"
+                    },
+                    {
+                        "subject": "英语"
+                    }
+                ],
+                "numOfClasses": 6
+            }
+        ]
+    }
+]

@@ -1,11 +1,15 @@
 /* Defines the product entity */
-export interface IStudent {
+export interface ITeacher {
     id?: string;
-    studentId: string;
-    studentName: string;
+    teacherId: string;
+    teacherName: string;
     grade: string;
-    class: string;
+    classes?: IClass[];
     type: string;
-    isTemp: boolean;
+    subject: string;
+    addiPerms?: string;
 }
 
+export interface IClass {
+    c: string;
+}

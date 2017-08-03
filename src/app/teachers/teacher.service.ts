@@ -7,52 +7,39 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
-import { IStudent } from './student';
+import { ITeacher } from './teacher';
 
 @Injectable()
-export class StudentService {
-    private _studentUrl = 'api/students/students.json';
+export class TeacherService {
+    private _teacherUrl = 'api/teachers/teachers.json';
 	
-	private grades = ["七年级", "八年级", "九年级", "高一", "高二", "高三"];
+	private grades = ["高一", "高二", "高三"];
 	
-	private classes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+	private types = ["任课老师", "班主任", "备课组长", "学科组长", "年级主任", "校长", "考务老师"];
 	
-	private types = ["普通", "体育", "艺术"];
+	private subjects = ["语文", "数学", "英语", "物理", "化学", "生物", "政治", "历史", "地理"];
 
     constructor(private _http: Http) { }
 
-    getStudents(): Observable<IStudent[]> {
-        return this._http.get(this._studentUrl)
-            .map((response: Response) => <IStudent[]>response.json())
-            .do(data => console.log('All: ' +  JSON.stringify(data)))
-            .catch(this.handleError);
-    }
-
-    getStudent(id: string): Observable<IStudent> {
-        return this.getStudents()
-            .map((students: IStudent[]) => students.find(p => p.studentId === id));
-    }
-	
 	getGrades(): string[] {
 		return this.grades;
 	}
 
-	getClasses(): string[] {
-		return this.classes;
+	getSubjects(): string[] {
+		return this.subjects;
 	}
 
 	getTypes(): string[] {
 		return this.types;
 	}
 
-    getDefaultStudent(): IStudent {
+    getDefaultTeacher(): ITeacher {
         return {
-            "studentId" : "",
-            "studentName" : "",
+            "teacherId" : "",
+            "teacherName" : "",
             "grade" : "",
-            "class" : "",
-            "type" : "",
-            "isTemp" : false
+            "subject" : "",
+            "type" : ""
 	    }
     }
 
