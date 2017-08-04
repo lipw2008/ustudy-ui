@@ -1,0 +1,57 @@
+<!-- 内容 start -->
+<div class="container container-sm">
+	<div class="panel panel-default">
+		<!-- 检索 start -->
+		<form id="searchForm" method="post" class="form-inline" action="#">
+			<div class="panel-heading search-wrap clearfix">
+				<h4 class="main-title btn btn-lg btn-link"><a href="/subjectLeader">{{schoolName}}<span>{{schoolId}}</span></a></h4>
+				<ul class="nav navbar-right clear-margin dropdown-select">
+					<li class="dropdown">
+						<button type="button" class="btn btn-lg btn-link clear-padding-horizontal" data-toggle="dropdown" aria-expanded="false"><span class="dropdown-btn"></span> <span class="caret"></span></button>
+						<ul id="myTabs" class="dropdown-menu" aria-labelledby="dLabel">
+							<li><a href="#tab0" data-value="0" data-toggle="tab">小学</a></li>
+							<li><a href="#tab1" data-value="1" data-toggle="tab">初中</a></li>
+							<li><a href="#tab2" data-value="2" data-toggle="tab">高中</a></li>
+							<li><a href="#tab3" data-value="3" data-toggle="tab">完中</a></li>
+							<li><a href="#tab4" data-value="4" data-toggle="tab">九年制</a></li>
+							<li><a href="#tab5" data-value="5" data-toggle="tab">十二年制</a></li>
+							<li><a href="#tab6" data-value="6" data-toggle="tab">其他</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</form>
+		<!-- 检索 end -->
+		<br/>
+		<!-- 表格 start -->
+		<div>
+			<ngx-datatable
+				style="width: 100%"
+				class="material striped"
+				[rows]="rows"
+				[columns]="columns"
+				[columnMode]="'force'"
+				[headerHeight]="50"
+				[footerHeight]="50"
+				[rowHeight]="50"
+				[limit]="10">
+				<ngx-datatable-column
+				[headerCheckboxable]="true"
+				[checkboxable]="true">					
+				</ngx-datatable-column>
+				<ngx-datatable-column prop="grade" name="年级"></ngx-datatable-column>
+				<ngx-datatable-column prop="classNum" name="班级数"></ngx-datatable-column>
+				<ngx-datatable-column prop="artClasses" name="文科班"></ngx-datatable-column>
+				<ngx-datatable-column prop="sciClasses" name="理科班"></ngx-datatable-column>
+				<ngx-datatable-column prop="studentNum" name="学生数"></ngx-datatable-column>
+				<ngx-datatable-column name="操作">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+						<a [routerLink]="['/classes', row]" id="editClassesInfoBtn" href="#" class="btn btn-default" title="修改">编辑</a>
+					</ng-template>
+				</ngx-datatable-column>
+			</ngx-datatable>
+		</div>
+		<!-- 表格 end -->
+	</div>
+</div>
+<!-- 内容 end -->

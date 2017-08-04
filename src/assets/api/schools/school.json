@@ -1,66 +1,23 @@
-
-{
-    "id": "001",
-    "schoolId": "001",
-    "schoolName": "西安一中",
-    "schoolType": "高中",
-    "province": "陕西省",
-    "city": "西安市",
-    "district": "长安区",
-    "grades": [
-        {
-            "grade": "高一",
-            "subjects": [
-                {
-                    "subject": "语文"
-                },
-                {
-                    "subject": "数学"
-                },
-                {
-                    "subject": "英语"
-                },
-                {
-                    "subject": "体育"
-                },
-                {
-                    "subject": "音乐"
-                }
-            ],
-            "numOfClasses": 5
-        },
-        {
-            "grade": "高二",
-            "subjects": [
-                {
-                    "subject": "语文"
-                },
-                {
-                    "subject": "数学"
-                },
-                {
-                    "subject": "英语"
-                },
-                {
-                    "subject": "体育"
-                }
-            ],
-            "numOfClasses": 5
-        },
-        {
-            "grade": "高三",
-            "subjects": [
-                {
-                    "subject": "语文"
-                },
-                {
-                    "subject": "数学"
-                },
-                {
-                    "subject": "英语"
-                }
-            ],
-            "numOfClasses": 5
-        }
-    ]
-}
+[
+	{
+		"grade": "高一",
+		"classNum": "8",
+		"artClasses": "1,2,3,4,5",
+		"sciClasses": "6,7,8",
+		"studentNum": "420"
+	},
+	{
+		"grade": "高二",
+		"classNum": "8",
+		"artClasses": "1,2,3",
+		"sciClasses": "4,5,6,7,8",
+		"studentNum": "400"
+	},
+	{
+		"grade": "高三",
+		"classNum": "8",
+		"artClasses": "1,2,3",
+		"sciClasses": "4,5,6,7,8",
+		"studentNum": "400"
+	}
+]
