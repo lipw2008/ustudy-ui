@@ -2,7 +2,7 @@
         <div class="container">
 	        <!-- 检索 start -->
 	        <div class="row search-wrap">
-	            <div class="col-sm-12 col-lg-9">
+	            <div class="col-sm-8 col-lg-8">
 	                <form [formGroup]="searchForm" id="searchForm" method="post" class="form-inline" action="#">
 						<div class="input-group" >
 						    <span class="input-group-addon">年级</span>
@@ -33,7 +33,7 @@
 				        </div>
 	                </form>
 	            </div>
-	            <div class="col-sm-12 col-lg-3 text-right">
+	            <div class="col-sm-4 col-lg-4 text-right">
 		            <div class="btn-group btn-group-justified" role="group" aria-label="button group">
 					    <a href="/addTeacher" id="addTeacherInfoBtn" class="btn btn-default" title="添加教师信息">添加教师</a>
 					    <a (click)='removeTeacher($event)' class="btn btn-default" title="删除教师信息">删除教师</a>
@@ -51,23 +51,23 @@
 					class="material striped"
 					[rows]="rows"
 					[columns]="columns"
-					[columnMode]="'force'"
+					[columnMode]="'flex'"
 					[headerHeight]="50"
 					[footerHeight]="50"
-					[rowHeight]="50"
+					[rowHeight]="auto"
 					[selected]="selected"
 					[selectionType]="'checkbox'"
 					[limit]="10">
 					<ngx-datatable-column
 					[headerCheckboxable]="true"
-					[checkboxable]="true">					
+					[checkboxable]="true" [flexGrow]="1">					
 					</ngx-datatable-column>
-					<ngx-datatable-column prop="teacherName" name="姓名"></ngx-datatable-column>
-					<ngx-datatable-column prop="teacherId" name="电话"></ngx-datatable-column>
-					<ngx-datatable-column prop="subject" name="学科"></ngx-datatable-column>
-					<ngx-datatable-column prop="classes" name="授课班级"></ngx-datatable-column>
-					<ngx-datatable-column prop="type" name="账号类型"></ngx-datatable-column>
-					<ngx-datatable-column name="操作">
+					<ngx-datatable-column prop="teacherName" name="姓名" [flexGrow]="2"></ngx-datatable-column>
+					<ngx-datatable-column prop="teacherId" name="电话" [flexGrow]="4"></ngx-datatable-column>
+					<ngx-datatable-column prop="subject" name="学科" [flexGrow]="2"></ngx-datatable-column>
+					<ngx-datatable-column prop="classes" name="授课班级" [flexGrow]="10"></ngx-datatable-column>
+					<ngx-datatable-column prop="type" name="账号类型" [flexGrow]="4"></ngx-datatable-column>
+					<ngx-datatable-column name="操作" [flexGrow]="4">
 						<ng-template let-row="row" ngx-datatable-cell-template>
 							<a [routerLink]="['/updateTeacher', row]" id="updateTeacherInfoBtn" href="#" class="btn btn-default" title="修改">修改</a>
 							<a id="stopTeacherInfoBtn" href="#" class="btn btn-default" title="停用">停用</a>

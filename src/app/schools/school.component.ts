@@ -10,8 +10,13 @@ export class SchoolComponent implements OnInit {
 
     errorMessage: string;
 
-    schoolName: "西安一中";
-	schoolId: "(912850)";
+    schoolName: string = '西安一中';
+
+	schoolId: string = "(912850)";
+
+	types = ["初中", "完中", "九年制", "小学", "十二年制", "补习", "其他", "高中"];
+
+	selectedType = "高中";
 
 	rows = [];
 	

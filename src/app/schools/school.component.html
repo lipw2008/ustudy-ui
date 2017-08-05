@@ -4,21 +4,10 @@
 		<!-- 检索 start -->
 		<form id="searchForm" method="post" class="form-inline" action="#">
 			<div class="panel-heading search-wrap clearfix">
-				<h4 class="main-title btn btn-lg btn-link"><a href="/subjectLeader">{{schoolName}}<span>{{schoolId}}</span></a></h4>
-				<ul class="nav navbar-right clear-margin dropdown-select">
-					<li class="dropdown">
-						<button type="button" class="btn btn-lg btn-link clear-padding-horizontal" data-toggle="dropdown" aria-expanded="false"><span class="dropdown-btn"></span> <span class="caret"></span></button>
-						<ul id="myTabs" class="dropdown-menu" aria-labelledby="dLabel">
-							<li><a href="#tab0" data-value="0" data-toggle="tab">小学</a></li>
-							<li><a href="#tab1" data-value="1" data-toggle="tab">初中</a></li>
-							<li><a href="#tab2" data-value="2" data-toggle="tab">高中</a></li>
-							<li><a href="#tab3" data-value="3" data-toggle="tab">完中</a></li>
-							<li><a href="#tab4" data-value="4" data-toggle="tab">九年制</a></li>
-							<li><a href="#tab5" data-value="5" data-toggle="tab">十二年制</a></li>
-							<li><a href="#tab6" data-value="6" data-toggle="tab">其他</a></li>
-						</ul>
-					</li>
-				</ul>
+				<h4 class="main-title btn btn-lg btn-link"><a href="/subjectLeader">{{schoolName}} <span>{{schoolId}}</span></a></h4>
+				<select class="nav navbar-right clear-margin dropdown-select">
+					<option *ngFor="let type of types" [selected]="type == '高中'" disabled="disabled">{{type}}</option>
+				</select>
 			</div>
 		</form>
 		<!-- 检索 end -->
