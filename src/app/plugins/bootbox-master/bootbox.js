@@ -977,7 +977,7 @@
     zh_CN : {
       OK      : "确定",
       CANCEL  : "取消",
-      CONFIRM : "确认"
+      CONFIRM : "确定"
     },
     zh_TW : {
       OK      : "OK",

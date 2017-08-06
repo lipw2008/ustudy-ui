@@ -2,16 +2,15 @@
 <div class="container container-sm">
 	<div class="panel panel-default">
 		<!-- 检索 start -->
-		<form id="searchForm" method="post" class="form-inline" action="#">
+		<form id="searchForm" method="post" action="#">
 			<div class="panel-heading search-wrap clearfix">
-				<h4 class="main-title btn btn-lg btn-link"><a href="/subjectLeader">{{schoolName}} <span>{{schoolId}}</span></a></h4>
-				<select class="nav navbar-right clear-margin dropdown-select">
-					<option *ngFor="let type of types" [selected]="type == '高中'" disabled="disabled">{{type}}</option>
+				<h4 class="main-title btn btn-lg btn-link"><a href="/subjectOwner">{{schoolName}} <span>{{schoolId}}</span></a></h4>
+				<select class="nav navbar-right clear-margin dropdown-select clear-padding-horizontal">
+					<option *ngFor="let type of types" [selected]="type == selectedType" disabled="disabled">{{type}}</option>
 				</select>
 			</div>
 		</form>
 		<!-- 检索 end -->
-		<br/>
 		<!-- 表格 start -->
 		<div>
 			<ngx-datatable
@@ -21,13 +20,9 @@
 				[columns]="columns"
 				[columnMode]="'force'"
 				[headerHeight]="50"
-				[footerHeight]="50"
-				[rowHeight]="50"
-				[limit]="10">
-				<ngx-datatable-column
-				[headerCheckboxable]="true"
-				[checkboxable]="true">					
-				</ngx-datatable-column>
+				[footerHeight]="none"
+				[rowHeight]="auto"
+				[limit]="20">
 				<ngx-datatable-column prop="grade" name="年级"></ngx-datatable-column>
 				<ngx-datatable-column prop="classNum" name="班级数"></ngx-datatable-column>
 				<ngx-datatable-column prop="artClasses" name="文科班"></ngx-datatable-column>

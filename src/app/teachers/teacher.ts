@@ -1,15 +1,23 @@
-/* Defines the product entity */
+/* Defines the teacher entity */
 export interface ITeacher {
     id?: string;
     teacherId: string;
     teacherName: string;
     grade: string;
     classes?: IClass[];
-    type: string;
+    roles: IRole[];
     subject: string;
-    addiPerms?: string;
+    addiPerms?: IPerm[];
 }
 
 export interface IClass {
     c: string;
+}
+
+export interface IRole {
+    r: string;
+}
+
+export interface IPerm {
+    p: boolean;
 }

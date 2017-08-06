@@ -1,0 +1,40 @@
+<!-- 内容 start -->
+<div class="container container-sm">
+	<div class="panel panel-default">
+		<!-- 检索 start -->
+		<form id="addStudentDetailsForm" method="post" class="form-horizontal" action="#">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="main-title btn btn-default">高中部：</h4>
+                </div>
+            </div>
+        </form>
+		<!-- 检索 end -->
+		<!-- 表格 start -->
+		<div>
+			<ngx-datatable
+				style="width: 100%"
+				class="material striped"
+				[rows]="rows"
+				[columns]="columns"
+				[columnMode]="'force'"
+				[headerHeight]="50"
+				[footerHeight]="none"
+				[rowHeight]="auto"
+				[limit]="20">
+				<ngx-datatable-column prop="grade" name="年级"></ngx-datatable-column>
+				<ngx-datatable-column prop="classNum" name="班级数"></ngx-datatable-column>
+				<ngx-datatable-column prop="artClasses" name="文科班"></ngx-datatable-column>
+				<ngx-datatable-column prop="sciClasses" name="理科班"></ngx-datatable-column>
+				<ngx-datatable-column prop="studentNum" name="学生数"></ngx-datatable-column>
+				<ngx-datatable-column name="操作">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+						<a [routerLink]="['/classes', row]" id="editClassesInfoBtn" href="#" class="btn btn-xs btn-primary" title="修改">编辑</a>
+					</ng-template>
+				</ngx-datatable-column>
+			</ngx-datatable>
+		</div>
+		<!-- 表格 end -->
+	</div>
+</div>
+<!-- 内容 end -->
