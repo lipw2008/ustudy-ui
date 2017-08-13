@@ -3,36 +3,39 @@
         "id": "001",
         "teacherId": "13455556666",
         "teacherName": "张老师",
-        "type": "任课老师",
-        "subject": "语文",
-        "grade": "高一",
-        "classes": [{"c":"1"},{"c":"2"},{"c":"3"},{"c":"4"},{"c":"5"}]
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"语文"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
     },
         {
         "id": "002",
         "teacherId": "13899990000",
         "teacherName": "李老师",
-        "type": "学科组长",
-        "subject": "数学",
-        "grade": "高二",
-        "classes": [{"c":"1"},{"c":"2"},{"c":"3"}]
+        "roles": [{"n":"学科组长"}],
+        "subjects": [{"n":"数学"}],
+        "grades": [{"n":"高二"}],
+        "classes": [{"n":"高二(1)"},{"n":"高二(2)"},{"n":"高二(3)"}]
     },
         {
         "id": "003",
         "teacherId": "13977777777",
         "teacherName": "王校长",
-        "type": "校长",
-        "subject": "英语",
-        "grade": "高三",
+        "password": "aaabbbccc",
+        "roles": [{"n":"校长"}],
+        "subjects": [{"n":"英语"}],
+        "grades": [{"n":"高三"}],
         "classes": []
     },
         {
         "id": "004",
         "teacherId": "13622222222",
         "teacherName": "高老师",
-        "type": "年级主任",
-        "subject": "历史",
-        "grade": "高一",
-        "classes": [{"c":"1"},{"c":"2"},{"c":"3"},{"c":"4"}]
+        "password": "aaabbbccc",
+        "roles": [{"n":"年级主任"}],
+        "subjects": [{"n":"历史"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"}]
     }
 ]

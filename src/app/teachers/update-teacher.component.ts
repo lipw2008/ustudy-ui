@@ -16,19 +16,14 @@ export class UpdateTeacherComponent implements OnInit {
     errorMessage: string;
 
     teacher: ITeacher = {
+    	"id" : "",
 		"teacherId" : "",
 		"teacherName" : "",
-		"grade" : "",
-		"subject" : "",
-		"type" : ""
+		"password" : ""
 	};
-
-	grades = [];
 	
-	subjects = [];
-	
-	types = [];
-	
+	oldPassword: string = "";
+    
     constructor(private _teacherService: TeacherService, public fb: FormBuilder, public route: ActivatedRoute, private router: Router) {
 		
     }
@@ -43,16 +38,20 @@ export class UpdateTeacherComponent implements OnInit {
 			return;
 		}
 		
+		if (this.teacher.password !== this.oldPassword) {
+			this.teacher.password = this._teacherService.MD5(this.teacher.password);
+		}
+
 		const req = new XMLHttpRequest();
 		req.open('POST', "http://47.92.53.57:8080/infocen/teacher/update");
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {
-			if (req.readyState == 4 && req.status == 200) {
+			if (req.readyState == 4 && req.status/100 == 2) {
 				alert("修改成功");
 				//go back to the teacher list page
 				that.router.navigate(['teacher']);
-			} else if (req.readyState == 4 && req.status != 200) {
+			} else if (req.readyState == 4 && req.status/100 != 2) {
 				alert("修改失败！");
 				//go back to the teacher list page
 				that.router.navigate(['teacher']);
@@ -65,18 +64,12 @@ export class UpdateTeacherComponent implements OnInit {
 		this.updateForm = this.fb.group({
 			teacherId: ["", Validators.required],
 			teacherName: ["", Validators.required],
-			grade: ["", Validators.required],
-			subject: ["", Validators.required],
-			type: ["", Validators.required]
+			password: ["", Validators.required]
 		});
 		this.teacher.teacherId = this.route.snapshot.params.teacherId;
 		this.teacher.teacherName = this.route.snapshot.params.teacherName;
-		this.teacher.grade = this.route.snapshot.params.grade;
-		this.teacher.subject = this.route.snapshot.params.subject;
-		this.teacher.type = this.route.snapshot.params.type;
+		this.teacher.password = this.route.snapshot.params.password;
 		this.teacher.id = this.route.snapshot.params.id;
-        this.grades = this._teacherService.getGrades();
-        this.subjects = this._teacherService.getSubjects();
-        this.types = this._teacherService.getTypes();
+		this.oldPassword = this.route.snapshot.params.password;
     }
 }

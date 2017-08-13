@@ -18,16 +18,23 @@ export class AddTeacherComponent implements OnInit {
     teacher: ITeacher = {
 		"teacherId" : "",
 		"teacherName" : "",
-		"grade" : "",
-		"subject" : "",
-		"type" : ""
+		"password" : "",
+		"grades" : [{"n":""}],
+		"subjects" : [{"n":""}],
+		"roles" : [{"n":""}]
 	};
+
+	inputGrade : string;
+
+	inputSubject : string;
+
+	inputRole : string;
 
 	grades = [];
 	
 	subjects = [];
 	
-	types = [];
+	roles = [];
 		
     constructor(private _teacherService: TeacherService, public fb: FormBuilder, private router: Router) {
 
@@ -43,16 +50,21 @@ export class AddTeacherComponent implements OnInit {
 			return;
 		}
 		
+		this.teacher.password = this._teacherService.MD5(this.teacher.password);
+		this.teacher.grades[0].n = this.inputGrade;
+		this.teacher.subjects[0].n = this.inputSubject;
+		this.teacher.roles[0].n = this.inputRole;
+
 		const req = new XMLHttpRequest();
 		req.open('POST', 'http://47.92.53.57:8080/infocen/teacher/add');
 		req.setRequestHeader("Content-type", "application/json");
 		var t = this;
 		req.onreadystatechange = function() {
-			if (req.readyState == 4 && req.status == 200) {
+			if (req.readyState == 4 && req.status/100 == 2) {
 				alert("添加成功");
 				//go back to the teacher list page
 				t.router.navigate(['teacher']);
-			} else if (req.readyState == 4 && req.status != 200) {
+			} else if (req.readyState == 4 && req.status/100 != 2) {
 				alert("添加失败！");
 				//go back to the teacher list page
 				t.router.navigate(['teacher']);
@@ -67,13 +79,14 @@ export class AddTeacherComponent implements OnInit {
 		this.addForm = this.fb.group({
 			teacherId: ["", Validators.required],
 			teacherName: ["", Validators.required],
+			password: ["", Validators.required],
 			grade: ["", Validators.required],
 			subject: ["", Validators.required],
-			type: ["", Validators.required]
+			role: ["", Validators.required]
 		});
 
         this.grades = this._teacherService.getGrades();
         this.subjects = this._teacherService.getSubjects();
-        this.types = this._teacherService.getTypes();
+        this.roles = this._teacherService.getRoles();
     }
 }

@@ -24,9 +24,15 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="password" class="col-sm-3 control-label">密码：</label>
+                            <div class="col-sm-6">
+                                <input formControlName="password" type="password" class="form-control" name="password" [(ngModel)]="teacher.password" placeholder="请输入密码" required data-bv-notempty-message="密码不能为空">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="subject" class="col-sm-3 control-label">授课学科：</label>
                             <div class="col-sm-6">
-                                <select formControlName="subject" class="form-control" id="subject" name="subject" [(ngModel)]="teacher.subject" required data-bv-notempty-message="学科不能为空">
+                                <select formControlName="subject" class="form-control" id="subject" name="subject" [(ngModel)]="inputSubject" required data-bv-notempty-message="学科不能为空">
                                     <option value="">请选择学科</option>
 									<option *ngFor="let subject of subjects" [value]="subject">{{subject}}</option>	
                                 </select>
@@ -35,18 +41,18 @@
                         <div class="form-group">
                             <label for="grade" class="col-sm-3 control-label">授课年级：</label>
                             <div class="col-sm-6">
-                                <select formControlName="grade" class="form-control" id="grade" name="grade" ng-value="string" [(ngModel)]="teacher.grade" required data-bv-notempty-message="年级不能为空">
+                                <select formControlName="grade" class="form-control" id="grade" name="grade" ng-value="string" [(ngModel)]="inputGrade" required data-bv-notempty-message="年级不能为空">
                                     <option value="">请选择年级</option>
                                     <option *ngFor="let grade of grades" [value]="grade">{{grade}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="type" class="col-sm-3 control-label">账号类型：</label>
+                            <label for="role" class="col-sm-3 control-label">账号类型：</label>
                             <div class="col-sm-6">
-                                <select formControlName="type" class="form-control" id="type" name="type" ng-value="string" [(ngModel)]="teacher.type" required data-bv-notempty-message="账号类型不能为空">
+                                <select formControlName="role" class="form-control" id="role" name="role" ng-value="string" [(ngModel)]="inputRole" required data-bv-notempty-message="账号类型不能为空">
                                     <option value="">请选择账号类型</option>
-                                    <option *ngFor="let type of types" [value]="type">{{type}}</option>
+                                    <option *ngFor="let role of roles" [value]="role">{{role}}</option>
                                 </select>
                             </div>
                         </div>

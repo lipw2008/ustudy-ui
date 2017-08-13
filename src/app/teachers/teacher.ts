@@ -3,21 +3,30 @@ export interface ITeacher {
     id?: string;
     teacherId: string;
     teacherName: string;
-    grade: string;
+    password: string;
+    grades?: IGrade[];
     classes?: IClass[];
-    roles: IRole[];
-    subject: string;
+    roles?: IRole[];
+    subjects?: ISubject[];
     addiPerms?: IPerm[];
 }
 
+export interface IGrade {
+    n: string;
+}
+
 export interface IClass {
-    c: string;
+    n: string;
 }
 
 export interface IRole {
-    r: string;
+    n: string;
+}
+
+export interface ISubject {
+    n: string;
 }
 
 export interface IPerm {
-    p: boolean;
+    n: boolean;
 }

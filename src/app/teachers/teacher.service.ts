@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-
+import {Md5} from 'ts-md5/dist/md5';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -15,7 +15,7 @@ export class TeacherService {
 	
 	private grades = ["高一", "高二", "高三"];
 	
-	private types = ["任课老师", "班主任", "备课组长", "学科组长", "年级主任", "校长", "考务老师"];
+	private roles = ["任课老师", "班主任", "备课组长", "学科组长", "年级主任", "校长", "考务老师"];
 	
 	private subjects = ["语文", "数学", "英语", "物理", "化学", "生物", "政治", "历史", "地理"];
 
@@ -29,17 +29,18 @@ export class TeacherService {
 		return this.subjects;
 	}
 
-	getTypes(): string[] {
-		return this.types;
+	getRoles(): string[] {
+		return this.roles;
 	}
 
     getDefaultTeacher(): ITeacher {
         return {
-            "teacherId" : "",
-            "teacherName" : "",
-            "grade" : "",
-            "subject" : "",
-            "type" : ""
+			"teacherId" : "",
+			"teacherName" : "",
+			"password" : "",
+			"grades" : [{"n":""}],
+			"subjects" : [{"n":""}],
+			"roles" : [{"n":""}]
 	    }
     }
 
@@ -49,4 +50,8 @@ export class TeacherService {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
+
+    MD5(pw: string): any {
+    	return Md5.hashStr(pw);
+  	}
 }

@@ -5,14 +5,13 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent }  from './app.component';
-import { StudentListComponent }  from './students/student-list.component';
-import { TeacherListComponent }  from './teachers/teacher-list.component';
-import { SchoolComponent }  from './schools/school.component';
+import { WelcomeComponent }  from './welcome/welcome.component';
 
 /* Feature Modules */
 import { StudentModule } from './students/student.module';
 import { TeacherModule } from './teachers/teacher.module';
 import { SchoolModule } from './schools/school.module';
+import { WelcomeModule } from './welcome/welcome.module';
 
 @NgModule({
   imports: [
@@ -20,14 +19,13 @@ import { SchoolModule } from './schools/school.module';
 	  NgxDatatableModule,
     HttpModule,
     RouterModule.forRoot([
-      { path: 'student', component: StudentListComponent },
-      { path: 'teacher', component: TeacherListComponent },
-      { path: 'school', component: SchoolComponent },
-      { path: '', redirectTo: 'student', pathMatch: 'full' }
+      { path: 'welcome', component: WelcomeComponent },
+      { path: '', redirectTo: 'welcome', pathMatch: 'full' }
     ]),
 	StudentModule,
   TeacherModule,
-  SchoolModule
+  SchoolModule,
+  WelcomeModule
   ],
   declarations: [
     AppComponent

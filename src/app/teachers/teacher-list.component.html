@@ -1,3 +1,12 @@
+        <!-- 路径导航 start -->
+        <div class="container">
+	        <ol class="breadcrumb clear-padding-vertical">
+	            <li><a href="#">首页</a></li>
+				<li><a href="teacher">教师信息</a></li>
+	        </ol>
+        </div>
+        <!-- 路径导航 end -->
+
         <!-- 内容 start -->
         <div class="container">
 	        <!-- 检索 start -->
@@ -20,9 +29,9 @@
 						</div>
 						<div class="input-group">
 						    <span class="input-group-addon">账号</span>
-	                        <select class="form-control" formControlName="type" id="typeFilterValue" [(ngModel)]="type">
+	                        <select class="form-control" formControlName="role" id="typeFilterValue" [(ngModel)]="role">
 	                            <option value=""></option>
-								<option *ngFor="let type of types">{{type}}</option>
+								<option *ngFor="let role of roles">{{role}}</option>
 	                        </select>
 						</div>
 				        <div class="input-group">
@@ -35,7 +44,7 @@
 	            </div>
 	            <div class="col-sm-4 col-lg-4 text-right">
 		            <div class="btn-group btn-group-justified" role="group" aria-label="button group">
-					    <a href="/addTeacher" id="addTeacherInfoBtn" class="btn btn-default" title="添加教师信息">添加教师</a>
+					    <a [routerLink]="['/addTeacher']" id="addTeacherInfoBtn" class="btn btn-default" title="添加教师信息">添加教师</a>
 					    <a (click)='removeTeacher($event)' class="btn btn-default" title="删除教师信息">删除教师</a>
 					    <a href="#" class="btn btn-default" title="批量导入学生信息">批量导入</a>
 					    <a href="#" class="btn btn-default" title="发送短信">发送短信</a>
@@ -64,9 +73,9 @@
 					</ngx-datatable-column>
 					<ngx-datatable-column prop="teacherName" name="姓名" [flexGrow]="2"></ngx-datatable-column>
 					<ngx-datatable-column prop="teacherId" name="电话" [flexGrow]="4"></ngx-datatable-column>
-					<ngx-datatable-column prop="subject" name="学科" [flexGrow]="2"></ngx-datatable-column>
+					<ngx-datatable-column prop="subjects" name="学科" [flexGrow]="2"></ngx-datatable-column>
 					<ngx-datatable-column prop="classes" name="授课班级" [flexGrow]="10"></ngx-datatable-column>
-					<ngx-datatable-column prop="type" name="账号类型" [flexGrow]="4"></ngx-datatable-column>
+					<ngx-datatable-column prop="roles" name="账号类型" [flexGrow]="4"></ngx-datatable-column>
 					<ngx-datatable-column name="操作" [flexGrow]="4">
 						<ng-template let-row="row" ngx-datatable-cell-template>
 							<a [routerLink]="['/updateTeacher', row]" id="updateTeacherInfoBtn" href="#" class="btn btn-default" title="修改">修改</a>

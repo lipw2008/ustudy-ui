@@ -14,7 +14,7 @@ export class TeacherListComponent implements OnInit {
 		teacherNameId: [""],
 		grade: [""],
 		subject: [""],
-		type: [""]
+		role: [""]
 	});
 	
     errorMessage: string;
@@ -23,7 +23,7 @@ export class TeacherListComponent implements OnInit {
 	
 	subjects = [];
 	
-	types = [];
+	roles = [];
 	
 	rows = [];
 	
@@ -34,15 +34,15 @@ export class TeacherListComponent implements OnInit {
 	columns = [
 		{ prop: 'teacherName', name: '姓名' },
 		{ prop: 'teacherId', name: '手机号' },
-		{ prop: 'subject', name: '学科' },
+		{ prop: 'subjects', name: '学科' },
 		{ prop: 'classes', name: '授课班级' },
-		{ prop: 'type', name: '账号类型' }
+		{ prop: 'roles', name: '账号类型' }
 	];
 	
 	// filter keys:
 	grade = "";
 	subject = "";
-	type = "";
+	role = "";
 	teacherNameId = "";
 
     constructor(private _teacherService: TeacherService, public fb: FormBuilder) {
@@ -53,7 +53,7 @@ export class TeacherListComponent implements OnInit {
 		this.reload();
         this.grades = this._teacherService.getGrades();
         this.subjects = this._teacherService.getSubjects();
-        this.types = this._teacherService.getTypes();
+        this.roles = this._teacherService.getRoles();
 	}
 	
 	reload() {
@@ -61,12 +61,43 @@ export class TeacherListComponent implements OnInit {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			for(var t of data) {
-				if (t.classes.length >0) {
-					var s = "";
-					for (var c of t.classes) {
-						s += t.grade + "(" + c.c + ") ";
+				//账号
+				if (t.roles.length >0) {
+					var str = "";
+					for (var r of t.roles) {
+						str += r.n + " ";
 					}
-					t.classes = s;
+					t.roles = str;
+				} else {
+					t.roles = "";
+				}
+				//科目
+				if (t.subjects.length >0) {
+					var str = "";
+					for (var s of t.subjects) {
+						str += s.n + " ";
+					}
+					t.subjects = str;
+				} else {
+					t.subjects = "";
+				}	
+				//年级
+				if (t.grades.length >0) {
+					var str = "";
+					for (var g of t.grades) {
+						str += g.n + " ";
+					}
+					t.grades = str;
+				} else {
+					t.grades = "";
+				}							
+				//班级
+				if (t.classes.length >0) {
+					var str = "";
+					for (var c of t.classes) {
+						str += c.n + " ";
+					}
+					t.classes = str;
 				} else {
 					t.classes = "";
 				}
@@ -92,9 +123,9 @@ export class TeacherListComponent implements OnInit {
 		// filter our data
 		var t = this;
 		const temp = this.temp.filter(function(d) {
-			return d.grade.indexOf(t.grade) !== -1 
-			&& d.subject.indexOf(t.subject) !== -1
-			&& d.type.indexOf(t.type) !== -1
+			return d.grades.indexOf(t.grade) !== -1 
+			&& d.subjects.indexOf(t.subject) !== -1
+			&& d.roles.indexOf(t.role) !== -1
 			&& (d.teacherName.indexOf(t.teacherNameId) !== -1 || d.teacherId.indexOf(t.teacherNameId) !== -1);
 		});
 		// update the rows
@@ -123,10 +154,10 @@ export class TeacherListComponent implements OnInit {
 		req.setRequestHeader("Content-type", "application/json");
 		var t = this;
 		req.onreadystatechange = function() {
-			if (req.readyState == 4 && req.status == 200) {
+			if (req.readyState == 4 && req.status/100 == 2) {
 				t.reload();
 				alert("删除成功！");
-			} else if (req.readyState == 4 && req.status != 200) {
+			} else if (req.readyState == 4 && req.status/100 != 2) {
 				alert("删除失败！");
 			}
 		}		
