@@ -7,7 +7,7 @@ import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import { SchoolComponent } from './school.component';
-import { SubjectOwnerComponent } from './subject-owner.component';
+import { SubjectComponent } from './subject.component';
 
 import { SchoolService } from './school.service';
 
@@ -17,7 +17,7 @@ import { SchoolService } from './school.service';
 	NgxDatatableModule,
     RouterModule.forChild([
       { path: 'school', component: SchoolComponent },
-      { path: 'subjectOwner', component: SubjectOwnerComponent }
+      { path: 'subject', component: SubjectComponent }
     ]),
 	ReactiveFormsModule,
   FormsModule,
@@ -25,7 +25,7 @@ import { SchoolService } from './school.service';
   ],
   declarations: [
     SchoolComponent,
-    SubjectOwnerComponent
+    SubjectComponent
   ],
   providers: [
     SchoolService

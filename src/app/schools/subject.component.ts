@@ -3,10 +3,10 @@ import { Component, OnInit }  from '@angular/core';
 import { SchoolService } from './school.service';
 
 @Component({
-    templateUrl: 'subject-owner.component.html'
+    templateUrl: 'subject.component.html'
 })
 
-export class SubjectOwnerComponent implements OnInit {
+export class SubjectComponent implements OnInit {
 
     errorMessage: string;
 

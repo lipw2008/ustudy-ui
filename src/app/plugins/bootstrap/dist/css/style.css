@@ -24,6 +24,20 @@
 body {
   padding-bottom: 50px;
 }
+.form-horizontal.text-justify .form-group > .control-label {
+  text-align: left;
+}
+@media (min-width: 768px) {
+  .form-horizontal.text-justify .form-group > .control-label + [class^="col-"] {
+    text-align: right;
+  }
+}
+.text-left {
+  text-align: left !important;
+}
+.text-right {
+  text-align: right !important;
+}
 .table-cell {
   table-layout: fixed;
   display: table;
@@ -44,11 +58,21 @@ body {
 .clear-margin-bottom {
   margin-bottom: 0 !important;
 }
+.margin-top {
+  margin-top: 20px;
+}
+.margin-vertical {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .margin-left {
   margin-left: 15px;
 }
 .margin-bottom-lg {
   margin-bottom: 20px;
+}
+.padding {
+  padding: 20px 15px;
 }
 .padding-top {
   padding-top: 20px;
@@ -80,6 +104,9 @@ body {
 }
 .clear-border {
   border: 0;
+}
+.clear-border-top {
+  border-top: 0 !important;
 }
 .clear-border-horizontal {
   border-right: 0 !important;
@@ -205,7 +232,7 @@ body {
 .bootstrap-select:first-child .btn.dropdown-toggle.btn-link {
   padding-left: 0;
 }
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
   .container-index {
     margin-top: 100px;
   }
@@ -335,13 +362,11 @@ body {
 }
 .table.table-checkbox > thead > tr > th:first-child,
 .table.table-checkbox > tbody > tr > td:first-child {
-  width: 43px;
   text-align: center;
 }
 .table.table-checkbox > thead > tr > th:first-child label,
 .table.table-checkbox > tbody > tr > td:first-child label {
-  margin: 0;
-  line-height: 1;
+  margin: 0 5px;
 }
 .table > tbody > tr > td {
   vertical-align: middle;
@@ -386,7 +411,7 @@ body {
   width: 100px;
   line-height: 14px;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .search-wrap select.form-control {
     width: 80px !important;
   }
@@ -508,9 +533,6 @@ body {
   border: 0;
   background: transparent;
   box-shadow: none;
-}
-.treeview .list-group .list-group-item {
-  text-align: right;
 }
 .msg-wrap {
   padding: 50px 0;
