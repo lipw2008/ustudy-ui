@@ -109,8 +109,8 @@ export class TeacherListComponent implements OnInit {
 	
 	fetch(cb) {
 		const req = new XMLHttpRequest();
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/teacher/list/0');
-		req.open('GET', 'assets/api/teachers/teachers.json');
+		req.open('GET', 'http://47.92.53.57:8080/info/teacher/list/0');
+		//req.open('GET', 'assets/api/teachers/teachers.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));
@@ -150,7 +150,7 @@ export class TeacherListComponent implements OnInit {
 	
 	remove(ids) {
 		const req = new XMLHttpRequest();
-		req.open('POST', 'http://47.92.53.57:8080/infocen/teacher/delete');
+		req.open('POST', 'http://47.92.53.57:8080/info/teacher/delete');
 		req.setRequestHeader("Content-type", "application/json");
 		var t = this;
 		req.onreadystatechange = function() {

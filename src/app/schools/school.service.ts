@@ -17,4 +17,8 @@ export class SchoolService {
 		return this.types;
 	}
 
+	getSchoolId(): string {
+		return "912850";
+	}
+
 }

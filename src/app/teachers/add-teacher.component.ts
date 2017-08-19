@@ -41,7 +41,7 @@ export class AddTeacherComponent implements OnInit {
     }
 	
 	cancel(event) {
-		this.router.navigate(['teacher']);
+		this.router.navigate(['teacherList']);
 	}
 
 	add(event) {
@@ -56,18 +56,18 @@ export class AddTeacherComponent implements OnInit {
 		this.teacher.roles[0].n = this.inputRole;
 
 		const req = new XMLHttpRequest();
-		req.open('POST', 'http://47.92.53.57:8080/infocen/teacher/add');
+		req.open('POST', 'http://47.92.53.57:8080/info/teacher/add');
 		req.setRequestHeader("Content-type", "application/json");
 		var t = this;
 		req.onreadystatechange = function() {
 			if (req.readyState == 4 && req.status/100 == 2) {
 				alert("添加成功");
 				//go back to the teacher list page
-				t.router.navigate(['teacher']);
+				t.router.navigate(['teacherList']);
 			} else if (req.readyState == 4 && req.status/100 != 2) {
 				alert("添加失败！");
 				//go back to the teacher list page
-				t.router.navigate(['teacher']);
+				t.router.navigate(['teacherList']);
 			}
 		}
 		req.send(JSON.stringify(this.teacher));

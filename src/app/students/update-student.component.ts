@@ -35,7 +35,7 @@ export class UpdateStudentComponent implements OnInit {
     }
 	
 	cancel(event) {
-		this.router.navigate(['student']);
+		this.router.navigate(['studentList']);
 	}
 
 	update(event) {
@@ -45,18 +45,18 @@ export class UpdateStudentComponent implements OnInit {
 		}
 		
 		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/infocen/student/update");
+		req.open('POST', "http://47.92.53.57:8080/info/student/update");
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {
 			if (req.readyState == 4 && req.status == 200) {
 				alert("修改成功");
 				//go back to the student list page
-				that.router.navigate(['student']);
+				that.router.navigate(['studentList']);
 			} else if (req.readyState == 4 && req.status != 200) {
 				alert("修改失败！");
 				//go back to the student list page
-				that.router.navigate(['student']);
+				that.router.navigate(['studentList']);
 			}
 		}
 		req.send(JSON.stringify(this.student));

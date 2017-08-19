@@ -1,0 +1,43 @@
+[
+	{
+		"department": "高中部",
+		"subjects": [
+			{
+				"subject": "语文",
+				"owner": "鲁迅"
+			},
+			{
+				"subject": "数学",
+				"owner": "陈省身"
+			},
+			{
+				"subject": "英语",
+				"owner": "大山"
+			},
+			{
+				"subject": "物理",
+				"owner": "牛顿"
+			},
+			{
+				"subject": "化学",
+				"owner": "居里夫人"
+			},
+			{
+				"subject": "生物",
+				"owner": "达尔文"
+			},
+			{
+				"subject": "政治",
+				"owner": "周恩来"
+			},
+			{
+				"subject": "历史",
+				"owner": "司马迁"
+			},
+			{
+				"subject": "地理",
+				"owner": "徐霞客"
+			}
+		]
+	}
+]

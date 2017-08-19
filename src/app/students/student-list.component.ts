@@ -67,7 +67,7 @@ export class StudentListComponent implements OnInit {
 	
 	fetch(cb) {
 		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/infocen/student/list/0');
+		req.open('GET', 'http://47.92.53.57:8080/info/student/list/0');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));
@@ -112,7 +112,7 @@ export class StudentListComponent implements OnInit {
 	
 	remove(ids) {
 		const req = new XMLHttpRequest();
-		req.open('POST', 'http://47.92.53.57:8080/infocen/student/delete');
+		req.open('POST', 'http://47.92.53.57:8080/info/student/delete');
 		req.setRequestHeader("Content-type", "application/json");
 		var t = this;
 		req.onreadystatechange = function() {

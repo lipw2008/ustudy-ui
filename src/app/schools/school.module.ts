@@ -8,6 +8,7 @@ import {HttpModule} from '@angular/http';
 
 import { SchoolComponent } from './school.component';
 import { SubjectComponent } from './subject.component';
+import { UpdateSubjectComponent } from './update-subject.component';
 
 import { SchoolService } from './school.service';
 
@@ -17,7 +18,8 @@ import { SchoolService } from './school.service';
 	NgxDatatableModule,
     RouterModule.forChild([
       { path: 'school', component: SchoolComponent },
-      { path: 'subject', component: SubjectComponent }
+      { path: 'subject', component: SubjectComponent },
+      { path: 'updateSubject', component: UpdateSubjectComponent }
     ]),
 	ReactiveFormsModule,
   FormsModule,
@@ -25,7 +27,8 @@ import { SchoolService } from './school.service';
   ],
   declarations: [
     SchoolComponent,
-    SubjectComponent
+    SubjectComponent,
+    UpdateSubjectComponent
   ],
   providers: [
     SchoolService

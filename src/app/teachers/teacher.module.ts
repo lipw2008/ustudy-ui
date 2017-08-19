@@ -17,7 +17,7 @@ import { TeacherService } from './teacher.service';
     CommonModule,
 	 NgxDatatableModule,
     RouterModule.forChild([
-      { path: 'teacher', component: TeacherListComponent },
+      { path: 'teacherList', component: TeacherListComponent },
 	  { path: 'addTeacher', component: AddTeacherComponent },
 	  { path: 'updateTeacher', component: UpdateTeacherComponent }
     ]),

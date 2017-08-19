@@ -29,7 +29,7 @@ export class UpdateTeacherComponent implements OnInit {
     }
 	
 	cancel(event) {
-		this.router.navigate(['teacher']);
+		this.router.navigate(['teacherList']);
 	}
 
 	update(event) {
@@ -43,18 +43,18 @@ export class UpdateTeacherComponent implements OnInit {
 		}
 
 		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/infocen/teacher/update");
+		req.open('POST', "http://47.92.53.57:8080/info/teacher/update");
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {
 			if (req.readyState == 4 && req.status/100 == 2) {
 				alert("修改成功");
 				//go back to the teacher list page
-				that.router.navigate(['teacher']);
+				that.router.navigate(['teacherList']);
 			} else if (req.readyState == 4 && req.status/100 != 2) {
 				alert("修改失败！");
 				//go back to the teacher list page
-				that.router.navigate(['teacher']);
+				that.router.navigate(['teacherList']);
 			}
 		}
 		req.send(JSON.stringify(this.teacher));
