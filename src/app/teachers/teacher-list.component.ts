@@ -62,7 +62,7 @@ export class TeacherListComponent implements OnInit {
 			console.log("data: " + JSON.stringify(data));
 			for(var t of data) {
 				//账号
-				if (t.roles.length >0) {
+				if (t.roles && t.roles.length >0) {
 					var str = "";
 					for (var r of t.roles) {
 						str += r.n + " ";
@@ -72,7 +72,7 @@ export class TeacherListComponent implements OnInit {
 					t.roles = "";
 				}
 				//科目
-				if (t.subjects.length >0) {
+				if (t.subjects && t.subjects.length >0) {
 					var str = "";
 					for (var s of t.subjects) {
 						str += s.n + " ";
@@ -82,7 +82,7 @@ export class TeacherListComponent implements OnInit {
 					t.subjects = "";
 				}	
 				//年级
-				if (t.grades.length >0) {
+				if (t.grades && t.grades.length >0) {
 					var str = "";
 					for (var g of t.grades) {
 						str += g.n + " ";
@@ -92,7 +92,7 @@ export class TeacherListComponent implements OnInit {
 					t.grades = "";
 				}							
 				//班级
-				if (t.classes.length >0) {
+				if (t.classes && t.classes.length >0) {
 					var str = "";
 					for (var c of t.classes) {
 						str += c.n + " ";

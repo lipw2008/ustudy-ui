@@ -80,14 +80,19 @@
 							</li>
 		                </ul>
                         <ul class="nav navbar-nav navbar-right navbar-right-box hidden-xs hidden-sm">
-                            <li><a href="javascript:;" title="收藏本站" onclick="AddFavorite('蘑菇云', 'http://www.ustudying.cn/')"><i class="iconfont iconfont-heart"></i> 收藏本站</a></li>
-                            <!--<li><a href="#" title="用户登录"><i class="iconfont iconfont-user"></i> 用户登录</a></li>-->
-                            <li class="dropdown">
-                                <a href="javascript:;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="iconfont iconfont-user"></i> 张三 <span class="caret"></span></a>
-                                <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                    <li><a id="modifyPasswordBtn" href="javascript:;">修改密码</a></li>
-                                </ul>
-                            </li>
+                            <ng-container *ngIf="userName===''">
+                                <li class="dropdown">
+                                    <a href="javascript:;" role="button" aria-haspopup="false" aria-expanded="false"><i class="iconfont iconfont-user"></i> 未登录 <span class="caret"></span></a>
+                                </li>
+                            </ng-container>
+                            <ng-container *ngIf="userName!==''">
+                                <li class="dropdown">
+                                    <a href="javascript:;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="iconfont iconfont-user"></i> {{userName}} <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                        <li><a id="modifyPasswordBtn" href="javascript:;">修改密码</a></li>
+                                    </ul>
+                                </li>
+                            </ng-container>
                         </ul>
 		            </div>
 		        </div>
