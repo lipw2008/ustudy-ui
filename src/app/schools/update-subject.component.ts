@@ -21,12 +21,41 @@ export class UpdateSubjectComponent implements OnInit {
 
     }
 
+	cancel(event) {
+		this.router.navigate(['subject']);
+	}
+
+	update(event) {
+		const req = new XMLHttpRequest();
+		req.open('POST', "http://47.92.53.57:8080/info/school/subject/update");
+		req.setRequestHeader("Content-type", "application/json");
+		var that = this;
+		req.onreadystatechange = function() {
+			if (req.readyState == 4 && req.status == 200) {
+				alert("修改成功");
+				//go back to the student list page
+				that.router.navigate(['subject']);
+			} else if (req.readyState == 4 && req.status != 200) {
+				alert("修改失败！");
+				//go back to the student list page
+				that.router.navigate(['subject']);
+			}
+		}
+		for(let subject of this.subjects) {
+			delete subject.options;
+		}
+		req.send(JSON.stringify(this.subjects));
+	}
+
     ngOnInit(): void {
-		
+
 		this.department = this.route.snapshot.params.department;
 		
-		if (this.route.snapshot.params.subject) {
-			this.subjects[0] = this.route.snapshot.params.subject;
+		if (this.route.snapshot.params.subject && this.route.snapshot.params.owner) {
+			let subject = {"subject":"", "owner": ""};
+			subject.subject = this.route.snapshot.params.subject;
+			subject.owner = this.route.snapshot.params.owner;
+			this.subjects.push(subject);
 			this.loadTeachers();
 		} else {
 			this.loadSubjects();
@@ -62,15 +91,13 @@ export class UpdateSubjectComponent implements OnInit {
 			for(let subject of this.subjects) {
 				subject.options = [];
 				for(let teacher of this.teachers) {
-					let t = {"n": "", "checked": false}
-					t.n = teacher.teacherName;
-					if (teacher.teacherName == subject.owner) {
-						t.checked = true;
-					}
+					let t = {"value": ""}
+					t.value = teacher.teacherName;
 					subject.options.push(t);
 				}
 			}
-		});	
+			console.log("subjects: " + JSON.stringify(this.subjects));
+		});
 	}
 	
 	fetchTeachers(cb) {
