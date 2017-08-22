@@ -10,13 +10,13 @@
                         <table class="table table-hover table-bordered table-lighter table-striped text-center">
                             <thead>
                                 <tr>
-                                    <th *ngFor="let subject of department.subjects"><a [routerLink]="['/updateSubject', {department: department.department, subject: subject.subject, owner: subject.owner}]">{{subject.subject}}</a></th>
+                                    <th *ngFor="let subject of department.subjects"><a [routerLink]="['/updateSubject', {department: department.department, subject: stringify(subject)}]">{{subject.subject}}</a></th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td *ngFor="let subject of department.subjects">{{subject.owner}}</td>
+                                    <td *ngFor="let subject of department.subjects">{{subject.ownersDisplay}}</td>
                                     <td><a [routerLink]="['/updateSubject', {department: department.department}]" class="btn btn-xs btn-primary">编辑</a></td>
                                 </tr>
                             </tbody>

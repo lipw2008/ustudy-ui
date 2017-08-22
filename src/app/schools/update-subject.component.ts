@@ -41,9 +41,18 @@ export class UpdateSubjectComponent implements OnInit {
 				that.router.navigate(['subject']);
 			}
 		}
+
 		for(let subject of this.subjects) {
+			subject.owners = [];
+			for(let option of subject.options){
+				if(option.selected === true) {
+					let owner = {"n": option.value};
+					subject.owners.push(owner);
+				}
+			}
 			delete subject.options;
 		}
+
 		req.send(JSON.stringify(this.subjects));
 	}
 
@@ -51,10 +60,10 @@ export class UpdateSubjectComponent implements OnInit {
 
 		this.department = this.route.snapshot.params.department;
 		
-		if (this.route.snapshot.params.subject && this.route.snapshot.params.owner) {
-			let subject = {"subject":"", "owner": ""};
-			subject.subject = this.route.snapshot.params.subject;
-			subject.owner = this.route.snapshot.params.owner;
+		if (this.route.snapshot.params.subject) {
+			console.log("subject routed:" + this.route.snapshot.params.subject);
+			let subject = JSON.parse(this.route.snapshot.params.subject);
+			delete subject.ownersDisplay;
 			this.subjects.push(subject);
 			this.loadTeachers();
 		} else {
@@ -91,8 +100,14 @@ export class UpdateSubjectComponent implements OnInit {
 			for(let subject of this.subjects) {
 				subject.options = [];
 				for(let teacher of this.teachers) {
-					let t = {"value": ""}
+					let t = {"value": "", "selected": false}
 					t.value = teacher.teacherName;
+					for(let owner of subject.owners) {
+						if(t.value === owner.n) {
+							t.selected = true;
+							break;
+						}
+					}
 					subject.options.push(t);
 				}
 			}

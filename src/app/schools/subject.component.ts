@@ -25,6 +25,16 @@ export class SubjectComponent implements OnInit {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.departments = data;
+			for(let department of this.departments){
+				for(let subject of department.subjects) {
+					let ownersDisplay = "";
+					for(let owner of subject.owners) {
+						ownersDisplay += owner.n;
+						ownersDisplay += " ";
+					}
+					subject.ownersDisplay = ownersDisplay;
+				}
+			}
 		});	
 	}
 	
@@ -38,6 +48,10 @@ export class SubjectComponent implements OnInit {
 		};
 		
 		req.send();
+	}
+
+	stringify(j){
+		return JSON.stringify(j);
 	}
 	
 }

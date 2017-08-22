@@ -3,17 +3,27 @@
     <form id="updateSubjectForm" name="updateSubjectForm" method="post" class="form-horizontal" action="#">
         <!-- 编辑学科组长 start -->
         <div class="panel panel-default" id="editSubjectLeaderModal">
-            <div class="panel-heading">
+            <div class="panel-heading" style="background-image: none">
                 <h4 class="main-title btn btn-default">设置学科组长：</h4>
             </div>
             <hr>
             <div class="panel-body">
+                <!--<div *ngFor="let subject of subjects" class="form-group">
+                    <label class="col-sm-2 control-label">{{subject.subject}}</label>
+                    <div class="col-sm-10">
+                        <div class="extra btn-group" data-toggle="buttons">
+                            <label *ngFor="let option of subject.options;" class="btn btn-default">
+                                <input type="radio" name="option{{subject.subject}}" [value]="option.value" [(ngModel)]="subject.owner"> {{option.value}}
+                            </label>
+                        </div>
+                    </div>
+                </div>-->
                 <div *ngFor="let subject of subjects" class="form-group">
                     <label class="col-sm-2 control-label">{{subject.subject}}</label>
                     <div class="col-sm-10">
                         <!--<div class="extra btn-group" data-toggle="buttons">-->
                             <label *ngFor="let option of subject.options;" class="btn btn-default">
-                                <input type="radio" name="option{{subject.subject}}" [value]="option.value" [(ngModel)]="subject.owner"> {{option.value}}
+                                <input type="checkbox" name="option{{subject.subject}}" [checked]="option.selected" (change)="option.selected = !option.selected"> {{option.value}}
                             </label>
                         <!--</div>-->
                     </div>
