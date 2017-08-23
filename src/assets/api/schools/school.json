@@ -1,23 +1,180 @@
 [
 	{
-		"grade": "高一",
-		"classNum": "8",
-		"artClasses": "1,2,3,4,5",
-		"sciClasses": "6,7,8",
-		"studentNum": "420"
-	},
-	{
-		"grade": "高二",
-		"classNum": "8",
-		"artClasses": "1,2,3",
-		"sciClasses": "4,5,6,7,8",
-		"studentNum": "400"
-	},
-	{
-		"grade": "高三",
-		"classNum": "8",
-		"artClasses": "1,2,3",
-		"sciClasses": "4,5,6,7,8",
-		"studentNum": "400"
+		"id": "000",
+		"department": "高中部",
+		"grades": [
+			{
+				"id": "1",
+				"gradeName": "高一",
+				"gradeOwner": "鲁迅",
+				"planners":[
+					{
+						"subject": "语文",
+						"planner": "茅盾"
+					},
+					{
+						"subject": "数学",
+						"planner": "陈景润"
+					},
+					{
+						"subject": "英语",
+						"planner": "大山"
+					},
+					{
+						"subject": "物理",
+						"planner": "牛顿"
+					},
+					{
+						"subject": "化学",
+						"planner": "居里夫人"
+					},
+					{
+						"subject": "生物",
+						"planner": "达尔文"
+					},
+					{
+						"subject": "政治",
+						"planner": "周恩来"
+					},
+					{
+						"subject": "历史",
+						"planner": "司马迁"
+					},
+					{
+						"subject": "地理",
+						"planner": "徐霞客"
+					}
+				],
+				"classNum": "1",
+				"classes": [
+					{
+						"id": "11",
+						"className": "高一(1)", 
+						"type": "art", 
+						"classOwner": "大山", 
+						"teachers":[
+							{
+								"subject": "语文",
+								"teacher": "茅盾"
+							},
+							{
+								"subject": "数学",
+								"teacher": "陈景润"
+							},
+							{
+								"subject": "英语",
+								"teacher": "大山"
+							},
+							{
+								"subject": "物理",
+								"teacher": "牛顿"
+							},
+							{
+								"subject": "化学",
+								"teacher": "居里夫人"
+							},
+							{
+								"subject": "生物",
+								"teacher": "达尔文"
+							},
+							{
+								"subject": "政治",
+								"teacher": "周恩来"
+							},
+							{
+								"subject": "历史",
+								"teacher": "司马迁"
+							},
+							{
+								"subject": "地理",
+								"teacher": "徐霞客"
+							}
+						]
+					}, 
+					{
+						"id": "22",
+						"className": "高一(2)", 
+						"type": "sci", 
+						"classOwner": "达尔文", 
+						"teachers":[
+							{
+								"subject": "语文",
+								"teacher": "茅盾"
+							},
+							{
+								"subject": "数学",
+								"teacher": "陈景润"
+							},
+							{
+								"subject": "英语",
+								"teacher": "大山"
+							},
+							{
+								"subject": "物理",
+								"teacher": "牛顿"
+							},
+							{
+								"subject": "化学",
+								"teacher": "居里夫人2"
+							},
+							{
+								"subject": "生物",
+								"teacher": "达尔文"
+							},
+							{
+								"subject": "政治",
+								"teacher": "周恩来"
+							},
+							{
+								"subject": "历史",
+								"teacher": "司马迁"
+							},
+							{
+								"subject": "地理",
+								"teacher": "徐霞客"
+							}
+						]
+					}
+				]
+			}
+		],
+		"subjects": [
+			{
+				"subject": "语文",
+				"owners": [{"n": "鲁迅"}, {"n": "茅盾"}]
+			},
+			{
+				"subject": "数学",
+				"owners": [{"n": "陈省身"}, {"n": "陈景润"}]
+			},
+			{
+				"subject": "英语",
+				"owners": [{"n": "大山"}, {"n": "李阳"}]
+			},
+			{
+				"subject": "物理",
+				"owners": [{"n": "牛顿"}, {"n": "瓦特"}]
+			},
+			{
+				"subject": "化学",
+				"owners": [{"n": "居里夫人"}, {"n": "居里夫人2"}]
+			},
+			{
+				"subject": "生物",
+				"owners": [{"n": "达尔文"}, {"n": "达尔文2"}]
+			},
+			{
+				"subject": "政治",
+				"owners": [{"n": "周恩来"}, {"n": "毛泽东"}]
+			},
+			{
+				"subject": "历史",
+				"owners": [{"n": "司马迁"}, {"n": "袁腾飞"}]
+			},
+			{
+				"subject": "地理",
+				"owners": [{"n": "徐霞客"}, {"n": "徐霞客2"}]
+			}
+		]
 	}
 ]

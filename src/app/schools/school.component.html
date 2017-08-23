@@ -19,31 +19,43 @@
 			</div>
 		</form>
 		<!-- 检索 end -->
-		<!-- 表格 start -->
-		<div>
-			<ngx-datatable
-				style="width: 100%"
-				class="material striped"
-				[rows]="rows"
-				[columns]="columns"
-				[columnMode]="'force'"
-				[headerHeight]="50"
-				[footerHeight]="0"
-				[rowHeight]="'auto'"
-				[limit]="20">
-				<ngx-datatable-column prop="grade" name="年级"></ngx-datatable-column>
-				<ngx-datatable-column prop="classNum" name="班级数"></ngx-datatable-column>
-				<ngx-datatable-column prop="artClasses" name="文科班"></ngx-datatable-column>
-				<ngx-datatable-column prop="sciClasses" name="理科班"></ngx-datatable-column>
-				<ngx-datatable-column prop="studentNum" name="学生数"></ngx-datatable-column>
-				<ngx-datatable-column name="操作">
-					<ng-template let-row="row" ngx-datatable-cell-template>
-						<a [routerLink]="['/classes', row]" id="editClassesInfoBtn" href="#" class="btn btn-default" title="修改">编辑</a>
-					</ng-template>
-				</ngx-datatable-column>
-			</ngx-datatable>
-		</div>
-		<!-- 表格 end -->
+        <!-- 表格 start -->
+                <table class="table table-hover table-bordered table-lighter table-striped">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">年级</th>
+                            <th rowspan="2">班级数</th>
+                            <th colspan="2">班级信息</th>
+                            <th rowspan="2">学生数</th>
+                            <th rowspan="2">操作</th>
+                        </tr>
+                        <tr>
+                            <td>文科班</td>
+                            <td>理科班</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="gradeDetails.html" class="btn btn-xs btn-link" title="设置年级主任及组长">高一</a></td>
+                            <td>8</td>
+                            <td>
+                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">1</a>
+                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">2</a>
+                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">3</a>
+                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">4</a>
+                            </td>
+                            <td>
+                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">5</a>
+                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">6</a>
+                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">7</a>
+                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">8</a>
+                            </td>
+                            <td>400</td>
+                            <td><a href="classes.html" class="btn btn-xs btn-primary">编辑</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+        <!-- 表格 end -->
 	</div>
 </div>
 <!-- 内容 end -->

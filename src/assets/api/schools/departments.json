@@ -1,6 +1,141 @@
 [
 	{
+		"id": "000",
 		"department": "高中部",
+		"grades": [
+			{
+				"id": "1",
+				"gradeName": "高一",
+				"gradeOwner": "鲁迅",
+				"planners":[
+					{
+						"subject": "语文",
+						"planner": "茅盾"
+					},
+					{
+						"subject": "数学",
+						"planner": "陈景润"
+					},
+					{
+						"subject": "英语",
+						"planner": "大山"
+					},
+					{
+						"subject": "物理",
+						"planner": "牛顿"
+					},
+					{
+						"subject": "化学",
+						"planner": "居里夫人"
+					},
+					{
+						"subject": "生物",
+						"planner": "达尔文"
+					},
+					{
+						"subject": "政治",
+						"planner": "周恩来"
+					},
+					{
+						"subject": "历史",
+						"planner": "司马迁"
+					},
+					{
+						"subject": "地理",
+						"planner": "徐霞客"
+					}
+				],
+				"classNum": "1",
+				"classes": [
+					{
+						"className": "1", 
+						"type": "art", 
+						"classOwner": "大山", 
+						"teachers":[
+							{
+								"subject": "语文",
+								"teacher": "茅盾"
+							},
+							{
+								"subject": "数学",
+								"teacher": "陈景润"
+							},
+							{
+								"subject": "英语",
+								"teacher": "大山"
+							},
+							{
+								"subject": "物理",
+								"teacher": "牛顿"
+							},
+							{
+								"subject": "化学",
+								"teacher": "居里夫人"
+							},
+							{
+								"subject": "生物",
+								"teacher": "达尔文"
+							},
+							{
+								"subject": "政治",
+								"teacher": "周恩来"
+							},
+							{
+								"subject": "历史",
+								"teacher": "司马迁"
+							},
+							{
+								"subject": "地理",
+								"teacher": "徐霞客"
+							}
+						]
+					}, 
+					{
+						"className": "2", 
+						"type": "sci", 
+						"classOwner": "达尔文", 
+						"teachers":[
+							{
+								"subject": "语文",
+								"teacher": "茅盾"
+							},
+							{
+								"subject": "数学",
+								"teacher": "陈景润"
+							},
+							{
+								"subject": "英语",
+								"teacher": "大山"
+							},
+							{
+								"subject": "物理",
+								"teacher": "牛顿"
+							},
+							{
+								"subject": "化学",
+								"teacher": "居里夫人2"
+							},
+							{
+								"subject": "生物",
+								"teacher": "达尔文"
+							},
+							{
+								"subject": "政治",
+								"teacher": "周恩来"
+							},
+							{
+								"subject": "历史",
+								"teacher": "司马迁"
+							},
+							{
+								"subject": "地理",
+								"teacher": "徐霞客"
+							}
+						]
+					}
+				]
+			}
+		],
 		"subjects": [
 			{
 				"subject": "语文",
