@@ -12,9 +12,9 @@
 		<!-- 检索 start -->
 		<form id="searchForm" method="post" action="#">
 			<div class="panel-heading search-wrap clearfix">
-				<h4 class="main-title btn btn-lg btn-link"><a [routerLink]="['/subject']">{{schoolName}} <span>{{schoolId}}</span></a></h4>
+				<h4 class="main-title btn btn-lg btn-link"><a [routerLink]="['/subjectList']" href="#">{{school.schoolName}} <span>{{school.schoolId}}</span></a></h4>
 				<select class="nav navbar-right clear-margin dropdown-select clear-padding-horizontal">
-					<option *ngFor="let type of types" [selected]="type == selectedType" disabled="disabled">{{type}}</option>
+					<option *ngFor="let type of types" [selected]="type == school.schoolType" disabled="disabled">{{type}}</option>
 				</select>
 			</div>
 		</form>
@@ -26,7 +26,6 @@
                             <th rowspan="2">年级</th>
                             <th rowspan="2">班级数</th>
                             <th colspan="2">班级信息</th>
-                            <th rowspan="2">学生数</th>
                             <th rowspan="2">操作</th>
                         </tr>
                         <tr>
@@ -35,24 +34,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><a href="gradeDetails.html" class="btn btn-xs btn-link" title="设置年级主任及组长">高一</a></td>
-                            <td>8</td>
-                            <td>
-                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">1</a>
-                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">2</a>
-                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">3</a>
-                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">4</a>
-                            </td>
-                            <td>
-                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">5</a>
-                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">6</a>
-                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">7</a>
-                                <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">8</a>
-                            </td>
-                            <td>400</td>
-                            <td><a href="classes.html" class="btn btn-xs btn-primary">编辑</a></td>
-                        </tr>
+                        <ng-container *ngFor="let department of school.departments">
+                            <tr *ngFor="let grade of department.grades">
+                                <td><a href="gradeDetails.html" class="btn btn-xs btn-link" title="设置年级主任及组长">{{grade.gradeName}}</a></td>
+                                <td>{{grade.classNum}}</td>
+                                <ng-container *ngIf="grade.gradeType==='2'">
+                                    <td>
+                                        <ng-container *ngFor="let class of grade.classes">
+                                            <a *ngIf="class.classType==='art'" href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
+                                        </ng-container>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngFor="let class of grade.classes">
+                                            <a *ngIf="class.classType==='sci'" href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
+                                        </ng-container>
+                                    </td>
+                                </ng-container>
+                                <ng-container *ngIf="grade.gradeType==='1'">
+                                    <td colspan="2">
+                                        <ng-container *ngFor="let class of grade.classes">
+                                            <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
+                                        </ng-container>
+                                    </td>
+                                </ng-container>
+                                <td><a href="classes.html" class="btn btn-xs btn-primary">编辑</a></td>
+                            </tr>
+                        </ng-container>
                     </tbody>
                 </table>
         <!-- 表格 end -->

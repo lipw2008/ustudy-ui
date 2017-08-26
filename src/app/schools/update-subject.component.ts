@@ -22,23 +22,29 @@ export class UpdateSubjectComponent implements OnInit {
     }
 
 	cancel(event) {
-		this.router.navigate(['subject']);
+		this.department="";
+		this.subjects=[];
+		this.teachers=[];
+		this.router.navigate(['subjectList']);
 	}
 
 	update(event) {
 		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/info/school/subject/update");
+		req.open('POST', "http://47.92.53.57:8080/info/school/subject/update/"  + this.department);
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {
+			that.department="";
+			that.subjects=[];
+			that.teachers=[];
 			if (req.readyState == 4 && req.status == 200) {
 				alert("修改成功");
 				//go back to the student list page
-				that.router.navigate(['subject']);
+				that.router.navigate(['subjectList']);
 			} else if (req.readyState == 4 && req.status != 200) {
 				alert("修改失败！");
 				//go back to the student list page
-				that.router.navigate(['subject']);
+				that.router.navigate(['subjectList']);
 			}
 		}
 
@@ -46,7 +52,7 @@ export class UpdateSubjectComponent implements OnInit {
 			subject.owners = [];
 			for(let option of subject.options){
 				if(option.selected === true) {
-					let owner = {"n": option.value};
+					let owner = {"id": option.id, "n": option.value};
 					subject.owners.push(owner);
 				}
 			}
@@ -63,7 +69,6 @@ export class UpdateSubjectComponent implements OnInit {
 		if (this.route.snapshot.params.subject) {
 			console.log("subject routed:" + this.route.snapshot.params.subject);
 			let subject = JSON.parse(this.route.snapshot.params.subject);
-			delete subject.ownersDisplay;
 			this.subjects.push(subject);
 			this.loadTeachers();
 		} else {
@@ -100,10 +105,11 @@ export class UpdateSubjectComponent implements OnInit {
 			for(let subject of this.subjects) {
 				subject.options = [];
 				for(let teacher of this.teachers) {
-					let t = {"value": "", "selected": false}
+					let t = {"id":"", "value": "", "selected": false}
+					t.id = teacher.teacherId;
 					t.value = teacher.teacherName;
 					for(let owner of subject.owners) {
-						if(t.value === owner.n) {
+						if(t.id === owner.id) {
 							t.selected = true;
 							break;
 						}

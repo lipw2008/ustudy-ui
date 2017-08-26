@@ -10,7 +10,9 @@ export class SchoolComponent implements OnInit {
 
     errorMessage: string;
 
-    school = {};
+    school: any = {
+		"departments": []
+	};
 
 	types = ["初中", "完中", "九年制", "小学", "十二年制", "补习", "其他", "高中"];
 	

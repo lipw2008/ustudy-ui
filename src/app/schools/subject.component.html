@@ -1,23 +1,28 @@
         <!-- 内容 start -->
         <div class="container">
-            <form *ngFor="let department of departments" method="post" class="form-horizontal" action="#">
+            <form *ngFor="let department of school.departments" method="post" class="form-horizontal" action="#">
                 <div class="panel panel-default">
                     <div class="panel-heading" style="background-image: none">
-                        <h4 class="main-title btn btn-default">{{department.department}}</h4>
+                        <h4 class="main-title btn btn-default">{{department.departmentName}}</h4>
                     </div>
                     <!--表格 start-->
                     <div class="table-responsive clear-border-horizontal" data-pattern="priority-columns">
                         <table class="table table-hover table-bordered table-lighter table-striped text-center">
                             <thead>
                                 <tr>
-                                    <th *ngFor="let subject of department.subjects"><a [routerLink]="['/updateSubject', {department: department.department, subject: stringify(subject)}]">{{subject.subject}}</a></th>
+                                    <th *ngFor="let subject of department.subjects"><a [routerLink]="['/updateSubject', {department: department.departmentName, subject: stringify(subject)}]">{{subject.subject}}</a></th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td *ngFor="let subject of department.subjects">{{subject.ownersDisplay}}</td>
-                                    <td><a [routerLink]="['/updateSubject', {department: department.department}]" class="btn btn-xs btn-primary">编辑</a></td>
+                                    <td *ngFor="let subject of department.subjects">
+                                        <ng-container *ngFor="let owner of subject.owners">
+                                            <label>{{owner.n}}</label>
+                                            <label> </label>
+                                        </ng-container>
+                                    </td>
+                                    <td><a [routerLink]="['/updateSubject', {department: department.departmentName}]" class="btn btn-xs btn-primary">编辑</a></td>
                                 </tr>
                             </tbody>
                         </table>

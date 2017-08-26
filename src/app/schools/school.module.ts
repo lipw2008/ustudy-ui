@@ -18,7 +18,7 @@ import { SchoolService } from './school.service';
 	NgxDatatableModule,
     RouterModule.forChild([
       { path: 'school', component: SchoolComponent },
-      { path: 'subject', component: SubjectComponent },
+      { path: 'subjectList', component: SubjectComponent },
       { path: 'updateSubject', component: UpdateSubjectComponent }
     ]),
 	ReactiveFormsModule,
