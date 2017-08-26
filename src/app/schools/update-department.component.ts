@@ -4,14 +4,16 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { SchoolService } from './school.service';
 
 @Component({
-    templateUrl: 'update-subject.component.html'
+    templateUrl: 'update-department.component.html'
 })
 
-export class UpdateSubjectComponent implements OnInit {
+export class UpdateDepartmentComponent implements OnInit {
 
     errorMessage: string;
 
-	department: string;
+	departmentId: string;
+
+	departmentName: string;
 
 	subjects = [];
 
@@ -22,29 +24,27 @@ export class UpdateSubjectComponent implements OnInit {
     }
 
 	cancel(event) {
-		this.department="";
 		this.subjects=[];
 		this.teachers=[];
-		this.router.navigate(['subjectList']);
+		this.router.navigate(['department']);
 	}
 
 	update(event) {
 		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/info/school/subject/update/"  + this.department);
+		req.open('POST', "http://47.92.53.57:8080/info/school/subject/update/"  + this.departmentId);
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {
-			that.department="";
 			that.subjects=[];
 			that.teachers=[];
 			if (req.readyState == 4 && req.status == 200) {
 				alert("修改成功");
 				//go back to the student list page
-				that.router.navigate(['subjectList']);
+				that.router.navigate(['department']);
 			} else if (req.readyState == 4 && req.status != 200) {
 				alert("修改失败！");
 				//go back to the student list page
-				that.router.navigate(['subjectList']);
+				that.router.navigate(['department']);
 			}
 		}
 
@@ -64,7 +64,8 @@ export class UpdateSubjectComponent implements OnInit {
 
     ngOnInit(): void {
 
-		this.department = this.route.snapshot.params.department;
+		this.departmentId = this.route.snapshot.params.departmentId;
+		this.departmentName = this.route.snapshot.params.departmentName;
 		
 		if (this.route.snapshot.params.subject) {
 			console.log("subject routed:" + this.route.snapshot.params.subject);
@@ -87,7 +88,7 @@ export class UpdateSubjectComponent implements OnInit {
 	
 	fetchSubjects(cb) {
 		const req = new XMLHttpRequest();
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/school/subject/list/' + this.department);
+		//req.open('GET', 'http://47.92.53.57:8080/infocen/school/subject/list/' + this.departmentId);
 		req.open('GET', 'assets/api/schools/subjects.json');
 
 		req.onload = () => {

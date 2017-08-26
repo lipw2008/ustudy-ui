@@ -7,8 +7,10 @@ import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import { SchoolComponent } from './school.component';
-import { SubjectComponent } from './subject.component';
-import { UpdateSubjectComponent } from './update-subject.component';
+import { DepartmentComponent } from './department.component';
+import { UpdateDepartmentComponent } from './update-department.component';
+import { GradeComponent } from './grade.component';
+import { UpdateGradeComponent } from './update-grade.component';
 
 import { SchoolService } from './school.service';
 
@@ -18,8 +20,10 @@ import { SchoolService } from './school.service';
 	NgxDatatableModule,
     RouterModule.forChild([
       { path: 'school', component: SchoolComponent },
-      { path: 'subjectList', component: SubjectComponent },
-      { path: 'updateSubject', component: UpdateSubjectComponent }
+      { path: 'department', component: DepartmentComponent },
+      { path: 'updateDepartment', component: UpdateDepartmentComponent },
+      { path: 'grade', component: GradeComponent },
+      { path: 'updateGrade', component: UpdateGradeComponent }
     ]),
 	ReactiveFormsModule,
   FormsModule,
@@ -27,8 +31,10 @@ import { SchoolService } from './school.service';
   ],
   declarations: [
     SchoolComponent,
-    SubjectComponent,
-    UpdateSubjectComponent
+    DepartmentComponent,
+    UpdateDepartmentComponent,
+    GradeComponent,
+    UpdateGradeComponent
   ],
   providers: [
     SchoolService

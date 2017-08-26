@@ -1,0 +1,181 @@
+[
+    {
+        "id": "001",
+        "teacherId": "13877657910",
+        "teacherName": "鲁迅",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"语文"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },
+        {
+        "id": "002",
+        "teacherId": "13877657911",
+        "teacherName": "陈省身",
+        "roles": [{"n":"学科组长"}],
+        "subjects": [{"n":"数学"}],
+        "grades": [{"n":"高二"}],
+        "classes": [{"n":"高二(1)"},{"n":"高二(2)"},{"n":"高二(3)"}]
+    },
+        {
+        "id": "003",
+        "teacherId": "13877657902",
+        "teacherName": "大山",
+        "password": "aaabbbccc",
+        "roles": [{"n":"校长"}],
+        "subjects": [{"n":"英语"}],
+        "grades": [{"n":"高三"}],
+        "classes": []
+    },
+        {
+        "id": "004",
+        "teacherId": "13877657907",
+        "teacherName": "司马迁",
+        "password": "aaabbbccc",
+        "roles": [{"n":"年级主任"}],
+        "subjects": [{"n":"历史"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"}]
+    },
+        {
+        "id": "005",
+        "teacherId": "13877657900",
+        "teacherName": "茅盾",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"语文"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },
+         {
+        "id": "006",
+        "teacherId": "13877657901",
+        "teacherName": "陈景润",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"数学"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },
+         {
+        "id": "007",
+        "teacherId": "13877657912",
+        "teacherName": "李阳",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"英语"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },
+         {
+        "id": "008",
+        "teacherId": "13877657903",
+        "teacherName": "牛顿",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"物理"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },
+         {
+        "id": "009",
+        "teacherId": "13877657913",
+        "teacherName": "瓦特",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"物理"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },
+         {
+        "id": "010",
+        "teacherId": "13877657904",
+        "teacherName": "居里夫人",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"化学"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },
+         {
+        "id": "011",
+        "teacherId": "13877657914",
+        "teacherName": "居里夫人2",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"化学"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },    
+         {
+        "id": "012",
+        "teacherId": "13877657905",
+        "teacherName": "达尔文",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"生物"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },  
+         {
+        "id": "013",
+        "teacherId": "13877657915",
+        "teacherName": "达尔文2",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"生物"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },              
+         {
+        "id": "014",
+        "teacherId": "13877657906",
+        "teacherName": "周恩来",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"政治"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },
+         {
+        "id": "015",
+        "teacherId": "13877657916",
+        "teacherName": "毛泽东",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"政治"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },    
+         {
+        "id": "018",
+        "teacherId": "13877657917",
+        "teacherName": "袁腾飞",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"历史"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },      
+         {
+        "id": "019",
+        "teacherId": "13877657908",
+        "teacherName": "徐霞客",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"地理"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    },   
+         {
+        "id": "020",
+        "teacherId": "13877657918",
+        "teacherName": "徐霞客2",
+        "password": "aaabbbccc",
+        "roles": [{"n":"任课老师"}],
+        "subjects": [{"n":"地理"}],
+        "grades": [{"n":"高一"}],
+        "classes": [{"n":"高一(1)"},{"n":"高一(2)"},{"n":"高一(3)"},{"n":"高一(4)"},{"n":"高一(5)"}]
+    }
+]

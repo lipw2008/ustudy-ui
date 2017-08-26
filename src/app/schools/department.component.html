@@ -10,7 +10,7 @@
                         <table class="table table-hover table-bordered table-lighter table-striped text-center">
                             <thead>
                                 <tr>
-                                    <th *ngFor="let subject of department.subjects"><a [routerLink]="['/updateSubject', {department: department.departmentName, subject: stringify(subject)}]">{{subject.subject}}</a></th>
+                                    <th *ngFor="let subject of department.subjects"><a [routerLink]="['/updateDepartment', {departmentId: department.id ,departmentName: department.departmentName, subject: stringify(subject)}]">{{subject.subject}}</a></th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -22,7 +22,7 @@
                                             <label> </label>
                                         </ng-container>
                                     </td>
-                                    <td><a [routerLink]="['/updateSubject', {department: department.departmentName}]" class="btn btn-xs btn-primary">编辑</a></td>
+                                    <td><a [routerLink]="['/updateDepartment', {departmentId: department.id, departmentName: department.departmentName}]" class="btn btn-xs btn-primary">编辑</a></td>
                                 </tr>
                             </tbody>
                         </table>
