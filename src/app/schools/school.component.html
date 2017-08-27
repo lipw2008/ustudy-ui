@@ -41,23 +41,23 @@
                                 <ng-container *ngIf="grade.gradeType==='2'">
                                     <td>
                                         <ng-container *ngFor="let class of grade.classes">
-                                            <a *ngIf="class.classType==='art'" href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
+                                            <a *ngIf="class.classType==='art'" [routerLink]="['/updateClass', {classId:class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
                                         </ng-container>
                                     </td>
                                     <td>
                                         <ng-container *ngFor="let class of grade.classes">
-                                            <a *ngIf="class.classType==='sci'" href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
+                                            <a *ngIf="class.classType==='sci'" [routerLink]="['/updateClass', {classId:class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
                                         </ng-container>
                                     </td>
                                 </ng-container>
                                 <ng-container *ngIf="grade.gradeType==='1'">
                                     <td colspan="2">
                                         <ng-container *ngFor="let class of grade.classes">
-                                            <a href="editClassesDetails.html" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
+                                            <a [routerLink]="['/updateClass', {classId:class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
                                         </ng-container>
                                     </td>
                                 </ng-container>
-                                <td><a href="classes.html" class="btn btn-xs btn-primary">编辑</a></td>
+                                <td><a [routerLink]="['/class', {gradeId:grade.id}]" class="btn btn-xs btn-primary">编辑</a></td>
                             </tr>
                         </ng-container>
                     </tbody>

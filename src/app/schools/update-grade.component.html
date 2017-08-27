@@ -13,7 +13,7 @@
                         <label for="" class="col-sm-3 control-label"><strong>年级主任：</strong></label>
                         <div class="col-sm-9 btn-toolbar">
                             <label *ngFor="let option of gradeOwner.options;" class="btn btn-default">
-                                <input type="radio" name="option" [value]="option.id" [(ngModel)]="gradeOwner.id"> {{option.value}}
+                                <input type="radio" name="option" [value]="option.id" [(ngModel)]="gradeOwner.id" (change)="gradeOwner.n=option.value"> {{option.value}}
                             </label>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                         <label class="col-sm-3 control-label">{{subject.subject}}</label>
                         <div class="col-sm-9">
                             <label *ngFor="let option of subject.options;" class="btn btn-default">
-                                <input type="radio" name="option{{subject.subject}}" [value]="option.id" [(ngModel)]="subject.planner.id"> {{option.value}}
+                                <input type="radio" name="option{{subject.subject}}" [value]="option.id" [(ngModel)]="subject.teacher.id" (change)="subject.teacher.n=option.value"> {{option.value}}
                             </label>
                         </div>
                     </div>

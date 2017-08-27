@@ -1,0 +1,52 @@
+<!-- 内容 start -->
+<div class="container">
+    <form id="updateGradeForm" name="updateGradeForm" method="post" class="form-horizontal" action="#">
+        <!-- 编辑年级主任 start -->
+        <div class="panel panel-default" id="editSubjectLeaderModal">
+            <div class="panel-heading" style="background-image: none">
+                <h4 class="main-title btn btn-default">其他任课老师：</h4>
+            </div>
+            <hr>
+            <div class="panel-body">
+                <!-- 检索，检索选项默认为空 start -->
+                <div class="form-inline">
+                    <div class="input-group">
+                        <span class="input-group-addon">学科</span>
+                        <select class="form-control" name="subjectName" [(ngModel)]="subjectName">
+                            <option *ngFor="let subject of subjects" [value]="subject">{{subject}}</option>
+                            <option value="">全体</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">年级</span>
+                        <select class="form-control" name="gradeName" [(ngModel)]="gradeName">
+                            <option *ngFor="let grade of grades" [value]="grade">{{grade}}</option>
+                            <option value="">全体</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="userName" name="userName" placeholder="请输入姓名" [(ngModel)]="teacherName">
+                        <span class="input-group-btn">
+                            <button (click)="filter($event)" type="button" class="btn btn-default">查询</button>
+                        </span>
+                    </div>
+                </div>
+                <!-- 检索 end -->
+                <hr>
+                <div class="">
+                    <div class="extra btn-group" data-toggle="buttons">
+                        <label *ngFor="let teacher of teachers;" class="btn btn-default">
+                            <input type="radio" name="option" [value]="teacher.teacherId" [(ngModel)]="selectedTeacher.teacherId" (change)="selectedTeacher.teacherName=teacher.teacherName"> {{teacher.teacherName}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-center">
+                <button type="reset" class="btn btn-default" (click)="cancel($event)">取消</button>
+                <button type="submit" class="btn btn-primary" (click)="update($event)">确定</button>
+            </div>
+        </div>
+        <!-- 编辑学科组长 end -->
+    </form>
+</div>
+<!-- 内容 end -->

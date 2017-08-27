@@ -1,0 +1,57 @@
+<!-- 内容 start -->
+<div class="container">
+    <form id="updateClassForm" name="updateClassForm" method="post" class="form-horizontal" action="#">
+        <!-- 编辑年级主任 start -->
+        <div class="panel panel-default" id="editClassModal">
+            <div class="panel-heading" style="background-image: none">
+                <h4 class="main-title btn btn-default">{{class.className}}</h4>
+            </div>
+            <hr>
+            <div class="panel-body">
+                <!--任课老师 start-->
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label"><strong>班级类别：</strong></label>
+                    <div class="col-sm-9 form-inline">
+                        <select class="form-control" id="classType" name="classType" [(ngModel)]="class.classType">
+                            <option value="none">不分科</option>
+                            <option value="art">文科</option>
+                            <option value="sci">理科</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label"><strong>任课老师：</strong></label>
+                </div>
+                <div *ngFor="let subject of class.subjects" class="form-group">
+                    <label for="" class="col-sm-3 control-label">{{subject.subject}}</label>
+                    <div class="col-sm-9">
+                        <label *ngFor="let option of subject.options;" class="btn btn-default">
+                            <input type="radio" name="option{{subject.subject}}" [value]="option.id" [(ngModel)]="subject.teacher.id" (change)="subject.teacher.n=option.value"> {{option.value}}
+                        </label>
+                        <button id="otherTeacherBtn" class="btn btn-default" type="button" (click)="addClassTeacher(subject.subject)"><i class="glyphicon glyphicon-plus"></i> 其他</button>
+                    </div>
+                </div>
+                <!--任课老师 end-->
+                <!--班主任 start-->
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label"><strong>班主任：</strong></label>
+                    <div class="col-sm-9 form-inline">
+                        <select class="form-control" id="classOwner" name="classOwner" [(ngModel)]="class.classOwner.id">
+                            <option value="">请选择</option>
+                            <option *ngFor="let subject of class.subjects" [value]="subject.teacher.id" [selected]="class.classOwner.n == subject.teacher.n">{{subject.teacher.n}}</option>
+                            <option *ngIf="otherClassOwner.id!==''" [value]="otherClassOwner.id" [selected]="class.classOwner.n == otherClassOwner.n">{{otherClassOwner.n}}</option>
+                        </select>
+                        <button class="btn btn-primary" type="button" (click)="addClassTeacher()"><i class="glyphicon glyphicon-plus"></i> 其他</button>
+                    </div>
+                </div>
+                <!--班主任 end-->
+            </div>
+            <div class="panel-footer text-center">
+                <button type="reset" class="btn btn-default" (click)="cancel($event)">取消</button>
+                <button type="submit" class="btn btn-primary" (click)="update($event)">确定</button>
+            </div>
+        </div>
+        <!-- 编辑学科组长 end -->
+    </form>
+</div>
+<!-- 内容 end -->

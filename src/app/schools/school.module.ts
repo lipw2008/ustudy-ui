@@ -11,6 +11,9 @@ import { DepartmentComponent } from './department.component';
 import { UpdateDepartmentComponent } from './update-department.component';
 import { GradeComponent } from './grade.component';
 import { UpdateGradeComponent } from './update-grade.component';
+import { ClassComponent } from './class.component';
+import { UpdateClassComponent } from './update-class.component';
+import { AddClassTeacherComponent } from './add-class-teacher.component';
 
 import { SchoolService } from './school.service';
 
@@ -23,7 +26,10 @@ import { SchoolService } from './school.service';
       { path: 'department', component: DepartmentComponent },
       { path: 'updateDepartment', component: UpdateDepartmentComponent },
       { path: 'grade', component: GradeComponent },
-      { path: 'updateGrade', component: UpdateGradeComponent }
+      { path: 'updateGrade', component: UpdateGradeComponent },
+      { path: 'class', component: ClassComponent },
+      { path: 'updateClass', component: UpdateClassComponent },
+      { path: 'addClassTeacher', component: AddClassTeacherComponent }
     ]),
 	ReactiveFormsModule,
   FormsModule,
@@ -34,7 +40,10 @@ import { SchoolService } from './school.service';
     DepartmentComponent,
     UpdateDepartmentComponent,
     GradeComponent,
-    UpdateGradeComponent
+    UpdateGradeComponent,
+    ClassComponent,
+    UpdateClassComponent,
+    AddClassTeacherComponent
   ],
   providers: [
     SchoolService
