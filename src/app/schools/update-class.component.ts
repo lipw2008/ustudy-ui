@@ -15,10 +15,9 @@ export class UpdateClassComponent implements OnInit {
 
 	class: any = {
 		classType: "",
-		classOwner: {"id": "", "n":""}
+		classOwner: {"id": "", "n":""},
+		otherClassOwner: {"id": "", "n": ""}
 	};
-
-	otherClassOwner: any = {"id": "", "n": ""}
 
 	teachers = [];
 
@@ -74,7 +73,6 @@ export class UpdateClassComponent implements OnInit {
 			this.class = this._schoolService.getPersistData();
 		} else if (this.route.snapshot.params.otherClassOwner){
 			this.class = this._schoolService.getPersistData();
-			this.otherClassOwner = JSON.parse(this.route.snapshot.params.otherClassOwner);
 		} else {
 			this.loadClass();
 		}

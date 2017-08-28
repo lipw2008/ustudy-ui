@@ -13,7 +13,7 @@ export class AddClassTeacherComponent implements OnInit {
 
 	class: any;
 
-	selectedTeacher = {"teacherId": "", "teacherName": ""};
+	selectedTeacher: any = {"teacherId": "", "teacherName": ""};
 
 	teachers = [];
 
@@ -38,7 +38,8 @@ export class AddClassTeacherComponent implements OnInit {
 		if (this.route.snapshot.params.subject) {
 			for(let subject of this.class.subjects) {
 				if(subject.subject === this.route.snapshot.params.subject) {
-					subject.teacher = this.selectedTeacher;
+					subject.teacher.id = this.selectedTeacher.teacherId;
+					subject.teacher.n = this.selectedTeacher.teacherName;
 					let option = {"id":"", "value":""};
 					option.id = this.selectedTeacher.teacherId;
 					option.value = this.selectedTeacher.teacherName;
@@ -47,12 +48,15 @@ export class AddClassTeacherComponent implements OnInit {
 				}
 			}
 			this._schoolService.setPersistData(this.class);
-			this.router.navigate(['updateClass', {"otherClassTeacher": this.selectedTeacher}]);
+			this.router.navigate(['updateClass', {"otherClassTeacher": "true"}]);
 		} else {
-			this.class.classOwner.id = this.selectedTeacher.teacherId;
-			this.class.classOwner.n = this.selectedTeacher.teacherName;
+			let otherClassOwner= {"id": "", "n": ""};
+			otherClassOwner.id = this.selectedTeacher.teacherId;
+			otherClassOwner.n = this.selectedTeacher.teacherName;
+			this.class.otherClassOwner = otherClassOwner;
+			this.class.classOwner = otherClassOwner;
 			this._schoolService.setPersistData(this.class);
-			this.router.navigate(['updateClass', {"otherClassOwner": this.class.classOwner}]);
+			this.router.navigate(['updateClass', {"otherClassOwner": "true"}]);
 		}
 		
 	}

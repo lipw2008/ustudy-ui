@@ -34,9 +34,9 @@
                 <!-- 检索 end -->
                 <hr>
                 <div class="">
-                    <div class="extra btn-group" data-toggle="buttons">
+                    <div class="extra btn-group" >
                         <label *ngFor="let teacher of teachers;" class="btn btn-default">
-                            <input type="radio" name="option" [value]="teacher.teacherId" [(ngModel)]="selectedTeacher.teacherId" (change)="selectedTeacher.teacherName=teacher.teacherName"> {{teacher.teacherName}}
+                            <input type="radio" name="option" [value]="teacher.teacherId" [(ngModel)]="selectedTeacher.teacherId" (click)="selectedTeacher.teacherName=teacher.teacherName"> {{teacher.teacherName}}
                         </label>
                     </div>
                 </div>
