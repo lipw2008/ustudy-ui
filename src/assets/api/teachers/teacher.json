@@ -2,7 +2,6 @@
         "id": "001",
         "teacherId": "13455556666",
         "teacherName": "鲁迅",
-        "password": "aaabbbccc",
         "roles": [{"n":"任课老师"}],
         "subjects": [{"n":"语文"}],
         "grades": [{"n":"高一"}],

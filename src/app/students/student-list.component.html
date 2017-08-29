@@ -1,85 +1,85 @@
-        <!-- 路径导航 start -->
-        <div class="container">
-	        <ol class="breadcrumb clear-padding-vertical">
-	            <li><a href="#">首页</a></li>
-				<li><a href="studentList">学生信息</a></li>
-	        </ol>
-        </div>
-        <!-- 路径导航 end -->
+<!-- 路径导航 start -->
+<div class="container">
+	<ol class="breadcrumb clear-padding-vertical">
+		<li><a href="#">首页</a></li>
+		<li><a href="studentList">学生信息</a></li>
+	</ol>
+</div>
+<!-- 路径导航 end -->
 
-        <!-- 内容 start -->
-        <div class="container">
-	        <!-- 检索 start -->
-	        <div class="row search-wrap">
-	            <div class="col-sm-12 col-lg-9">
-	                <form [formGroup]="searchForm" id="searchForm" method="post" class="form-inline" action="#">
-						<div class="input-group" >
-						    <span class="input-group-addon">年级</span>
-	                        <select class="form-control" formControlName="gradeName" id="gradeFilterValue" [(ngModel)]="grade">
-								<option value=""></option>
-	                            <option *ngFor="let grade of grades">{{grade}}</option>
-	                        </select>
-						</div>
-						<div class="input-group">
-						    <span class="input-group-addon">班级</span>
-	                        <select class="form-control" formControlName="className" id="classFilterValue" [(ngModel)]="class">
-	                            <option value=""></option>
-								<option *ngFor="let class of classes">{{class}}</option>
-	                        </select>
-						</div>
-						<div class="input-group">
-						    <span class="input-group-addon">专业</span>
-	                        <select class="form-control" formControlName="type" id="typeFilterValue" [(ngModel)]="studentType">
-	                            <option value=""></option>
-								<option *ngFor="let type of types">{{type}}</option>
-	                        </select>
-						</div>
-				        <div class="input-group">
-				            <input type="text" class="form-control" formControlName="studentName" id="studentNameFilterValue" [(ngModel)]="studentName" placeholder="请输入姓名">
-				            <span class="input-group-btn">
-				                <button type="button" class="btn btn-default" (click)='filter($event)'>查询</button>
-				            </span>
-				        </div>
-	                </form>
-	            </div>
-	            <div class="col-sm-12 col-lg-3 text-right">
-		            <div class="btn-group btn-group-justified" role="group" aria-label="button group">
-					    <a [routerLink]="['/addStudent']" id="addStudentInfoBtn" href="#" class="btn btn-default" title="添加学生信息">添加学生</a>
-					    <a (click)='removeStudent($event)' class="btn btn-default" title="删除学生信息">删除学生</a>
-					    <a href="#" class="btn btn-default" title="批量导入学生信息">批量导入</a>
-					</div>
+<!-- 内容 start -->
+<div class="container">
+	<!-- 检索 start -->
+	<div class="row search-wrap">
+		<div class="col-sm-12 col-lg-9">
+			<form [formGroup]="searchForm" id="searchForm" method="post" class="form-inline" action="#">
+				<div class="input-group" >
+					<span class="input-group-addon">年级</span>
+					<select class="form-control" formControlName="gradeName" id="gradeFilterValue" [(ngModel)]="grade">
+						<option value=""></option>
+						<option *ngFor="let grade of grades">{{grade}}</option>
+					</select>
 				</div>
-	        </div>
-	        <!-- 检索 end -->
-			<br/>
-			<!-- 表格 start -->
-			<div>
-				  <ngx-datatable
-				    style="width: 100%"
-					class="material striped"
-					[rows]="rows"
-					[columns]="columns"
-					[columnMode]="'flex'"
-					[headerHeight]="50"
-					[footerHeight]="50"
-					[rowHeight]="'auto'"
-					[selected]="selected"
-					[selectionType]="'checkbox'"
-					[limit]="10">
-					<ngx-datatable-column
-					[headerCheckboxable]="true"
-					[checkboxable]="true" [flexGrow]="1">					
-					</ngx-datatable-column>
-					<ngx-datatable-column prop="studentName" name="姓名" [flexGrow]="8"></ngx-datatable-column>
-					<ngx-datatable-column prop="grade" name="年级" [flexGrow]="8"></ngx-datatable-column>
-					<ngx-datatable-column prop="class" name="班级" [flexGrow]="8"></ngx-datatable-column>
-					<ngx-datatable-column name="操作" [flexGrow]="3">
-						<ng-template let-row="row" ngx-datatable-cell-template>
-							<a [routerLink]="['/updateStudent', row]" id="addStudentInfoBtn" href="#" class="btn btn-default" title="修改">修改</a>
-						</ng-template>
-					</ngx-datatable-column>
-				  </ngx-datatable>
+				<div class="input-group">
+					<span class="input-group-addon">班级</span>
+					<select class="form-control" formControlName="className" id="classFilterValue" [(ngModel)]="class">
+						<option value=""></option>
+						<option *ngFor="let class of classes">{{class}}</option>
+					</select>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">专业</span>
+					<select class="form-control" formControlName="type" id="typeFilterValue" [(ngModel)]="studentType">
+						<option value=""></option>
+						<option *ngFor="let type of types">{{type}}</option>
+					</select>
+				</div>
+				<div class="input-group">
+					<input type="text" class="form-control" formControlName="studentName" id="studentNameFilterValue" [(ngModel)]="studentName" placeholder="请输入姓名">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" (click)='filter($event)'>查询</button>
+					</span>
+				</div>
+			</form>
+		</div>
+		<div class="col-sm-12 col-lg-3 text-right">
+			<div class="btn-group btn-group-justified" role="group" aria-label="button group">
+				<a [routerLink]="['/addStudent']" id="addStudentInfoBtn" href="#" class="btn btn-default" title="添加学生信息">添加学生</a>
+				<a (click)='removeStudent($event)' class="btn btn-default" title="删除学生信息">删除学生</a>
+				<a href="#" class="btn btn-default" title="批量导入学生信息">批量导入</a>
 			</div>
-			<!-- 表格 end -->
-        </div>
-        <!-- 内容 end -->			
+		</div>
+	</div>
+	<!-- 检索 end -->
+	<br/>
+	<!-- 表格 start -->
+	<div>
+			<ngx-datatable
+			style="width: 100%"
+			class="material striped"
+			[rows]="rows"
+			[columns]="columns"
+			[columnMode]="'flex'"
+			[headerHeight]="50"
+			[footerHeight]="50"
+			[rowHeight]="'auto'"
+			[selected]="selected"
+			[selectionType]="'checkbox'"
+			[limit]="10">
+			<ngx-datatable-column
+			[headerCheckboxable]="true"
+			[checkboxable]="true" [flexGrow]="1">					
+			</ngx-datatable-column>
+			<ngx-datatable-column prop="studentName" name="姓名" [flexGrow]="8"></ngx-datatable-column>
+			<ngx-datatable-column prop="grade" name="年级" [flexGrow]="8"></ngx-datatable-column>
+			<ngx-datatable-column prop="class" name="班级" [flexGrow]="8"></ngx-datatable-column>
+			<ngx-datatable-column name="操作" [flexGrow]="3">
+				<ng-template let-row="row" ngx-datatable-cell-template>
+					<a [routerLink]="['/updateStudent', row]" id="addStudentInfoBtn" href="#" class="btn btn-default" title="修改">修改</a>
+				</ng-template>
+			</ngx-datatable-column>
+			</ngx-datatable>
+	</div>
+	<!-- 表格 end -->
+</div>
+<!-- 内容 end -->			

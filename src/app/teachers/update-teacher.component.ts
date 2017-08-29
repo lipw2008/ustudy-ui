@@ -18,12 +18,9 @@ export class UpdateTeacherComponent implements OnInit {
     teacher: ITeacher = {
     	"id" : "",
 		"teacherId" : "",
-		"teacherName" : "",
-		"password" : ""
+		"teacherName" : ""
 	};
 	
-	oldPassword: string = "";
-    
     constructor(private _teacherService: TeacherService, public fb: FormBuilder, public route: ActivatedRoute, private router: Router) {
 		
     }
@@ -38,10 +35,6 @@ export class UpdateTeacherComponent implements OnInit {
 			return;
 		}
 		
-		if (this.teacher.password !== this.oldPassword) {
-			this.teacher.password = this._teacherService.MD5(this.teacher.password);
-		}
-
 		const req = new XMLHttpRequest();
 		req.open('POST', "http://47.92.53.57:8080/info/teacher/update");
 		req.setRequestHeader("Content-type", "application/json");
@@ -63,13 +56,10 @@ export class UpdateTeacherComponent implements OnInit {
     ngOnInit(): void {
 		this.updateForm = this.fb.group({
 			teacherId: ["", Validators.required],
-			teacherName: ["", Validators.required],
-			password: ["", Validators.required]
+			teacherName: ["", Validators.required]
 		});
 		this.teacher.teacherId = this.route.snapshot.params.teacherId;
 		this.teacher.teacherName = this.route.snapshot.params.teacherName;
-		this.teacher.password = this.route.snapshot.params.password;
 		this.teacher.id = this.route.snapshot.params.id;
-		this.oldPassword = this.route.snapshot.params.password;
     }
 }

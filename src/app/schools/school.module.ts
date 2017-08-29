@@ -22,7 +22,7 @@ import { SchoolService } from './school.service';
     CommonModule,
 	NgxDatatableModule,
     RouterModule.forChild([
-      { path: 'school', component: SchoolComponent },
+      { path: 'schoolDetails', component: SchoolComponent },
       { path: 'department', component: DepartmentComponent },
       { path: 'updateDepartment', component: UpdateDepartmentComponent },
       { path: 'grade', component: GradeComponent },

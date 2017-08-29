@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import {Md5} from 'ts-md5/dist/md5';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -37,7 +36,6 @@ export class TeacherService {
         return {
 			"teacherId" : "",
 			"teacherName" : "",
-			"password" : "",
 			"grades" : [{"n":""}],
 			"subjects" : [{"n":""}],
 			"roles" : [{"n":""}]
@@ -50,8 +48,4 @@ export class TeacherService {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
-
-    MD5(pw: string): any {
-    	return Md5.hashStr(pw);
-  	}
 }

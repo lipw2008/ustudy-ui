@@ -1,3 +1,10 @@
+<!-- 路径导航 start -->
+<div class="container">
+    <ol class="breadcrumb clear-padding-vertical">
+        <li><a href="#">首页</a></li>
+        <li><a href="schoolDetails">学校信息</a></li>
+    </ol>
+</div>
 <!-- 内容 start -->
 <div class="container">
     <form id="updateDepartmentForm" name="updateDepartmentForm" method="post" class="form-horizontal" action="#">
@@ -8,16 +15,6 @@
             </div>
             <hr>
             <div class="panel-body">
-                <!--<div *ngFor="let subject of subjects" class="form-group">
-                    <label class="col-sm-2 control-label">{{subject.subject}}</label>
-                    <div class="col-sm-10">
-                        <div class="extra btn-group" data-toggle="buttons">
-                            <label *ngFor="let option of subject.options;" class="btn btn-default">
-                                <input type="radio" name="option{{subject.subject}}" [value]="option.value" [(ngModel)]="subject.owner"> {{option.value}}
-                            </label>
-                        </div>
-                    </div>
-                </div>-->
                 <div *ngFor="let subject of subjects" class="form-group">
                     <label class="col-sm-2 control-label">{{subject.subject}}</label>
                     <div class="col-sm-10">

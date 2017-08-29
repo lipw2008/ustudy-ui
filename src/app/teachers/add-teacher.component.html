@@ -1,68 +1,70 @@
-        <!-- 内容 start -->
-        <div class="container">
-            <!-- 添加教师信息 start -->
-            <div class="panel panel-default" id="addTeacherInfoModal">
-                <form id="addTeacherInfoForm" method="post" action="#" class="form-horizontal" [formGroup]="addForm" (ngSubmit)="add($event)"
-                 data-bv-message="输入错误"
-                 data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
-                 data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
-                 data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
-                    <div class="panel-heading">
-                        <h4>添加教师信息</h4>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label for="teacherName" class="col-sm-3 control-label">教师姓名：</label>
-                            <div class="col-sm-6">
-                                <input formControlName="teacherName" type="text" class="form-control" id="teacherName" name="teacherName" [(ngModel)]="teacher.teacherName" placeholder="请输入姓名" required data-bv-notempty-message="姓名不能为空">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="teacherId" class="col-sm-3 control-label">手机号码：</label>
-                            <div class="col-sm-6">
-                                <input formControlName="teacherId" type="text" class="form-control" id="teacherId" name="teacherId" [(ngModel)]="teacher.teacherId" placeholder="请输入手机号" required data-bv-notempty-message="手机号不能为空">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-sm-3 control-label">密码：</label>
-                            <div class="col-sm-6">
-                                <input formControlName="password" type="password" class="form-control" name="password" [(ngModel)]="teacher.password" placeholder="请输入密码" required data-bv-notempty-message="密码不能为空">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject" class="col-sm-3 control-label">授课学科：</label>
-                            <div class="col-sm-6">
-                                <select formControlName="subject" class="form-control" id="subject" name="subject" [(ngModel)]="inputSubject" required data-bv-notempty-message="学科不能为空">
-                                    <option value="">请选择学科</option>
-									<option *ngFor="let subject of subjects" [value]="subject">{{subject}}</option>	
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="grade" class="col-sm-3 control-label">授课年级：</label>
-                            <div class="col-sm-6">
-                                <select formControlName="grade" class="form-control" id="grade" name="grade" ng-value="string" [(ngModel)]="inputGrade" required data-bv-notempty-message="年级不能为空">
-                                    <option value="">请选择年级</option>
-                                    <option *ngFor="let grade of grades" [value]="grade">{{grade}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="role" class="col-sm-3 control-label">账号类型：</label>
-                            <div class="col-sm-6">
-                                <select formControlName="role" class="form-control" id="role" name="role" ng-value="string" [(ngModel)]="inputRole" required data-bv-notempty-message="账号类型不能为空">
-                                    <option value="">请选择账号类型</option>
-                                    <option *ngFor="let role of roles" [value]="role">{{role}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer text-center">
-                        <button type="reset" class="btn btn-default" (click)="cancel($event)">取消</button>
-                        <button type="submit" class="btn btn-primary">确定</button>
-                    </div>
-                </form>
+<!-- 路径导航 start -->
+<div class="container">
+	<ol class="breadcrumb clear-padding-vertical">
+		<li><a href="#">首页</a></li>
+		<li><a href="teacherList">教师信息</a></li>
+	</ol>
+</div>
+<!-- 路径导航 end -->
+<!-- 内容 start -->
+<div class="container">
+    <!-- 添加教师信息 start -->
+    <div class="panel panel-default" id="addTeacherInfoModal">
+        <form id="addTeacherInfoForm" method="post" action="#" class="form-horizontal" [formGroup]="addForm" (ngSubmit)="add($event)"
+            data-bv-message="输入错误"
+            data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+            data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+            data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+            <div class="panel-heading">
+                <h4>添加教师信息</h4>
             </div>
-            <!-- 添加教师信息 end -->
-        </div>
-        <!-- 内容 end -->
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="teacherName" class="col-sm-3 control-label">教师姓名：</label>
+                    <div class="col-sm-6">
+                        <input formControlName="teacherName" type="text" class="form-control" id="teacherName" name="teacherName" [(ngModel)]="teacher.teacherName" placeholder="请输入姓名" required data-bv-notempty-message="姓名不能为空">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="teacherId" class="col-sm-3 control-label">手机号码：</label>
+                    <div class="col-sm-6">
+                        <input formControlName="teacherId" type="text" class="form-control" id="teacherId" name="teacherId" [(ngModel)]="teacher.teacherId" placeholder="请输入手机号" required data-bv-notempty-message="手机号不能为空">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subject" class="col-sm-3 control-label">授课学科：</label>
+                    <div class="col-sm-6">
+                        <select formControlName="subject" class="form-control" id="subject" name="subject" [(ngModel)]="inputSubject" required data-bv-notempty-message="学科不能为空">
+                            <option value="">请选择学科</option>
+                            <option *ngFor="let subject of subjects" [value]="subject">{{subject}}</option>	
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="grade" class="col-sm-3 control-label">授课年级：</label>
+                    <div class="col-sm-6">
+                        <select formControlName="grade" class="form-control" id="grade" name="grade" ng-value="string" [(ngModel)]="inputGrade" required data-bv-notempty-message="年级不能为空">
+                            <option value="">请选择年级</option>
+                            <option *ngFor="let grade of grades" [value]="grade">{{grade}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="role" class="col-sm-3 control-label">账号类型：</label>
+                    <div class="col-sm-6">
+                        <select formControlName="role" class="form-control" id="role" name="role" ng-value="string" [(ngModel)]="inputRole" required data-bv-notempty-message="账号类型不能为空">
+                            <option value="">请选择账号类型</option>
+                            <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-center">
+                <button type="reset" class="btn btn-default" (click)="cancel($event)">取消</button>
+                <button type="submit" class="btn btn-primary">确定</button>
+            </div>
+        </form>
+    </div>
+    <!-- 添加教师信息 end -->
+</div>
+<!-- 内容 end -->

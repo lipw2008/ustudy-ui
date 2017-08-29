@@ -3,7 +3,6 @@ export interface ITeacher {
     id?: string;
     teacherId: string;
     teacherName: string;
-    password: string;
     grades?: IGrade[];
     classes?: IClass[];
     roles?: IRole[];

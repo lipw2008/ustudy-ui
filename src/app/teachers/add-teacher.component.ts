@@ -18,7 +18,6 @@ export class AddTeacherComponent implements OnInit {
     teacher: ITeacher = {
 		"teacherId" : "",
 		"teacherName" : "",
-		"password" : "",
 		"grades" : [{"n":""}],
 		"subjects" : [{"n":""}],
 		"roles" : [{"n":""}]
@@ -50,7 +49,6 @@ export class AddTeacherComponent implements OnInit {
 			return;
 		}
 		
-		this.teacher.password = this._teacherService.MD5(this.teacher.password);
 		this.teacher.grades[0].n = this.inputGrade;
 		this.teacher.subjects[0].n = this.inputSubject;
 		this.teacher.roles[0].n = this.inputRole;
@@ -79,7 +77,6 @@ export class AddTeacherComponent implements OnInit {
 		this.addForm = this.fb.group({
 			teacherId: ["", Validators.required],
 			teacherName: ["", Validators.required],
-			password: ["", Validators.required],
 			grade: ["", Validators.required],
 			subject: ["", Validators.required],
 			role: ["", Validators.required]

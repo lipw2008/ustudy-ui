@@ -106,16 +106,25 @@ export class UpdateDepartmentComponent implements OnInit {
 			for(let subject of this.subjects) {
 				subject.options = [];
 				for(let teacher of this.teachers) {
-					let t = {"id":"", "value": "", "selected": false}
-					t.id = teacher.teacherId;
-					t.value = teacher.teacherName;
-					for(let owner of subject.owners) {
-						if(t.id === owner.id) {
-							t.selected = true;
+					let ret = false;
+					for(let ts of teacher.subjects){
+						if (ts.n === subject.subject) {
+							ret = true;
 							break;
 						}
 					}
-					subject.options.push(t);
+					if (ret === true) { 
+						let t = {"id":"", "value": "", "selected": false}
+						t.id = teacher.teacherId;
+						t.value = teacher.teacherName;
+						for(let owner of subject.owners) {
+							if(t.id === owner.id) {
+								t.selected = true;
+								break;
+							}
+						}
+						subject.options.push(t);
+					}
 				}
 			}
 			console.log("subjects: " + JSON.stringify(this.subjects));
@@ -124,6 +133,7 @@ export class UpdateDepartmentComponent implements OnInit {
 	
 	fetchTeachers(cb) {
 		const req = new XMLHttpRequest();
+		//get department teachers
 		//req.open('GET', 'http://47.92.53.57:8080/infocen/teacher/list/0');
 		req.open('GET', 'assets/api/teachers/teachers.json');
 
