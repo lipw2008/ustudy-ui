@@ -38,7 +38,7 @@
                             <tr *ngFor="let grade of department.grades">
                                 <td><a [routerLink]="['/grade', {gradeId:grade.id}]" class="btn btn-xs btn-link" title="设置年级主任及组长">{{grade.gradeName}}</a></td>
                                 <td>{{grade.classNum}}</td>
-                                <ng-container *ngIf="grade.gradeType==='2'">
+                                <ng-container *ngIf="grade.gradeType===true">
                                     <td>
                                         <ng-container *ngFor="let class of grade.classes">
                                             <a *ngIf="class.classType==='art'" [routerLink]="['/updateClass', {classId:class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
@@ -50,7 +50,7 @@
                                         </ng-container>
                                     </td>
                                 </ng-container>
-                                <ng-container *ngIf="grade.gradeType==='1'">
+                                <ng-container *ngIf="grade.gradeType===false">
                                     <td colspan="2">
                                         <ng-container *ngFor="let class of grade.classes">
                                             <a [routerLink]="['/updateClass', {classId:class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>

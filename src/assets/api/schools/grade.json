@@ -2,7 +2,7 @@
 	"id": "1",
 	"gradeName": "高一",
 	"gradeOwner": {"id": "13877657910", "n": "鲁迅"},
-	"gradeType": "2",
+	"gradeType": true,
 	"subjects":[
 		{
 			"subject": "语文",
