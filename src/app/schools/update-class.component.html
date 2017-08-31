@@ -48,7 +48,7 @@
                             <option *ngFor="let subject of class.subjects" [value]="subject.teacher.id" [selected]="class.classOwner.n == subject.teacher.n">{{subject.teacher.n}}</option>
                             <option *ngIf="class.otherClassOwner && class.otherClassOwner.id!==''" [value]="class.otherClassOwner.id" [selected]="class.classOwner.n == class.otherClassOwner.n">{{class.otherClassOwner.n}}</option>
                         </select>
-                        <button class="btn btn-primary" type="button" (click)="addClassTeacher()"><i class="glyphicon glyphicon-plus"></i> 其他</button>
+                        <button class="btn btn-primary" type="button" (click)="addClassTeacher('')"><i class="glyphicon glyphicon-plus"></i> 其他</button>
                     </div>
                 </div>
                 <!--班主任 end-->

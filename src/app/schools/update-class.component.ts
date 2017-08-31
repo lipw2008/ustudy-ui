@@ -27,7 +27,7 @@ export class UpdateClassComponent implements OnInit {
 
 	addClassTeacher(subjectName) {
 		this._schoolService.setPersistData(this.class);
-		if(subjectName) {
+		if(subjectName !== '') {
 			this.router.navigate(['addClassTeacher', {subject: subjectName}]);
 		} else {
 			this.router.navigate(['addClassTeacher']);
