@@ -11,13 +11,13 @@ export class UpdateDepartmentComponent implements OnInit {
 
     errorMessage: string;
 
-	departmentId: string;
-
 	departmentName: string;
 
 	subjects = [];
 
 	teachers = [];
+
+	endpoints = {"高中部": "high", "初中部": "junior", "小学部": "primary", "其他": "other"};
 
     constructor(private _schoolService: SchoolService, private route: ActivatedRoute, private router: Router) {
 
@@ -31,7 +31,7 @@ export class UpdateDepartmentComponent implements OnInit {
 
 	update(event) {
 		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/info/school/subject/update/"  + this.departmentId);
+		req.open('POST', "http://47.92.53.57:8080/info/school/departsubs/update/"  + this.endpoints[this.departmentName]);
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {
@@ -64,7 +64,6 @@ export class UpdateDepartmentComponent implements OnInit {
 
     ngOnInit(): void {
 
-		this.departmentId = this.route.snapshot.params.departmentId;
 		this.departmentName = this.route.snapshot.params.departmentName;
 		
 		if (this.route.snapshot.params.subject) {
@@ -88,8 +87,8 @@ export class UpdateDepartmentComponent implements OnInit {
 	
 	fetchSubjects(cb) {
 		const req = new XMLHttpRequest();
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/school/subject/list/' + this.departmentId);
-		req.open('GET', 'assets/api/schools/subjects.json');
+		req.open('GET', 'http://47.92.53.57:8080/info/school/departsubs/' + this.endpoints[this.departmentName]);
+		//req.open('GET', 'assets/api/schools/subjects.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));
@@ -134,8 +133,8 @@ export class UpdateDepartmentComponent implements OnInit {
 	fetchTeachers(cb) {
 		const req = new XMLHttpRequest();
 		//get department teachers
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/teacher/list/0');
-		req.open('GET', 'assets/api/teachers/teachers.json');
+		req.open('GET', 'http://47.92.53.57:8080/info/school/departteac/' + this.endpoints[this.departmentName]);
+		//req.open('GET', 'assets/api/teachers/teachers.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));

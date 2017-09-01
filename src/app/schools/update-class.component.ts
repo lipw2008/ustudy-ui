@@ -42,7 +42,7 @@ export class UpdateClassComponent implements OnInit {
 
 	update(event) {
 		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/info/school/grade/updateClass/"  + this.classId);
+		req.open('POST', "http://47.92.53.57:8080/info/school/class/update"  + this.classId);
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {
@@ -89,8 +89,8 @@ export class UpdateClassComponent implements OnInit {
 	
 	fetchClass(cb) {
 		const req = new XMLHttpRequest();
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/school/class/list/' + this.classId);
-		req.open('GET', 'assets/api/schools/class.json');
+		req.open('GET', 'http://47.92.53.57:8080/info/school/class/' + this.classId);
+		//req.open('GET', 'assets/api/schools/class.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));
@@ -122,8 +122,8 @@ export class UpdateClassComponent implements OnInit {
 	
 	fetchTeachers(cb) {
 		const req = new XMLHttpRequest();
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/teacher/list/' + this.gradeId);
-		req.open('GET', 'assets/api/teachers/classTeachers.json');
+		req.open('GET', 'http://47.92.53.57:8080/info/school/classteac/' + this.classId);
+		//req.open('GET', 'assets/api/teachers/classTeachers.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));

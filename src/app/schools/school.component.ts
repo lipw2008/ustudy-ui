@@ -34,8 +34,8 @@ export class SchoolComponent implements OnInit {
 	
 	fetch(cb) {
 		const req = new XMLHttpRequest();
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/student/list/0');
-		req.open('GET', 'assets/api/schools/school.json');
+		req.open('GET', 'http://47.92.53.57:8080/info/school/detail');
+		//req.open('GET', 'assets/api/schools/school.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));

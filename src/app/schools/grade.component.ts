@@ -1,4 +1,5 @@
 import { Component, OnInit }  from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 import { SchoolService } from './school.service';
 
@@ -15,11 +16,14 @@ export class GradeComponent implements OnInit {
 		gradeOwner: {"id": "", "n": ""}
 	};
 	
-    constructor(private _schoolService: SchoolService) {
+	gradeId: string = "";
+
+    constructor(private _schoolService: SchoolService, private route: ActivatedRoute) {
 
     }
 
     ngOnInit(): void {
+		this.gradeId = this.route.snapshot.params.gradeId;
 		this.reload();
 	}
 	
@@ -33,8 +37,8 @@ export class GradeComponent implements OnInit {
 	
 	fetch(cb) {
 		const req = new XMLHttpRequest();
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/school/grade/' + this.gradeId);
-		req.open('GET', 'assets/api/schools/grade.json');
+		req.open('GET', 'http://47.92.53.57:8080/info/school/grade/' + this.gradeId);
+		//req.open('GET', 'assets/api/schools/grade.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));

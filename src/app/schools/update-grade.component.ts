@@ -70,7 +70,7 @@ export class UpdateGradeComponent implements OnInit {
 
 	updateSubjects(event) {
 		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/info/school/grade/updateSubjects/"  + this.gradeId);
+		req.open('POST', "http://47.92.53.57:8080/info/school/grade/update/"  + this.gradeId);
 		req.setRequestHeader("Content-type", "application/json");
 		var that = this;
 		req.onreadystatechange = function() {
@@ -130,8 +130,8 @@ export class UpdateGradeComponent implements OnInit {
 	
 	fetchSubjects(cb) {
 		const req = new XMLHttpRequest();
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/school/grade/list/' + this.gradeId);
-		req.open('GET', 'assets/api/schools/grade.json');
+		req.open('GET', 'http://47.92.53.57:8080/info/school/grade/' + this.gradeId);
+		//req.open('GET', 'assets/api/schools/grade.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));
@@ -172,8 +172,8 @@ export class UpdateGradeComponent implements OnInit {
 	
 	fetchTeachers(cb) {
 		const req = new XMLHttpRequest();
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/teacher/list/' + this.gradeId);
-		req.open('GET', 'assets/api/teachers/gradeTeachers.json');
+		req.open('GET', 'http://47.92.53.57:8080/info/school/gradeteac/' + this.gradeId);
+		//req.open('GET', 'assets/api/teachers/gradeTeachers.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));

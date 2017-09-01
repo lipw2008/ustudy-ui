@@ -10,7 +10,6 @@
 	"district": "长安区",
 	"departments": [
 		{
-			"id": "000",
 			"departmentName": "高中部",
 			"grades": [
 				{
