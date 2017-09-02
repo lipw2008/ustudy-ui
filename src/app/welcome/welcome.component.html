@@ -1,137 +1,135 @@
-        <!-- 内容 start -->
-        <div class="container-index">
-	        <div class="container">
-		        <div class="row">
+<!-- 内容 start -->
+<div class="container-index">
+	<div class="container" *ngIf="role==='任课老师'">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
+						<a href="#">
+							<i class="glyphicon glyphicon-duplicate"></i>
+							<h4>未完成考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="glyphicon glyphicon-user"></i>
+							<h4>新建考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="glyphicon glyphicon-user"></i>
+							<h4>学生信息</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x1 col-orange">
+						<a href="#">
+							<i class="glyphicon glyphicon-blackboard"></i>
+							<h4>答题卷中心</h4>
+						</a>
+					</div>
+				</div>
+			</div>
 
-			        <div class="col-sm-3">
-				        <div class="grid clearfix">
-				        	<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-duplicate"></i>
-									<h4>未完成考试</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
-						        <a href="#">
-				        			<i class="glyphicon glyphicon-user"></i>
-									<h4>新建考试</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-user"></i>
-									<h4>学生信息</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-2x1 col-orange">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-blackboard"></i>
-									<h4>答题卷中心</h4>
-						        </a>
-					        </div>
-				        </div>
-			        </div>
+			<div class="col-sm-3">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="glyphicon glyphicon-stats"></i>
+							<h4>答卷扫描</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
+						<a href="#">
+							<i class="glyphicon glyphicon-plus"></i>
+							<h4>线上阅卷</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue" style="top:131px; position:absolute">
+						<a href="#">
+							<i class="glyphicon glyphicon-plus"></i>
+							<h4>模板制作</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="glyphicon glyphicon-check"></i>
+							<h4>任务分配</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="glyphicon glyphicon-save"></i>
+							<h4>答案设置</h4>
+						</a>
+					</div>
+				</div>
+			</div>
 
-			        <div class="col-sm-3">
-				        <div class="grid clearfix">
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-stats"></i>
-									<h4>答卷扫描</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
-						        <a href="#">
-				        			<i class="glyphicon glyphicon-plus"></i>
-									<h4>线上阅卷</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue" style="top:131px; position:absolute">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-plus"></i>
-									<h4>模板制作</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-check"></i>
-									<h4>任务分配</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-save"></i>
-									<h4>答案设置</h4>
-						        </a>
-					        </div>
-				        </div>
-			        </div>
+			<div class="col-sm-3">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
+						<a href="#">
+							<i class="glyphicon glyphicon-headphones"></i>
+							<h4>阅卷统计</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
+						<a href="#">
+							<i class="glyphicon glyphicon-cloud"></i>
+							<h4>试题分析</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
+						<a href="#">
+							<i class="glyphicon glyphicon-headphones"></i>
+							<h4>考生成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
+						<a href="#">
+							<i class="glyphicon glyphicon-cloud"></i>
+							<h4>班级成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
+						<a href="#">
+							<i class="glyphicon glyphicon-headphones"></i>
+							<h4>学校成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
+						<a href="#">
+							<i class="glyphicon glyphicon-cloud"></i>
+							<h4>报表下载</h4>
+						</a>
+					</div>
+				</div>
+			</div>
 
-			        <div class="col-sm-3">
-				        <div class="grid clearfix">
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-headphones"></i>
-									<h4>阅卷统计</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
-						        <a href="#">
-				        			<i class="glyphicon glyphicon-cloud"></i>
-									<h4>试题分析</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-headphones"></i>
-									<h4>考生成绩</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
-						        <a href="#">
-				        			<i class="glyphicon glyphicon-cloud"></i>
-									<h4>班级成绩</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-headphones"></i>
-									<h4>学校成绩</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
-						        <a href="#">
-				        			<i class="glyphicon glyphicon-cloud"></i>
-									<h4>报表下载</h4>
-						        </a>
-					        </div>
-				        </div>
-			        </div>
-
-			        <div class="col-sm-3">
-				        <div class="grid clearfix">
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-headphones"></i>
-									<h4>在线客服</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
-						        <a href="#">
-				        			<i class="glyphicon glyphicon-cloud"></i>
-									<h4>云盘</h4>
-						        </a>
-					        </div>
-				        	<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
-						        <a href="#">
-						        	<i class="glyphicon glyphicon-comment"></i>
-									<h4>系统消息</h4>
-						        </a>
-					        </div>
-				        </div>
-			        </div>
-
-		        </div>
-	        </div>
-        </div>
-        <!-- 内容 end -->
+			<div class="col-sm-3">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="glyphicon glyphicon-headphones"></i>
+							<h4>在线客服</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="glyphicon glyphicon-cloud"></i>
+							<h4>云盘</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
+						<a href="#">
+							<i class="glyphicon glyphicon-comment"></i>
+							<h4>系统消息</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 内容 end -->
