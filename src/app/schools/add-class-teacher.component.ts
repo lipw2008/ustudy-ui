@@ -26,12 +26,18 @@ export class AddClassTeacherComponent implements OnInit {
 	gradeName: string = "";
 	teacherName: string = "";
 
+	departmentName: string = "";
+	gradeId: string = "";
+	classId: string = "";
+
+	endpoints = {"高中部": "high", "初中部": "junior", "小学部": "primary", "其他": "other"};
+
     constructor(private _schoolService: SchoolService, private route: ActivatedRoute, private router: Router) {
 
     }
 
 	cancel(event) {
-		this.router.navigate(['updateClass']);
+		this.router.navigate(['updateClass', {departmentName: this.departmentName, gradeId: this.gradeId, classId: this.classId}]);
 	}
 
 	update(event) {
@@ -48,7 +54,7 @@ export class AddClassTeacherComponent implements OnInit {
 				}
 			}
 			this._schoolService.setPersistData(this.class);
-			this.router.navigate(['updateClass', {"otherClassTeacher": "true"}]);
+			this.router.navigate(['updateClass', {departmentName: this.departmentName, gradeId: this.gradeId, classId: this.classId, "otherClassTeacher": "true"}]);
 		} else {
 			let otherClassOwner= {"id": "", "n": ""};
 			otherClassOwner.id = this.selectedTeacher.teacherId;
@@ -56,12 +62,15 @@ export class AddClassTeacherComponent implements OnInit {
 			this.class.otherClassOwner = otherClassOwner;
 			this.class.classOwner = otherClassOwner;
 			this._schoolService.setPersistData(this.class);
-			this.router.navigate(['updateClass', {"otherClassOwner": "true"}]);
+			this.router.navigate(['updateClass', {departmentName: this.departmentName, gradeId: this.gradeId, classId: this.classId, "otherClassOwner": "true"}]);
 		}
 		
 	}
 
     ngOnInit(): void {
+		this.departmentName = this.route.snapshot.params.departmentName;
+		this.gradeId = this.route.snapshot.params.gradeId;
+		this.classId = this.route.snapshot.params.classId;
 		this.grades = this._schoolService.getGrades();
 		this.subjects = this._schoolService.getSubjects();
 		this.class = this._schoolService.getPersistData();
@@ -116,8 +125,8 @@ export class AddClassTeacherComponent implements OnInit {
 	
 	fetchTeachers(cb) {
 		const req = new XMLHttpRequest();
-		//req.open('GET', 'http://47.92.53.57:8080/infocen/teacher/list/' + this.gradeId);
-		req.open('GET', 'assets/api/teachers/gradeTeachers.json');
+		req.open('GET', 'http://47.92.53.57:8080/info/school/departteac/' + this.endpoints[this.departmentName]);
+		//req.open('GET', 'assets/api/teachers/gradeTeachers.json');
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));

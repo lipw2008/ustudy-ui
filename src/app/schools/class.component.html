@@ -30,7 +30,7 @@
                         <td>{{class.className}}</td>
                         <td>{{class.classOwner.n}}</td>
                         <td *ngFor="let subject of class.subjects">{{subject.teacher.n}}</td>
-                        <td><a [routerLink]="['/updateClass', {classId: class.id}]" class="btn btn-xs btn-primary">编辑</a></td>
+                        <td><a [routerLink]="['/updateClass', {departmentName: departmentName, gradeId: grade.id, classId: class.id}]" class="btn btn-xs btn-primary">编辑</a></td>
                     </tr>
                 </tbody>
             </table>

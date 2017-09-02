@@ -26,7 +26,7 @@ export class UpdateDepartmentComponent implements OnInit {
 	cancel(event) {
 		this.subjects=[];
 		this.teachers=[];
-		this.router.navigate(['department']);
+		this.router.navigate(['department', {departmentName: this.departmentName}]);
 	}
 
 	update(event) {
@@ -40,11 +40,11 @@ export class UpdateDepartmentComponent implements OnInit {
 			if (req.readyState == 4 && req.status == 200) {
 				alert("修改成功");
 				//go back to the student list page
-				that.router.navigate(['department']);
+				that.router.navigate(['department', {departmentName: that.departmentName}]);
 			} else if (req.readyState == 4 && req.status != 200) {
 				alert("修改失败！");
 				//go back to the student list page
-				that.router.navigate(['department']);
+				that.router.navigate(['department', {departmentName: that.departmentName}]);
 			}
 		}
 

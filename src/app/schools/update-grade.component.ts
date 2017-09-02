@@ -26,7 +26,7 @@ export class UpdateGradeComponent implements OnInit {
 	cancel(event) {
 		this.subjects=[];
 		this.teachers=[];
-		this.router.navigate(['grade']);
+		this.router.navigate(['grade', {gradeId: this.gradeId}]);
 	}
 
 	update(event) {
@@ -49,11 +49,11 @@ export class UpdateGradeComponent implements OnInit {
 			if (req.readyState == 4 && req.status == 200) {
 				alert("修改成功");
 				//go back to the student list page
-				that.router.navigate(['grade']);
+				that.router.navigate(['grade', {gradeId: that.gradeId}]);
 			} else if (req.readyState == 4 && req.status != 200) {
 				alert("修改失败！");
 				//go back to the student list page
-				that.router.navigate(['grade']);
+				that.router.navigate(['grade', {gradeId: that.gradeId}]);
 			}
 		}
 
@@ -79,11 +79,11 @@ export class UpdateGradeComponent implements OnInit {
 			if (req.readyState == 4 && req.status == 200) {
 				alert("修改成功");
 				//go back to the student list page
-				that.router.navigate(['grade']);
+				that.router.navigate(['grade', {gradeId: that.gradeId}]);
 			} else if (req.readyState == 4 && req.status != 200) {
 				alert("修改失败！");
 				//go back to the student list page
-				that.router.navigate(['grade']);
+				that.router.navigate(['grade', , {gradeId: that.gradeId}]);
 			}
 		}
 

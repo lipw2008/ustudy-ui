@@ -12,6 +12,8 @@ export class UpdateClassComponent implements OnInit {
     errorMessage: string;
 
 	classId: string;
+	gradeId: string;
+	departmentName: string;
 
 	class: any = {
 		classType: "",
@@ -28,16 +30,16 @@ export class UpdateClassComponent implements OnInit {
 	addClassTeacher(subjectName) {
 		this._schoolService.setPersistData(this.class);
 		if(subjectName !== '') {
-			this.router.navigate(['addClassTeacher', {subject: subjectName}]);
+			this.router.navigate(['addClassTeacher', {departmentName: this.departmentName, gradeId: this.gradeId, classId: this.classId, subject: subjectName}]);
 		} else {
-			this.router.navigate(['addClassTeacher']);
+			this.router.navigate(['addClassTeacher', {departmentName: this.departmentName, gradeId: this.gradeId, classId: this.classId}]);
 		}
 	}
 
 	cancel(event) {
 		this.teachers=[];
 		this._schoolService.resetPersistData();
-		this.router.navigate(['class']);
+		this.router.navigate(['class', {departmentName: this.departmentName, gradeId: this.gradeId}]);
 	}
 
 	update(event) {
@@ -50,11 +52,11 @@ export class UpdateClassComponent implements OnInit {
 			if (req.readyState == 4 && req.status == 200) {
 				alert("修改成功");
 				//go back to the student list page
-				that.router.navigate(['class']);
+				that.router.navigate(['class', {departmentName: that.departmentName, gradeId: that.gradeId}]);
 			} else if (req.readyState == 4 && req.status != 200) {
 				alert("修改失败！");
 				//go back to the student list page
-				that.router.navigate(['class']);
+				that.router.navigate(['class', {departmentName: that.departmentName, gradeId: that.gradeId}]);
 			}
 		}
 
@@ -66,7 +68,8 @@ export class UpdateClassComponent implements OnInit {
 	}
 
     ngOnInit(): void {
-
+		this.departmentName = this.route.snapshot.params.departmentName;
+		this.gradeId = this.route.snapshot.params.gradeId;
 		this.classId = this.route.snapshot.params.classId;
 		
 		if (this.route.snapshot.params.otherClassTeacher) {
@@ -122,7 +125,7 @@ export class UpdateClassComponent implements OnInit {
 	
 	fetchTeachers(cb) {
 		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/school/classteac/' + this.classId);
+		req.open('GET', 'http://47.92.53.57:8080/info/school/gradeteac/' + this.gradeId);
 		//req.open('GET', 'assets/api/teachers/classTeachers.json');
 
 		req.onload = () => {

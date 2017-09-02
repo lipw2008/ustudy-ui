@@ -16,6 +16,7 @@ export class ClassComponent implements OnInit {
 		subjects: []
 	};
 	
+	departmentName: string = "";
 	gradeId: string = "";
 
     constructor(private _schoolService: SchoolService, private route: ActivatedRoute) {
@@ -23,6 +24,7 @@ export class ClassComponent implements OnInit {
     }
 
     ngOnInit(): void {
+		this.departmentName = this.route.snapshot.params.departmentName;
 		this.gradeId = this.route.snapshot.params.gradeId;
 
 		this.reload();
