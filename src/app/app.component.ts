@@ -26,6 +26,7 @@ export class AppComponent {
 		req.onreadystatechange = function() {
 			if (req.readyState == 4 && req.status/100 == 2) {
 				alert("您已退出");
+				that.userName = '';
 				that.router.navigate(['welcome']);
 			} else if (req.readyState == 4 && req.status/100 != 2) {
 				alert("退出失败！");
