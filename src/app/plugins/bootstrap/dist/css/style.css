@@ -1,15 +1,13 @@
 * {
   outline: none !important;
 }
-@media (min-width: 768px) {
-  .container.container-xs {
-    margin: 0 auto;
-    width: 640px;
-  }
-  .container.container-sm {
-    margin: 0 auto;
-    width: 768px;
-  }
+.clear-response .navbar {
+  margin: 0 auto;
+  min-width: 100%;
+  width: 1170px;
+}
+.clear-response .navbar .container {
+  width: 1170px;
 }
 .container-footer {
   position: fixed;
@@ -59,14 +57,17 @@ body {
   margin-bottom: 0 !important;
 }
 .margin-top {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .margin-vertical {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .margin-left {
-  margin-left: 15px;
+  margin-left: 10px;
+}
+.margin-top-lg {
+  margin-top: 20px;
 }
 .margin-bottom-lg {
   margin-bottom: 20px;
@@ -82,8 +83,8 @@ body {
   padding-bottom: 20px;
 }
 .padding-horizontal {
-  padding-right: 0;
-  padding-left: 0;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 .clear-padding {
   padding: 0;
@@ -131,6 +132,9 @@ body {
 }
 .border-left {
   border-left: 1px solid #ddd;
+}
+.clear-bg {
+  background: none;
 }
 .text-gray,
 .text-gray a {
@@ -232,9 +236,115 @@ body {
 .bootstrap-select:first-child .btn.dropdown-toggle.btn-link {
   padding-left: 0;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
+  .register-guide ul {
+    margin: 0 auto;
+    width: 800px;
+  }
+}
+.register-guide ul.nav > li {
+  position: relative;
+  display: block;
+  float: left;
+  width: 25%;
+  text-align: center;
+}
+.register-guide ul.nav > li > a {
+  cursor: default;
+}
+.register-guide ul.nav > li:before {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  margin-top: -1px;
+  content: "";
+  width: 100%;
+  height: 2px;
+  background-color: #ddd;
+}
+.register-guide ul.nav > li i {
+  display: block;
+  margin: 0 auto;
+  width: 52px;
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  color: #fff;
+  background-color: #ddd;
+  webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.register-guide ul.nav > li h4 {
+  font-size: 14px;
+  color: #ddd;
+}
+.register-guide ul.nav > li.active:before {
+  background-color: #189fd9;
+}
+.register-guide ul.nav > li.active i {
+  color: #fff;
+  background-color: #189fd9;
+}
+.register-guide ul.nav > li.active h4 {
+  color: #189fd9;
+}
+.register-guide ul.nav > li.visited:before {
+  background-color: #04be02;
+}
+.register-guide ul.nav > li.visited i {
+  color: #fff;
+  background-color: #04be02;
+}
+.register-guide ul.nav > li.visited h4 {
+  color: #04be02;
+}
+.drag-captcha {
+  position: relative;
+  background-color: #f2f2f2;
+  width: 100%;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+}
+.drag-captcha .handler {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 40px;
+  height: 34px;
+  line-height: 34px;
+  border: 1px solid #ddd;
+  background-color: #f2f2f2;
+  cursor: move;
+}
+.drag-captcha .handler.text-success {
+  color: #3c763d;
+}
+.drag-captcha .drag-bg {
+  background-color: #04be02;
+  height: 34px;
+  width: 0px;
+}
+.drag-captcha .drag-text {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+}
+@media (min-width: 480px) {
   .container-index {
     margin-top: 100px;
+  }
+  .container-index .container {
+    width: 1170px !important;
+    max-width: none !important;
   }
   .container-index .container .col-sm-6 .col.col-1x1 {
     width: 277px;
@@ -311,13 +421,17 @@ body {
 .container-index .container .col.col-green > a {
   background-color: #0c3;
 }
+.container-index .container .col.col-muted > a {
+  color: #999;
+  background-color: #f2f2f2;
+}
 .container-index .container .col {
   padding: 5px;
 }
 .container-index .container .col > a > i {
   display: block;
   margin: 10px 0;
-  font-size: 30px;
+  font-size: 48px;
   font-style: normal;
 }
 .container-index .container .col > a > h4 {
@@ -359,6 +473,9 @@ body {
   color: #ee3f24;
   font-weight: 600;
   font-style: normal;
+}
+.treeview {
+  background-color: #f2f2f2;
 }
 .table.table-checkbox > thead > tr > th:first-child,
 .table.table-checkbox > tbody > tr > td:first-child {

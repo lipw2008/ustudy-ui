@@ -1,13 +1,11 @@
-
 @font-face {font-family: "iconfont";
-  src: url('../fonts/iconfont.eot?t=1495346886791'); /* IE9*/
-  src: url('../fonts/iconfont.eot?t=1495346886791#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('../fonts/iconfont.woff?t=1495346886791') format('woff'), /* chrome, firefox */
-  url('../fonts/iconfont.ttf?t=1495346886791') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('../fonts/iconfont.svg?t=1495346886791#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('../fonts/iconfont.eot?t=1503903981177'); /* IE9*/
+  src: url('../fonts/iconfont.eot?t=1503903981177#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/iconfont.woff?t=1503903981177') format('woff'), /* chrome, firefox */
+  url('../fonts/iconfont.ttf?t=1503903981177') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../fonts/iconfont.svg?t=1503903981177#iconfont') format('svg'); /* iOS 4.1- */
 }
-
-.iconfont {
+[class^="iconfont-"] {
   position: relative;
   top: 0;
   display: inline-block;
@@ -18,9 +16,37 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-.iconfont-add:before { content: "\e698"; }
-.iconfont-heart:before { content: "\e699"; }
-.iconfont-user:before { content: "\e69a"; }
-.iconfont-batchadd:before { content: "\e69b"; }
-.iconfont-del:before { content: "\e69c"; }
+.iconfont-del:before { content: "\e698"; }
+.iconfont-batchadd:before { content: "\e69a"; }
+.iconfont-link:before { content: "\e69b"; }
+.iconfont-mail:before { content: "\e69c"; }
+.iconfont-chevronright:before { content: "\e69d"; }
+.iconfont-mobile:before { content: "\e69f"; }
+.iconfont-locationpin:before { content: "\e6a0"; }
+.iconfont-chevronleft:before { content: "\e6a1"; }
+.iconfont-weixin:before { content: "\e6a2"; }
+.iconfont-weibo:before { content: "\e6a3"; }
+.iconfont-examineeachievement:before { content: "\e6a4"; }
+.iconfont-finishedexam:before { content: "\e6a5"; }
+.iconfont-itemanalysis:before { content: "\e6a6"; }
+.iconfont-markingstatistics:before { content: "\e6a7"; }
+.iconfont-onlinemarking:before { content: "\e6a8"; }
+.iconfont-reportdownload:before { content: "\e6a9"; }
+.iconfont-school:before { content: "\e6aa"; }
+.iconfont-service:before { content: "\e6ab"; }
+.iconfont-scan:before { content: "\e6ac"; }
+.iconfont-student:before { content: "\e6ad"; }
+.iconfont-schoolmarks:before { content: "\e6ae"; }
+.iconfont-systemmessage:before { content: "\e6af"; }
+.iconfont-taskallocation:before { content: "\e6b0"; }
+.iconfont-teacher:before { content: "\e6b1"; }
+.iconfont-unfinishedexam:before { content: "\e6b2"; }
+.iconfont-templatemaking:before { content: "\e6b3"; }
+.iconfont-addexam:before { content: "\e6b4"; }
+.iconfont-bestanswer:before { content: "\e6b5"; }
+.iconfont-assignmentscoringtas:before { content: "\e6b6"; }
+.iconfont-classes:before { content: "\e6b7"; }
+.iconfont-answersetting:before { content: "\e6b8"; }
+.iconfont-classachievement:before { content: "\e6b9"; }
+.iconfont-examinationcenter:before { content: "\e6ba"; }
+.iconfont-clouds:before { content: "\e6bb"; }

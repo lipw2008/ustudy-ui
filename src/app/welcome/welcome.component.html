@@ -1,30 +1,122 @@
 <!-- 内容 start -->
 <div class="container-index">
-	<div class="container" *ngIf="role==='任课老师'">
+<!-- *********************** 任课老师 *********************** -->
+	<div class="container" *ngIf="role==='任课老师' || role===''">
 		<div class="row">
-			<div class="col-sm-3">
+			<div class="col-sm-4">
 				<div class="grid clearfix">
-					<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
 						<a href="#">
-							<i class="glyphicon glyphicon-duplicate"></i>
-							<h4>未完成考试</h4>
+							<i class="iconfont-finishedexam"></i>
+							<h4>已完成考试</h4>
 						</a>
 					</div>
-					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
 						<a href="#">
-							<i class="glyphicon glyphicon-user"></i>
-							<h4>新建考试</h4>
+							<i class="iconfont-calender"></i>
+							<h4>日历</h4>
 						</a>
 					</div>
-					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
 						<a href="#">
-							<i class="glyphicon glyphicon-user"></i>
+							<i class="iconfont-student"></i>
 							<h4>学生信息</h4>
 						</a>
 					</div>
-					<div class="grid-item table-cell horizontal vertical col col-2x1 col-orange">
+					<div class="grid-item table-cell horizontal vertical col col-2x1 col-blue">
 						<a href="#">
-							<i class="glyphicon glyphicon-blackboard"></i>
+							<i class="iconfont-bestanswer"></i>
+							<h4>优标答案</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-examineeachievement"></i>
+							<h4>考生成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
+						<a href="#">
+							<i class="iconfont-onlinemarking"></i>
+							<h4>线上阅卷</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange" style="top:131px; position:absolute">
+						<a href="#">
+							<i class="iconfont-classachievement"></i>
+							<h4>班级成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-itemanalysis"></i>
+							<h4>试题分析</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-reportdownload"></i>
+							<h4>报表下载</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-service"></i>
+							<h4>在线客服</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-clouds"></i>
+							<h4>云盘</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
+						<a href="#">
+							<i class="iconfont-systemmessage"></i>
+							<h4>系统消息</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container" *ngIf="role==='扫描账号'">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-muted">
+						<a href="#">
+							<i class="iconfont-unfinishedexam"></i>
+							<h4>未完成考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-addexam"></i>
+							<h4>新建考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-student"></i>
+							<h4>学生信息</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x1 col-muted">
+						<a href="#">
+							<i class="iconfont-examinationcenter"></i>
 							<h4>答题卷中心</h4>
 						</a>
 					</div>
@@ -35,31 +127,162 @@
 				<div class="grid clearfix">
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
 						<a href="#">
-							<i class="glyphicon glyphicon-stats"></i>
+							<i class="iconfont-scan"></i>
 							<h4>答卷扫描</h4>
 						</a>
 					</div>
-					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-muted">
 						<a href="#">
-							<i class="glyphicon glyphicon-plus"></i>
+							<i class="iconfont-onlinemarking"></i>
 							<h4>线上阅卷</h4>
 						</a>
 					</div>
-					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue" style="top:131px; position:absolute">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted" style="top:131px; position:absolute">
 						<a href="#">
-							<i class="glyphicon glyphicon-plus"></i>
+							<i class="iconfont-templatemaking"></i>
 							<h4>模板制作</h4>
 						</a>
 					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-taskallocation"></i>
+							<h4>任务分配</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-scan"></i>
+							<h4>答案设置</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-markingstatistics"></i>
+							<h4>阅卷统计</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-itemanalysis"></i>
+							<h4>试题分析</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-examineeachievement"></i>
+							<h4>考生成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-classachievement"></i>
+							<h4>班级成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-student"></i>
+							<h4>学生信息</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-reportdownload"></i>
+							<h4>报表下载</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="grid clearfix">
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
 						<a href="#">
-							<i class="glyphicon glyphicon-check"></i>
-							<h4>任务分配</h4>
+							<i class="iconfont-service"></i>
+							<h4>在线客服</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-muted">
+						<a href="#">
+							<i class="iconfont-clouds"></i>
+							<h4>云盘</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x2 col-muted">
+						<a href="#">
+							<i class="iconfont-systemmessage"></i>
+							<h4>系统消息</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container" *ngIf="role==='考务老师'">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
+						<a href="#">
+							<i class="iconfont-unfinishedexam"></i>
+							<h4>未完成考试</h4>
 						</a>
 					</div>
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
 						<a href="#">
-							<i class="glyphicon glyphicon-save"></i>
+							<i class="iconfont-addexam"></i>
+							<h4>新建考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-student"></i>
+							<h4>学生信息</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x1 col-blue">
+						<a href="#">
+							<i class="iconfont-examinationcenter"></i>
+							<h4>答题卷中心</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-scan"></i>
+							<h4>答卷扫描</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
+						<a href="#">
+							<i class="iconfont-onlinemarking"></i>
+							<h4>线上阅卷</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange" style="top:131px; position:absolute">
+						<a href="#">
+							<i class="iconfont-templatemaking"></i>
+							<h4>模板制作</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-taskallocation"></i>
+							<h4>任务分配</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-scan"></i>
 							<h4>答案设置</h4>
 						</a>
 					</div>
@@ -70,60 +293,59 @@
 				<div class="grid clearfix">
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
 						<a href="#">
-							<i class="glyphicon glyphicon-headphones"></i>
+							<i class="iconfont-markingstatistics"></i>
 							<h4>阅卷统计</h4>
 						</a>
 					</div>
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
 						<a href="#">
-							<i class="glyphicon glyphicon-cloud"></i>
+							<i class="iconfont-itemanalysis"></i>
 							<h4>试题分析</h4>
 						</a>
 					</div>
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
 						<a href="#">
-							<i class="glyphicon glyphicon-headphones"></i>
+							<i class="iconfont-examineeachievement"></i>
 							<h4>考生成绩</h4>
 						</a>
 					</div>
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
 						<a href="#">
-							<i class="glyphicon glyphicon-cloud"></i>
+							<i class="iconfont-classachievement"></i>
 							<h4>班级成绩</h4>
 						</a>
 					</div>
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
 						<a href="#">
-							<i class="glyphicon glyphicon-headphones"></i>
-							<h4>学校成绩</h4>
+							<i class="iconfont-student"></i>
+							<h4>学生信息</h4>
 						</a>
 					</div>
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-yellow">
 						<a href="#">
-							<i class="glyphicon glyphicon-cloud"></i>
+							<i class="iconfont-reportdownload"></i>
 							<h4>报表下载</h4>
 						</a>
 					</div>
 				</div>
 			</div>
-
 			<div class="col-sm-3">
 				<div class="grid clearfix">
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
 						<a href="#">
-							<i class="glyphicon glyphicon-headphones"></i>
+							<i class="iconfont-service"></i>
 							<h4>在线客服</h4>
 						</a>
 					</div>
 					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
 						<a href="#">
-							<i class="glyphicon glyphicon-cloud"></i>
+							<i class="iconfont-clouds"></i>
 							<h4>云盘</h4>
 						</a>
 					</div>
 					<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
 						<a href="#">
-							<i class="glyphicon glyphicon-comment"></i>
+							<i class="iconfont-systemmessage"></i>
 							<h4>系统消息</h4>
 						</a>
 					</div>
@@ -131,5 +353,674 @@
 			</div>
 		</div>
 	</div>
+
+<!-- *********************** 班主任 *********************** -->
+	<div class="container" *ngIf="role==='班主任'">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
+						<a href="#">
+							<i class="iconfont-finishedexam"></i>
+							<h4>已完成考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-classes"></i>
+							<h4>班级信息</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-student"></i>
+							<h4>学生信息</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x1 col-blue">
+						<a href="#">
+							<i class="iconfont-bestanswer"></i>
+							<h4>优标答案</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-examineeachievement"></i>
+							<h4>考生成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
+						<a href="#">
+							<i class="iconfont-onlinemarking"></i>
+							<h4>线上阅卷</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange" style="top:131px; position:absolute">
+						<a href="#">
+							<i class="iconfont-classachievement"></i>
+							<h4>班级成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-itemanalysis"></i>
+							<h4>试题分析</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-reportdownload"></i>
+							<h4>报表下载</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-service"></i>
+							<h4>在线客服</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-clouds"></i>
+							<h4>云盘</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
+						<a href="#">
+							<i class="iconfont-systemmessage"></i>
+							<h4>系统消息</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- *********************** 备课组长 *********************** -->
+	<div class="container" *ngIf="role==='备课组长'">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-scan"></i>
+							<h4>答案设置</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-student"></i>
+							<h4>学生信息</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
+						<a href="#">
+							<i class="iconfont-assignmentscoringtasks"></i>
+							<h4>阅卷任务分配</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-bestanswer"></i>
+							<h4>优标答案</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-reportdownload"></i>
+							<h4>报表下载</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-examineeachievement"></i>
+							<h4>考生成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
+						<a href="#">
+							<i class="iconfont-onlinemarking"></i>
+							<h4>线上阅卷</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange" style="top:131px; position:absolute">
+						<a href="#">
+							<i class="iconfont-classachievement"></i>
+							<h4>班级成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-itemanalysis"></i>
+							<h4>试题分析</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-markingstatistics"></i>
+							<h4>阅卷统计</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-service"></i>
+							<h4>在线客服</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-clouds"></i>
+							<h4>云盘</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
+						<a href="#">
+							<i class="iconfont-systemmessage"></i>
+							<h4>系统消息</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- *********************** 学科组长 *********************** -->
+	<div class="container" *ngIf="role==='学科组长'">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-scan"></i>
+							<h4>答案设置</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-addexam"></i>
+							<h4>新建考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
+						<a href="#">
+							<i class="iconfont-assignmentscoringtasks"></i>
+							<h4>阅卷任务分配</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-bestanswer"></i>
+							<h4>优标答案</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-reportdownload"></i>
+							<h4>报表下载</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-examineeachievement"></i>
+							<h4>考生成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
+						<a href="#">
+							<i class="iconfont-onlinemarking"></i>
+							<h4>线上阅卷</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange" style="top:131px; position:absolute">
+						<a href="#">
+							<i class="iconfont-classachievement"></i>
+							<h4>班级成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-itemanalysis"></i>
+							<h4>试题分析</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-markingstatistics"></i>
+							<h4>阅卷统计</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-service"></i>
+							<h4>在线客服</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-clouds"></i>
+							<h4>云盘</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
+						<a href="#">
+							<i class="iconfont-systemmessage"></i>
+							<h4>系统消息</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- *********************** 年级主任 *********************** -->
+	<div class="container" *ngIf="role==='年级主任'">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
+						<a href="#">
+							<i class="iconfont-unfinishedexam"></i>
+							<h4>未完成考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-addexam"></i>
+							<h4>新建考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-examinationcenter"></i>
+							<h4>答题卷中心</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x1 col-blue">
+						<a href="#">
+							<i class="iconfont-reportdownload"></i>
+							<h4>报表下载</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-examineeachievement"></i>
+							<h4>考生成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
+						<a href="#">
+							<i class="iconfont-onlinemarking"></i>
+							<h4>线上阅卷</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange" style="top:131px; position:absolute">
+						<a href="#">
+							<i class="iconfont-classachievement"></i>
+							<h4>班级成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-markingstatistics"></i>
+							<h4>阅卷统计</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-itemanalysis"></i>
+							<h4>试题分析</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-service"></i>
+							<h4>在线客服</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-clouds"></i>
+							<h4>云盘</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
+						<a href="#">
+							<i class="iconfont-systemmessage"></i>
+							<h4>系统消息</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- *********************** 校长 *********************** -->
+	<div class="container" *ngIf="role==='校长'">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
+						<a href="#">
+							<i class="iconfont-unfinishedexam"></i>
+							<h4>未完成考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-addexam"></i>
+							<h4>新建考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-examinationcenter"></i>
+							<h4>答题卷中心</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x1 col-blue">
+						<a href="#">
+							<i class="iconfont-onlinemarking"></i>
+							<h4>线上阅卷</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-examineeachievement"></i>
+							<h4>考生成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-markingstatistics"></i>
+							<h4>阅卷统计</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-classachievement"></i>
+							<h4>班级成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-itemanalysis"></i>
+							<h4>试题分析</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-schoolmarks"></i>
+							<h4>学校成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-reportdownload"></i>
+							<h4>报表下载</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-service"></i>
+							<h4>在线客服</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-clouds"></i>
+							<h4>云盘</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
+						<a href="#">
+							<i class="iconfont-systemmessage"></i>
+							<h4>系统消息</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- *********************** 教研室主任 *********************** -->
+	<div class="container" *ngIf="role==='教研室主任'">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
+						<a href="#">
+							<i class="iconfont-school"></i>
+							<h4>学校信息</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-addexam"></i>
+							<h4>新建考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-unfinishedexam"></i>
+							<h4>未完成考试</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x1 col-blue">
+						<a href="#">
+							<i class="iconfont-examinationcenter"></i>
+							<h4>答题卷中心</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-examineeachievement"></i>
+							<h4>考生成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
+						<a href="#">
+							<i class="iconfont-markingstatistics"></i>
+							<h4>阅卷统计</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange" style="top:131px; position:absolute">
+						<a href="#">
+							<i class="iconfont-schoolmarks"></i>
+							<h4>学校成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-itemanalysis"></i>
+							<h4>试题分析</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-reportdownload"></i>
+							<h4>报表下载</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-service"></i>
+							<h4>在线客服</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-clouds"></i>
+							<h4>云盘</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
+						<a href="#">
+							<i class="iconfont-systemmessage"></i>
+							<h4>系统消息</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- *********************** 教研员 *********************** -->
+	<div class="container" *ngIf="role==='教研员'">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-scan"></i>
+							<h4>答案设置</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-teacher"></i>
+							<h4>教师信息</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-blue">
+						<a href="#">
+							<i class="iconfont-assignmentscoringtasks"></i>
+							<h4>阅卷任务分配</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-bestanswer"></i>
+							<h4>优标答案</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-blue">
+						<a href="#">
+							<i class="iconfont-reportdownload"></i>
+							<h4>报表下载</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-examineeachievement"></i>
+							<h4>考生成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x2 col-orange">
+						<a href="#">
+							<i class="iconfont-onlinemarking"></i>
+							<h4>线上阅卷</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange" style="top:131px; position:absolute">
+						<a href="#">
+							<i class="iconfont-schoolmarks"></i>
+							<h4>学校成绩</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-itemanalysis"></i>
+							<h4>试题分析</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-orange">
+						<a href="#">
+							<i class="iconfont-markingstatistics"></i>
+							<h4>阅卷统计</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="grid clearfix">
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-service"></i>
+							<h4>在线客服</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-1x1 col-green">
+						<a href="#">
+							<i class="iconfont-clouds"></i>
+							<h4>云盘</h4>
+						</a>
+					</div>
+					<div class="grid-item table-cell horizontal vertical col col-2x2 col-green">
+						<a href="#">
+							<i class="iconfont-systemmessage"></i>
+							<h4>系统消息</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 <!-- 内容 end -->
