@@ -8,7 +8,9 @@ import { Router } from '@angular/router';
 export class AppComponent {
     pageTitle: string = '蘑菇云后台管理系统';
     userName: string = '';
-
+	
+	role: string = "校长";
+	
 	constructor(private router: Router) {
 
 	}
@@ -17,6 +19,10 @@ export class AppComponent {
         console.log("get user name...");
 		this.getUserName();
     }
+
+	checkLogInStatus() : void {
+		//alert("clicked");
+	}
 
 	logout(): void {
 		const req = new XMLHttpRequest();
