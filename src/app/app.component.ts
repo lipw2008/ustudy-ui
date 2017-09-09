@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from './shared.service';
 
 @Component({
     selector: 'ustudy-app',
@@ -11,13 +12,12 @@ export class AppComponent {
 	
 	role: string = "校长";
 	
-	constructor(private router: Router) {
+	constructor(private _sharedService: SharedService, private router: Router) {
 
 	}
 
     ngOnInit() : void {
-        console.log("get user name...");
-		this.getUserName();
+  		this.getUser();
     }
 
 	checkLogInStatus() : void {
@@ -25,38 +25,23 @@ export class AppComponent {
 	}
 
 	logout(): void {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/logout');
-		req.setRequestHeader("Content-type", "application/json");
-		var that = this;
-		req.onreadystatechange = function() {
-			if (req.readyState == 4 && req.status/100 == 2) {
-				alert("您已退出");
-				that.userName = '';
-				that.router.navigate(['welcome']);
-			} else if (req.readyState == 4 && req.status/100 != 2) {
-				alert("退出失败！");
-				that.router.navigate(['welcome']);
-			}
-		}
-		req.send();
+		this._sharedService.makeRequest('GET', '/info/logout', '').then((data: any) => {
+			alert("您已退出");
+			this.userName = '';
+			this.router.navigate(['welcome']);
+		}).catch((error: any) => {
+			alert("退出失败");
+			this.router.navigate(['welcome']);
+		});
 	}
 
-    getUserName() {
-		this.fetch((data) => {
-			//cache the list
+	getUser() {
+		this._sharedService.makeRequest('GET', '/info/loginId', '').then((data: any) => {
 			console.log("data: " + data);
-			this.userName = data===undefined ? '' : data;
-		});		
-	}
-	
-	fetch(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/loginId');
-		req.onload = () => {
-			cb(req.response);
-		};
-		
-		req.send();
+			this.userName = data.userName ===undefined ? '' : data.userName;
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}	
 }

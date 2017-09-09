@@ -13,6 +13,8 @@ import { TeacherModule } from './teachers/teacher.module';
 import { SchoolModule } from './schools/school.module';
 import { WelcomeModule } from './welcome/welcome.module';
 
+import { SharedService } from './shared.service';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -29,6 +31,9 @@ import { WelcomeModule } from './welcome/welcome.module';
   ],
   declarations: [
     AppComponent
+  ],
+  providers: [
+    SharedService
   ],
   bootstrap: [ AppComponent ]
 })

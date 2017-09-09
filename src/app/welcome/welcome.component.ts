@@ -1,4 +1,5 @@
 import { Component, OnInit }  from '@angular/core';
+ import { SharedService } from '../shared.service';
 
 
 @Component({
@@ -9,25 +10,20 @@ export class WelcomeComponent{
 
     role: string = "任课老师";
 
-    ngOnInit() {
-        this.getUserName();
+    constructor(private _sharedService: SharedService) {
     }
 
-    getUserName() {
-		this.fetch((data) => {
-			//cache the list
+    ngOnInit() {
+        this.getUser();
+    }
+
+	getUser() {
+		this._sharedService.makeRequest('GET', '/info/loginId', '').then((data: any) => {
 			console.log("data: " + data);
-			//this.userName = data===undefined ? '' : data;
-		});		
-	}
-	
-	fetch(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/loginId');
-		req.onload = () => {
-			cb(req.response);
-		};
-		
-		req.send();
+			this.role = data.role ===undefined ? '' : data.role;
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
 }
