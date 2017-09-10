@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { IStudent } from './student';
 import { StudentService } from './student.service';
+import { SharedService } from '../shared.service';
 
 @Component({
     templateUrl: 'update-student.component.html'
@@ -30,7 +31,7 @@ export class UpdateStudentComponent implements OnInit {
 	
 	types = [];
 	
-    constructor(private _studentService: StudentService, public fb: FormBuilder, public route: ActivatedRoute, private router: Router) {
+    constructor(private _studentService: StudentService, private _sharedService: SharedService, public fb: FormBuilder, public route: ActivatedRoute, private router: Router) {
 		
     }
 	
@@ -44,22 +45,17 @@ export class UpdateStudentComponent implements OnInit {
 			return;
 		}
 		
-		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/info/student/update");
-		req.setRequestHeader("Content-type", "application/json");
-		var that = this;
-		req.onreadystatechange = function() {
-			if (req.readyState == 4 && req.status == 200) {
-				alert("修改成功");
-				//go back to the student list page
-				that.router.navigate(['studentList']);
-			} else if (req.readyState == 4 && req.status != 200) {
-				alert("修改失败！");
-				//go back to the student list page
-				that.router.navigate(['studentList']);
-			}
-		}
-		req.send(JSON.stringify(this.student));
+		this._sharedService.makeRequest('POST', '/info/student/update', JSON.stringify(this.student)).then((data: any) => {
+			alert("修改成功");
+			//go back to the teacher list page
+			this.router.navigate(['studentList']);
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+			alert("修改失败！");
+			//go back to the teacher list page
+			this.router.navigate(['studentList']);
+		});
 	}
 		
     ngOnInit(): void {

@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { ITeacher } from './teacher';
 import { TeacherService } from './teacher.service';
+import { SharedService } from '../shared.service';
 
 @Component({
     templateUrl: 'teacher-list.component.html'
@@ -45,7 +46,7 @@ export class TeacherListComponent implements OnInit {
 	role = "";
 	teacherNameId = "";
 
-    constructor(private _teacherService: TeacherService, public fb: FormBuilder) {
+    constructor(private _teacherService: TeacherService, private _sharedService: SharedService, public fb: FormBuilder) {
 
     }
 
@@ -57,7 +58,8 @@ export class TeacherListComponent implements OnInit {
 	}
 	
 	reload() {
-		this.fetch((data) => {
+		//req.open('GET', 'assets/api/teachers/teachers.json');
+		this._sharedService.makeRequest('GET', '/info/teacher/list/0', '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			for(var t of data) {
@@ -104,20 +106,11 @@ export class TeacherListComponent implements OnInit {
 			}
 			this.temp = [...data];
 			this.rows = data;
-		});		
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
-	
-	fetch(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/teacher/list/0');
-		//req.open('GET', 'assets/api/teachers/teachers.json');
-
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
-	}	
 	
 	filter(event) {
 		// filter our data
@@ -149,18 +142,13 @@ export class TeacherListComponent implements OnInit {
 	}
 	
 	remove(ids) {
-		const req = new XMLHttpRequest();
-		req.open('POST', 'http://47.92.53.57:8080/info/teacher/delete');
-		req.setRequestHeader("Content-type", "application/json");
-		var t = this;
-		req.onreadystatechange = function() {
-			if (req.readyState == 4 && req.status/100 == 2) {
-				t.reload();
-				alert("删除成功！");
-			} else if (req.readyState == 4 && req.status/100 != 2) {
-				alert("删除失败！");
-			}
-		}		
-		req.send(ids);
+		this._sharedService.makeRequest('POST', '/info/teacher/delete', ids).then((data: any) => {
+			this.reload();
+			alert("删除成功！");
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+			alert("删除失败！");
+		});
 	}
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit }  from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { SchoolService } from './school.service';
+import { SharedService } from '../shared.service';
 
 @Component({
     templateUrl: 'class.component.html'
@@ -19,7 +20,7 @@ export class ClassComponent implements OnInit {
 	departmentName: string = "";
 	gradeId: string = "";
 
-    constructor(private _schoolService: SchoolService, private route: ActivatedRoute) {
+    constructor(private _schoolService: SchoolService, private _sharedService: SharedService, private route: ActivatedRoute) {
 
     }
 
@@ -31,23 +32,15 @@ export class ClassComponent implements OnInit {
 	}
 	
 	reload() {
-		this.fetch((data) => {
+		//req.open('GET', 'assets/api/schools/grade.json');
+		this._sharedService.makeRequest('GET', '/info/school/grade/' + this.gradeId, '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.grade = data;
-		});	
-	}
-	
-	fetch(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/school/grade/' + this.gradeId);
-		//req.open('GET', 'assets/api/schools/grade.json');
-
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
 
 	stringify(j){

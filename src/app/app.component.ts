@@ -8,9 +8,9 @@ import { SharedService } from './shared.service';
 })
 export class AppComponent {
     pageTitle: string = '蘑菇云后台管理系统';
+
     userName: string = '';
-	
-	role: string = "校长";
+	role: string = "任课老师";
 	
 	constructor(private _sharedService: SharedService, private router: Router) {
 
@@ -21,7 +21,10 @@ export class AppComponent {
     }
 
 	checkLogInStatus() : void {
-		//alert("clicked");
+		console.log("check log in status");
+		if (this._sharedService.url !== '' && this.userName === '') {
+			window.location.href = this._sharedService.url + '/info/login.jsp';
+		}
 	}
 
 	logout(): void {
@@ -39,6 +42,7 @@ export class AppComponent {
 		this._sharedService.makeRequest('GET', '/info/loginId', '').then((data: any) => {
 			console.log("data: " + data);
 			this.userName = data.userName ===undefined ? '' : data.userName;
+			this.role = data.role === undefined ? '任课老师' : data.role;
 		}).catch((error: any) => {
 			console.log(error.status);
 			console.log(error.statusText);

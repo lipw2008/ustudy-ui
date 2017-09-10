@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { ITeacher } from './teacher';
 import { TeacherService } from './teacher.service';
+import { SharedService } from '../shared.service';
 
 @Component({
     templateUrl: 'add-teacher.component.html'
@@ -35,7 +36,7 @@ export class AddTeacherComponent implements OnInit {
 	
 	roles = [];
 		
-    constructor(private _teacherService: TeacherService, public fb: FormBuilder, private router: Router) {
+    constructor(private _teacherService: TeacherService, private _sharedService: SharedService, public fb: FormBuilder, private router: Router) {
 
     }
 	
@@ -53,22 +54,17 @@ export class AddTeacherComponent implements OnInit {
 		this.teacher.subjects[0].n = this.inputSubject;
 		this.teacher.roles[0].n = this.inputRole;
 
-		const req = new XMLHttpRequest();
-		req.open('POST', 'http://47.92.53.57:8080/info/teacher/add');
-		req.setRequestHeader("Content-type", "application/json");
-		var t = this;
-		req.onreadystatechange = function() {
-			if (req.readyState == 4 && req.status/100 == 2) {
-				alert("添加成功");
-				//go back to the teacher list page
-				t.router.navigate(['teacherList']);
-			} else if (req.readyState == 4 && req.status/100 != 2) {
-				alert("添加失败！");
-				//go back to the teacher list page
-				t.router.navigate(['teacherList']);
-			}
-		}
-		req.send(JSON.stringify(this.teacher));
+		this._sharedService.makeRequest('POST', '/info/teacher/add', JSON.stringify(this.teacher)).then((data: any) => {
+			alert("添加成功");
+			//go back to the teacher list page
+			this.router.navigate(['teacherList']);
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+			alert("添加失败！");
+			//go back to the teacher list page
+			this.router.navigate(['teacherList']);
+		});
 	}
 		
     ngOnInit(): void {

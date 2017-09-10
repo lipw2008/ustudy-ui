@@ -2,6 +2,7 @@ import { Component, OnInit }  from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import { SchoolService } from './school.service';
+import { SharedService } from '../shared.service';
 
 @Component({
     templateUrl: 'add-class-teacher.component.html'
@@ -32,7 +33,7 @@ export class AddClassTeacherComponent implements OnInit {
 
 	endpoints = {"高中部": "high", "初中部": "junior", "小学部": "primary", "其他": "other"};
 
-    constructor(private _schoolService: SchoolService, private route: ActivatedRoute, private router: Router) {
+    constructor(private _schoolService: SchoolService, private _sharedService: SharedService, private route: ActivatedRoute, private router: Router) {
 
     }
 
@@ -115,23 +116,16 @@ export class AddClassTeacherComponent implements OnInit {
 	}
 
 	loadTeachers() {
-		this.fetchTeachers((data) => {
+		//get department teachers
+		//req.open('GET', 'assets/api/teachers/teachers.json');
+		this._sharedService.makeRequest('GET', '/info/school/departteac/' + this.endpoints[this.departmentName], '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.teachers = data;
 			this.temp = data;
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
 		});
-	}
-	
-	fetchTeachers(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/school/departteac/' + this.endpoints[this.departmentName]);
-		//req.open('GET', 'assets/api/teachers/gradeTeachers.json');
-
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
 	}
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit }  from '@angular/core';
 
 import { SchoolService } from './school.service';
+import { SharedService } from '../shared.service';
 
 @Component({
     templateUrl: 'department.component.html'
@@ -14,7 +15,7 @@ export class DepartmentComponent implements OnInit {
 		"departments": []
 	};
 	
-    constructor(private _schoolService: SchoolService) {
+    constructor(private _schoolService: SchoolService, private _sharedService: SharedService) {
 
     }
 
@@ -23,23 +24,15 @@ export class DepartmentComponent implements OnInit {
 	}
 	
 	reload() {
-		this.fetch((data) => {
+		//req.open('GET', 'assets/api/schools/school.json');
+		this._sharedService.makeRequest('GET', '/info/school/detail', '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.school = data;
-		});	
-	}
-	
-	fetch(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/school/detail');
-		//req.open('GET', 'assets/api/schools/school.json');
-
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
 
 	stringify(j){

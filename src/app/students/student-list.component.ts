@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { IStudent } from './student';
 import { StudentService } from './student.service';
+import { SharedService } from '../shared.service';
 
 @Component({
     templateUrl: 'student-list.component.html'
@@ -45,7 +46,7 @@ export class StudentListComponent implements OnInit {
 	studentType = "";
 	studentName = "";
 
-    constructor(private _studentService: StudentService, public fb: FormBuilder) {
+    constructor(private _studentService: StudentService, private _sharedService: SharedService, public fb: FormBuilder) {
 
     }
 
@@ -57,24 +58,16 @@ export class StudentListComponent implements OnInit {
 	}
 	
 	reload() {
-		this.fetch((data) => {
+		this._sharedService.makeRequest('GET', '/info/student/list/0', '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.temp = [...data];
 			this.rows = data;
-		});		
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
-	
-	fetch(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/student/list/0');
-
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
-	}	
 	
 	filter(event) {
 		// const gradeName = this.elm.nativeElement.querySelector('#gradeFilterValue').value;
@@ -111,19 +104,15 @@ export class StudentListComponent implements OnInit {
 	}
 	
 	remove(ids) {
-		const req = new XMLHttpRequest();
-		req.open('POST', 'http://47.92.53.57:8080/info/student/delete');
-		req.setRequestHeader("Content-type", "application/json");
-		var t = this;
-		req.onreadystatechange = function() {
-			if (req.readyState == 4 && req.status == 200) {
-				t.reload();
-				alert("删除成功！");
-			} else if (req.readyState == 4 && req.status != 200) {
-				alert("删除失败！");
-			}
-		}		
-		req.send(ids);
+
+		this._sharedService.makeRequest('POST', '/info/student/delete', ids).then((data: any) => {
+			this.reload();
+			alert("删除成功！");
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+			alert("删除失败！");
+		});
 	}
 	
 	updateStudent(id) {

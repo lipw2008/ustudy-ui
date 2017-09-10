@@ -2,6 +2,7 @@ import { Component, OnInit }  from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import { SchoolService } from './school.service';
+import { SharedService } from '../shared.service';
 
 @Component({
     templateUrl: 'update-class.component.html'
@@ -23,7 +24,7 @@ export class UpdateClassComponent implements OnInit {
 
 	teachers = [];
 
-    constructor(private _schoolService: SchoolService, private route: ActivatedRoute, private router: Router) {
+    constructor(private _schoolService: SchoolService, private _sharedService: SharedService, private route: ActivatedRoute, private router: Router) {
 
     }
 
@@ -43,28 +44,20 @@ export class UpdateClassComponent implements OnInit {
 	}
 
 	update(event) {
-		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/info/school/class/update"  + this.classId);
-		req.setRequestHeader("Content-type", "application/json");
-		var that = this;
-		req.onreadystatechange = function() {
-			that._schoolService.resetPersistData();
-			if (req.readyState == 4 && req.status == 200) {
-				alert("修改成功");
-				//go back to the student list page
-				that.router.navigate(['class', {departmentName: that.departmentName, gradeId: that.gradeId}]);
-			} else if (req.readyState == 4 && req.status != 200) {
-				alert("修改失败！");
-				//go back to the student list page
-				that.router.navigate(['class', {departmentName: that.departmentName, gradeId: that.gradeId}]);
-			}
-		}
-
 		for(let subject of this.class.subjects) {
 			delete subject.options;
 		}
-
-		req.send(JSON.stringify(this.class));
+		this._sharedService.makeRequest('POST', '/info/school/class/update/' + this.classId, JSON.stringify(this.class)).then((data: any) => {
+			alert("修改成功");
+			//go back to the student list page
+			this.router.navigate(['class', {departmentName: this.departmentName, gradeId: this.gradeId}]);
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+			alert("修改失败！");
+			//go back to the student list page
+			this.router.navigate(['class', {departmentName: this.departmentName, gradeId: this.gradeId}]);
+		});
 	}
 
     ngOnInit(): void {
@@ -82,28 +75,21 @@ export class UpdateClassComponent implements OnInit {
 	}
 	
 	loadClass() {
-		this.fetchClass((data) => {
+		//req.open('GET', 'assets/api/schools/class.json');
+		this._sharedService.makeRequest('GET', '/info/school/class/' + this.classId, '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.class = data;
 			this.loadTeachers();
-		});	
-	}
-	
-	fetchClass(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/school/class/' + this.classId);
-		//req.open('GET', 'assets/api/schools/class.json');
-
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
 
 	loadTeachers() {
-		this.fetchTeachers((data) => {
+		//req.open('GET', 'assets/api/teachers/classTeachers.json');
+		this._sharedService.makeRequest('GET', '/info/school/gradeteac/' + this.gradeId, '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.teachers = data;
@@ -120,18 +106,9 @@ export class UpdateClassComponent implements OnInit {
 				}
 			}
 			console.log("subjects: " + JSON.stringify(this.class.subjects));
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
 		});
-	}
-	
-	fetchTeachers(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/school/gradeteac/' + this.gradeId);
-		//req.open('GET', 'assets/api/teachers/classTeachers.json');
-
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
 	}
 }

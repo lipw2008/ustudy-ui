@@ -2,6 +2,7 @@ import { Component, OnInit }  from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import { SchoolService } from './school.service';
+import { SharedService } from '../shared.service';
 
 @Component({
     templateUrl: 'update-grade.component.html'
@@ -19,7 +20,7 @@ export class UpdateGradeComponent implements OnInit {
 
 	teachers = [];
 
-    constructor(private _schoolService: SchoolService, private route: ActivatedRoute, private router: Router) {
+    constructor(private _schoolService: SchoolService, private _sharedService: SharedService, private route: ActivatedRoute, private router: Router) {
 
     }
 
@@ -39,66 +40,41 @@ export class UpdateGradeComponent implements OnInit {
 	}
 
 	updateGradeOwner(event) {
-		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/info/school/grade/updateOwner/"  + this.gradeId);
-		req.setRequestHeader("Content-type", "application/json");
-		var that = this;
-		req.onreadystatechange = function() {
-			that.subjects=[];
-			that.teachers=[];
-			if (req.readyState == 4 && req.status == 200) {
-				alert("修改成功");
-				//go back to the student list page
-				that.router.navigate(['grade', {gradeId: that.gradeId}]);
-			} else if (req.readyState == 4 && req.status != 200) {
-				alert("修改失败！");
-				//go back to the student list page
-				that.router.navigate(['grade', {gradeId: that.gradeId}]);
-			}
-		}
-
-		// for(let option of this.gradeOwner.options){
-		// 	if(option.selected === true) {
-		// 		this.gradeOwner = {"id": option.id, "n": option.value};
-		// 		break;
-		// 	}
-		// }
+		this.subjects=[];
+		this.teachers=[];
 		delete this.gradeOwner.options;
-
-		req.send(JSON.stringify(this.gradeOwner));
+		this._sharedService.makeRequest('POST', '/info/school/grade/updateOwner/' + this.gradeId, JSON.stringify(this.gradeOwner)).then((data: any) => {
+			alert("修改成功");
+			//go back to the student list page
+			this.router.navigate(['grade', {gradeId: this.gradeId}]);
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+			alert("修改失败！");
+			//go back to the student list page
+			this.router.navigate(['grade', {gradeId: this.gradeId}]);
+		});
 	}
 
 	updateSubjects(event) {
-		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/info/school/grade/update/"  + this.gradeId);
-		req.setRequestHeader("Content-type", "application/json");
-		var that = this;
-		req.onreadystatechange = function() {
-			that.subjects=[];
-			that.teachers=[];
-			if (req.readyState == 4 && req.status == 200) {
-				alert("修改成功");
-				//go back to the student list page
-				that.router.navigate(['grade', {gradeId: that.gradeId}]);
-			} else if (req.readyState == 4 && req.status != 200) {
-				alert("修改失败！");
-				//go back to the student list page
-				that.router.navigate(['grade', , {gradeId: that.gradeId}]);
-			}
-		}
-
 		for(let subject of this.subjects) {
-		// 	subject.owners = [];
-		// 	for(let option of subject.options){
-		// 		if(option.selected === true) {
-		// 			let owner = {"id": option.id, "n": option.value};
-		// 			subject.owners.push(owner);
-		// 		}
-		// 	}
 			delete subject.options;
 		}
-
-		req.send(JSON.stringify(this.subjects));
+		this._sharedService.makeRequest('POST', '/info/school/grade/update/' + this.gradeId, JSON.stringify(this.subjects)).then((data: any) => {
+			this.subjects=[];
+			this.teachers=[];
+			alert("修改成功");
+			//go back to the student list page
+			this.router.navigate(['grade', {gradeId: this.gradeId}]);
+		}).catch((error: any) => {
+			this.subjects=[];
+			this.teachers=[];
+			console.log(error.status);
+			console.log(error.statusText);
+			alert("修改失败！");
+			//go back to the student list page
+			this.router.navigate(['grade', {gradeId: this.gradeId}]);
+		});
 	}
 
     ngOnInit(): void {
@@ -119,29 +95,23 @@ export class UpdateGradeComponent implements OnInit {
 	}
 	
 	loadSubjects() {
-		this.fetchSubjects((data) => {
+		//req.open('GET', 'assets/api/schools/grade.json');
+		this._sharedService.makeRequest('GET', '/info/school/grade/' + this.gradeId, '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.subjects = data.subjects;
 			this.gradeOwner = data.gradeOwner;
 			this.loadTeachers();
-		});	
-	}
-	
-	fetchSubjects(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/school/grade/' + this.gradeId);
-		//req.open('GET', 'assets/api/schools/grade.json');
-
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
 
 	loadTeachers() {
-		this.fetchTeachers((data) => {
+
+		//req.open('GET', 'assets/api/teachers/gradeTeachers.json');
+		this._sharedService.makeRequest('GET', '/info/school/gradeteac/' + this.gradeId, '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.teachers = data;
@@ -167,18 +137,10 @@ export class UpdateGradeComponent implements OnInit {
 				}
 				console.log("subjects: " + JSON.stringify(this.subjects));
 			}
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
 		});
 	}
-	
-	fetchTeachers(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/school/gradeteac/' + this.gradeId);
-		//req.open('GET', 'assets/api/teachers/gradeTeachers.json');
 
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
-	}
 }

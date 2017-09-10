@@ -2,6 +2,7 @@ import { Component, OnInit }  from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import { SchoolService } from './school.service';
+import { SharedService } from '../shared.service';
 
 @Component({
     templateUrl: 'update-department.component.html'
@@ -19,7 +20,7 @@ export class UpdateDepartmentComponent implements OnInit {
 
 	endpoints = {"高中部": "high", "初中部": "junior", "小学部": "primary", "其他": "other"};
 
-    constructor(private _schoolService: SchoolService, private route: ActivatedRoute, private router: Router) {
+    constructor(private _schoolService: SchoolService, private _sharedService: SharedService, private route: ActivatedRoute, private router: Router) {
 
     }
 
@@ -30,24 +31,6 @@ export class UpdateDepartmentComponent implements OnInit {
 	}
 
 	update(event) {
-		const req = new XMLHttpRequest();
-		req.open('POST', "http://47.92.53.57:8080/info/school/departsubs/update/"  + this.endpoints[this.departmentName]);
-		req.setRequestHeader("Content-type", "application/json");
-		var that = this;
-		req.onreadystatechange = function() {
-			that.subjects=[];
-			that.teachers=[];
-			if (req.readyState == 4 && req.status == 200) {
-				alert("修改成功");
-				//go back to the student list page
-				that.router.navigate(['department', {departmentName: that.departmentName}]);
-			} else if (req.readyState == 4 && req.status != 200) {
-				alert("修改失败！");
-				//go back to the student list page
-				that.router.navigate(['department', {departmentName: that.departmentName}]);
-			}
-		}
-
 		for(let subject of this.subjects) {
 			subject.owners = [];
 			for(let option of subject.options){
@@ -58,8 +41,21 @@ export class UpdateDepartmentComponent implements OnInit {
 			}
 			delete subject.options;
 		}
-
-		req.send(JSON.stringify(this.subjects));
+		this._sharedService.makeRequest('POST', '/info/school/departsubs/update/' + this.endpoints[this.departmentName], JSON.stringify(this.subjects)).then((data: any) => {
+			this.subjects=[];
+			this.teachers=[];
+			alert("修改成功");
+			//go back to the depart list page
+			this.router.navigate(['department', {departmentName: this.departmentName}]);
+		}).catch((error: any) => {
+			this.subjects=[];
+			this.teachers=[];
+			console.log(error.status);
+			console.log(error.statusText);
+			alert("修改失败！");
+			//go back to the student list page
+			this.router.navigate(['department', {departmentName: this.departmentName}]);
+		});
 	}
 
     ngOnInit(): void {
@@ -77,28 +73,22 @@ export class UpdateDepartmentComponent implements OnInit {
 	}
 	
 	loadSubjects() {
-		this.fetchSubjects((data) => {
+		//req.open('GET', 'assets/api/schools/subjects.json');
+		this._sharedService.makeRequest('GET', '/info/school/departsubs/' + this.endpoints[this.departmentName], '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.subjects = data;
 			this.loadTeachers();
-		});	
-	}
-	
-	fetchSubjects(cb) {
-		const req = new XMLHttpRequest();
-		req.open('GET', 'http://47.92.53.57:8080/info/school/departsubs/' + this.endpoints[this.departmentName]);
-		//req.open('GET', 'assets/api/schools/subjects.json');
-
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
 
 	loadTeachers() {
-		this.fetchTeachers((data) => {
+		//get department teachers
+		//req.open('GET', 'assets/api/teachers/teachers.json');
+		this._sharedService.makeRequest('GET', '/info/school/departteac/' + this.endpoints[this.departmentName], '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.teachers = data;
@@ -127,19 +117,9 @@ export class UpdateDepartmentComponent implements OnInit {
 				}
 			}
 			console.log("subjects: " + JSON.stringify(this.subjects));
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
 		});
-	}
-	
-	fetchTeachers(cb) {
-		const req = new XMLHttpRequest();
-		//get department teachers
-		req.open('GET', 'http://47.92.53.57:8080/info/school/departteac/' + this.endpoints[this.departmentName]);
-		//req.open('GET', 'assets/api/teachers/teachers.json');
-
-		req.onload = () => {
-			cb(JSON.parse(req.response));
-		};
-		
-		req.send();
 	}
 }
