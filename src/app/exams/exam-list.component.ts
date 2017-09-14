@@ -48,27 +48,16 @@ export class ExamListComponent implements OnInit {
 
     ngOnInit(): void {
 		this.reload();
-        this.grades = this._teacherService.getGrades();
-        this.subjects = this._teacherService.getSubjects();
-        this.roles = this._teacherService.getRoles();
+        this.grades = ["高一", "高二", "高三"];
+        this.subjects = ["数学", "物理", "化学"];
 	}
 	
 	reload() {
 		//req.open('GET', 'assets/api/teachers/teachers.json');
-		this._sharedService.makeRequest('GET', '/info/exam/list/0', '').then((data: any) => {
+		this._sharedService.makeRequest('GET', 'assets/api/exams/exams.json', '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			for(var t of data) {
-				//账号
-				if (t.roles && t.roles.length >0) {
-					var str = "";
-					for (var r of t.roles) {
-						str += r.n + " ";
-					}
-					t.roles = str;
-				} else {
-					t.roles = "";
-				}
 				//科目
 				if (t.subjects && t.subjects.length >0) {
 					var str = "";
@@ -89,16 +78,6 @@ export class ExamListComponent implements OnInit {
 				} else {
 					t.grades = "";
 				}							
-				//班级
-				if (t.classes && t.classes.length >0) {
-					var str = "";
-					for (var c of t.classes) {
-						str += c.n + " ";
-					}
-					t.classes = str;
-				} else {
-					t.classes = "";
-				}
 			}
 			this.temp = [...data];
 			this.rows = data;
@@ -114,37 +93,11 @@ export class ExamListComponent implements OnInit {
 		const temp = this.temp.filter(function(d) {
 			return d.grades.indexOf(t.grade) !== -1 
 			&& d.subjects.indexOf(t.subject) !== -1
-			&& d.roles.indexOf(t.role) !== -1
-			&& (d.teacherName.indexOf(t.teacherNameId) !== -1 || d.teacherId.indexOf(t.teacherNameId) !== -1);
+			&& d.examName.indexOf(t.examName) !== -1;
 		});
 		// update the rows
 		this.rows = temp;
 		// Whenever the filter changes, always go back to the first page
 		//this.table.offset = 0;
-	}
-	
-	removeTeacher(event) {
-		var ids = [];
-		console.log("length:" + this.selected.length);
-		for(var s of this.selected) {
-			var id = {"id" : ""};
-			id.id = s.id;
-			console.log("remove teachers:" + id.id);
-			ids.push(id);
-		}
-		
-		console.log("remove teachers:" + JSON.stringify(ids) );
-		this.remove(JSON.stringify(ids));
-	}
-	
-	remove(ids) {
-		this._sharedService.makeRequest('POST', '/info/teacher/delete', ids).then((data: any) => {
-			this.reload();
-			alert("删除成功！");
-		}).catch((error: any) => {
-			console.log(error.status);
-			console.log(error.statusText);
-			alert("删除失败！");
-		});
 	}
 }

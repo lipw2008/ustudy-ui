@@ -1,0 +1,26 @@
+[
+    {
+        "id": "001",
+        "orgType": "school",
+        "orgId": "003",
+        "examName": "16-17学年上学期期末考试",
+        "examStatus": "finished",
+        "startDate": "2017-09-11",
+        "endDate": "2017-09-15",
+        "subjects": [{"n":"语文"}],
+        "grades": [{"n":"高一"}],
+        "examinees": [{"n":"张三"}]
+    },
+    {
+        "id": "002",
+        "orgType": "school",
+        "orgId": "003",
+        "examName": "16-17学年上学期期末考试",
+        "examStatus": "finished",
+        "startDate": "2017-09-11",
+        "endDate": "2017-09-15",
+        "subjects": [{"n":"语文"}],
+        "grades": [{"n":"高一"}],
+        "examinees": [{"n":"张三"}]
+    }
+]
