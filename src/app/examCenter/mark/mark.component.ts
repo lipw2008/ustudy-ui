@@ -88,12 +88,13 @@ export class MarkComponent implements OnInit {
 				this.cxt.beginPath();
 				this.circleBeginX = evt.offsetX;
 				this.circleBeginY = evt.offsetY;
+				break;
 			case 'Text':
 				let textbox = document.createElement("input");
 				textbox.type = "text";
 				textbox.style.position = "absolute";
-				textbox.style.top = this.canvas.offsetTop + evt.offsetY + "px";
-				textbox.style.left = this.canvas.offsetLeft + evt.offsetX + "px";
+				textbox.style.left = evt.clientX + "px";
+				textbox.style.top = evt.clientY + "px";
 				textbox.style.display = "inline";
 				textbox.setAttribute("autofocus", "");
 				let tEvt = evt;
@@ -110,6 +111,7 @@ export class MarkComponent implements OnInit {
 				textbox.focus();
 				console.log(textbox);
 				console.log(this.canvas.offsetLeft + ' ' + evt.offsetX);
+				break;
 			default:
 				//Do Nothing
 		}
@@ -125,8 +127,8 @@ export class MarkComponent implements OnInit {
 					this.cxt.strokeStyle = "red";
 					this.cxt.stroke();
 					this.cxt.closePath();
-					break;
 				}
+				break;
 			case 'Circle':
 				let circleEndX = 0;
 				let circleEndY = 0;
@@ -154,6 +156,7 @@ export class MarkComponent implements OnInit {
 				this.cxt.strokeStyle = "red";
 				this.cxt.stroke();
 				this.cxt.closePath();
+				break;
 			default:
 				//Do Nothing
 		}
