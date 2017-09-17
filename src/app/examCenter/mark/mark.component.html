@@ -1,0 +1,15 @@
+<!-- 内容 start -->
+<div class="container">
+	<div class="col-sm-12 col-lg-3 text-right">
+		<div class="btn-group btn-group-justified" role="group" aria-label="button group">
+			<a (click)='drawLine()' class="btn btn-default" title="画线">画线</a>
+			<a (click)='drawCircle()' class="btn btn-default" title="画圆">画圆</a>
+			<a (click)='drawText()' class="btn btn-default" title="批注">批注</a>
+			<a (click)='saveImage()' class="btn btn-default" title="导出">导出</a>
+		</div>
+	</div>
+	<div #markContainer style="width: 800px; height:550px; overflow-x: auto; overflow-y: auto">
+		<canvas #markCanvas id="markCanvas"></canvas>
+	</div>
+</div>
+<!-- 内容 end -->			

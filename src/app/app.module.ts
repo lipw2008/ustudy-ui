@@ -13,6 +13,8 @@ import { TeacherModule } from './teachers/teacher.module';
 import { SchoolModule } from './schools/school.module';
 import { WelcomeModule } from './welcome/welcome.module';
 
+import { MarkModule } from './examCenter/mark/mark.module';
+
 import { SharedService } from './shared.service';
 
 @NgModule({
@@ -27,7 +29,8 @@ import { SharedService } from './shared.service';
 	StudentModule,
   TeacherModule,
   SchoolModule,
-  WelcomeModule
+  WelcomeModule,
+  MarkModule
   ],
   declarations: [
     AppComponent

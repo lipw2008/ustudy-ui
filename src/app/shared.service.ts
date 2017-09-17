@@ -30,7 +30,10 @@ export class SharedService {
 	  	var configXhr = new XMLHttpRequest();
 	  	configXhr.open('GET', 'assets/config.json');
 	  	configXhr.onload = () => {
-	  		var url = JSON.parse(configXhr.response).url;
+	  		var url = "";
+	  		if(endpoint.substring(0,6) !== "assets") {
+	  			url = JSON.parse(configXhr.response).url;
+	  		}
 		    var xhr = new XMLHttpRequest();
 		    xhr.open(method, "" + url + endpoint);
 		    xhr.onload = () => {
