@@ -22,9 +22,9 @@ export class AppComponent {
 
 	checkLogInStatus() : void {
 		console.log("check log in status");
-		if (this._sharedService.url !== '' && this.userName === '') {
-			window.location.href = this._sharedService.url + '/info/login.jsp';
-		}
+		// if (this._sharedService.url !== '' && this.userName === '') {
+		// 	window.location.href = this._sharedService.url + '/info/login.jsp';
+		// }
 	}
 
 	logout(): void {
