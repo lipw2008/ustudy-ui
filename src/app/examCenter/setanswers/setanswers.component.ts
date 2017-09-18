@@ -4,10 +4,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SharedService } from '../../shared.service';
 
 @Component({
-    templateUrl: 'exam-list.component.html'
+    templateUrl: 'setanswers.component.html'
 })
 
-export class ExamListComponent implements OnInit {
+export class SetAnswersComponent implements OnInit {
 
 	public searchForm = this.fb.group({
 		examName: [""],

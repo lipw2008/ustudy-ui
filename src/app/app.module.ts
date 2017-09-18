@@ -14,6 +14,7 @@ import { SchoolModule } from './schools/school.module';
 import { WelcomeModule } from './welcome/welcome.module';
 
 import { MarkModule } from './examCenter/mark/mark.module';
+import { SetAnswersModule } from './examCenter/setanswers/setanswers.module';
 
 import { SharedService } from './shared.service';
 
@@ -30,7 +31,8 @@ import { SharedService } from './shared.service';
   TeacherModule,
   SchoolModule,
   WelcomeModule,
-  MarkModule
+  MarkModule,
+  SetAnswersModule
   ],
   declarations: [
     AppComponent
