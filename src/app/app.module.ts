@@ -14,6 +14,7 @@ import { SchoolModule } from './schools/school.module';
 import { WelcomeModule } from './welcome/welcome.module';
 
 import { MarkModule } from './examCenter/mark/mark.module';
+import { SelectSubjectModule } from './examCenter/setanswers/selectsubject.module';
 import { SetAnswersModule } from './examCenter/setanswers/setanswers.module';
 
 import { SharedService } from './shared.service';
@@ -32,6 +33,7 @@ import { SharedService } from './shared.service';
   SchoolModule,
   WelcomeModule,
   MarkModule,
+  SelectSubjectModule,
   SetAnswersModule
   ],
   declarations: [

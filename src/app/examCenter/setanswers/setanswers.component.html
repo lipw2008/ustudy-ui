@@ -1,156 +1,347 @@
 <!-- 路径导航 start -->
 <div class="container">
-	<ol class="nav nav-tabs clear-padding-vertical">
-		<li><a (click)="isFinished = true">已完成考试</a></li>
-		<li><a (click)="isFinished = false">未完成考试</a></li>
+	<ol class="breadcrumb">
+		<li><a href="../">首页</a></li>
+		<li><a href="selectsubject">考试中心</a></li>
+		<li class="active">答案设置</li>
 	</ol>
 </div>
 <!-- 路径导航 end -->
 <!-- 内容 start -->
 <div class="container">
 	<!-- Nav tabs -->
-	<ul class="nav nav-tabs" role="tablist">
-		<li role="presentation" class="active"><a href="#finishedExam" aria-controls="finishedExam" role="tab" data-toggle="tab">已完成考试</a></li>
-		<li role="presentation"><a href="#unFinishedExam" aria-controls="unFinishedExam" role="tab" data-toggle="tab">未完成考试</a></li>
+	<ul class="nav nav-tabs margin-bottom-lg" role="tablist">
+		<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">客观题设置</a></li>
+		<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">主观题设置</a></li>
 	</ul>
 	<!-- Tab panes -->
 	<div class="tab-content">
-		<!--已完成考试 start-->
-		<div role="tabpanel" class="tab-pane active" id="finishedExam">
-			<div class="panel panel-default">
-				<!-- 检索 start -->
-				<div class="row search-wrap">
-					<div class="col-sm-8 col-lg-8">
-						<form [formGroup]="searchForm" id="searchForm" method="post" class="form-inline" action="#">
-							<div class="input-group" >
-								<span class="input-group-addon">年级</span>
-								<select class="form-control" formControlName="grade" id="gradeFilterValue" [(ngModel)]="grade">
-									<option value=""></option>
-									<option *ngFor="let grade of grades">{{grade}}</option>
-								</select>
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon">学科</span>
-								<select class="form-control" formControlName="subject" id="subjectFilterValue" [(ngModel)]="subject">
-									<option value=""></option>
-									<option *ngFor="let subject of subjects">{{subject}}</option>
-								</select>
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon">起始日期</span>
-								<input type="text" class="form-control date" formControlName="startDate" id="startDateFilterValue" [(ngModel)]="startDate" data-date-format="yyyy-mm-dd" placeholder="开始日期">
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon">截止日期</span>
-								<input type="text" class="form-control date" formControlName="endDate" id="endDateFilterValue" [(ngModel)]="endDate" data-date-format="yyyy-mm-dd" placeholder="截止日期">
-							</div>
-							<div class="input-group">
-								<input type="text" class="form-control" formControlName="examName" id="examNameFilterValue" [(ngModel)]="examName" placeholder="请输入考试名称">
-								<span class="input-group-btn">
-									<button type="button" class="btn btn-default" (click)='filter($event)'>查询</button>
-								</span>
-							</div>
-						</form>
-					</div>
-					<div class="col-sm-4 col-lg-4 text-right">
-						<div class="btn-group btn-group-justified" role="group" aria-label="button group">
-							<a [routerLink]="['/addExam']" id="addExamBtn" class="btn btn-default" title="新建考试">新建考试</a>
-						</div>
-					</div>
-				</div>
-				<!-- 检索 end -->
-				<br/>
-				<!-- 表格 start -->
-				<div>
-						<ngx-datatable
-						style="width: 100%"
-						class="material striped"
-						[rows]="rows"
-						[columns]="columns"
-						[columnMode]="'flex'"
-						[headerHeight]="50"
-						[footerHeight]="50"
-						[rowHeight]="'auto'"
-						[selected]="selected"
-						[selectionType]="'checkbox'"
-						[limit]="10">
-						<ngx-datatable-column
-						[headerCheckboxable]="true"
-						[checkboxable]="true" [flexGrow]="1">					
-						</ngx-datatable-column>
-						<ngx-datatable-column prop="examName" name="考试名称" [flexGrow]="4"></ngx-datatable-column>
-						<ngx-datatable-column prop="startDate" name="开考时间" [flexGrow]="2"></ngx-datatable-column>
-						<ngx-datatable-column prop="grade" name="考试年级" [flexGrow]="4"></ngx-datatable-column>
-						<ngx-datatable-column prop="subject" name="考试科目" [flexGrow]="6"></ngx-datatable-column>
-						<ngx-datatable-column prop="examineeNum" name="考生人数" [flexGrow]="2"></ngx-datatable-column>
-						<ngx-datatable-column name="操作" [flexGrow]="4">
-							<ng-template let-row="row" ngx-datatable-cell-template>
-								<a [routerLink]="['/result', row]" id="resultBtn" href="#" class="btn btn-default" title="查看成绩">查看成绩</a>
-								<a [routerLink]="['/cancelPublish', row]" id="cancelPublishBtn" href="#" class="btn btn-default" title="取消发布">取消发布</a>
-							</ng-template>
-						</ngx-datatable-column>
-						</ngx-datatable>
-				</div>
-				<!-- 表格 end -->
-			</div>
-		</div>
-        <!--已完成考试 end-->
-		<!--未完成考试 start-->
-		<div role="tabpanel" class="tab-pane container container-sm" id="unFinishedExam">
-			<div class="panel panel-default">
-				<!-- 检索 start -->
-				<div class="panel-heading search-wrap">
-					<div class="row">
-						<div class="col-sm-12 text-right">
-							<div class="btn-group" role="group" aria-label="button group">
-								<a href="addExam.html" class="btn btn-primary btn-clear text-decoration" title="新建考试"><i class="glyphicon glyphicon-plus"></i> 新建考试</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- 检索 end -->
-				<!--表格 start-->
+		<div role="tabpanel" class="tab-pane active" id="tab1">
+			<!--表格 start-->
+			<form>
 				<div class="table-responsive clear-border-horizontal" data-pattern="priority-columns">
-					<table class="table table-hover table-bordered table-lighter table-striped text-center">
+					<table class="table table-hover table-bordered table-lighter table-striped form-inline">
 						<thead>
 							<tr>
-								<th>考试名称</th>
-								<th>考试时间</th>
-								<th>操作</th>
+								<th class="clearfix">
+									题号 
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link clear-padding-vertical"><i class="glyphicon glyphicon-plus"></i></a>
+									</div>
+								</th>
+								<th>题型</th>
+								<th>选项</th>
+								<th>分值</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><a href="unfinishedExamDetails.html">西安八校高三联考</a></td>
-								<td>17-4-10</td>
+								<td class="clearfix">
+									<div class="input-group">
+										<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="1">
+										<span class="input-group-addon clear-border clear-bg">至</span>
+										<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="20">
+									</div>
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
+									</div>
+								</td>
 								<td>
-									<a href="javascript:;" class="btn btn-xs btn-primary">编辑</a>
-									<a href="javascript:;" class="btn btn-xs btn-primary disabled">删除</a>
+									<select id="u60_input" class="form-control">
+										<option selected="selected" value="单选题">单选题</option>
+										<option value="多选题">多选题</option>
+										<option value="判断题">判断题</option>
+									</select>
+								</td>
+								<td>
+									<select id="u76_input" class="form-control">
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option selected="selected" value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+										<option value="9">9</option>
+										<option value="10">10</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="0">
 								</td>
 							</tr>
 							<tr>
-								<td><a href="unfinishedExamDetails.html">西工大附中4月月考</a></td>
-								<td>17-4-10</td>
-								<td>
-									<a href="javascript:;" class="btn btn-xs btn-primary">编辑</a>
-									<a href="javascript:;" class="btn btn-xs btn-primary">删除</a>
+								<td class="clearfix">
+									<div class="input-group">
+										<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="21">
+										<span class="input-group-addon clear-border clear-bg">至</span>
+										<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="25">
+									</div>
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
+									</div>
 								</td>
-							</tr>
-							<tr>
-								<td><a href="unfinishedExamDetails.html">高三周考（8/4）</a></td>
-								<td></td>
 								<td>
-									<a href="javascript:;" class="btn btn-xs btn-primary">编辑</a>
-									<a href="javascript:;" class="btn btn-xs btn-primary">删除</a>
+									<select id="u60_input" class="form-control">
+										<option value="单选题">单选题</option>
+										<option selected="selected" value="多选题">多选题</option>
+										<option value="判断题">判断题</option>
+									</select>
+								</td>
+								<td>
+									<select id="u76_input" class="form-control">
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option selected="selected" value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+										<option value="9">9</option>
+										<option value="10">10</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="0">
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-cog"></i></a>
+									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<!--表格end-->
-			</div>
+				<!--表格 start-->
+				<div class="table-responsive" data-pattern="priority-columns">
+					<table class="table table-hover table-bordered form-inline">
+						<thead>
+							<tr>
+								<th>题号</th>
+								<th>选项</th>
+								<th>正确答案</th>
+								<th>分科设置</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>
+									<div class="extra" data-toggle="buttons">
+										<label class="btn btn-default active">
+											<input type="radio" id="" name="" value="A" required=""> A
+										</label>
+										<label class="btn btn-default">
+											<input type="radio" id="" name="" value="B" required=""> B
+										</label>
+										<label class="btn btn-default">
+											<input type="radio" id="" name="" value="C" required=""> C
+										</label>
+										<label class="btn btn-default">
+											<input type="radio" id="" name="" value="D" required=""> D
+										</label>
+									</div>
+								</td>
+								<td>A</td>
+								<td>
+									<select id="u78_input" class="form-control">
+										<option selected="selected" value="历史">历史</option>
+										<option value="政治">政治</option>
+										<option value="地理">地理</option>
+										<option value="不分科">不分科</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>
+									<div class="extra" data-toggle="buttons">
+										<label class="btn btn-default">
+											<input type="radio" id="" name="" value="A" required=""> A
+										</label>
+										<label class="btn btn-default active">
+											<input type="radio" id="" name="" value="B" required=""> B
+										</label>
+										<label class="btn btn-default">
+											<input type="radio" id="" name="" value="C" required=""> C
+										</label>
+										<label class="btn btn-default">
+											<input type="radio" id="" name="" value="D" required=""> D
+										</label>
+									</div>
+								</td>
+								<td>B</td>
+								<td>
+									<select id="u78_input" class="form-control">
+										<option selected="selected" value="历史">历史</option>
+										<option value="政治">政治</option>
+										<option value="地理">地理</option>
+										<option value="不分科">不分科</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--表格end-->
+				<p>单选题合计X分，多选题合计Y分，客观题总计分数：Z</p>
+				<div class="padding-vertical text-center">
+					<button type="reset" class="btn btn-default">取消</button>
+					<button type="submit" class="btn btn-primary">保存</button>
+				</div>
+			</form>
 		</div>
-		<!--未完成考试 end-->		
+		<div role="tabpanel" class="tab-pane" id="tab2">
+			<!--表格 start-->
+			<form>
+				<div class="table-responsive clear-border-horizontal" data-pattern="priority-columns">
+					<table class="table table-hover table-bordered table-lighter table-striped form-inline table-questions">
+						<thead>
+							<tr>
+								<th class="clearfix">
+									题号 
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link clear-padding-vertical"><i class="glyphicon glyphicon-plus"></i></a>
+									</div>
+								</th>
+								<th>分科</th>
+								<th>题型</th>
+								<th>分值</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div class="input-group">
+										<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="21">
+										<span class="input-group-addon clear-border clear-bg">至</span>
+										<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="25">
+									</div>
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
+									</div>
+								</td>
+								<td>
+									<select id="u602_input" class="form-control">
+										<option selected="selected" value="物理">物理</option>
+										<option value="化学">化学</option>
+										<option value="生物">生物</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="填空题">
+								</td>
+								<td>
+									<div class="input-group">
+										<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="2">
+										<span class="input-group-addon clear-border clear-bg">/题</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="26">
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
+									</div>
+								</td>
+								<td>
+									<select id="u602_input" class="form-control">
+										<option selected="selected" value="物理">物理</option>
+										<option value="化学">化学</option>
+										<option value="生物">生物</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="解答题">
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-pencil"></i></a>
+									</div>
+								</td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="10">
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-plus"></i></a>
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-screenshot"></i></a>
+									</div>
+								</td>
+							</tr>
+							<tr class="child">
+								<td>
+									26.1
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
+									</div>
+								</td>
+								<td>
+									<select id="u602_input" class="form-control">
+										<option selected="selected" value="物理">物理</option>
+										<option value="化学">化学</option>
+										<option value="生物">生物</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="解答题">
+								</td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="10">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="27">
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
+									</div>
+								</td>
+								<td>
+									<select id="u602_input" class="form-control">
+										<option selected="selected" value="物理">物理</option>
+										<option value="化学">化学</option>
+										<option value="生物">生物</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="解答题">
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-pencil"></i></a>
+									</div>
+								</td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="10">
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-plus"></i></a>
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-screenshot"></i></a>
+									</div>
+								</td>
+							</tr>
+							<tr class="child">
+								<td>
+									（<span>1</span>）
+									<div class="input-group pull-right">
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-info-sign"></i></a>
+										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
+									</div>
+								</td>
+								<td></td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="解答题">
+								</td>
+								<td>
+									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="10">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--表格end-->
+				<p>主观题共X道题，合计分数：Z</p>
+				<div class="padding-vertical text-center">
+					<button type="reset" class="btn btn-default">取消</button>
+					<button type="submit" class="btn btn-primary">保存</button>
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
-<!-- 内容 end -->			
+<!-- 内容 end -->
