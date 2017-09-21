@@ -12,29 +12,30 @@
 	<!-- 检索 start -->
 	<div class="row margin-bottom-lg">
 		<div class="col-sm-12 col-lg-12">
-			<ul class="nav clear-margin dropdown-select">
-				<li class="dropdown">
-					<button type="button" class="btn btn-lg btn-link clear-padding-horizontal" data-toggle="dropdown" aria-expanded="false"><span class="dropdown-btn">铜川一中16-17学年上学期期末考试</span> <span class="caret"></span></button>
-					<ul id="myTabs" class="dropdown-menu" aria-labelledby="dLabel" [(ngModel)]="exams">
-						<li><a href="#tab0" data-value="0" data-toggle="tab" *ngFor="let exam of exams">{{exam.name}}</a></li>
-					</ul>
-				</li>
-			</ul>
+			<div class="form-inline" >
+				<div class="input-group" >	
+					<span class="input-group-addon">考试</span>
+					<select class="form-control" id="examFilterValue" (change)="getExam($event)">
+						<option value="0" selected>请选择一场考试</option>
+						<option *ngFor="let exam of exams" value={{exam.id}}>{{exam.name}}</option>
+					</select>
+				</div>
+			</div>
 		</div>
 	</div>
 	<!-- 检索 end -->
-	<div id="editGradeDetailsForm" class="form-horizontal">
+	<div id="editGradeDetailsForm" class="form-horizontal" style="display:none;">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="clear-margin"><strong>选择科目：</strong></h4>
 			</div>
 			<hr>
-			<div class="panel-body" [(ngModel)]="setedsubjects">
+			<div class="panel-body">
 				<div class="form-group" *ngFor="let grades of setedsubjects">
 					<label for="" class="col-sm-3 control-label"><strong>{{grades.grade}}：</strong></label>
 					<div class="col-sm-9 btn-toolbar">
-						<div class="extra btn-group" data-toggle="buttons" [(ngModel)]="grades.subjects">
-							<a class="btn btn-primary" href="../setanswers" *ngFor="let subject of grades.subjects">{{subject}}</a>
+						<div class="extra btn-group" data-toggle="buttons">
+							<a class="btn btn-primary" (click)="setAnswers(grades.id, subject.id, 'true')" *ngFor="let subject of grades.subjects">{{subject.name}}</a>
 						</div>
 					</div>
 				</div>
@@ -43,12 +44,12 @@
 				<h4 class="clear-margin"><strong>已设置科目：</strong></h4>
 			</div>
 			<hr>
-			<div class="panel-body" [(ngModel)]="unsetedsubjects">
+			<div class="panel-body">
 				<div class="form-group" *ngFor="let grades of unsetedsubjects">
 					<label for="" class="col-sm-3 control-label"><strong>{{grades.grade}}：</strong></label>
 					<div class="col-sm-9 btn-toolbar">
-						<div class="extra btn-group" data-toggle="buttons" [(ngModel)]="grades.subjects">
-							<a class="btn btn-primary" href="../setanswers" *ngFor="let subject of grades.subjects">{{subject}}</a>
+						<div class="extra btn-group" data-toggle="buttons">
+							<a class="btn btn-default" [routerLink]="['/setanswers',{gradeId:grades.id,subjectId:subject.id,seted:'true'}]" *ngFor="let subject of grades.subjects">{{subject.name}}</a>
 						</div>
 					</div>
 				</div>
