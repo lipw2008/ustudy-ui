@@ -33,49 +33,31 @@ export class SetAnswersComponent implements OnInit {
 
 	objectiveAnswers = [
 		{no:1,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:2,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:0},
-		{no:3,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'C',subject:0},
-		{no:4,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'D',subject:0},
+		{no:2,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
+		{no:3,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
+		{no:4,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
 		{no:5,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:6,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:0},
-		{no:7,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'C',subject:0},
-		{no:8,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'D',subject:0},
+		{no:6,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
+		{no:7,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
+		{no:8,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
 		{no:9,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:10,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:10},
+		{no:10,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:10},
 		{no:11,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:11},
-		{no:12,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:12},
-		{no:13,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'C',subject:11},
-		{no:14,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'D',subject:10},
+		{no:12,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:12},
+		{no:13,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:11},
+		{no:14,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:10},
 		{no:15,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:12},
-		{no:16,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:0},
-		{no:17,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'C',subject:0},
-		{no:18,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'D',subject:0},
+		{no:16,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
+		{no:17,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
+		{no:18,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
 		{no:19,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:20,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:0}
+		{no:20,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0}
 	];
 
 	radioScore = 20;
 	checkboxScore = 0;
 	judgmentScore = 0;
 	objectiveScore = 20;
-
-	subjectives = [
-		{type:4,start:31,end:35,subject:0,score:2},
-		{type:4,start:36,subject:0,score:10},
-		{type:4,start:37,subject:0,score:10,child:[
-			{no:1,type:4,subject:0,score:5},
-			{no:2,type:4,subject:0,score:5}
-		]},
-		{type:4,start:38,subject:10,score:10,child:[
-			{no:1,type:4,subject:10,score:5},
-			{no:2,type:4,subject:10,score:5}
-		]},
-		{type:4,start:39,subject:0,score:20,child:[
-			{no:1,type:4,subject:10,score:6},
-			{no:2,type:4,subject:11,score:6},
-			{no:3,type:4,subject:12,score:8}
-		]}
-	];
 
 	constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
 
@@ -326,4 +308,129 @@ export class SetAnswersComponent implements OnInit {
 		});
 	}
 
+	//-------------------------------Subjectives--------------------------------------
+
+	subjectives = [
+		{id:1, type:4,start:1,end:10,subject:0,score:2}
+	];
+
+	subjectiveCount = 10;
+	subjectiveScore = 20;
+
+	addOneSubjectiveRow(id) {
+		if (this.subjectives.length > 0) {
+			if (id > 0){
+				this.subjectives.forEach(subjective => {
+					if(subjective.id === id){
+						let childs = subjective['child'];
+						if(!childs){
+							childs = [];
+						}
+						let child = {id:1,type:4,subject:10,score:1};
+						child.id = childs.length + 1;
+						child.type = subjective.type;
+						child.subject = subjective.subject;
+						childs.push(child);
+
+						subjective['child'] = childs;
+					}
+				});
+			} else {
+				const obj = this.subjectives[this.subjectives.length-1];
+				const obj_ = {id:new Date().getTime(), type:4, start:1, end:10, subject:0, score:2};
+				if(obj['type'] === 4) obj_['start'] = obj['end'] + 1;
+				else obj_['start'] = obj['start'] + 1;
+				obj_['end'] = obj_['start'];
+				this.subjectives.push(obj_);
+
+				this.subjectiveCount = this.subjectiveCount + 1;
+				this.subjectiveScore = this.subjectiveScore + 2;
+			}
+
+		}else{
+			const obj = {id:1, type:4, start:1, end:10, subject:0, score:2};
+			this.subjectives.push(obj);
+
+			this.subjectiveCount = 10;
+			this.subjectiveScore = 20;
+		}
+	}
+
+	removeOneSubjectiveRow(id, childId) {
+		const _subjectives = [];
+		for (var i=0;i<this.subjectives.length;i++) {
+			const subjective = this.subjectives[i];
+			if (subjective && subjective['id'] !== id) {
+				_subjectives.push(subjective);
+			} else if(childId > 0) {
+				let child = subjective['child'];
+				const _child = [];
+				child.forEach(element => {
+					if(element.id !== childId){
+						element.id = _child.length + 1;
+						_child.push(element);
+					}
+				});
+				subjective['child'] = _child;
+
+				_subjectives.push(subjective);
+			} else {
+				this.subjectiveCount = this.subjectiveCount - 1;
+				if (subjective.type === 4){
+					this.subjectiveScore = this.subjectiveScore - (subjective.end - subjective.start + 1) * subjective.score;
+				} else {
+					this.subjectiveScore = this.subjectiveScore - subjective.score;
+				}
+			}
+		}
+
+		this.subjectives = _subjectives;
+	}
+
+	onSubjectiveValueChange(valueType, id, childId) {
+		this.subjectives.forEach(subjective => {
+			if (subjective.id === id) {
+				if (childId > 0) {
+					let childs = subjective['child'];
+					childs.forEach(child => {
+						if (child.id === childId) {
+							let value = Number(this.elementRef.nativeElement.querySelector('#subjective_'+valueType + '_' + id +'_' + childId).value);
+							child[valueType] = value;
+						}
+					});
+				} else {
+					
+					let value = Number(this.elementRef.nativeElement.querySelector('#subjective_'+valueType+'_' + id).value);
+					if (valueType === 'start') {
+						if(subjective.type === 4){
+							this.subjectiveCount = this.subjectiveCount + subjective.start - value;
+							this.subjectiveScore = this.subjectiveScore + (subjective.start - value) * subjective.score
+						}
+					} else if (valueType === 'end') {
+						this.subjectiveCount = this.subjectiveCount - subjective.start + value;
+						this.subjectiveScore = this.subjectiveScore + (value - subjective.end ) * subjective.score
+					} else if (valueType === 'type') {
+						if(subjective.type === 4 || value === 4){
+							if (subjective.type === 4) {
+								this.subjectiveCount = this.subjectiveCount - subjective.end + subjective.start;
+								this.subjectiveScore = this.subjectiveScore - (subjective.end - subjective.start) * subjective.score
+							} else {
+								this.subjectiveCount = this.subjectiveCount + subjective.end - subjective.start;
+								this.subjectiveScore = this.subjectiveScore + (subjective.end - subjective.start) * subjective.score
+							}
+						}
+					} else if (valueType === 'score') {
+						debugger;
+						if(subjective.type === 4){
+							this.subjectiveScore = this.subjectiveScore + (subjective.end - subjective.start + 1) * (value - subjective.score)
+						} else {
+							this.subjectiveScore = this.subjectiveScore + value - subjective.score;
+						}
+					}
+					
+					subjective[valueType] = value;
+				}
+			}
+		});
+	}
 }

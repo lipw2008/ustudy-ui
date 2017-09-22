@@ -35,7 +35,7 @@
 					<label for="" class="col-sm-3 control-label"><strong>{{grades.grade}}：</strong></label>
 					<div class="col-sm-9 btn-toolbar">
 						<div class="extra btn-group" data-toggle="buttons">
-							<a class="btn btn-primary" (click)="setAnswers(grades.id, subject.id, 'true')" *ngFor="let subject of grades.subjects">{{subject.name}}</a>
+							<a class="btn btn-primary" (click)="setAnswers(grades.id, subject.id, false)" *ngFor="let subject of grades.subjects">{{subject.name}}</a>
 						</div>
 					</div>
 				</div>
@@ -49,7 +49,7 @@
 					<label for="" class="col-sm-3 control-label"><strong>{{grades.grade}}：</strong></label>
 					<div class="col-sm-9 btn-toolbar">
 						<div class="extra btn-group" data-toggle="buttons">
-							<a class="btn btn-default" [routerLink]="['/setanswers',{gradeId:grades.id,subjectId:subject.id,seted:'true'}]" *ngFor="let subject of grades.subjects">{{subject.name}}</a>
+							<a class="btn btn-default" [routerLink]="['/setanswers',{gradeId:grades.id,subjectId:subject.id,seted:true}]" *ngFor="let subject of grades.subjects">{{subject.name}}</a>
 						</div>
 					</div>
 				</div>

@@ -135,7 +135,9 @@
 								<th class="clearfix">
 									题号 
 									<div class="input-group pull-right">
-										<a href="#" class="btn btn-link clear-padding-vertical"><i class="glyphicon glyphicon-plus"></i></a>
+										<a class="btn btn-link clear-padding-vertical" (click)="addOneSubjectiveRow(0)">
+											<i class="glyphicon glyphicon-plus"></i>
+										</a>
 									</div>
 								</th>
 								<th>分科</th>
@@ -144,132 +146,98 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>
-									<div class="input-group">
-										<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="21">
-										<span class="input-group-addon clear-border clear-bg">至</span>
-										<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="25">
-									</div>
-									<div class="input-group pull-right">
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
-									</div>
-								</td>
-								<td>
-									<select id="u602_input" class="form-control">
-										<option selected="selected" value="物理">物理</option>
-										<option value="化学">化学</option>
-										<option value="生物">生物</option>
-									</select>
-								</td>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="填空题">
-								</td>
-								<td>
-									<div class="input-group">
-										<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="2">
-										<span class="input-group-addon clear-border clear-bg">/题</span>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="26">
-									<div class="input-group pull-right">
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
-									</div>
-								</td>
-								<td>
-									<select id="u602_input" class="form-control">
-										<option selected="selected" value="物理">物理</option>
-										<option value="化学">化学</option>
-										<option value="生物">生物</option>
-									</select>
-								</td>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="解答题">
-									<div class="input-group pull-right">
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-pencil"></i></a>
-									</div>
-								</td>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="10">
-									<div class="input-group pull-right">
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-plus"></i></a>
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-screenshot"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr class="child">
-								<td>
-									26.1
-									<div class="input-group pull-right">
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
-									</div>
-								</td>
-								<td>
-									<select id="u602_input" class="form-control">
-										<option selected="selected" value="物理">物理</option>
-										<option value="化学">化学</option>
-										<option value="生物">生物</option>
-									</select>
-								</td>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="解答题">
-								</td>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="10">
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="27">
-									<div class="input-group pull-right">
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
-									</div>
-								</td>
-								<td>
-									<select id="u602_input" class="form-control">
-										<option selected="selected" value="物理">物理</option>
-										<option value="化学">化学</option>
-										<option value="生物">生物</option>
-									</select>
-								</td>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="解答题">
-									<div class="input-group pull-right">
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-pencil"></i></a>
-									</div>
-								</td>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="10">
-									<div class="input-group pull-right">
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-plus"></i></a>
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-screenshot"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr class="child">
-								<td>
-									（<span>1</span>）
-									<div class="input-group pull-right">
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-info-sign"></i></a>
-										<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-trash"></i></a>
-									</div>
-								</td>
-								<td></td>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="解答题">
-								</td>
-								<td>
-									<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="10">
-								</td>
-							</tr>
+							<ng-container *ngFor="let subjective of subjectives">
+								<tr>
+									<td>
+										<div class="input-group">
+											<input type="text" class="form-control" size="5" id="subjective_start_{{subjective.id}}" value="{{subjective.start}}" (change)="onSubjectiveValueChange('start',subjective.id,0)">
+											<span class="input-group-addon clear-border clear-bg" *ngIf="subjective.type === 4">至</span>
+											<input type="text" class="form-control" size="5" id="subjective_end_{{subjective.id}}" value="{{subjective.end}}" *ngIf="subjective.type === 4" (change)="onSubjectiveValueChange('end',subjective.id,0)">
+										</div>
+										<div class="input-group pull-right">
+											<a class="btn btn-link" (click)="removeOneSubjectiveRow(subjective.id,0)">
+												<i class="glyphicon glyphicon-trash"></i>
+											</a>
+										</div>
+									</td>
+									<td>
+										<select id="subjective_subject_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('subject',subjective.id,0)">
+											<ng-container *ngFor="let subject of subjects">
+												<option *ngIf="subjective.subject === subject.id" selected="selected" value="{{subject.id}}">{{subject.name}}</option>
+												<option *ngIf="subjective.subject !== subject.id" value="{{subject.id}}">{{subject.name}}</option>
+											</ng-container>
+										</select>
+									</td>
+									<td>
+										<select id="subjective_type_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('type',subjective.id,0)">
+											<option *ngIf="subjective.type === 4" selected="selected" value="4">填空题</option>
+											<option *ngIf="subjective.type !== 4" value="4">填空题</option>
+											<option *ngIf="subjective.type === 5" selected="selected" value="5">解答题</option>
+											<option *ngIf="subjective.type !== 5" value="5">解答题</option>
+											<option *ngIf="subjective.type === 6" selected="selected" value="6">证明题</option>
+											<option *ngIf="subjective.type !== 6" value="6">证明题</option>
+											<option *ngIf="subjective.type === 7" selected="selected" value="7">论述题</option>
+											<option *ngIf="subjective.type !== 7" value="7">论述题</option>
+											<option *ngIf="subjective.type === 8" selected="selected" value="8">作文题</option>
+											<option *ngIf="subjective.type !== 8" value="8">作文题</option>
+										</select>
+									</td>
+									<td>
+										<div class="input-group">
+											<input type="text" class="form-control" size="5" id="subjective_score_{{subjective.id}}" value="{{subjective.score}}" (change)="onSubjectiveValueChange('score',subjective.id,0)">
+											<span class="input-group-addon clear-border clear-bg">/题</span>
+											<div class="input-group pull-right" *ngIf="subjective.type !== 4">
+												<a class="btn btn-link" (click)="addOneSubjectiveRow(subjective.id)">
+													<i class="glyphicon glyphicon-plus" ></i>
+												</a>
+												<a class="btn btn-link">
+													<i class="glyphicon glyphicon-screenshot"></i>
+												</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr class="child" *ngFor="let child of subjective.child">
+									<td>
+										{{subjective.start}}.{{child.id}}
+										<div class="input-group pull-right">
+											<a class="btn btn-link" (click)="removeOneSubjectiveRow(subjective.id,child.id)">
+												<i class="glyphicon glyphicon-trash"></i>
+											</a>
+										</div>
+									</td>
+									<td>
+										<select  id="subjective_subject_{{subjective.id}}_{{child.id}}" class="form-control" (change)="onSubjectiveValueChange('subject',subjective.id,child.id)">
+											<ng-container *ngFor="let subject of subjects">
+												<option *ngIf="child.subject === subject.id" selected="selected" value="{{subject.id}}">{{subject.name}}</option>
+												<option *ngIf="child.subject !== subject.id" value="{{subject.id}}">{{subject.name}}</option>
+											</ng-container>
+										</select>
+									</td>
+									<td>
+										<select id="subjective_type_{{subjective.id}}_{{child.id}}" class="form-control" (change)="onSubjectiveValueChange('type',subjective.id,child.id)">
+											<option *ngIf="child.type === 4" selected="selected" value="4">填空题</option>
+											<option *ngIf="child.type !== 4" value="4">填空题</option>
+											<option *ngIf="child.type === 5" selected="selected" value="5">解答题</option>
+											<option *ngIf="child.type !== 5" value="5">解答题</option>
+											<option *ngIf="child.type === 6" selected="selected" value="6">证明题</option>
+											<option *ngIf="child.type !== 6" value="6">证明题</option>
+											<option *ngIf="child.type === 7" selected="selected" value="7">论述题</option>
+											<option *ngIf="child.type !== 7" value="7">论述题</option>
+											<option *ngIf="child.type === 8" selected="selected" value="8">作文题</option>
+											<option *ngIf="child.type !== 8" value="8">作文题</option>
+										</select>
+									</td>
+									<td>
+										<input type="text" class="form-control" size="5" id="subjective_score_{{subjective.id}}_{{child.id}}" value="{{child.score}}" (change)="onSubjectiveValueChange('score',subjective.id,child.id)">
+									</td>
+								</tr>
+							</ng-container>
 						</tbody>
 					</table>
 				</div>
 				<!--表格end-->
-				<p>主观题共X道题，合计分数：Z</p>
+				<p>主观题共{{subjectiveCount}}道题，合计分数：{{subjectiveScore}}分</p>
 				<div class="padding-vertical text-center">
 					<button type="reset" class="btn btn-default">取消</button>
 					<button type="submit" class="btn btn-primary">保存</button>
