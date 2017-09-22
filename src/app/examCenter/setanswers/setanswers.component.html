@@ -52,123 +52,19 @@
 								</td>
 								<td>
 									<select id="type_{{objective.id}}" class="form-control" (change)="onValueChange(3,objective.id)">
-										<ng-container *ngIf="objective.type===1">
-											<option selected="selected" value="1">单选题</option>
-											<option value="2">多选题</option>
-											<option value="3">判断题</option>
-										</ng-container>
-										<ng-container *ngIf="objective.type===2">
-											<option value="1">单选题</option>
-											<option selected="selected" value="2">多选题</option>
-											<option value="3">判断题</option>
-										</ng-container>
-										<ng-container *ngIf="objective.type===3">
-											<option value="1">单选题</option>
-											<option value="2">多选题</option>
-											<option selected="selected" value="3">判断题</option>
-										</ng-container>
+										<option *ngIf="objective.type === 1" selected="selected" value="1">单选题</option>
+										<option *ngIf="objective.type !== 1" value="1">单选题</option>
+										<option *ngIf="objective.type === 2" selected="selected" value="2">多选题</option>
+										<option *ngIf="objective.type !== 2" value="2">多选题</option>
+										<option *ngIf="objective.type === 3" selected="selected" value="3">判断题</option>
+										<option *ngIf="objective.type !== 3" value="3">判断题</option>
 									</select>
 								</td>
 								<td>
 									<select id="option_{{objective.id}}" class="form-control" (change)="onValueChange(4,objective.id)">
-										<ng-container *ngIf="objective.option === 2">
-											<option selected="selected" value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-										</ng-container>
-										<ng-container *ngIf="objective.option === 3">
-												<option value="2">2</option>
-												<option selected="selected" value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-												<option value="6">6</option>
-												<option value="7">7</option>
-												<option value="8">8</option>
-												<option value="9">9</option>
-												<option value="10">10</option>
-										</ng-container>
-										<ng-container *ngIf="objective.option===4">
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option selected="selected" value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-										</ng-container>
-										<ng-container *ngIf="objective.option===5">
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option selected="selected" value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-										</ng-container>
-										<ng-container *ngIf="objective.option===6">
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-												<option selected="selected" value="6">6</option>
-												<option value="7">7</option>
-												<option value="8">8</option>
-												<option value="9">9</option>
-												<option value="10">10</option>
-										</ng-container>
-										<ng-container *ngIf="objective.option===7">
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-												<option value="6">6</option>
-												<option selected="selected" value="7">7</option>
-												<option value="8">8</option>
-												<option value="9">9</option>
-												<option value="10">10</option>
-										</ng-container>
-										<ng-container *ngIf="objective.option===8">
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-												<option value="6">6</option>
-												<option value="7">7</option>
-												<option selected="selected" value="8">8</option>
-												<option value="9">9</option>
-												<option value="10">10</option>
-										</ng-container>
-										<ng-container *ngIf="objective.option===9">
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-												<option value="6">6</option>
-												<option value="7">7</option>
-												<option value="8">8</option>
-												<option selected="selected" value="9">9</option>
-												<option value="10">10</option>
-										</ng-container>
-										<ng-container *ngIf="objective.option===10">
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-												<option value="6">6</option>
-												<option value="7">7</option>
-												<option value="8">8</option>
-												<option value="9">9</option>
-												<option selected="selected" value="10">10</option>
+										<ng-container *ngFor="let option of options">
+											<option *ngIf="objective.option === option" selected="selected" value="{{option}}">{{option}}</option>
+											<option *ngIf="objective.option !== option" value="{{option}}">{{option}}</option>
 										</ng-container>
 									</select>
 								</td>
@@ -196,46 +92,24 @@
 								<td>{{answer.no}}</td>
 								<td>
 									<div class="extra" data-toggle="buttons">
-										<label class="btn btn-default active">
-											<input type="radio" id="" name="" value="A" required=""> A
-										</label>
-										<label class="btn btn-default">
-											<input type="radio" id="" name="" value="B" required=""> B
-										</label>
-										<label class="btn btn-default">
-											<input type="radio" id="" name="" value="C" required=""> C
-										</label>
-										<label class="btn btn-default">
-											<input type="radio" id="" name="" value="D" required=""> D
-										</label>
+										<ng-container *ngFor="let option of answer.options">
+											<label class="btn btn-default active" *ngIf="option.checked" (click)="setAnswersOption(answer.no,answer.type,option.name)">
+												<input *ngIf="answer.type !== 2" type="radio" value="{{option.name}}">
+												<input *ngIf="answer.type === 2" type="checkbox" value="{{option.name}}"> {{option.name}}
+											</label>
+											<label class="btn btn-default" *ngIf="!option.checked" (click)="setAnswersOption(answer.no,answer.type,option.name)">
+												<input *ngIf="answer.type !== 2" type="radio" value="{{option.name}}">
+												<input *ngIf="answer.type === 2" type="checkbox" value="{{option.name}}"> {{option.name}}
+											</label>
+										</ng-container>
 									</div>
 								</td>
 								<td>{{answer.answer}}</td>
 								<td>
-									<select id="u78_input" class="form-control">
-										<ng-container *ngIf="answer.subject===0">
-											<option selected="selected" value="0">不分科</option>
-											<option value="10">历史</option>
-											<option value="11">政治</option>
-											<option value="12">地理</option>
-										</ng-container>
-										<ng-container *ngIf="answer.subject===10">
-											<option value="0">不分科</option>
-											<option selected="selected" value="10">历史</option>
-											<option value="11">政治</option>
-											<option value="12">地理</option>
-										</ng-container>
-										<ng-container *ngIf="answer.subject===11">
-											<option value="0">不分科</option>
-											<option value="10">历史</option>
-											<option selected="selected" value="11">政治</option>
-											<option value="12">地理</option>
-										</ng-container>
-										<ng-container *ngIf="answer.subject===12">
-											<option value="0">不分科</option>
-											<option value="10">历史</option>
-											<option value="11">政治</option>
-											<option selected="selected" value="12">地理</option>
+									<select id="answersSubject_{{answer.no}}" class="form-control" (change)="setAnswersSubject(answer.no,answer.type)">
+										<ng-container *ngFor="let subject of subjects">
+											<option *ngIf="answer.subject === subject.id" selected="selected" value="{{subject.id}}">{{subject.name}}</option>
+											<option *ngIf="answer.subject !== subject.id" value="{{subject.id}}">{{subject.name}}</option>
 										</ng-container>
 									</select>
 								</td>

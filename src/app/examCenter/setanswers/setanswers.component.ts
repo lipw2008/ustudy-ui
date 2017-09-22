@@ -18,31 +18,40 @@ export class SetAnswersComponent implements OnInit {
 
 	options = [2,3,4,5,6,7,8,9,10];
 
+	subjects = [
+		{id:0,name:'不分科'},
+		{id:10,name:'历史'},
+		{id:11,name:'政治'},
+		{id:12,name:'地理'}
+	];
+
+	selectOptions = ['A','B','C','D','E','F','G','H','I','J'];
+
 	objectives = [
 		{id:1, start:1,end:20,type:1,option:4,score:1}
 	];
 
 	objectiveAnswers = [
-		{no:1,type:1,option:4,answer:'A',subject:0},
-		{no:2,type:1,option:4,answer:'B',subject:0},
-		{no:3,type:1,option:4,answer:'C',subject:0},
-		{no:4,type:1,option:4,answer:'D',subject:0},
-		{no:5,type:1,option:4,answer:'A',subject:0},
-		{no:6,type:1,option:4,answer:'B',subject:0},
-		{no:7,type:1,option:4,answer:'C',subject:0},
-		{no:8,type:1,option:4,answer:'D',subject:0},
-		{no:9,type:1,option:4,answer:'A',subject:0},
-		{no:10,type:1,option:4,answer:'B',subject:10},
-		{no:11,type:1,option:4,answer:'A',subject:11},
-		{no:12,type:1,option:4,answer:'B',subject:12},
-		{no:13,type:1,option:4,answer:'C',subject:11},
-		{no:14,type:1,option:4,answer:'D',subject:10},
-		{no:15,type:1,option:4,answer:'A',subject:12},
-		{no:16,type:1,option:4,answer:'B',subject:0},
-		{no:17,type:1,option:4,answer:'C',subject:0},
-		{no:18,type:1,option:4,answer:'D',subject:0},
-		{no:19,type:1,option:4,answer:'A',subject:0},
-		{no:20,type:1,option:4,answer:'B',subject:0}
+		{no:1,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
+		{no:2,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:0},
+		{no:3,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'C',subject:0},
+		{no:4,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'D',subject:0},
+		{no:5,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
+		{no:6,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:0},
+		{no:7,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'C',subject:0},
+		{no:8,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'D',subject:0},
+		{no:9,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
+		{no:10,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:10},
+		{no:11,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:11},
+		{no:12,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:12},
+		{no:13,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'C',subject:11},
+		{no:14,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'D',subject:10},
+		{no:15,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:12},
+		{no:16,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:0},
+		{no:17,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'C',subject:0},
+		{no:18,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'D',subject:0},
+		{no:19,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
+		{no:20,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'B',subject:0}
 	];
 
 	radioScore = 20;
@@ -137,6 +146,21 @@ export class SetAnswersComponent implements OnInit {
 		}
 	}
 
+	addOption(objective){
+		let optionCount = objective.option;
+		let type = objective.type;
+		let _option = [];
+
+		if(type === 3){
+			_option.push('Y');
+			_option.push('N');
+		}else{
+			for(var i=0;i<optionCount;i++){
+				_option.push(this.selectOptions[i]);
+			}
+		}
+	}
+	
 	removeOneRow(id){
 		const _objectives = [];
 		for(var i=0;i<this.objectives.length;i++){
@@ -150,13 +174,31 @@ export class SetAnswersComponent implements OnInit {
 		}
 		this.objectives = _objectives;
 	}
-
+	
 	addAnswers(objective){
 		let start = objective['start'];
 		let end = objective['end'];
 		let type = objective['type'];
+		
+		let optionCount = objective.option;
+		let _option = [];
+		
+		if(type === 3){
+			_option.push({name:'Y',checked:true});
+			_option.push({name:'N',checked:false});
+		}else{
+			for(var i=0;i<optionCount;i++){
+				let checked = false;
+				if(i === 0) checked = true;
+				_option.push({name:this.selectOptions[i],checked:checked});
+			}
+		}
+
 		for(var j=start;j<=end;j++){
-			const answer = {no:j,type:objective.type,option:objective.option,answer:'A',subject:0};
+			const answer = {no:j,type:objective.type,option:objective.option,options:_option,answer:'A',subject:0};
+			if(type === 3){
+				answer.answer = 'Y';
+			}
 			this.objectiveAnswers.push(answer);
 		}
 	}	
@@ -251,6 +293,37 @@ export class SetAnswersComponent implements OnInit {
 			_objectives.push(obj);
 		}
 		this.objectives = _objectives;
+	}
+
+	setAnswersOption(id, type, value){
+		this.objectiveAnswers.forEach(answer => {
+			if(answer.no === id && answer.type === type){
+				if(type === 2){
+					let ans = answer.answer;
+					if(ans.indexOf(value)>=0){
+						ans = ans.replace(','+value,'');
+						ans = ans.replace(value,'');
+						if(ans.indexOf(',') === 0){
+							ans = ans.substring(1);
+						}
+						answer.answer = ans;
+					}else{
+						answer.answer = ans + ',' + value;
+					}
+				}else{
+					answer.answer = value;
+				}
+			}
+		});
+	}
+
+	setAnswersSubject(id, type){
+		let value = this.elementRef.nativeElement.querySelector('#answersSubject_' + id).value;
+		this.objectiveAnswers.forEach(answer => {
+			if(answer.no === id && answer.type === type){
+				answer.subject = value;				
+			}
+		});
 	}
 
 }
