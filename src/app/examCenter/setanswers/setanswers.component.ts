@@ -125,7 +125,7 @@ export class SetAnswersComponent implements OnInit {
 
 			this.addScore(obj);
 			this.addAnswers(obj);
-		}
+		}		
 	}
 
 	addOption(objective){
@@ -183,6 +183,10 @@ export class SetAnswersComponent implements OnInit {
 			}
 			this.objectiveAnswers.push(answer);
 		}
+
+		this.objectiveAnswers.sort(function(a,b){
+			return a.no - b.no;
+		});
 	}	
 
 	removeAnswers(objective){
