@@ -1,0 +1,299 @@
+<!-- 路径导航 start -->
+<div class="container-fluid container-breadcrumb">
+	<div class="container">
+		<ol class="breadcrumb">
+			<li><a href="../">首页</a></li>
+			<li><a href="selectsubject;type=task">考试中心</a></li>
+			<li class="active">任务分配</li>
+		</ol>
+	</div>
+</div>
+<!-- 路径导航 end -->
+<!-- 内容 start -->
+<div class="container container-sm container-task-allocation">
+	<form class="form-horizontal">
+		<div class="panel panel-default clear-margin">
+			<div class="panel-body margin-bottom-lg border-bottom">
+				<div class="form-group">
+					<label for="number" class="col-sm-3 control-label">题号：</label>
+					<div class="col-sm-9 form-inline clearfix">
+						<input type="text" class="form-control" id="" name="" size="8" placeholder="" value="11-20">
+						<select id="u6022_input" class="form-control">
+							<option selected="selected" value="11">11</option>
+							<option selected="selected" value="...">...</option>
+							<option selected="selected" value="20">20</option>
+						</select>
+						<div class="input-group pull-right">
+							<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-cog"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="number" class="col-sm-3 control-label">题型：</label>
+					<div class="col-sm-9 form-inline">
+						<select id="u602_input" class="form-control">
+							<option selected="selected" value="填空题">填空题</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-3 control-label">任务分配方式：</label>
+					<div class="col-sm-9">
+						<label class="radio-inline">
+							<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked="checked"> 平均
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 动态
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 比例
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-3 control-label">阅卷模式：</label>
+					<div class="col-sm-9 form-inline">
+						<label class="radio-inline">
+							<input type="radio" name="inlineRadioOptions1" id="inlineRadio1" value="option1" checked="checked"> 单评
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="inlineRadioOptions1" id="inlineRadio2" value="option2"> 双评
+						</label>
+						<div class="input-group pull-right">
+							<a href="#" class="btn btn-link"><i class="glyphicon glyphicon-time"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="form-group hide">
+					<label for="" class="col-sm-3 control-label">阅卷时间：</label>
+					<div class="col-sm-9 form-inline">
+						<div class="input-group">
+							<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="">
+							<span class="input-group-addon">秒</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group hide">
+					<label for="" class="col-sm-3 control-label">设定双评时的分差：</label>
+					<div class="col-sm-9 form-inline">
+						<input type="text" class="form-control" id="" name="" size="5" placeholder="" value="0">
+					</div>
+				</div>
+			</div>
+			<div id="singelContent" class="panel-body">
+				<div class="form-group">
+					<label for="number" class="col-sm-3 control-label">阅卷教师选择：</label>
+					<div class="col-sm-9 form-inline clearfix">
+						<select id="u58_input" class="form-control">
+							<option selected="selected" value="语文组">语文组</option>
+							<option value="数学组">数学组</option>
+							<option value="英语组">英语组</option>
+							<option value="物理组">物理组</option>
+							<option value="化学组">化学组</option>
+							<option value="生物组">生物组</option>
+							<option value="政治组">政治组</option>
+							<option value="历史组">历史组</option>
+							<option value="地理组">地理组</option>
+							<option value="全体教师">全体教师</option>
+						</select>
+						<select id="u59_input" class="form-control">
+							<option selected="selected" value="阅卷组全体教师">阅卷组全体教师</option>
+							<option value="阅卷组内未安排阅卷任务教师">阅卷组内未安排阅卷任务教师</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-9">
+						<div class="extra regular margin-left margin-top">
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox1" value="option1" checked="checked"> 黄药师
+								<a href="#" class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox2" value="option1"> 欧阳锋
+								<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox3" value="option1"> 一灯
+								<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox4" value="option1"> 洪七公
+								<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox5" value="option1"> 王重阳
+								<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox6" value="option1" checked="checked"> 黄药师
+								<a href="#" class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox7" value="option1"> 欧阳锋
+								<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox8" value="option1"> 一灯
+								<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox9" value="option1"> 洪七公
+								<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox10" value="option1"> 王重阳
+								<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="doubleContent" class="panel-body">
+					<div class="form-group">
+						<label for="number" class="col-sm-3 control-label">初评教师选择：</label>
+						<div class="col-sm-9 form-inline clearfix">
+							<select id="u58_input" class="form-control">
+								<option selected="selected" value="语文组">语文组</option>
+								<option value="数学组">数学组</option>
+								<option value="英语组">英语组</option>
+								<option value="物理组">物理组</option>
+								<option value="化学组">化学组</option>
+								<option value="生物组">生物组</option>
+								<option value="政治组">政治组</option>
+								<option value="历史组">历史组</option>
+								<option value="地理组">地理组</option>
+								<option value="全体教师">全体教师</option>
+							</select>
+							<select id="u59_input" class="form-control">
+								<option selected="selected" value="阅卷组全体教师">阅卷组全体教师</option>
+								<option value="阅卷组内未安排阅卷任务教师">阅卷组内未安排阅卷任务教师</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<div class="extra regular margin-left margin-top">
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox1" value="option1" checked="checked"> 黄药师
+									<a href="#" class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox2" value="option1"> 欧阳锋
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox3" value="option1"> 一灯
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox4" value="option1"> 洪七公
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox5" value="option1"> 王重阳
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox6" value="option1" checked="checked"> 黄药师
+									<a href="#" class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox7" value="option1"> 欧阳锋
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox8" value="option1"> 一灯
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox9" value="option1"> 洪七公
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox10" value="option1"> 王重阳
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="number" class="col-sm-3 control-label">终评教师选择：</label>
+						<div class="col-sm-9 form-inline clearfix">
+							<select id="u58_input" class="form-control">
+								<option selected="selected" value="语文组">语文组</option>
+								<option value="数学组">数学组</option>
+								<option value="英语组">英语组</option>
+								<option value="物理组">物理组</option>
+								<option value="化学组">化学组</option>
+								<option value="生物组">生物组</option>
+								<option value="政治组">政治组</option>
+								<option value="历史组">历史组</option>
+								<option value="地理组">地理组</option>
+								<option value="全体教师">全体教师</option>
+							</select>
+							<select id="u59_input" class="form-control">
+								<option selected="selected" value="阅卷组全体教师">阅卷组全体教师</option>
+								<option value="阅卷组内未安排阅卷任务教师">阅卷组内未安排阅卷任务教师</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<div class="extra regular margin-left margin-top">
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox1" value="option1" checked="checked"> 黄药师
+									<a href="#" class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox2" value="option1"> 欧阳锋
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox3" value="option1"> 一灯
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox4" value="option1"> 洪七公
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox5" value="option1"> 王重阳
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox6" value="option1" checked="checked"> 黄药师
+									<a href="#" class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox7" value="option1"> 欧阳锋
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox8" value="option1"> 一灯
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox9" value="option1"> 洪七公
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+								<label class="checkbox-inline">
+									<input type="checkbox" name="inlineCheckbox" id="inlineCheckbox10" value="option1"> 王重阳
+									<a href="#" class="btn btn-xs btn-link hide"><i class="glyphicon glyphicon-asterisk"></i></a>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			<div class="panel-footer padding-right text-right">
+				<button type="reset" class="btn btn-default">取消</button>
+				<button type="button" class="btn btn-default">提交</button>
+			</div>
+		</div>
+   </form>
+</div>
+<!-- 内容 end -->
+<div class="margin-top-lg padding-vertical text-center">
+	<button type="reset" class="btn btn-default">取消</button>
+	<button type="button" class="btn btn-primary">完成</button>
+</div>

@@ -16,6 +16,7 @@ import { WelcomeModule } from './welcome/welcome.module';
 import { MarkModule } from './examCenter/mark/mark.module';
 import { SelectSubjectModule } from './examCenter/setanswers/selectsubject.module';
 import { SetAnswersModule } from './examCenter/setanswers/setanswers.module';
+import { TaskAllocationModule } from './examCenter/task/taskallocation.module';
 
 import { SharedService } from './shared.service';
 
@@ -34,6 +35,7 @@ import { SharedService } from './shared.service';
   WelcomeModule,
   MarkModule,
   SelectSubjectModule,
+  TaskAllocationModule,
   SetAnswersModule
   ],
   declarations: [

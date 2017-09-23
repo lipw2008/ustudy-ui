@@ -11,6 +11,7 @@ export class SelectSubjectComponent implements OnInit {
 
 	errorMessage: string;
 	examId: string;
+	type = 'answers';
 
 	exams = [
 		{ id: '1', name: '铜川一中16-17学年上学期期末考试1' },
@@ -69,6 +70,7 @@ export class SelectSubjectComponent implements OnInit {
     }
 
     ngOnInit(): void {
+		this.type = this.route.snapshot.params.type;
 		this.loadExams();
 	}
 
@@ -122,5 +124,9 @@ export class SelectSubjectComponent implements OnInit {
 
 	setAnswers(gradeId,subjectId,seted) {
 		this.router.navigate(['setanswers', {examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
+	}
+
+	setTasks(gradeId,subjectId,seted) {
+		this.router.navigate(['taskallocation', {examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
 	}
 }
