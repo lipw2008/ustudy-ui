@@ -1,0 +1,41 @@
+[
+    {
+        "id": "P001",
+        "examId": "E001",
+        "subject": "语文",
+        "grade": "高一",
+        "studentId": "S001",
+        "studentName": "小李",
+        "score": 100,
+        "answers": {
+            "1": 10, 
+            "2": {
+                "2.1": 30, 
+                "2.2": 30
+            }, 
+            "3": {
+                "isMarked": false,
+                "score": 30,
+                "steps": {
+                    "3.1": 15,
+                    "3.2": 15
+                }, 
+                "isBest": false, 
+                "isBad": false, 
+                "isFAQ": false, 
+                "url": "",
+                "firstPaper": "",
+                "firstMark": "",
+                "secondPaper": "",
+                "secondMark": "",
+                "finalMark": "",
+                "finalPaper": "",
+                "questionUrl": "",
+                "stdAnswerUrl": ""
+            }
+        },
+        "type": "标准",
+        "status": "unfinished",
+        "url": ""
+    }
+]

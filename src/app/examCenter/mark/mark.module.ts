@@ -7,20 +7,23 @@ import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import { MarkComponent } from './mark.component';
+import { MarkListComponent } from './mark-list.component';
 
 @NgModule({
   imports: [
     CommonModule,
   	NgxDatatableModule,
     RouterModule.forChild([
-      { path: 'mark', component: MarkComponent }
+      { path: 'mark', component: MarkComponent },
+      { path: 'marklist', component: MarkListComponent }
     ]),
 	ReactiveFormsModule,
   FormsModule,
 	HttpModule
   ],
   declarations: [
-    MarkComponent
+    MarkComponent,
+    MarkListComponent
   ],
   providers: []
 })
