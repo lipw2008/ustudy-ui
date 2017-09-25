@@ -1,6 +1,6 @@
 [
     {
-        "id": "001",
+        "id": "M001",
         "examId": "E001",
         "examName": "16-17学年上学期期末考试",
         "teacherId": "T001",
@@ -9,11 +9,29 @@
         "grade": "高一",
         "markType": "常规",
         "markStyle": "single",
-        "title": "",
         "progress": "60%",
         "questionType": "填空题",
         "questionNum": "",
-        "startNum": "11",
-        "endNum": "20"
+        "startNum": "2",
+        "endNum": "5",
+        "fullScore": 10,
+        "papers": [
+            {
+                "paperId": "P001",
+                "isBest": false, 
+                "isBad": false, 
+                "isFAQ": false,
+                "isProblemPaper": false,
+                "score": 4, 
+                "steps": {
+                    "2": 0, 
+                    "3": 2,
+                    "4": 2,
+                    "5": 0
+                },
+                "paperUrl": "",
+                "markUrl": ""
+            }
+        ]
     }
 ]
