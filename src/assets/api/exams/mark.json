@@ -6,14 +6,13 @@
     "teacherName": "鲁迅",
     "subject": "语文",
     "grade": "高一",
-    "markType": "常规",
+    "markType": "标准",
     "markStyle": "single",
     "progress": "60%",
     "questionType": "填空题",
     "questionNum": "",
     "startNum": "2",
     "endNum": "5",
-    "fullScore": 10,
     "papers": [
         {
             "paperId": "P001",
@@ -28,8 +27,8 @@
                 "4": 2,
                 "5": 0
             },
-            "paperUrl": "",
-            "markUrl": ""
+            "paperImg": "",
+            "markImg": ""
         }
     ]
 }

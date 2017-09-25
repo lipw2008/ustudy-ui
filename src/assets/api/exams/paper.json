@@ -8,22 +8,23 @@
     "studentName": "小李",
     "score": 22,
     "answers": [
-        { "questionNum": "1", "type": "客观题", "answer": "A", "score": 10},
+        { "questionNum": "1", "type": "客观题", "answer": "A", "fullScore": 10, "score": 10},
         { "startNum": "2", 
             "endNum": "5", 
-            "type": "填空题", 
+            "type": "填空题",
+            "fullScore": 8, 
             "score": 4, 
             "steps": {
-                "2": 0, 
-                "3": 2,
-                "4": 2,
-                "5": 0
+                "2": {"fullScore": 2, "score": 0}, 
+                "3": {"fullScore": 2, "score": 2},
+                "4": {"fullScore": 2, "score": 2},
+                "5": {"fullScore": 2, "score": 0}
             },
-            "answerUrl": "",
-            "paperUrl": "",
-            "markUrl": "",
-            "questionUrl": "",
-            "stdAnswerUrl": "",
+            "answerImg": "",
+            "paperImg": "",
+            "markImg": "",
+            "questionImg": "",
+            "stdAnswerImg": "",
             "marks" : {
                 "firstMarkId": "M001",
                 "secondMarkId": "",
@@ -32,17 +33,18 @@
             "status": "complete"            
         },
         { "questionNum": "6", 
-            "type": "解答题", 
+            "type": "解答题",
+            "fullScore": 10, 
             "score": 8, 
             "steps": {
-                "6.1": 5, 
-                "6.2": 3
+                "6.1": {"fullScore": 5, "score": 5}, 
+                "6.2": {"fullScore": 5, "score": 3}
             },
-            "answerUrl": "",
-            "paperUrl": "",
-            "markUrl": "",
-            "questionUrl": "",
-            "stdAnswerUrl": "",
+            "answerImg": "",
+            "paperImg": "",
+            "markImg": "",
+            "questionImg": "",
+            "stdAnswerImg": "",
             "marks" : {
                 "firstMarkId": "",
                 "secondMarkId": "",
@@ -51,7 +53,7 @@
             "status": "complete"            
         }
     ],
-    "type": "标准卷",
+    "type": "标准",
     "status": "inprogress",
-    "url": ""
+    "img": ""
 }
