@@ -69,7 +69,13 @@
 									</select>
 								</td>
 								<td>
-									<input type="text" class="form-control" id="score_{{objective.id}}" name="" size="5" placeholder="" value="{{objective.score}}" (change)="onValueChange(5,objective.id)">
+									<div class="input-group">
+										<input type="text" class="form-control" id="score_{{objective.id}}" size="5" value="{{objective.score}}" (change)="onValueChange(5,objective.id)">
+										<span class="input-group-addon clear-border clear-bg">分/题</span>
+										<div class="input-group pull-right" *ngIf="objective.type === 2">
+											<a class="btn btn-link"><i class="glyphicon glyphicon-cog"></i></a>
+										</div>
+									</div>
 								</td>
 							</tr>
 						</tbody>
@@ -84,7 +90,7 @@
 								<th>题号</th>
 								<th>选项</th>
 								<th>正确答案</th>
-								<th>分科设置</th>
+								<th *ngIf="issynthesize">分科设置</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -105,7 +111,7 @@
 									</div>
 								</td>
 								<td>{{answer.answer}}</td>
-								<td>
+								<td *ngIf="issynthesize">
 									<select id="answersSubject_{{answer.no}}" class="form-control" (change)="setAnswersSubject(answer.no,answer.type)">
 										<ng-container *ngFor="let subject of subjects">
 											<option *ngIf="answer.subject === subject.id" selected="selected" value="{{subject.id}}">{{subject.name}}</option>
@@ -140,7 +146,7 @@
 										</a>
 									</div>
 								</th>
-								<th>分科</th>
+								<th *ngIf="issynthesize">分科</th>
 								<th>题型</th>
 								<th>分值</th>
 							</tr>
@@ -160,7 +166,7 @@
 											</a>
 										</div>
 									</td>
-									<td>
+									<td *ngIf="issynthesize">
 										<select id="subjective_subject_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('subject',subjective.id,0)">
 											<ng-container *ngFor="let subject of subjects">
 												<option *ngIf="subjective.subject === subject.id" selected="selected" value="{{subject.id}}">{{subject.name}}</option>
@@ -185,7 +191,7 @@
 									<td>
 										<div class="input-group">
 											<input type="text" class="form-control" size="5" id="subjective_score_{{subjective.id}}" value="{{subjective.score}}" (change)="onSubjectiveValueChange('score',subjective.id,0)">
-											<span class="input-group-addon clear-border clear-bg">/题</span>
+											<span class="input-group-addon clear-border clear-bg">分/题</span>
 											<div class="input-group pull-right" *ngIf="subjective.type !== 4">
 												<a class="btn btn-link" (click)="addOneSubjectiveRow(subjective.id)">
 													<i class="glyphicon glyphicon-plus" ></i>

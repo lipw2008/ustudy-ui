@@ -22,47 +22,44 @@ export class SelectSubjectComponent implements OnInit {
 		{ id: '6', name: '铜川一中16-17学年上学期期末考试6' }
 	];
 
-	setedsubjects = [
+	gradesubjects = [
 		{ id:'10', grade: '高一', subjects: [
-			{id: '1', name: '数学'},
-			{id: '2', name: '物理'},
-			{id: '3', name: '化学'}
+			{id: '1', name: '语文', seted:true},
+			{id: '2', name: '数学', seted:false},
+			{id: '3', name: '英语', seted:true},
+			{id: '4', name: '物理', seted:false},
+			{id: '5', name: '化学', seted:true},
+			{id: '6', name: '生物', seted:false},
+			{id: '7', name: '政治', seted:true},
+			{id: '8', name: '历史', seted:false},
+			{id: '9', name: '地理', seted:true}
 		]},
 		{ id:'11', grade: '高二', subjects: [
-			{id: '1', name: '数学'},
-			{id: '2', name: '物理'},
-			{id: '3', name: '化学'}
+			{id: '1', name: '语文', seted:true},
+			{id: '2', name: '数学', seted:false},
+			{id: '3', name: '英语', seted:true},
+			{id: '4', name: '物理', seted:false},
+			{id: '5', name: '化学', seted:false},
+			{id: '6', name: '生物', seted:false},
+			{id: '7', name: '政治', seted:true},
+			{id: '8', name: '历史', seted:false},
+			{id: '9', name: '地理', seted:true},
+			{id: '10', name: '文综', seted:false},
+			{id: '11', name: '理综', seted:true}
 		]},
 		{ id:'12', grade: '高三', subjects: [
-			{id: '1', name: '数学'},
-			{id: '2', name: '物理'},
-			{id: '3', name: '化学'}
+			{id: '1', name: '语文', seted:true},
+			{id: '2', name: '数学', seted:false},
+			{id: '3', name: '英语', seted:true},
+			{id: '4', name: '物理', seted:false},
+			{id: '5', name: '化学', seted:true},
+			{id: '6', name: '生物', seted:false},
+			{id: '7', name: '政治', seted:false},
+			{id: '8', name: '历史', seted:false},
+			{id: '9', name: '地理', seted:false},
+			{id: '10', name: '文综', seted:true},
+			{id: '11', name: '理综', seted:false}
 		]}
-	];
-
-	unsetedsubjects = [
-		{ id:'10', grade: '高一', subjects: [
-			{id: '4', name: '语文'},
-			{id: '5', name: '英语'},
-			{id: '6', name: '生物'},
-			{id: '4', name: '政治'},
-			{id: '5', name: '地理'},
-			{id: '6', name: '历史'}
-		]},
-		{ id:'11', grade: '高二', subjects: [
-			{id: '4', name: '语文'},
-			{id: '5', name: '英语'},
-			{id: '6', name: '生物'},
-			{id: '4', name: '政治'},
-			{id: '5', name: '地理'},
-			{id: '6', name: '历史'}]},
-		{ id:'12', grade: '高三', subjects: [
-			{id: '4', name: '语文'},
-			{id: '5', name: '英语'},
-			{id: '6', name: '生物'},
-			{id: '4', name: '政治'},
-			{id: '5', name: '地理'},
-			{id: '6', name: '历史'}]}
 	];
 
     constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {

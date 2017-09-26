@@ -31,14 +31,18 @@
 			</div>
 			<hr>
 			<div class="panel-body">
-				<div class="form-group" *ngFor="let grades of setedsubjects">
+				<div class="form-group" *ngFor="let grades of gradesubjects">
 					<label for="" class="col-sm-3 control-label"><strong>{{grades.grade}}：</strong></label>
 					<div class="col-sm-9 btn-toolbar">
 						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'answers'">
-							<a class="btn btn-primary" (click)="setAnswers(grades.id, subject.id, false)" *ngFor="let subject of grades.subjects">{{subject.name}}</a>
+							<ng-container *ngFor="let subject of grades.subjects">
+								<a class="btn btn-primary" (click)="setAnswers(grades.id, subject.id, false)" *ngIf="!subject.seted">{{subject.name}}</a>
+							</ng-container>
 						</div>
 						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
-							<a class="btn btn-primary" (click)="setTasks(grades.id, subject.id, false)" *ngFor="let subject of grades.subjects">{{subject.name}}</a>
+							<ng-container *ngFor="let subject of grades.subjects">
+								<a class="btn btn-primary" (click)="setTasks(grades.id, subject.id, false)" *ngIf="!subject.seted">{{subject.name}}</a>
+							</ng-container>
 						</div>
 					</div>
 				</div>
@@ -48,15 +52,19 @@
 			</div>
 			<hr>
 			<div class="panel-body">
-				<div class="form-group" *ngFor="let grades of unsetedsubjects">
+				<div class="form-group" *ngFor="let grades of gradesubjects">
 					<label for="" class="col-sm-3 control-label"><strong>{{grades.grade}}：</strong></label>
 					<div class="col-sm-9 btn-toolbar">
-						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'answers'">
-							<a class="btn btn-default" (click)="setAnswers(grades.id, subject.id, true)" *ngFor="let subject of grades.subjects">{{subject.name}}</a>
-						</div>
-						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
-							<a class="btn btn-default" (click)="setTasks(grades.id, subject.id, true)" *ngFor="let subject of grades.subjects">{{subject.name}}</a>
-						</div>
+							<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'answers'">
+								<ng-container *ngFor="let subject of grades.subjects">
+									<a class="btn btn-default" (click)="setAnswers(grades.id, subject.id, false)" *ngIf="subject.seted">{{subject.name}}</a>
+								</ng-container>
+							</div>
+							<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
+								<ng-container *ngFor="let subject of grades.subjects">
+									<a class="btn btn-default" (click)="setTasks(grades.id, subject.id, false)" *ngIf="subject.seted">{{subject.name}}</a>
+								</ng-container>
+							</div>
 					</div>
 				</div>
 			</div>

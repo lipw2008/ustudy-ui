@@ -18,7 +18,7 @@
 					<div class="form-group">
 						<label for="number" class="col-sm-3 control-label">题号：</label>
 						<div class="col-sm-9 form-inline clearfix">
-							<select id="u6022_input" class="form-control">
+							<select id="subjective_number_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('number',subjective.id,0)">
 								<ng-container *ngFor="let sub of subjectives">
 									<option *ngIf="sub.id === currentSubjectiveId" selected="selected" value="{{sub.id}}">
 										{{sub.start}}
@@ -61,26 +61,26 @@
 						<div class="col-sm-9">
 							<label class="radio-inline">
 								<ng-container *ngIf="subjective.dmode === 1">
-									<input type="radio" name="dmode" value="1" checked="checked"> 平均
+									<input type="radio" name="dmode" value="1" checked="checked" (change)="onSubjectiveValueChange('dmode',subjective.id,1)"> 平均
 								</ng-container>
 								<ng-container *ngIf="subjective.dmode !== 1">
-									<input type="radio" name="dmode" value="1"> 平均
+									<input type="radio" name="dmode" value="1" (change)="onSubjectiveValueChange('dmode',subjective.id,1)"> 平均
 								</ng-container>
 							</label>
 							<label class="radio-inline">
 								<ng-container *ngIf="subjective.dmode === 2">
-									<input type="radio" name="dmode" value="2" checked="checked"> 动态
+									<input type="radio" name="dmode" value="2" checked="checked" (change)="onSubjectiveValueChange('dmode',subjective.id,2)"> 动态
 								</ng-container>
 								<ng-container *ngIf="subjective.dmode !== 2">
-									<input type="radio" name="dmode" value="2"> 动态
+									<input type="radio" name="dmode" value="2" (change)="onSubjectiveValueChange('dmode',subjective.id,2)"> 动态
 								</ng-container>
 							</label>
 							<label class="radio-inline">
 								<ng-container *ngIf="subjective.dmode === 3">
-									<input type="radio" name="dmode" value="3" checked="checked"> 比例
+									<input type="radio" name="dmode" value="3" checked="checked" (change)="onSubjectiveValueChange('dmode',subjective.id,3)"> 比例
 								</ng-container>
 								<ng-container *ngIf="subjective.dmode !== 3">
-									<input type="radio" name="dmode" value="3"> 比例
+									<input type="radio" name="dmode" value="3" (change)="onSubjectiveValueChange('dmode',subjective.id,3)"> 比例
 								</ng-container>
 							</label>
 						</div>
@@ -90,18 +90,18 @@
 						<div class="col-sm-9 form-inline">
 							<label class="radio-inline">
 								<ng-container *ngIf="subjective.mmode === 1">
-									<input type="radio" name="mmode" value="1" checked="checked"> 单评
+									<input type="radio" name="mmode" value="1" checked="checked" (change)="onSubjectiveValueChange('mmode',subjective.id,1)"> 单评
 								</ng-container>
 								<ng-container *ngIf="subjective.mmode !== 1">
-									<input type="radio" name="mmode" value="1"> 单评
+									<input type="radio" name="mmode" value="1" (change)="onSubjectiveValueChange('mmode',subjective.id,1)"> 单评
 								</ng-container>
 							</label>
 							<label class="radio-inline">
 								<ng-container *ngIf="subjective.mmode === 2">
-									<input type="radio" name="mmode" value="2" checked="checked"> 双评
+									<input type="radio" name="mmode" value="2" checked="checked" (change)="onSubjectiveValueChange('mmode',subjective.id,2)"> 双评
 								</ng-container>
 								<ng-container *ngIf="subjective.mmode !== 2">
-									<input type="radio" name="mmode" value="2"> 双评
+									<input type="radio" name="mmode" value="2" (change)="onSubjectiveValueChange('mmode',subjective.id,2)"> 双评
 								</ng-container>
 							</label>
 							<div class="input-group pull-right">
@@ -113,7 +113,7 @@
 						<label for="" class="col-sm-3 control-label">阅卷时间：</label>
 						<div class="col-sm-9 form-inline">
 							<div class="input-group">
-								<input type="text" class="form-control" size="5" placeholder="最小时长" value="{{subjective.time}}">
+								<input type="text" class="form-control" size="5" placeholder="最小时长" id="subjective_time_{{subjective.id}}" value="{{subjective.time}}" (change)="onSubjectiveValueChange('time',subjective.id,0)">
 								<span class="input-group-addon">秒</span>
 							</div>
 						</div>
@@ -121,7 +121,7 @@
 					<div class="form-group" *ngIf="subjective.mmode === 2">
 						<label for="" class="col-sm-3 control-label">设定双评时的分差：</label>
 						<div class="col-sm-9 form-inline">
-							<input type="text" class="form-control" size="5" placeholder="两次评分最大差距" value="{{subjective.score}}">
+							<input type="text" class="form-control" size="5" placeholder="两次评分最大差距" id="subjective_score_{{subjective.id}}" value="{{subjective.score}}" (change)="onSubjectiveValueChange('score',subjective.id,0)">
 						</div>
 					</div>
 				</div>
@@ -129,7 +129,7 @@
 					<div class="form-group">
 						<label for="number" class="col-sm-3 control-label">阅卷教师选择：</label>
 						<div class="col-sm-9 form-inline clearfix">
-							<select id="pre_groups" class="form-control">
+							<select id="subjective_pre_groups_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('pre_groups',subjective.id,0)">
 								<ng-container *ngFor="let group of groups">
 									<ng-container *ngIf="subjective.pre.group === group.id">
 										<option selected="selected" value="{{group.id}}">{{group.name}}</option>
@@ -139,12 +139,12 @@
 									</ng-container>
 								</ng-container>
 							</select>
-							<select id="pre_all" class="form-control">
-								<ng-container *ngIf="subjective.pre.all">
+							<select id="subjective_pre_all_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('pre_all',subjective.id,0)">
+								<ng-container *ngIf="subjective.pre.all === 1">
 									<option value="1" selected="selected">阅卷组全体教师</option>
 									<option value="0">阅卷组内未安排阅卷任务教师</option>
 								</ng-container>
-								<ng-container *ngIf="!subjective.pre.all">
+								<ng-container *ngIf="subjective.pre.all === 0">
 									<option value="1">阅卷组全体教师</option>
 									<option value="0" selected="selected">阅卷组内未安排阅卷任务教师</option>
 								</ng-container>
@@ -156,10 +156,18 @@
 							<div class="extra regular margin-left margin-top">
 								<ng-container *ngFor="let teacher of teachers">
 									<ng-container *ngIf="subjective.pre.group === teacher.group">
-										<label class="checkbox-inline">
-											<input type="checkbox" name="pre_teachers" value="{{teacher.id}}"> {{teacher.name}}
+										<ng-container *ngIf="subjective.pre.all === 1">
+											<label class="checkbox-inline">
+												<input type="checkbox" name="subjective_pre_teachers" value="{{teacher.id}}"> {{teacher.name}}
+											</label>
 											<a class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
-										</label>
+										</ng-container>
+										<ng-container *ngIf="subjective.pre.all === 0">
+											<label class="checkbox-inline" *ngIf="!teacher.distributed">
+												<input type="checkbox" name="subjective_pre_teachers" value="{{teacher.id}}"> {{teacher.name}}
+											</label>
+											<a class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+										</ng-container>
 									</ng-container>
 								</ng-container>
 							</div>
@@ -167,85 +175,101 @@
 					</div>
 				</div>
 				<div id="doubleContent" class="panel-body" *ngIf="subjective.mmode === 2">
-						<div class="form-group">
-							<label for="number" class="col-sm-3 control-label">初评教师选择：</label>
-							<div class="col-sm-9 form-inline clearfix">
-								<select id="pre_groups" class="form-control">
-									<ng-container *ngFor="let group of groups">
-										<ng-container *ngIf="subjective.pre.group === group.id">
-											<option selected="selected" value="{{group.id}}">{{group.name}}</option>
-										</ng-container>
-										<ng-container *ngIf="subjective.pre.group !== group.id">
-											<option value="{{group.id}}">{{group.name}}</option>
-										</ng-container>
+					<div class="form-group">
+						<label for="number" class="col-sm-3 control-label">阅卷教师选择：</label>
+						<div class="col-sm-9 form-inline clearfix">
+							<select id="subjective_pre_groups_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('pre_groups',subjective.id,0)">
+								<ng-container *ngFor="let group of groups">
+									<ng-container *ngIf="subjective.pre.group === group.id">
+										<option selected="selected" value="{{group.id}}">{{group.name}}</option>
 									</ng-container>
-								</select>
-								<select id="pre_all" class="form-control">
-									<ng-container *ngIf="subjective.pre.all">
-										<option value="1" selected="selected">阅卷组全体教师</option>
-										<option value="0">阅卷组内未安排阅卷任务教师</option>
+									<ng-container *ngIf="subjective.pre.group !== group.id">
+										<option value="{{group.id}}">{{group.name}}</option>
 									</ng-container>
-									<ng-container *ngIf="!subjective.pre.all">
-										<option value="1">阅卷组全体教师</option>
-										<option value="0" selected="selected">阅卷组内未安排阅卷任务教师</option>
-									</ng-container>
-								</select>
-							</div>
+								</ng-container>
+							</select>
+							<select id="subjective_pre_all_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('pre_all',subjective.id,0)">
+								<ng-container *ngIf="subjective.pre.all === 1">
+									<option value="1" selected="selected">阅卷组全体教师</option>
+									<option value="0">阅卷组内未安排阅卷任务教师</option>
+								</ng-container>
+								<ng-container *ngIf="subjective.pre.all === 0">
+									<option value="1">阅卷组全体教师</option>
+									<option value="0" selected="selected">阅卷组内未安排阅卷任务教师</option>
+								</ng-container>
+							</select>
 						</div>
-						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-9">
-								<div class="extra regular margin-left margin-top">
-									<ng-container *ngFor="let teacher of teachers">
-										<ng-container *ngIf="subjective.pre.group === teacher.group">
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<div class="extra regular margin-left margin-top">
+								<ng-container *ngFor="let teacher of teachers">
+									<ng-container *ngIf="subjective.pre.group === teacher.group">
+										<ng-container *ngIf="subjective.pre.all === 1">
 											<label class="checkbox-inline">
-												<input type="checkbox" name="pre_teachers" value="{{teacher.id}}"> {{teacher.name}}
-												<a class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+												<input type="checkbox" name="subjective_pre_teachers" value="{{teacher.id}}"> {{teacher.name}}
 											</label>
+											<a class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
 										</ng-container>
-									</ng-container>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="number" class="col-sm-3 control-label">终评教师选择：</label>
-							<div class="col-sm-9 form-inline clearfix">
-								<select id="final_groups" class="form-control">
-									<ng-container *ngFor="let group of groups">
-										<ng-container *ngIf="subjective.final.group === group.id">
-											<option selected="selected" value="{{group.id}}">{{group.name}}</option>
-										</ng-container>
-										<ng-container *ngIf="subjective.final.group !== group.id">
-											<option value="{{group.id}}">{{group.name}}</option>
-										</ng-container>
-									</ng-container>
-								</select>
-								<select id="final_all" class="form-control">
-									<ng-container *ngIf="subjective.final.all">
-										<option value="1" selected="selected">阅卷组全体教师</option>
-										<option value="0">阅卷组内未安排阅卷任务教师</option>
-									</ng-container>
-									<ng-container *ngIf="!subjective.final.all">
-										<option value="1">阅卷组全体教师</option>
-										<option value="0" selected="selected">阅卷组内未安排阅卷任务教师</option>
-									</ng-container>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-9">
-								<div class="extra regular margin-left margin-top">
-									<ng-container *ngFor="let teacher of teachers">
-										<ng-container *ngIf="subjective.final.group === teacher.group">
-											<label class="checkbox-inline">
-												<input type="checkbox" name="final_teachers" value="{{teacher.id}}"> {{teacher.name}}
-												<a class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+										<ng-container *ngIf="subjective.pre.all === 0">
+											<label class="checkbox-inline" *ngIf="!teacher.distributed">
+												<input type="checkbox" name="subjective_pre_teachers" value="{{teacher.id}}"> {{teacher.name}}
 											</label>
+											<a class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
 										</ng-container>
 									</ng-container>
-								</div>
+								</ng-container>
 							</div>
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="number" class="col-sm-3 control-label">终评教师选择：</label>
+						<div class="col-sm-9 form-inline clearfix">
+							<select id="subjective_final_groups_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('final_groups',subjective.id,0)">
+								<ng-container *ngFor="let group of groups">
+									<ng-container *ngIf="subjective.final.group === group.id">
+										<option selected="selected" value="{{group.id}}">{{group.name}}</option>
+									</ng-container>
+									<ng-container *ngIf="subjective.final.group !== group.id">
+										<option value="{{group.id}}">{{group.name}}</option>
+									</ng-container>
+								</ng-container>
+							</select>
+							<select id="subjective_final_all_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('final_all',subjective.id,0)">
+								<ng-container *ngIf="subjective.final.all === 1">
+									<option value="1" selected="selected">阅卷组全体教师</option>
+									<option value="0">阅卷组内未安排阅卷任务教师</option>
+								</ng-container>
+								<ng-container *ngIf="subjective.final.all === 0">
+									<option value="1">阅卷组全体教师</option>
+									<option value="0" selected="selected">阅卷组内未安排阅卷任务教师</option>
+								</ng-container>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<div class="extra regular margin-left margin-top">
+								<ng-container *ngFor="let teacher of teachers">
+									<ng-container *ngIf="subjective.final.group === teacher.group">
+										<ng-container *ngIf="subjective.final.all === 1">
+											<label class="checkbox-inline">
+												<input type="checkbox" name="subjective_final_teachers" value="{{teacher.id}}"> {{teacher.name}}
+											</label>
+											<a class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+										</ng-container>
+										<ng-container *ngIf="subjective.final.all === 0">
+											<label class="checkbox-inline" *ngIf="!teacher.distributed">
+												<input type="checkbox" name="subjective_final_teachers" value="{{teacher.id}}"> {{teacher.name}}
+											</label>
+											<a class="btn btn-xs btn-link"><i class="glyphicon glyphicon-asterisk"></i></a>
+										</ng-container>
+									</ng-container>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="panel-footer padding-right text-right">
 					<button type="button" class="btn btn-default">取消</button>
 					<button type="button" class="btn btn-default" (click)="saveOne()">提交</button>

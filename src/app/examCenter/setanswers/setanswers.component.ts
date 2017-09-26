@@ -16,48 +16,28 @@ export class SetAnswersComponent implements OnInit {
 	subjectId: string;
 	seted: boolean;	
 
+	issynthesize = false;
+
 	options = [2,3,4,5,6,7,8,9,10];
 
 	subjects = [
-		{id:0,name:'不分科'},
-		{id:10,name:'历史'},
-		{id:11,name:'政治'},
-		{id:12,name:'地理'}
+		{id:0,name:'不分科'}
 	];
 
 	selectOptions = ['A','B','C','D','E','F','G','H','I','J'];
 
 	objectives = [
-		{id:1, start:1,end:20,type:1,option:4,score:1}
+		{id:1, start:1,end:10,type:1,option:4,score:1},
+		{id:2, start:11,end:20,type:2,option:6,score:1},
+		{id:3, start:21,end:30,type:3,option:2,score:1}
 	];
 
-	objectiveAnswers = [
-		{no:1,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:2,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:3,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:4,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:5,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:6,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:7,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:8,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:9,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:10,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:10},
-		{no:11,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:11},
-		{no:12,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:12},
-		{no:13,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:11},
-		{no:14,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:10},
-		{no:15,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:12},
-		{no:16,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:17,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:18,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:19,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0},
-		{no:20,type:1,option:4,options:[{name:'A',checked:true},{name:'B',checked:false},{name:'C',checked:false},{name:'D',checked:false}],answer:'A',subject:0}
-	];
+	objectiveAnswers = [];
 
-	radioScore = 20;
+	radioScore = 0;
 	checkboxScore = 0;
 	judgmentScore = 0;
-	objectiveScore = 20;
+	objectiveScore = 0;
 
 	constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
 
@@ -69,9 +49,27 @@ export class SetAnswersComponent implements OnInit {
 		this.subjectId = this.route.snapshot.params.subjectId;
 		this.seted = this.route.snapshot.params.seted;
 
+		if(parseInt(this.subjectId) === 10){
+			this.subjects.push({id:7,name:'政治'});
+			this.subjects.push({id:8,name:'历史'});
+			this.subjects.push({id:9,name:'地理'});
+
+			this.issynthesize = true;
+		}else if(parseInt(this.subjectId) === 11){
+			this.subjects.push({id:4,name:'物理'});
+			this.subjects.push({id:5,name:'化学'});
+			this.subjects.push({id:6,name:'生物'});
+
+			this.issynthesize = true;
+		}
+
 		if(this.seted){
 			this.reload(this.examId, this.gradeId, this.subjectId);
 		}
+
+		this.objectives.forEach(objective => {
+			this.addAnswers(objective);
+		});
 	}
 	
 	reload(examId,gradeId,subjectId) {
@@ -117,31 +115,29 @@ export class SetAnswersComponent implements OnInit {
 			obj_['end'] = obj_['start'];
 			this.objectives.push(obj_);
 	
-			this.addScore(obj_);
 			this.addAnswers(obj_);
 		}else{
 			const obj = {id:1, start:1,end:20,type:1,option:4,score:1};
 			this.objectives.push(obj);
 
-			this.addScore(obj);
 			this.addAnswers(obj);
 		}		
 	}
 
-	addOption(objective){
-		let optionCount = objective.option;
-		let type = objective.type;
-		let _option = [];
+	// addOption(objective){
+	// 	let optionCount = objective.option;
+	// 	let type = objective.type;
+	// 	let _option = [];
 
-		if(type === 3){
-			_option.push('Y');
-			_option.push('N');
-		}else{
-			for(var i=0;i<optionCount;i++){
-				_option.push(this.selectOptions[i]);
-			}
-		}
-	}
+	// 	if(type === 3){
+	// 		_option.push('Y');
+	// 		_option.push('N');
+	// 	}else{
+	// 		for(var i=0;i<optionCount;i++){
+	// 			_option.push(this.selectOptions[i]);
+	// 		}
+	// 	}
+	// }
 	
 	removeOneRow(id){
 		const _objectives = [];
@@ -158,9 +154,13 @@ export class SetAnswersComponent implements OnInit {
 	}
 	
 	addAnswers(objective){
+
 		let start = objective['start'];
 		let end = objective['end'];
 		let type = objective['type'];
+		let score = objective['score'];
+		let totalScore = (end - start + 1) * score; 
+		this.objectiveScore = this.objectiveScore + totalScore;		
 		
 		let optionCount = objective.option;
 		let _option = [];
@@ -184,6 +184,14 @@ export class SetAnswersComponent implements OnInit {
 			this.objectiveAnswers.push(answer);
 		}
 
+		if (type === 1) {
+			this.radioScore = this.radioScore + totalScore;
+		} else if(type === 2){
+			this.checkboxScore = this.checkboxScore + totalScore;
+		} else if(type === 3){
+			this.judgmentScore = this.judgmentScore + totalScore;
+		}
+
 		this.objectiveAnswers.sort(function(a,b){
 			return a.no - b.no;
 		});
@@ -203,22 +211,6 @@ export class SetAnswersComponent implements OnInit {
 			}
 		}
 		this.objectiveAnswers = answers;
-	}
-
-	addScore(objective){
-		let start = objective['start'];
-		let end = objective['end'];
-		let type = objective['type'];
-		let score = objective['score'];
-		let total = (end+1-start)*score;
-		if(type === 1){
-			this.radioScore = this.radioScore + total;
-		}else if(type === 2){
-			this.checkboxScore = this.checkboxScore + total;
-		}else if(type === 3){
-			this.judgmentScore = this.judgmentScore + total;
-		}
-		this.objectiveScore = this.objectiveScore + total;
 	}
 
 	removeScore(objective){
@@ -273,7 +265,7 @@ export class SetAnswersComponent implements OnInit {
 					obj['score'] = score;
 				}
 
-				this.addScore(obj);
+				//this.addScore(obj);
 				this.addAnswers(obj);
 			}
 			_objectives.push(obj);
@@ -352,11 +344,17 @@ export class SetAnswersComponent implements OnInit {
 			}
 
 		}else{
-			const obj = {id:1, type:4, start:1, end:10, subject:0, score:2};
+			const obj = {id:new Date().getTime(), type:4, start:1, end:1, subject:0, score:1};
+			debugger;
+			if (this.objectives.length > 0) {
+				let objective = this.objectives[this.objectives.length - 1];
+				obj.start = objective.end + 1;
+				obj.end = objective.end + 1;
+			}
 			this.subjectives.push(obj);
 
-			this.subjectiveCount = 10;
-			this.subjectiveScore = 20;
+			this.subjectiveCount = 1;
+			this.subjectiveScore = 1;
 		}
 	}
 
