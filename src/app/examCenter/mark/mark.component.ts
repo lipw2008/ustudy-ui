@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Renderer2 }  from '@angular/core';
-
+import { ActivatedRoute } from '@angular/router';
 import { SharedService } from '../../shared.service';
 
 @Component({
@@ -8,9 +8,17 @@ import { SharedService } from '../../shared.service';
 
 export class MarkComponent implements OnInit {
 
+	/***** Model *****/
+
+	markId: string;
+	mark: any;
+
+	/***** View *****/
 	@ViewChild('markCanvas') markCanvas;
 	@ViewChild('markContainer') markContainer;
+	@ViewChild('rootContainer') rootContainer;
 
+	rootContainerElement: any;
 	container: any;
 	canvas: any;
 	cxt: any;
@@ -29,16 +37,30 @@ export class MarkComponent implements OnInit {
 	circleBeginX = 0;
 	circleBeginY = 0;
 
-    constructor(private _sharedService: SharedService, private renderer: Renderer2) {
+    constructor(private _sharedService: SharedService, private renderer: Renderer2, private route: ActivatedRoute) {
 
     }
 
     ngOnInit(): void {
-	}	
+    	this.markId = this.route.snapshot.params.markId;
+    	this.reload();
+	}
+
+	reload(): void {
+		this._sharedService.makeRequest('GET', 'assets/api/exams/mark.json', '').then((data: any) => {
+			//cache the list
+			console.log("data: " + JSON.stringify(data));
+			this.mark = data;
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
+	}
 
 	ngAfterViewInit(): void {
 		this.container = this.markContainer.nativeElement;
 		this.canvas = this.markCanvas.nativeElement;
+		this.rootContainerElement = this.rootContainer.nativeElement;
 		console.log(this.canvas);
 		
 		// Bind events
@@ -69,23 +91,25 @@ export class MarkComponent implements OnInit {
 
 		let t = this;
 		this.img.onload = function() {
-			// If the size of image is small, scale it to fit the container.
-			console.log("image width:" + t.img.width + " container.width:" + t.container.style.width);
-			// TODO: change 800 to real time container width later.
-			// if (t.img.width < 800) {
-				t.cxt.canvas.width = 780;
-				t.cxt.canvas.height = t.img.height * (780/t.img.width);
-				t.cxt.drawImage(t.img, 0, 0, t.img.width, t.img.height, 0, 0, t.cxt.canvas.width, t.cxt.canvas.height);
+			t.cxt.canvas.width = t.container.offsetWidth;
+			t.cxt.canvas.height = t.img.height * (t.cxt.canvas.width/t.img.width);
+			t.cxt.drawImage(t.img, 0, 0, t.img.width, t.img.height, 0, 0, t.cxt.canvas.width, t.cxt.canvas.height);
+			//hidden canvas
+			t.hCxt.canvas.width = t.cxt.canvas.width;
+			t.hCxt.canvas.height = t.cxt.canvas.height;
+		}
+		this.img.src = 'assets/api/exams/exam01.png';
+	}
 
-				//hidden canvas
-				t.hCxt.canvas.width = t.cxt.canvas.width;
-				t.hCxt.canvas.height = t.cxt.canvas.height;
-
-			// } else {
-			// 	t.cxt.canvas.width = t.img.width;
-			// 	t.cxt.canvas.height = t.img.height;
-			// 	t.cxt.drawImage(t.img, 0, 0, t.img.width, t.img.height);				
-			// }
+	clear(): void {
+		let t = this;
+		this.img.onload = function() {
+			t.cxt.canvas.width = t.container.offsetWidth;
+			t.cxt.canvas.height = t.img.height * (t.cxt.canvas.width/t.img.width);
+			t.cxt.drawImage(t.img, 0, 0, t.img.width, t.img.height, 0, 0, t.cxt.canvas.width, t.cxt.canvas.height);
+			//hidden canvas
+			t.hCxt.canvas.width = t.cxt.canvas.width;
+			t.hCxt.canvas.height = t.cxt.canvas.height;
 		}
 		this.img.src = 'assets/api/exams/exam01.png';
 	}
@@ -139,14 +163,37 @@ export class MarkComponent implements OnInit {
 						textbox.parentNode.removeChild(textbox);
 					}
     			});
-				this.container.appendChild(textbox);
+				this.rootContainerElement.appendChild(textbox);
 				textbox.focus();
 				console.log(textbox);
+				console.log("x: " + evt.clientX + " y: " + evt.clientY);
 				// console.log(this.canvas.offsetLeft);
 				// console.log(evt.offsetX == undefined? evt.layerX: evt.offsetX);
 				break;
+			case 'Help':
+				this.img = new Image();
+				let t = this;
+				this.img.onload = function() {
+					t.cxt.drawImage(t.img, evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY, t.img.width, t.img.height);
+
+					//hidden canvas
+					t.hCxt.drawImage(t.img, evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY, t.img.width, t.img.height);
+				}
+				this.img.src = 'assets/images/icon-help.png';
+				break;
+			case 'Like':
+				this.img = new Image();
+				t = this;
+				this.img.onload = function() {
+					t.cxt.drawImage(t.img, evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY, t.img.width, t.img.height);
+
+					//hidden canvas
+					t.hCxt.drawImage(t.img, evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY, t.img.width, t.img.height);
+				}
+				this.img.src = 'assets/images/icon-like.png';
+				break;
 			default:
-				console.log(evt.layerY);
+				console.log("x: " + evt.clientX + " y: " + evt.clientY);
 				//Do Nothing
 		}
 	}
@@ -259,6 +306,14 @@ export class MarkComponent implements OnInit {
 		this.editMode = 'Text';
 	}
 
+	addLike(): void {
+		this.editMode = 'Like';
+	}
+
+	addHelp(): void {
+		this.editMode = 'Help';
+	}
+
 	saveImage(): void {
 		let dataUrl = this.canvas.toDataURL("image/png");
 		window.open(dataUrl);
@@ -276,5 +331,41 @@ export class MarkComponent implements OnInit {
 			t.cxt.drawImage(t.img, 0, 150, t.img.width, t.img.height-150, 0, 150, t.cxt.canvas.width, t.cxt.canvas.height-150);
 		}
 		this.img.src = 'assets/api/exams/hidden.png';
+	}
+
+	addBestAnswer(): void {
+		this.img = new Image();
+		let t = this;
+		this.img.onload = function() {
+			t.cxt.drawImage(t.img, 0, 0, t.img.width, t.img.height);
+
+			//hidden canvas
+			t.hCxt.drawImage(t.img, 0, 0, t.img.width, t.img.height);
+		}
+		this.img.src = 'assets/images/icon-bestanswer.png';
+	}
+
+	addFAQ(): void {
+		this.img = new Image();
+		let t = this;
+		this.img.onload = function() {
+			t.cxt.drawImage(t.img, 80, 0, t.img.width, t.img.height);
+
+			//hidden canvas
+			t.hCxt.drawImage(t.img, 80, 0, t.img.width, t.img.height);
+		}
+		this.img.src = 'assets/images/icon-faq.png';
+	}
+
+	addQueerAnswer(): void {
+		this.img = new Image();
+		let t = this;
+		this.img.onload = function() {
+			t.cxt.drawImage(t.img, 160, 0, t.img.width, t.img.height);
+
+			//hidden canvas
+			t.hCxt.drawImage(t.img, 160, 0, t.img.width, t.img.height);
+		}
+		this.img.src = 'assets/images/icon-queerflower.png';
 	}
 }

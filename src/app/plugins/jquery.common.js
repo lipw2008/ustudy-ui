@@ -64,53 +64,29 @@ $(function () {
         "catID": "2",
         "icon": "caret",
         "catName": "考试中心",
-        "catLink": "../examCenter/school.html",
+        "catLink": "../examinationCenter/school.html",
         "child": [
             {
                 "catID": "1",
                 "icon": "glyphicon-minus",
-                "catName": "模板制作",
-        		"catLink": "../examCenter/school.html",
+                "catName": "答案设置",
+        		"catLink": "../examinationCenter/answerSetting.html",
                 "parentCatID": "2",
             	"child": []
             },
             {
                 "catID": "2",
                 "icon": "glyphicon-minus",
-                "catName": "答卷扫描",
-        		"catLink": "../examCenter/school.html",
+                "catName": "任务分配",
+        		"catLink": "../examinationCenter/taskAllocation.html",
                 "parentCatID": "2",
             	"child": []
             },
             {
                 "catID": "3",
                 "icon": "glyphicon-minus",
-                "catName": "答案设置",
-        		"catLink": "../examCenter/school.html",
-                "parentCatID": "2",
-            	"child": []
-            },
-            {
-                "catID": "4",
-                "icon": "glyphicon-minus",
-                "catName": "阅卷任务",
-        		"catLink": "../examCenter/school.html",
-                "parentCatID": "2",
-            	"child": []
-            },
-            {
-                "catID": "5",
-                "icon": "glyphicon-minus",
-                "catName": "网络阅卷",
-        		"catLink": "../examCenter/school.html",
-                "parentCatID": "2",
-            	"child": []
-            },
-            {
-                "catID": "6",
-                "icon": "glyphicon-minus",
-                "catName": "答题卷中心",
-        		"catLink": "../examCenter/school.html",
+                "catName": "线上阅卷",
+        		"catLink": "../examinationCenter/OnlineMarkingTask.html",
                 "parentCatID": "2",
             	"child": []
             }
@@ -126,7 +102,7 @@ $(function () {
                 "catID": "1",
                 "icon": "glyphicon-minus",
                 "catName": "阅卷统计",
-        		"catLink": "../dataCenter/markingStatistics.html",
+        		"catLink": "../dataCenter/markingProgress.html",
                 "parentCatID": "3",
             	"child": []
             },
@@ -142,7 +118,7 @@ $(function () {
                 "catID": "3",
                 "icon": "glyphicon-minus",
                 "catName": "成绩统计",
-        		"catLink": "../dataCenter/schievementStatistics.html",
+        		"catLink": "../dataCenter/classAchievement.html",
                 "parentCatID": "3",
             	"child": []
             },

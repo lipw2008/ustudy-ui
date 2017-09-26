@@ -27,9 +27,9 @@ export class SetAnswersComponent implements OnInit {
 	selectOptions = ['A','B','C','D','E','F','G','H','I','J'];
 
 	objectives = [
-		{id:1, start:1,end:10,type:1,option:4,score:1},
-		{id:2, start:11,end:20,type:2,option:6,score:1},
-		{id:3, start:21,end:30,type:3,option:2,score:1}
+		{id:1, start:1,end:2,type:1,option:4,score:1},
+		{id:2, start:3,end:4,type:2,option:6,score:1},
+		{id:3, start:5,end:6,type:3,option:2,score:1}
 	];
 
 	objectiveAnswers = [];
@@ -123,21 +123,6 @@ export class SetAnswersComponent implements OnInit {
 			this.addAnswers(obj);
 		}		
 	}
-
-	// addOption(objective){
-	// 	let optionCount = objective.option;
-	// 	let type = objective.type;
-	// 	let _option = [];
-
-	// 	if(type === 3){
-	// 		_option.push('Y');
-	// 		_option.push('N');
-	// 	}else{
-	// 		for(var i=0;i<optionCount;i++){
-	// 			_option.push(this.selectOptions[i]);
-	// 		}
-	// 	}
-	// }
 	
 	removeOneRow(id){
 		const _objectives = [];
@@ -434,5 +419,11 @@ export class SetAnswersComponent implements OnInit {
 				}
 			}
 		});
+	}
+
+	setCheckboxScore(){
+		debugger;
+		let obj = this.elementRef.nativeElement.querySelector('#loginModal111');
+		obj.css({'display': 'block'});
 	}
 }

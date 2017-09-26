@@ -73,7 +73,7 @@
 										<input type="text" class="form-control" id="score_{{objective.id}}" size="5" value="{{objective.score}}" (change)="onValueChange(5,objective.id)">
 										<span class="input-group-addon clear-border clear-bg">分/题</span>
 										<div class="input-group pull-right" *ngIf="objective.type === 2">
-											<a class="btn btn-link"><i class="glyphicon glyphicon-cog"></i></a>
+											<a class="btn btn-link" (click)="setCheckboxScore()"><i class="glyphicon glyphicon-cog"></i></a>
 										</div>
 									</div>
 								</td>
@@ -253,3 +253,62 @@
 	</div>
 </div>
 <!-- 内容 end -->
+
+<!-- 模态框，登录 start -->
+<div id="loginModal111" class="modal login-modal" tabindex="-1" role="dialog">
+	<form id="loginForm" method="get" class="form-horizontal" action="informationCenter/student.html">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs row" role="tablist">
+						<li role="presentation" class="col-xs-6 col-sm-6 active clear-padding"><a class="text-center clear-margin" href="#account" aria-controls="account" role="tab" data-toggle="tab">账号登录</a></li>
+						<li role="presentation" class="col-xs-6 col-sm-6 clear-padding"><a class="text-center clear-margin" href="#qrCode" aria-controls="qrCode" role="tab" data-toggle="tab">扫码登录</a></li>
+					</ul>
+				</div>
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="account">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="userName" class="col-sm-3 control-label">账号：</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="userName" name="userName" placeholder="请输入姓名" required data-bv-notempty-message="姓名不能为空">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="statusCode" class="col-sm-3 control-label">密码：</label>
+								<div class="col-sm-8">
+									<input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="请输入密码" required data-bv-notempty-message="密码不能为空">
+								</div>
+							</div>
+							<div class="form-group clear-margin">
+								<div class="col-sm-offset-3 col-sm-5">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" id="isCookie" name="isCookie"> 记住密码
+										</label>
+									</div>
+								</div>
+								<div class="col-sm-3 clear-padding-horizontal text-right">
+									<a class="btn btn-link clear-padding-horizontal" href="resetPassword.html">找回密码</a>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button id="loginBtn" type="button" class="btn btn-primary btn-block">确定</button>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="qrCode">
+						<div class="modal-body">
+							<img class="img-responsive center-block" src="images/qrcode.png">
+						</div>
+						<div class="modal-footer">
+							<h5 class="text-center">微信扫描二维码登录“蘑菇云阅卷平台”</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 模态框，登录 end -->

@@ -634,7 +634,7 @@ body {
 .container-task-allocation {
   padding: 10px 10px 10px 30px;
   background-color: #f2f2f2;
-  background-image: url(../../../../../assets/images/binding-line.png);
+  background-image: url(../../../../images/binding-line.png);
   background-repeat: repeat-y;
   background-position: 0 0;
   border: 1px solid #ddd;
@@ -767,7 +767,7 @@ body {
 }
 .panel.online-marking .panel-body {
   padding: 0;
-  height: 451px;
+  height: 731px;
   border-top: 1px solid #ddd;
   overflow-y: auto;
 }
@@ -803,25 +803,25 @@ body {
   content: "\2A2F";
 }
 .online-marking-wrap .mark-icon.icon-bestanswer {
-  background-image: url(../../../../../assets/images/icon-bestanswer.svg);
+  background-image: url(../../../../images/icon-bestanswer.svg);
 }
 .online-marking-wrap .mark-icon.icon-faq {
-  background-image: url(../../../../../assets/images/icon-faq.svg);
+  background-image: url(../../../../images/icon-faq.svg);
 }
 .online-marking-wrap .mark-icon.icon-queerflower {
-  background-image: url(../../../../../assets/images/icon-queerflower.svg);
+  background-image: url(../../../../images/icon-queerflower.svg);
 }
 .online-marking-wrap .mark-icon.icon-markdoubleline {
-  background-image: url(../../../../../assets/images/icon-markdoubleline.svg);
+  background-image: url(../../../../images/icon-markdoubleline.svg);
 }
 .online-marking-wrap .mark-icon.icon-markcircle {
-  background-image: url(../../../../../assets/images/icon-markcircle.svg);
+  background-image: url(../../../../images/icon-markcircle.svg);
 }
 .online-marking-wrap .mark-icon.icon-help {
-  background-image: url(../../../../../assets/images/icon-help.svg);
+  background-image: url(../../../../images/icon-help.svg);
 }
 .online-marking-wrap .mark-icon.icon-like {
-  background-image: url(../../../../../assets/images/icon-like.svg);
+  background-image: url(../../../../images/icon-like.svg);
 }
 .online-marking-wrap .control {
   position: absolute;
