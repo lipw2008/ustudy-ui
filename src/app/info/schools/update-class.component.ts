@@ -2,7 +2,7 @@ import { Component, OnInit }  from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import { SchoolService } from './school.service';
-import { SharedService } from '../shared.service';
+import { SharedService } from '../../shared.service';
 
 @Component({
     templateUrl: 'update-class.component.html'

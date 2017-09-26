@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { ITeacher } from './teacher';
 import { TeacherService } from './teacher.service';
-import { SharedService } from '../shared.service';
+import { SharedService } from '../../shared.service';
 
 @Component({
     templateUrl: 'add-teacher.component.html'

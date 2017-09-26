@@ -1,7 +1,7 @@
 import { Component, OnInit }  from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { SchoolService } from './school.service';
-import { SharedService } from '../shared.service';
+import { SharedService } from '../../shared.service';
 
 @Component({
     templateUrl: 'class.component.html'
