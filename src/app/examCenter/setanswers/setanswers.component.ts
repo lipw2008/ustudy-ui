@@ -18,7 +18,11 @@ export class SetAnswersComponent implements OnInit {
 
 	issynthesize = false;
 
+	currentCheckBox = 2;
+
 	options = [2,3,4,5,6,7,8,9,10];
+
+	checkBoxScores = [];
 
 	subjects = [
 		{id:0,name:'不分科'}
@@ -69,7 +73,10 @@ export class SetAnswersComponent implements OnInit {
 
 		this.objectives.forEach(objective => {
 			this.addAnswers(objective);
+			this.setDefaultCheckBoxScore(objective);			
 		});
+
+		
 	}
 	
 	reload(examId,gradeId,subjectId) {
@@ -252,6 +259,7 @@ export class SetAnswersComponent implements OnInit {
 
 				//this.addScore(obj);
 				this.addAnswers(obj);
+				this.setDefaultCheckBoxScore(obj);
 			}
 			_objectives.push(obj);
 		}
@@ -421,9 +429,56 @@ export class SetAnswersComponent implements OnInit {
 		});
 	}
 
-	setCheckboxScore(){
-		debugger;
-		let obj = this.elementRef.nativeElement.querySelector('#loginModal111');
-		obj.css({'display': 'block'});
+	showCheckBoxScore(){
+		this.elementRef.nativeElement.querySelector('#infoModal').style.display = '';
 	}
+
+	closeCheckBoxModal(){
+		this.elementRef.nativeElement.querySelector('#infoModal').style.display = 'none';
+	}
+
+	setDefaultCheckBoxScore(objective){
+		if (objective.type === 2) {
+			this.checkBoxScores = [];
+			let optionSize = objective['option'];
+	
+			for (var i=2;i <= optionSize; i++) {
+				let scores_ = [];
+				for (var j=1; j < i; j++) {
+					scores_.push({count:j, score:0});
+				}
+				this.checkBoxScores.push({size:i, seted:false, scores:scores_});
+			}
+		}
+	}
+
+	setCheckBoxScore(size, count){
+		let score = this.elementRef.nativeElement.querySelector('#checkBoxScore_' + size + '_' + count).value;
+		this.checkBoxScores.forEach(element => {
+			if (element.size === size) {
+				element.scores.forEach(element_ => {
+					if (element_.count === count) {
+						element_.score = score;
+					}
+				});
+			}
+		});
+	}
+
+	setNextCheckBoxScore(){
+		this.checkBoxScores.forEach(element => {
+			if (element.size === this.currentCheckBox) {
+				element.seted = true;
+			}
+		});
+
+		if (this.currentCheckBox < this.checkBoxScores[this.checkBoxScores.length -1].size) {
+			this.currentCheckBox = this.currentCheckBox + 1;
+		}
+	}
+
+	setCurrentCheckBoxScore(size){
+		this.currentCheckBox = size;
+	}
+
 }
