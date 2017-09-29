@@ -6,6 +6,7 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
+import { SelectSubjectComponent } from './selectsubject.component';
 import { SetAnswersComponent } from './setanswers.component';
 
 @NgModule({
@@ -13,6 +14,7 @@ import { SetAnswersComponent } from './setanswers.component';
     CommonModule,
   	NgxDatatableModule,
     RouterModule.forChild([
+      { path: 'selectsubject', component: SelectSubjectComponent },
       { path: 'setanswers', component: SetAnswersComponent }
     ]),
 	ReactiveFormsModule,
@@ -20,6 +22,7 @@ import { SetAnswersComponent } from './setanswers.component';
 	HttpModule
   ],
   declarations: [
+    SelectSubjectComponent,
     SetAnswersComponent
   ],
   providers: []

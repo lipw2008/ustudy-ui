@@ -6,6 +6,7 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
+import { SetObjectivesNoComponent } from './setobjectivesno.component';
 import { TaskAllocationComponent } from './taskallocation.component';
 
 @NgModule({
@@ -13,6 +14,7 @@ import { TaskAllocationComponent } from './taskallocation.component';
     CommonModule,
   	NgxDatatableModule,
     RouterModule.forChild([
+      { path: 'setobjectivesno', component: SetObjectivesNoComponent },
       { path: 'taskallocation', component: TaskAllocationComponent }
     ]),
 	ReactiveFormsModule,
@@ -20,6 +22,7 @@ import { TaskAllocationComponent } from './taskallocation.component';
 	HttpModule
   ],
   declarations: [
+    SetObjectivesNoComponent,    
     TaskAllocationComponent
   ],
   providers: []

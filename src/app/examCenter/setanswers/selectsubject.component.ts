@@ -13,6 +13,8 @@ export class SelectSubjectComponent implements OnInit {
 	examId: string;
 	type = 'answers';
 
+	isCreated = false;
+
 	exams = [
 		{ id: '1', name: '铜川一中16-17学年上学期期末考试1' },
 		{ id: '2', name: '铜川一中16-17学年上学期期末考试2' },
@@ -124,6 +126,10 @@ export class SelectSubjectComponent implements OnInit {
 	}
 
 	setTasks(gradeId,subjectId,seted) {
-		this.router.navigate(['taskallocation', {examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
+		if(this.isCreated){
+			this.router.navigate(['taskallocation', {examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
+		}else{
+			this.router.navigate(['setobjectivesno', {examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
+		}
 	}
 }

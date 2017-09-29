@@ -1,0 +1,82 @@
+<!-- 路径导航 start -->
+<div class="container-fluid container-breadcrumb">
+	<div class="container">
+		<ol class="breadcrumb">
+			<li><a href="../">首页</a></li>
+			<li><a href="selectsubject;type=task">考试中心</a></li>
+			<li class="active">任务分配</li>
+		</ol>
+	</div>
+</div>
+<!-- 路径导航 end -->
+<!-- 内容 start -->
+<div class="container container-sm">
+	<form id="" method="post" class="form-horizontal" action="#">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="main-title btn btn-default">设置客观题：</h4>
+			</div>
+			<hr>
+			<div class="panel-body">
+				<div class="form-group">
+					<label for="number" class="col-sm-3 control-label">客观题数量：</label>
+					<div class="col-sm-9 form-inline">
+						<input type="text" class="form-control" id="objective_nos_count" name="" placeholder="客观题数量" value="10" (change)="resetSelectCount()">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-3 control-label">客观题题号：</label>
+					<div class="col-sm-9">
+						<div class="extra margin-left margin-top" data-toggle="buttons">
+							<ng-container *ngFor="let objective of objectivesNos">
+								<ng-container *ngIf="objective.selected">
+									<label class="btn btn-default active">
+										<input type="checkbox" id="teacher11" name="teacher1" value="{{objective.no}}" (click)="selectOne(objective.no)"> {{objective.no}}
+									</label>
+								</ng-container>
+								<ng-container *ngIf="!objective.selected">
+									<label class="btn btn-default">
+										<input type="checkbox" id="teacher11" name="teacher1" value="{{objective.no}}" (click)="selectOne(objective.no)"> {{objective.no}}
+									</label>
+								</ng-container>
+							</ng-container>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-9">
+						<button id="" class="btn btn-default" type="button" (click)="addOneNo()">
+							<i class="glyphicon glyphicon-plus"></i> 其他
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer text-center">
+				<button type="button" class="btn btn-default">取消</button>
+				<button type="button" class="btn btn-primary" (click)="commitObjectives()">确定</button>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 内容 end -->
+<!-- 模态框，修改密码 start -->
+<div id="infoModal" tabindex="-1" role="dialog" style="display: block;overflow: hidden;position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1050;">
+	<form id="infoForm" method="post" class="form-horizontal" action="#">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">提示</h4>
+				</div>
+				<div class="modal-body">
+					<p>由于本次考试“英语”科目模板制作、答案设置均未做设置，所以您在做阅卷任务设置前，需要先设置客观题，请问是否继续。</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()">否</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeModal()">是</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 模态框，修改密码 end -->
