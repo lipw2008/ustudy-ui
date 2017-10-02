@@ -1,31 +1,38 @@
 import { Injectable} from '@angular/core';
 import { Http, Response } from '@angular/http';
-
+import {Md5} from 'ts-md5/dist/md5';
+/*
+This shared service provides common utilitis and constants to the whole project.
+*/
 @Injectable()
 export class SharedService {
 
-	public url: string = '';
+	public userName: string = '';
+	public userRole: string = '';
 
     constructor(private _http: Http) { 
-		if(this.url === '') {
-			this.loadUrl();
+    }
+
+		MD5(pw: string): any {
+			return Md5.hashStr(pw);
 		}
-    }
 
-    loadUrl () {
-	  	var configXhr = new XMLHttpRequest();
-	  	configXhr.open('GET', 'assets/config.json');
-	  	configXhr.onload = () => {
-	  		this.url = JSON.parse(configXhr.response).url;
-	  	}
-	  	configXhr.onerror = () => {
-	  		console.log("The request is rejected when getting configured URL. Status: " + configXhr.status + " Text: " + configXhr.statusText);
-	  	}
-	  	configXhr.send();
-    }
-
-	makeRequest (method: string, endpoint: string, content: string) {
+/* Do a http request
+method: http method
+endpoint:
+	- "/info/..." will send to server side
+	- "assets/..." is for test
+content:
+	- string: request data. the default req&res contentType is JSON
+	- JSON: {"data": "", "reqContentType": "", "resContentType": ""}
+*/
+	makeRequest (method: string, endpoint: string, content: any) {
 	  return new Promise(function (resolve, reject) {
+			// parse the content
+			let data = (content.data === undefined ? content : content.data);
+			let reqContentType = (content.reqContentType === undefined ? "application/json" : content.reqContentType);
+			let resContentType = (content.resContentType === undefined ? "application/json" : content.resContentType);
+
 	  	// get the configured URL
 	  	var configXhr = new XMLHttpRequest();
 	  	configXhr.open('GET', 'assets/config.json');
@@ -36,6 +43,7 @@ export class SharedService {
 	  		}
 		    var xhr = new XMLHttpRequest();
 		    xhr.open(method, "" + url + endpoint);
+				console.log("url:" + method + url + endpoint);
 		    xhr.onload = () => {
 		    	console.log("xhr status is: " + xhr.status);
 		      if (xhr.status >= 200 && xhr.status < 300) {
@@ -54,9 +62,10 @@ export class SharedService {
 		        statusText: xhr.statusText
 		      });
 		    };
+				xhr.withCredentials = true;
 		    if (method === 'POST') {
-		    	xhr.setRequestHeader("Content-type", "application/json");
-		    	xhr.send(content);
+		    	xhr.setRequestHeader("Content-type", reqContentType);
+		    	xhr.send(data);
 		    }
 		    else {
 		    	xhr.send();
@@ -72,34 +81,4 @@ export class SharedService {
 	  	configXhr.send();
 	  });
 	}
-
-	// makeRequest (method: string, endpoint: string, content: string) {
-	//     return new Promise(function (resolve, reject) {
-	// 		var url = "http://47.92.53.57:8080";
-	// 		var xhr = new XMLHttpRequest();
-	// 		xhr.open(method, "" + url + endpoint);
-	// 		xhr.onload = () => {
-	// 			console.log("xhr status is: " + xhr.status);
-	// 		  	if (xhr.status >= 200 && xhr.status < 300) {
-	// 		  		console.log("xhr response is: " + xhr.response);
-	// 		    	resolve(JSON.parse(xhr.response));
-	// 		  	} else {
-	// 		    	reject({
-	// 		   			status: xhr.status,
-	// 		    		statusText: xhr.statusText
-	// 		  		});
-	// 		  	}
-	// 		};
-	// 		xhr.onerror = () => {
-	// 		  	reject({
-	// 		    	status: xhr.status,
-	// 		    	statusText: xhr.statusText
-	// 		  	});
-	// 		};
-	// 		if (method === 'POST')
-	// 			xhr.send(content);
-	// 		else 
-	//     		xhr.send();
-	//     });
-	// }
 }

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent }  from './app.component';
 import { WelcomeComponent }  from './welcome/welcome.component';
+import { LoginComponent }  from './welcome/login.component';
 
 /* Feature Modules */
 import { WelcomeModule } from './welcome/welcome.module';
@@ -26,6 +27,7 @@ import { SharedService } from './shared.service';
     HttpModule,
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
+      { path: 'login', component: LoginComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' }
     ]),
 	StudentModule,
@@ -44,4 +46,3 @@ import { SharedService } from './shared.service';
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
-

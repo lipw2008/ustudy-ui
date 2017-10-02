@@ -9,41 +9,44 @@ import { SharedService } from './shared.service';
 export class AppComponent {
     pageTitle: string = '蘑菇云后台管理系统';
 
-    userName: string = '';
-	role: string = "任课老师";
-	
 	constructor(private _sharedService: SharedService, private router: Router) {
 
 	}
 
     ngOnInit() : void {
-  		this.getUser();
+  		this.updateUserStatus();
     }
 
-	checkLogInStatus() : void {
+	checkUserStatus() : void {
 		console.log("check log in status");
-		// if (this._sharedService.url !== '' && this.userName === '') {
-		// 	window.location.href = this._sharedService.url + '/info/login.jsp';
-		// }
+		if (this._sharedService.userName === '') {
+			this.router.navigate(['login']);
+		}
 	}
 
 	logout(): void {
 		this._sharedService.makeRequest('GET', '/info/logout', '').then((data: any) => {
 			alert("您已退出");
-			this.userName = '';
+			this._sharedService.userName = '';
+			this._sharedService.userRole = '';
 			this.router.navigate(['welcome']);
 		}).catch((error: any) => {
 			alert("退出失败");
+			this._sharedService.userName = '';
+			this._sharedService.userRole = '';			
 			this.router.navigate(['welcome']);
 		});
 	}
 
-	getUser() {
+	updateUserStatus() {
+		console.log("update user status");
 		this._sharedService.makeRequest('GET', '/info/loginId', '').then((data: any) => {
 			console.log("data: " + data);
-			this.userName = data.userName ===undefined ? '' : data.userName;
-			this.role = data.role === undefined ? '任课老师' : data.role;
+			this._sharedService.userName = data.userName ===undefined ? '' : data.userName;
+			this._sharedService.userRole = data.role === undefined ? '' : data.role;
 		}).catch((error: any) => {
+			this._sharedService.userName = '';
+			this._sharedService.userRole = '';
 			console.log(error.status);
 			console.log(error.statusText);
 		});
