@@ -10,10 +10,158 @@
         "markType": "标准",
         "markStyle": "single",
         "progress": "60%",
+        "questionType": "解答题",
+        "questionNum": "1",
+        "startNum": "",
+        "endNum": "",
+        "papers": [
+            {
+                "paperId": "P001",
+                "isBest": false, 
+                "isBad": false, 
+                "isFAQ": false,
+                "isProblemPaper": false,
+                "score": 4, 
+                "paperImg": "assets/api/exams/exam01.png",
+                "markImg": ""
+            },
+            {
+                "paperId": "P002",
+                "isBest": false, 
+                "isBad": false, 
+                "isFAQ": false,
+                "isProblemPaper": false,
+                "score": 4, 
+                "paperImg": "assets/api/exams/exam01.png",
+                "markImg": ""
+            }
+        ]
+    },
+    {
+        "id": "M002",
+        "examId": "E001",
+        "examName": "16-17学年上学期期末考试",
+        "teacherId": "T001",
+        "teacherName": "鲁迅",
+        "subject": "语文",
+        "grade": "高一",
+        "markType": "标准",
+        "markStyle": "single",
+        "progress": "60%",
         "questionType": "填空题",
         "questionNum": "",
         "startNum": "2",
         "endNum": "5",
+        "papers": [
+            {
+                "paperId": "P001",
+                "isBest": false, 
+                "isBad": false, 
+                "isFAQ": false,
+                "isProblemPaper": false,
+                "score": 4, 
+                "steps": {
+                    "2": 0, 
+                    "3": 2,
+                    "4": 2,
+                    "5": 0
+                },
+                "paperImg": "",
+                "markImg": ""
+            }
+        ]
+    },
+    {
+        "id": "M003",
+        "examId": "E001",
+        "examName": "16-17学年上学期期末考试",
+        "teacherId": "T001",
+        "teacherName": "鲁迅",
+        "subject": "语文",
+        "grade": "高一",
+        "markType": "标准",
+        "markStyle": "single",
+        "progress": "60%",
+        "questionType": "解答题",
+        "questionNum": "6",
+        "startNum": "",
+        "endNum": "",
+        "papers": [
+            {
+                "paperId": "P001",
+                "isBest": false, 
+                "isBad": false, 
+                "isFAQ": false,
+                "isProblemPaper": false,
+                "score": 4, 
+                "paperImg": "",
+                "markImg": ""
+            },
+            {
+                "paperId": "P002",
+                "isBest": false, 
+                "isBad": false, 
+                "isFAQ": false,
+                "isProblemPaper": false,
+                "score": 4, 
+                "paperImg": "",
+                "markImg": ""
+            }
+        ]
+    },
+    {
+        "id": "M004",
+        "examId": "E001",
+        "examName": "16-17学年上学期期末考试",
+        "teacherId": "T001",
+        "teacherName": "鲁迅",
+        "subject": "语文",
+        "grade": "高一",
+        "markType": "标准",
+        "markStyle": "single",
+        "progress": "60%",
+        "questionType": "解答题",
+        "questionNum": "7",
+        "startNum": "",
+        "endNum": "",
+        "papers": [
+            {
+                "paperId": "P001",
+                "isBest": false, 
+                "isBad": false, 
+                "isFAQ": false,
+                "isProblemPaper": false,
+                "score": 4, 
+                "paperImg": "",
+                "markImg": ""
+            },
+            {
+                "paperId": "P002",
+                "isBest": false, 
+                "isBad": false, 
+                "isFAQ": false,
+                "isProblemPaper": false,
+                "score": 4, 
+                "paperImg": "",
+                "markImg": ""
+            }
+        ]
+    },    
+    {
+        "id": "M005",
+        "examId": "E001",
+        "examName": "16-17学年上学期期末考试",
+        "teacherId": "T001",
+        "teacherName": "鲁迅",
+        "subject": "语文",
+        "grade": "高一",
+        "markType": "问题卷",
+        "markStyle": "single",
+        "progress": "60%",
+        "questionType": "",
+        "questionNum": "",
+        "startNum": "",
+        "endNum": "",
         "papers": [
             {
                 "paperId": "P001",

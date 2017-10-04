@@ -20,19 +20,22 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-3" *ngFor="let mark of marks">
-                            <a [routerLink]="['/mark', {markId: mark.id}]">
+                            <a [routerLink]="['/mark', {markId: mark.id, questionList: stringify(questionList), 
+                            questionNum: mark.questionNum, startNum: mark.startNum, endNum: mark.endNum}]">
                                 <dl class="widget text-center">
-                                	<ng-container *ngIf="mark.markType !== '常规'">
+                                	<ng-container *ngIf="mark.markType !== '标准'">
 	                                    <div class="triangle-bottom-right warning"></div>
 	                                    <small class="triangle-bottom-right-text">疑点</small>
                                     </ng-container>
                                     <dt>{{mark.examName}}</dt>
                                     <dd class="content table-cell vertical">
-                                        <h1>{{mark.title}}</h1>
+                                        <h1 *ngIf="mark.markType !== '标准'">{{mark.markType}}</h1>
+                                        <h1 *ngIf="mark.markType === '标准' && mark.questionType === '填空题'">{{mark.startNum}} - {{mark.endNum}}</h1>
+                                        <h1 *ngIf="mark.markType === '标准' && mark.questionType !== '填空题'">{{mark.questionNum}}</h1>
                                     </dd>
                                     <dd>
                                         <ul class="list-inline text-muted clear-margin">
-                                            <li *ngIf="mark.markType != '常规'">{{mark.questionType}}</li>
+                                            <li *ngIf="mark.markType === '标准'">{{mark.questionType}}</li>
                                             <li>{{mark.subject}}</li>
                                         </ul>
                                     </dd>

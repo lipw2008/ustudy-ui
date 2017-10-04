@@ -43,11 +43,8 @@ content:
 	  		}
 		    var xhr = new XMLHttpRequest();
 		    xhr.open(method, "" + url + endpoint);
-				console.log("url:" + method + url + endpoint);
 		    xhr.onload = () => {
-		    	console.log("xhr status is: " + xhr.status);
 		      if (xhr.status >= 200 && xhr.status < 300) {
-		      	console.log("xhr response is: " + xhr.response);
 		        resolve(JSON.parse(xhr.response));
 		      } else {
 		        reject({

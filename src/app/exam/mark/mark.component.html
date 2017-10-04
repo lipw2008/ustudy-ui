@@ -17,14 +17,9 @@
 			<div class="panel panel-default online-marking">
 				<div class="panel-heading clearfix">
                     <div class="question-box">
-						<ul class="nav dropdown-select">
-	                        <li class="dropdown">
-	                            <button type="button" class="btn btn-lg btn-link clear-padding-horizontal" data-toggle="dropdown" aria-expanded="false"><span class="dropdown-btn"> 第17题</span> <span class="caret"></span></button>
-	                            <ul id="myTabs" class="dropdown-menu" aria-labelledby="dLabel">
-	                                <li><a href="#tab0" data-value="0" data-toggle="tab">第17题</a></li>
-	                            </ul>
-	                        </li>
-	                    </ul>
+                        <select class="selectpicker" multiple [(ngModel)]="markQuestions" (change)="onQuestionChange($event)">
+                            <option *ngFor="let question of questionList" [value]="question.num">{{question.num}}</option>
+                        </select>
                     </div>
                     <div class="progress-box">
                         <div class="progress clear-margin-bottom">
@@ -164,3 +159,25 @@
 	</div>
 </div>
 <!-- 内容 end -->
+
+<!-- 模态框，登录 start -->
+<div id="selectQuestions" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">选择阅卷题目</h4>
+            </div>
+            <div class="modal-body">
+                <label *ngFor="let option of options;" class="btn btn-default">
+                    <input type="checkbox" name="{{option.name}}" [checked]="option.selected" (change)="option.selected = !option.selected"> {{option.name}}
+                </label>                        
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 模态框，登录 end -->
