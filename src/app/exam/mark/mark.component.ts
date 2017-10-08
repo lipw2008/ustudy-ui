@@ -12,6 +12,8 @@ export class MarkComponent implements OnInit {
 
 	markId: string;
 	mark: any;
+	questionList: any;
+	markQuestions: any = [];
 
 	/***** View *****/
 	@ViewChild('markCanvas') markCanvas;
@@ -43,7 +45,11 @@ export class MarkComponent implements OnInit {
 
     ngOnInit(): void {
     	this.markId = this.route.snapshot.params.markId;
-    	this.reload();
+		this.questionList = JSON.parse(this.route.snapshot.params.questionList);
+		let questionNum = this.route.snapshot.params.questionNum;
+		let startNum = this.route.snapshot.params.startNum;
+		let endNum = this.route.snapshot.params.endNum;
+		this.markQuestions.push(questionNum === '' ? startNum + '-' + endNum : questionNum);
 	}
 
 	reload(): void {
@@ -51,12 +57,18 @@ export class MarkComponent implements OnInit {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.mark = data;
+			this.loadPaper(this.mark.papers[0]);
 		}).catch((error: any) => {
 			console.log(error.status);
 			console.log(error.statusText);
 		});
+	}	
+	
+	onQuestionChange(event): void {
+		console.log("On question change: " + this.markQuestions);
+		// load marks data based on the mark questions.
 	}
-
+	
 	ngAfterViewInit(): void {
 		this.container = this.markContainer.nativeElement;
 		this.canvas = this.markCanvas.nativeElement;
@@ -87,6 +99,12 @@ export class MarkComponent implements OnInit {
 		this.hCanvas = document.createElement("canvas");
 		this.hCxt = this.hCanvas.getContext("2d");
 
+		this.reload();
+	}
+
+	loadPaper(paper): void {
+
+		console.log("paper: " + JSON.stringify(paper));
 		this.img = new Image();
 
 		let t = this;
@@ -98,7 +116,9 @@ export class MarkComponent implements OnInit {
 			t.hCxt.canvas.width = t.cxt.canvas.width;
 			t.hCxt.canvas.height = t.cxt.canvas.height;
 		}
-		this.img.src = 'assets/api/exams/exam01.png';
+		this.img.src = paper.paperImg;
+
+		// fill paper score information in the panel
 	}
 
 	clear(): void {

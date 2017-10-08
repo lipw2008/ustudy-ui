@@ -15,7 +15,7 @@ import { MarkListComponent } from './mark-list.component';
   	NgxDatatableModule,
     RouterModule.forChild([
       { path: 'mark', component: MarkComponent },
-      { path: 'marklist', component: MarkListComponent }
+      { path: 'markList', component: MarkListComponent }
     ]),
 	ReactiveFormsModule,
   FormsModule,

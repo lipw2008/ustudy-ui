@@ -33,70 +33,80 @@
 	                </div>
 		            <div class="collapse navbar-collapse" id="navbar-collapse">
 		                <ul class="nav navbar-nav">
-		                    <li class="dropdown" *ngIf="role!=='扫描账号'">
-		                    	<a href="#" (click)="checkLogInStatus()" data-toggle="dropdown" class="dropdown-toggle">信息中心 <span class="caret"></span></a>
-							    <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                    <li><a href="schoolDetails">学校信息</a></li>
-                                    <li *ngIf="role!=='班主任'&&role!=='任课老师'&&role!==''"><a href="teacherList">教师信息</a></li>
-                                    <li><a href="studentList">学生信息</a></li>
-                                    <li><a href="#">考试信息</a></li>
-							    </ul>
+		                    <li class="dropdown" *ngIf="_sharedService.userRole!=='扫描账号'">
+		                    	<a href="#" (click)="checkUserStatus()" data-toggle="dropdown" class="dropdown-toggle">信息中心 <span class="caret"></span></a>
+                                <ng-container *ngIf="_sharedService.userRole!= ''">
+                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                        <li><a [routerLink]="['/schoolDetails']">学校信息</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a [routerLink]="['/teacherList']">教师信息</a></li>
+                                        <li><a [routerLink]="['/studentList']">学生信息</a></li>
+                                        <li><a href="#">考试信息</a></li>
+                                    </ul>
+                                </ng-container>
 							</li>
-		                    <li class="dropdown" *ngIf="role!=='扫描账号'">
-		                    	<a href="#" (click)="checkLogInStatus()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">考试中心 <span class="caret"></span></a>
-							    <ul class="dropdown-menu" aria-labelledby="dLabel">
-		                            <li *ngIf="role!=='学科组长'&&role!=='备课组长'&&role!=='班主任'&&role!=='任课老师'&&role!==''"><a href="#">模板制作</a></li>
-		                            <li *ngIf="role!=='学科组长'&&role!=='备课组长'&&role!=='班主任'&&role!=='任课老师'&&role!==''"><a href="#">答卷扫描</a></li>
-		                            <li *ngIf="role!=='班主任'&&role!=='任课老师'&&role!==''"><a href="selectsubject;type=answers">答案设置</a></li>
-		                            <li *ngIf="role!=='班主任'&&role!=='任课老师'&&role!==''"><a href="selectsubject;type=task">任务分配</a></li>
-                                    <li><a href="selectsubject;type=answers">答案设置</a></li>
-                                    <li><a href="selectsubject;type=task">任务分配</a></li>
-                                    <li><a href="marklist">网络阅卷</a></li>
-                                    <li><a href="#">答题卷中心</a></li>
-							    </ul>
+		                    <li class="dropdown" *ngIf="_sharedService.userRole!=='扫描账号'">
+		                    	<a href="#" (click)="checkUserStatus()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">考试中心 <span class="caret"></span></a>
+                                <ng-container *ngIf="_sharedService.userRole!= ''">
+                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                        <li *ngIf="_sharedService.userRole!=='学科组长'&&_sharedService.userRole!=='备课组长'&&_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">模板制作</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='学科组长'&&_sharedService.userRole!=='备课组长'&&_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">答卷扫描</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="selectsubject;type=answers">答案设置</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="selectsubject;type=task">任务分配</a></li>
+                                        <li><a href="selectsubject;type=answers">答案设置</a></li>
+                                        <li><a href="selectsubject;type=task">任务分配</a></li>
+                                        <li><a [routerLink]="['/markList']">网络阅卷</a></li>
+                                        <li><a href="#">答题卷中心</a></li>
+                                    </ul>
+                                </ng-container>
 							</li>
-		                    <li class="dropdown" *ngIf="role!=='扫描账号'">
-		                    	<a href="#" (click)="checkLogInStatus()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据中心 <span class="caret"></span></a>
-							    <ul class="dropdown-menu" aria-labelledby="dLabel">
-		                            <li *ngIf="role!=='班主任'&&role!=='任课老师'&&role!==''"><a href="#">阅卷统计</a></li>
-		                            <li><a href="#">试卷分析</a></li>
-		                            <li><a href="#">成绩统计</a></li>
-		                            <li><a href="#">报表下载</a></li>
-							    </ul>
+		                    <li class="dropdown" *ngIf="_sharedService.userRole!=='扫描账号'">
+		                    	<a href="#" (click)="checkUserStatus()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据中心 <span class="caret"></span></a>
+							    <ng-container *ngIf="_sharedService.userRole!= ''">
+                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">阅卷统计</a></li>
+                                        <li><a href="#">试卷分析</a></li>
+                                        <li><a href="#">成绩统计</a></li>
+                                        <li><a href="#">报表下载</a></li>
+                                    </ul>
+							    </ng-container>
 							</li>
-		                    <li class="dropdown" *ngIf="role!=='扫描账号'">
-		                    	<a href="#" (click)="checkLogInStatus()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">下载中心 <span class="caret"></span></a>
-							    <ul class="dropdown-menu" aria-labelledby="dLabel">
-		                            <li><a href="#">学生信息模板</a></li>
-		                            <li><a href="#">教师信息模板</a></li>
-		                            <li><a href="#">考生成绩上传模板</a></li>
-		                            <li><a href="#">阅卷任务分配表</a></li>
-                                    <li><a href="#">扫描仪驱动</a></li>
-							    </ul>
+		                    <li class="dropdown" *ngIf="_sharedService.userRole!=='扫描账号'">
+		                    	<a href="#" (click)="checkUserStatus()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">下载中心 <span class="caret"></span></a>
+                                <ng-container *ngIf="_sharedService.userRole!= ''">
+                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                        <li><a href="#">学生信息模板</a></li>
+                                        <li><a href="#">教师信息模板</a></li>
+                                        <li><a href="#">考生成绩上传模板</a></li>
+                                        <li><a href="#">阅卷任务分配表</a></li>
+                                        <li><a href="#">扫描仪驱动</a></li>
+                                    </ul>
+                                </ng-container>
 							</li>
-		                    <li class="dropdown" *ngIf="role!=='扫描账号'">
-		                    	<a href="#" (click)="checkLogInStatus()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">其他应用 <span class="caret"></span></a>
-							    <ul class="dropdown-menu" aria-labelledby="dLabel">
-		                            <li><a href="#">修改密码</a></li>
-		                            <li><a href="#">阅-Message</a></li>
-		                            <li *ngIf="role!=='学科组长'&&role!=='备课组长'&&role!=='班主任'&&role!=='任课老师'&&role!==''"><a href="#">信息导入</a></li>
-		                            <li *ngIf="role!=='班主任'&&role!=='任课老师'&&role!==''"><a href="#">报表参数设置</a></li>
-                                    <li><a href="#">在线制作答题卡</a></li>
-                                    <li *ngIf="role!=='班主任'&&role!=='任课老师'&&role!==''"><a href="#">在线编辑考号</a></li>
-                                    <li><a href="#">在线打印条码</a></li>
-                                    <li><a href="#">蘑菇云云盘</a></li>
-							    </ul>
+		                    <li class="dropdown" *ngIf="_sharedService.userRole!=='扫描账号'">
+		                    	<a href="#" (click)="checkUserStatus()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">其他应用 <span class="caret"></span></a>
+                                <ng-container *ngIf="_sharedService.userRole!= ''">
+                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                        <li><a href="#">修改密码</a></li>
+                                        <li><a href="#">阅-Message</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='学科组长'&&_sharedService.userRole!=='备课组长'&&_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">信息导入</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">报表参数设置</a></li>
+                                        <li><a href="#">在线制作答题卡</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">在线编辑考号</a></li>
+                                        <li><a href="#">在线打印条码</a></li>
+                                        <li><a href="#">蘑菇云云盘</a></li>
+                                    </ul>
+                                </ng-container>
 							</li>
 		                </ul>
                         <ul class="nav navbar-nav navbar-right navbar-right-box hidden-xs hidden-sm">
-                            <ng-container *ngIf="userName===''">
+                            <ng-container *ngIf="_sharedService.userName===''">
                                 <li class="dropdown">
                                     <a href="javascript:;" role="button" aria-haspopup="false" aria-expanded="false"><i class="iconfont iconfont-user"></i> 未登录 <span class="caret"></span></a>
                                 </li>
                             </ng-container>
-                            <ng-container *ngIf="userName!==''">
+                            <ng-container *ngIf="_sharedService.userName!==''">
                                 <li class="dropdown">
-                                    <a href="javascript:;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="iconfont iconfont-user"></i> {{userName}} <span class="caret"></span></a>
+                                    <a href="javascript:;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="iconfont iconfont-user"></i> {{_sharedService.userName}} <span class="caret"></span></a>
                                     <ul class="dropdown-menu" aria-labelledby="dLabel">
                                         <li><a id="modifyPasswordBtn" href="javascript:;" (click)="logout()">退出</a></li>
                                     </ul>
@@ -111,7 +121,7 @@
 
         <!-- 内容 start -->
         <div class="container">
-             <router-outlet></router-outlet>
+             <router-outlet (childEvent)="updateUserStatus()"></router-outlet>
         </div>
         <!-- 内容 end -->
 

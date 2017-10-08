@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { IStudent } from './student';
 import { StudentService } from './student.service';
-import { SharedService } from '../shared.service';
+import { SharedService } from '../../shared.service';
 
 @Component({
     templateUrl: 'student-list.component.html'

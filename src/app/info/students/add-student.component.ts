@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { IStudent } from './student';
 import { StudentService } from './student.service';
-import { SharedService } from '../shared.service';
+import { SharedService } from '../../shared.service';
 
 @Component({
     templateUrl: 'add-student.component.html'

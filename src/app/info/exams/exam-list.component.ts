@@ -1,7 +1,7 @@
 import { Component, OnInit }  from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { SharedService } from '../shared.service';
+import { SharedService } from '../../shared.service';
 
 @Component({
     templateUrl: 'exam-list.component.html'
@@ -17,6 +17,10 @@ export class ExamListComponent implements OnInit {
 		endDate: [""]
 	});
 	
+	isFinished: boolean;
+
+	selected: any;
+
     errorMessage: string;
 
 	grades = [];

@@ -1,21 +1,19 @@
 import { Component, OnInit }  from '@angular/core';
 
 import { SchoolService } from './school.service';
-import { SharedService } from '../shared.service';
+import { SharedService } from '../../shared.service';
 
 @Component({
-    templateUrl: 'school.component.html'
+    templateUrl: 'department.component.html'
 })
 
-export class SchoolComponent implements OnInit {
+export class DepartmentComponent implements OnInit {
 
     errorMessage: string;
 
     school: any = {
 		"departments": []
 	};
-
-	types = ["初中", "完中", "九年制", "小学", "十二年制", "补习", "其他", "高中"];
 	
     constructor(private _schoolService: SchoolService, private _sharedService: SharedService) {
 
@@ -36,4 +34,9 @@ export class SchoolComponent implements OnInit {
 			console.log(error.statusText);
 		});
 	}
+
+	stringify(j){
+		return JSON.stringify(j);
+	}
+	
 }

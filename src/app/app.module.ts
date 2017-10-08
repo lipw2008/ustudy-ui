@@ -6,16 +6,18 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent }  from './app.component';
 import { WelcomeComponent }  from './welcome/welcome.component';
+import { LoginComponent }  from './welcome/login.component';
 
 /* Feature Modules */
-import { StudentModule } from './students/student.module';
-import { TeacherModule } from './teachers/teacher.module';
-import { SchoolModule } from './schools/school.module';
 import { WelcomeModule } from './welcome/welcome.module';
 
-import { MarkModule } from './examCenter/mark/mark.module';
 import { SetAnswersModule } from './examCenter/setanswers/setanswers.module';
 import { TaskAllocationModule } from './examCenter/task/taskallocation.module';
+import { StudentModule } from './info/students/student.module';
+import { TeacherModule } from './info/teachers/teacher.module';
+import { SchoolModule } from './info/schools/school.module';
+import { ExamModule } from './info/exams/exam.module';
+import { MarkModule } from './exam/mark/mark.module';
 import { SharedService } from './shared.service';
 
 @NgModule({
@@ -25,6 +27,7 @@ import { SharedService } from './shared.service';
     HttpModule,
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
+      { path: 'login', component: LoginComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' }
     ]),
 	StudentModule,
@@ -33,7 +36,9 @@ import { SharedService } from './shared.service';
   WelcomeModule,
   MarkModule,
   TaskAllocationModule,
-  SetAnswersModule
+  SetAnswersModule,
+  ExamModule,
+  MarkModule
   ],
   declarations: [
     AppComponent
@@ -44,4 +49,3 @@ import { SharedService } from './shared.service';
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
-
