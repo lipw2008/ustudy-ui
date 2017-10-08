@@ -1,8 +1,4 @@
     {
-<<<<<<< HEAD
-        "url": "http://localhost:80/api"
-    }
-=======
+        // "url": "http://localhost:80/api"
         "url": "http://47.92.53.57"
     }
->>>>>>> 207e293ed45f60f5c6da0e9d83179bacdd7aa1d3
