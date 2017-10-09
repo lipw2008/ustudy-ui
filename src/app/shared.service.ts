@@ -47,6 +47,7 @@ content:
 		      if (xhr.status >= 200 && xhr.status < 300) {
 		        resolve(JSON.parse(xhr.response));
 		      } else {
+						console.log("error happens: " + url);
 		        reject({
 		        status: xhr.status,
 		        statusText: xhr.statusText
@@ -54,6 +55,7 @@ content:
 		      }
 		    };
 		    xhr.onerror = () => {
+					console.log("error happens: " + url);
 		      reject({
 		        status: xhr.status,
 		        statusText: xhr.statusText

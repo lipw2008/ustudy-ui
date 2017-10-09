@@ -41,7 +41,7 @@ export class AppComponent {
 	updateUserStatus() {
 		console.log("update user status");
 		this._sharedService.makeRequest('GET', '/info/loginId', '').then((data: any) => {
-			console.log("data: " + data);
+			console.log("data: " + JSON.stringify(data));
 			this._sharedService.userName = data.userName ===undefined ? '' : data.userName;
 			this._sharedService.userRole = data.role === undefined ? '' : data.role;
 		}).catch((error: any) => {

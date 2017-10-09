@@ -1,0 +1,165 @@
+{
+    "id": "M001",
+    "examId": "E001",
+    "examName": "16-17学年上学期期末考试",
+    "teacherId": "T001",
+    "teacherName": "鲁迅",
+    "subject": "语文",
+    "grade": "高一",
+    "markType": "标准",
+    "progress": "60%",
+    "markedGroupNum": 30,
+    "marked": [
+        {
+            "questionName": "1",
+            "avgScore": 3.1,
+            "markedNum": 44
+        },
+        {
+            "questionName": "2-5",
+            "avgScore": 4.1,
+            "markedNum": 44
+        },
+        {
+            "questionName": "6",
+            "avgScore": 3.2,
+            "markedNum": 44
+        }
+    ],
+    "groups": [
+        {
+            "papers": [
+                {
+                    "questionName": "1",
+                    "questionType": "解答题",
+                    "paperId": "P001",
+                    "isBest": false, 
+                    "isBad": false, 
+                    "isFAQ": false,
+                    "isProblemPaper": false,
+                    "fullScore": "5",
+                    "score": "", 
+                    "steps": [],
+                    "paperImg": "assets/api/exams/exam01.png",
+                    "markImg": ""
+                },
+                {
+                    "questionName": "2-5",
+                    "questionType": "填空题",
+                    "paperId": "P001",
+                    "isBest": false, 
+                    "isBad": false, 
+                    "isFAQ": false,
+                    "isProblemPaper": false,
+                    "fullScore": "10",
+                    "score": "", 
+                    "steps": [
+                        {   
+                            "name" : "2",
+                            "fullScore": "2",
+                            "score": ""
+                        },
+                        {   
+                            "name" : "3",
+                            "fullScore": "2",
+                            "score": ""
+                        },
+                        {   
+                            "name" : "4",
+                            "fullScore": "3",
+                            "score": ""
+                        },
+                        {   
+                            "name" : "5",
+                            "fullScore": "3",
+                            "score": ""
+                        }
+                    ],
+                    "paperImg": "assets/api/exams/small.png",
+                    "markImg": ""
+                },
+                {
+                    "questionName": "6",
+                    "questionType": "解答题",
+                    "paperId": "P001",
+                    "isBest": false, 
+                    "isBad": false, 
+                    "isFAQ": false,
+                    "isProblemPaper": false,
+                    "fullScore": "15",
+                    "score": "", 
+                    "steps": [],
+                    "paperImg": "assets/api/exams/exam01.png",
+                    "markImg": ""
+                }                    
+            ]
+        },
+        {
+            "papers": [
+                {
+                    "questionName": "1",
+                    "questionType": "解答题",
+                    "paperId": "P001",
+                    "isBest": false, 
+                    "isBad": false, 
+                    "isFAQ": false,
+                    "isProblemPaper": false,
+                    "fullScore": "5",
+                    "score": "", 
+                    "steps": [],
+                    "paperImg": "assets/api/exams/small.png",
+                    "markImg": ""
+                },
+                {
+                    "questionName": "2-5",
+                    "questionType": "填空题",
+                    "paperId": "P001",
+                    "isBest": false, 
+                    "isBad": false, 
+                    "isFAQ": false,
+                    "isProblemPaper": false,
+                    "fullScore": "10",
+                    "score": "", 
+                    "steps": [
+                        {   
+                            "name" : "2",
+                            "fullScore": "2",
+                            "score": ""
+                        },
+                        {   
+                            "name" : "3",
+                            "fullScore": "2",
+                            "score": ""
+                        },
+                        {   
+                            "name" : "4",
+                            "fullScore": "3",
+                            "score": ""
+                        },
+                        {   
+                            "name" : "5",
+                            "fullScore": "3",
+                            "score": ""
+                        }
+                    ],
+                    "paperImg": "assets/api/exams/exam01.png",
+                    "markImg": ""
+                },
+                {
+                    "questionName": "6",
+                    "questionType": "解答题",
+                    "paperId": "P001",
+                    "isBest": false, 
+                    "isBad": false, 
+                    "isFAQ": false,
+                    "isProblemPaper": false,
+                    "fullScore": "15",
+                    "score": "", 
+                    "steps": [],
+                    "paperImg": "assets/api/exams/small.png",
+                    "markImg": ""
+                }                    
+            ]
+        }
+    ]
+}
