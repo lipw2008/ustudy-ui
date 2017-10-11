@@ -18,7 +18,7 @@
 				<div class="panel-heading clearfix">
                     <div class="question-box">
                         <select #questionSelector class="selectpicker" multiple>
-                            <option *ngFor="let question of questionList" [value]="question.num">{{question.num}}</option>
+                            <option *ngFor="let question of questionList" [value]="question.n">{{question.n}}</option>
                         </select>
                     </div>
                     <div class="progress-box">
@@ -45,9 +45,9 @@
 				<div class="panel-body">
 					<div>
                         <div #markContainer style="height: 450px; overflow-x: auto; overflow-y: auto">
-                            <mark-canvas [imgPath]="imgPath"></mark-canvas>
-                            <mark-canvas [imgPath]="imgPath2" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
-                            <mark-canvas [imgPath]="imgPath3" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
+                            <mark-canvas [score]="score" [imgPath]="imgPath"  [editMode]="editMode"></mark-canvas>
+                            <mark-canvas [score]="score2" [imgPath]="imgPath2" [editMode]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
+                            <mark-canvas [score]="score3" [imgPath]="imgPath3" [editMode]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
                         </div>
 					</div>
 				</div>
@@ -102,7 +102,7 @@
                             </div>
                             <div class="pull-right">
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="inlineCheckboxOptions" id="inlineCheckbox1" value="option1" checked="checked"> 自动提交
+                                    <input type="checkbox" name="autoSubmit" id="autoSubmit" [checked]="autoSubmit" (change)="autoSubmit = !autoSubmit"> 自动提交
                                 </label>
                             </div>
                         </div>
@@ -110,54 +110,58 @@
                     <div *ngIf="displayScoreBoard === true" class="panel-body border clear-border-top">
                         <div class="extra margin-top margin-left clearfix" data-toggle="buttons">
                             <a *ngFor="let score of scoreList" (click)="setScore(score)" class="btn btn-default pull-left">{{score}}</a>
-                            <a href="javascript:;" class="btn btn-danger pull-right">问题卷</a>
+                            <a (click)="setScore('PROBLEM')" class="btn btn-danger pull-right">问题卷</a>
                         </div>
                     </div>
                 </div>
                 <div class="form-group form-inline">
-                    <ng-container *ngFor="let paper of mark.groups[curIndex].papers">
-                        <ng-container *ngIf="paper.steps.length === 0">
-                            <label for="">{{paper.questionName}}题: </label>
-                            <input (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
-                            <br/>
-                        </ng-container>
-                        <ng-container *ngIf="paper.steps.length > 0">
-                            <label for="">{{paper.questionName}}题: </label>
-                            <br/>
-                            <ng-container *ngFor="let step of paper.steps">
-                                <label for="">{{step.name}}: </label>
-                                <input (change)="updateFullScore()" name="{{step.name}}" type="text" class="form-control" id="" size="3" [(ngModel)]="step.score">
+                    <ng-container *ngFor="let group of mark.groups">
+                        <ng-container *ngIf="group.groupNo === curPage">
+                            <ng-container *ngFor="let paper of group.papers">
+                                <ng-container *ngIf="paper.steps.length === 0">
+                                    <label for="">{{paper.questionName}}题: </label>
+                                    <input (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
+                                    <br/>
+                                </ng-container>
+                                <ng-container *ngIf="paper.steps.length > 0">
+                                    <label for="">{{paper.questionName}}题: </label>
+                                    <br/>
+                                    <ng-container *ngFor="let step of paper.steps">
+                                        <label for="">{{step.name}}: </label>
+                                        <input (change)="updateFullScore()" name="{{step.name}}" type="text" class="form-control" id="" size="3" [(ngModel)]="step.score">
+                                        <br/>
+                                    </ng-container>
+                                </ng-container>
                                 <br/>
                             </ng-container>
                         </ng-container>
-                        <br/>
                     </ng-container>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-success btn-block">提交</button>
+                    <button (click)="submit()" type="button" class="btn btn-success btn-block">提交</button>
                 </div>
                 <div class="panel-footer text-center">
                     <!-- 翻页 start -->
                     <ul class="pagination">
-                        <li class="disabled">
+                        <li>
                             <a (click)="firstPage()" aria-label="First" title="首页">
                                 <i aria-hidden="true" class="glyphicon glyphicon-fast-backward"></i>
                             </a>
                         </li>
-                        <li class="disabled">
+                        <li>
                             <a (click)="previousPage()" aria-label="Previous" title="上一页">
                                 <i aria-hidden="true" class="glyphicon glyphicon-backward"></i>
                             </a>
                         </li>
                         <li>
-                            <span>{{curPageNum}}</span>
+                            <span>{{curPage}}</span>
                         </li>
                         <li>
                             <a (click)="nextPage()" aria-label="Next" title="下一页">
                                 <i aria-hidden="true" class="glyphicon glyphicon-forward"></i>
                             </a>
                         </li>
-                        <li>
+                        <li class="disabled">
                             <a (click)="lastPage()" aria-label="Last" title="尾页">
                                 <i aria-hidden="true" class="glyphicon glyphicon-fast-forward"></i>
                             </a>

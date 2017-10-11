@@ -9,10 +9,23 @@ declare var $: any;
 })
 
 export class MarkComponent implements OnInit {
+	//Dom elements
 	@ViewChild('questionSelector') questionSelector;
-	/***** Model *****/
+	@ViewChild('markContainer') markContainer;
+	@ViewChild('rootContainer') rootContainer;
 
-	markId: string;
+	//request content
+	reqContent: any = {
+		examId: "",
+		subject: "",
+		grade: "",
+		groupNo: {
+			"start": -1,
+			"end": -1
+		}
+	}
+
+	// mark content
 	mark: any = {
 		progress: "0%",
 		groups: [
@@ -23,23 +36,30 @@ export class MarkComponent implements OnInit {
 			}
 		]
 	};
+
+	// question selector
 	questionList: any;
 	markQuestions: any = [];
+	
+	// score board
 	displayScoreBoard: boolean = true;
-	groupTotalNum: number;
-	curPageNum: string = "";
-	curIndex: number = 0;
-	markedGroupNum: number = 0;
 	fullScore: string = "0";
 	scoreList = [];
 	scoreUnit = "1";
+	autoSubmit = false;
 
-	editMode = "None";
+	// page controller
+	curPage: number = 0;
+	pageCount: number = 0; 
 
+	// canvas
+	editMode: string = "None";
+	score: string = "";
+	score2: string = "";
+	score3: string = "";
 	imgPath : string;
 	imgPath2: string = '';
 	imgPath3: string = '';
-	
 	markCanvas2Display: string = 'none';
 	markCanvas3Display: string = 'none';
 
@@ -48,16 +68,15 @@ export class MarkComponent implements OnInit {
     }
 
 	ngOnInit(): void {
-		this.markId = this.route.snapshot.params.markId;
+		this.reqContent.examId = this.route.snapshot.params.examId;
+		this.reqContent.subject = this.route.snapshot.params.subject;
+		this.reqContent.grade = this.route.snapshot.params.grade;
 		this.questionList = JSON.parse(this.route.snapshot.params.questionList);
 	}
 
     ngAfterViewInit(): void {
 		console.log();
-		let questionNum = this.route.snapshot.params.questionNum;
-		let startNum = this.route.snapshot.params.startNum;
-		let endNum = this.route.snapshot.params.endNum;
-		this.markQuestions.push(questionNum === '' ? startNum + '-' + endNum : questionNum);
+		this.markQuestions.push(this.route.snapshot.params.questionName);
 		console.log("init mark questions:" + this.markQuestions);
 		$(this.questionSelector.nativeElement).selectpicker('val', this.markQuestions);
 		$(this.questionSelector.nativeElement).on('changed.bs.select', {t: this}, this.onQuestionChange);
@@ -68,8 +87,8 @@ export class MarkComponent implements OnInit {
 		var t = event.data.t;
 		t.markQuestions = $(t.questionSelector.nativeElement).val();
 		console.log("On question change: " + t.markQuestions);
-		t.reload();
 		// load marks data based on the mark questions.
+		t.reload();
 	}
 
 	reload(): void {
@@ -77,17 +96,23 @@ export class MarkComponent implements OnInit {
 		- total progress %
 		- group of papers
 		*/
+		// send the examId, subject, grade and groupNo(optional) to the server side
 		this._sharedService.makeRequest('GET', 'assets/api/exams/multiMark.json', '').then((data: any) => {
+			this.reqContent.groupNo.start = -1;
+			this.reqContent.groupNo.end = -1;
+
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.mark = data;
-			this.groupTotalNum = this.mark.groups.length;
-			if (this.groupTotalNum <= 0) {
+			this.pageCount = this.mark.groups.length;
+			if (this.pageCount <= 0) {
 				alert("没有可阅试卷");
+				return;
 			}
-			this.curIndex = 0;
-			this.curPageNum = "" + (this.mark.markedGroupNum + 1);
-			this.markedGroupNum = this.mark.markedGroupNum;
+			if (this.reqContent.groupNo.start === -1 && this.reqContent.groupNo.end === -1) {
+				this.curPage = this.mark.groups[0].groupNo;
+			}
+
 			if (this.markQuestions.length == 1) {
 				this.markCanvas2Display = 'none';
 				this.markCanvas3Display = 'none';
@@ -98,7 +123,6 @@ export class MarkComponent implements OnInit {
 			if (this.markQuestions.length == 3) {
 				this.markCanvas3Display = 'block';
 			}
-
 			this.updateCanvas();
 			this.updateFullScore();
 		}).catch((error: any) => {
@@ -108,35 +132,51 @@ export class MarkComponent implements OnInit {
 	}	
 
 	updateCanvas(): void {
-		console.log("update canvas for page: " + this.curIndex);
-		this.imgPath = this.mark.groups[this.curIndex].papers[0].paperImg;
-		if (this.markQuestions.length >= 2) {
-			this.imgPath2 = this.mark.groups[this.curIndex].papers[1].paperImg;
+		console.log("update canvas for page: " + this.curPage);
+		for (let group of this.mark.groups) {
+			if (group.groupNo === this.curPage) {
+				this.imgPath = group.papers[0].paperImg;
+				if (this.markQuestions.length >= 2) {
+					this.imgPath2 = group.papers[1].paperImg;
+				}
+				if (this.markQuestions.length == 3) {
+					this.imgPath3 = group.papers[2].paperImg;
+				}
+			}
 		}
-		if (this.markQuestions.length == 3) {
-			this.imgPath3 = this.mark.groups[this.curIndex].papers[2].paperImg;
-		}
+		console.log(this.imgPath + this.imgPath2 + this.imgPath3);
+		this.score = this.score2 = this.score3 = "阅卷老师：" + this.mark.teacherId + " 得分：";
 	}
 
 	updateFullScore(): void {
 		console.log("before update full score: " + this.fullScore);
 		console.log("before update full score - mark: " + JSON.stringify(this.mark));
-		for(let paper of this.mark.groups[this.curIndex].papers) {
-			if (paper.steps.length === 0 && paper.score === "") {
-				this.fullScore = paper.fullScore;
-				console.log("after update full score: " + this.fullScore);
-				this.updateScoreBoard();
-				return;
-			} else if (paper.steps.length > 0) {
-				for(let step of paper.steps) {
-					if (step.score === "") {
-						this.fullScore = step.fullScore;
+		for (let group of this.mark.groups) {
+			if (group.groupNo === this.curPage) {
+				for(let paper of group.papers) {
+					if (paper.isProblemPaper === true) {
+						continue;
+					}
+					if (paper.steps.length === 0 && paper.score === "") {
+						this.fullScore = paper.fullScore;
 						console.log("after update full score: " + this.fullScore);
 						this.updateScoreBoard();
 						return;
-					} 
+					} else if (paper.steps.length > 0) {
+						for(let step of paper.steps) {
+							if (step.score === "") {
+								this.fullScore = step.fullScore;
+								console.log("after update full score: " + this.fullScore);
+								this.updateScoreBoard();
+								return;
+							} 
+						}
+					}
 				}
 			}
+		}
+		if(this.autoSubmit === true) {
+			this.submit();
 		}
 	}
 
@@ -164,18 +204,33 @@ export class MarkComponent implements OnInit {
 	}
 
 	setScore(score: string): void {
-		for(let paper of this.mark.groups[this.curIndex].papers) {
-			if (paper.steps.length === 0 && paper.score === "") {
-				paper.score = score;
-				this.updateFullScore();
-				return;
-			} else if (paper.steps.length > 0) {
-				for(let step of paper.steps) {
-					if (step.score === "") {
-						step.score = score;
+		for (let group of this.mark.groups) {
+			if (group.groupNo === this.curPage) {
+				for(let paper of group.papers) {
+					if (paper.isProblemPaper === true) {
+						continue;
+					}
+					if (paper.steps.length === 0 && paper.score === "") {
+						if (score !== 'PROBLEM') {
+							paper.score = score;
+						} else {
+							paper.isProblemPaper = true;
+						}
 						this.updateFullScore();
 						return;
-					} 
+					} else if (paper.steps.length > 0) {
+						for(let step of paper.steps) {
+							if (step.score === "") {
+								if (score !== 'PROBLEM') {
+									step.score = score;
+								} else {
+									paper.isProblemPaper = true;
+								}
+								this.updateFullScore();
+								return;
+							} 
+						}
+					}
 				}
 			}
 		}
@@ -186,18 +241,70 @@ export class MarkComponent implements OnInit {
 	}
 
 	previousPage(): void {
-
+		this.curPage--;
+		if (this.curPage < this.mark.groups[0].groupNo) {
+			this.reqContent.groupNo.start = (this.curPage - 10 < 0 ? 0 : this.curPage - 10);
+			this.reqContent.groupNo.end = this.curPage;
+			this.reload();
+		} else {
+			this.updateCanvas();
+			this.updateFullScore();
+		}
 	}
 
 	nextPage(): void {
-		this.curIndex++;
-		this.curPageNum = "" + (Number(this.curPageNum) + 1);
-		this.updateCanvas();
-		this.updateFullScore();
+		this.curPage++;
+		if (this.curPage > this.mark.groups[this.pageCount - 1].groupNo) {
+			this.reload();
+		} else {
+			this.updateCanvas();
+			this.updateFullScore();
+		}
 	}
 
 	lastPage(): void {
 
+	}
+
+	submit(): void {
+		for (let group of this.mark.groups) {
+			if (group.groupNo === this.curPage) {
+				if (group.papers[0].score !== "") {
+					this.score += group.papers[0].score + "/" + group.papers[0].fullScore;
+				} else {
+					for (let step of group.papers[0].steps) {
+						this.score += step.score + "/" + step.fullScore + " ";
+					}
+				}
+				if (this.markQuestions.length >= 2) {
+					if (group.papers[1].score !== "") {
+						this.score2 += group.papers[1].score + "/" + group.papers[1].fullScore;
+					} else {
+						for (let step of group.papers[1].steps) {
+							this.score2 += step.score + "/" + step.fullScore + " ";
+						}
+					}
+				}
+				if (this.markQuestions.length == 3) {
+					if (group.papers[2].score !== "") {
+						this.score3 += group.papers[2].score + "/" + group.papers[2].fullScore;
+					} else {
+						for (let step of group.papers[2].steps) {
+							this.score3 += step.score + "/" + step.fullScore + " ";
+						}
+					}
+				}
+			}
+		}
+		this.addScore();
+		this._sharedService.makeRequest('POST', '/exam/mark/update', JSON.stringify(this.mark)).then((data: any) => {
+			alert("修改成功");
+			this.nextPage();
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+			alert("修改失败！");
+		});
 	}
 
 	drawLine(): void {
@@ -220,41 +327,23 @@ export class MarkComponent implements OnInit {
 		this.editMode = 'Help';
 	}
 
-/*
 	addBestAnswer(): void {
-		this.img = new Image();
-		let t = this;
-		this.img.onload = function() {
-			t.cxt.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-			//hidden canvas
-			t.hCxt.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-		}
-		this.img.src = 'assets/images/icon-bestanswer.png';
+		this.editMode = "BestAnswer";
 	}
 
 	addFAQ(): void {
-		this.img = new Image();
-		let t = this;
-		this.img.onload = function() {
-			t.cxt.drawImage(t.img, 80, 0, t.img.width, t.img.height);
-
-			//hidden canvas
-			t.hCxt.drawImage(t.img, 80, 0, t.img.width, t.img.height);
-		}
-		this.img.src = 'assets/images/icon-faq.png';
+		this.editMode = "FAQ";
 	}
 
 	addQueerAnswer(): void {
-		this.img = new Image();
-		let t = this;
-		this.img.onload = function() {
-			t.cxt.drawImage(t.img, 160, 0, t.img.width, t.img.height);
-
-			//hidden canvas
-			t.hCxt.drawImage(t.img, 160, 0, t.img.width, t.img.height);
-		}
-		this.img.src = 'assets/images/icon-queerflower.png';
+		this.editMode = "QueerAnswer";
 	}
-	*/
+
+	addScore(): void {
+		this.editMode = "Score";
+	}
+
+	clear(): void {
+		this.editMode = "Clear";
+	}
 }

@@ -10,7 +10,6 @@ export class MarkListComponent implements OnInit {
 
 	marks: any;
 	questionList = [];
-	questionNum = "";
 
     constructor(private _sharedService: SharedService) {
 
@@ -31,9 +30,8 @@ export class MarkListComponent implements OnInit {
 			this.marks = data;
 			for (let mark of this.marks) {
 				if (mark.markType === "标准") {
-					let questionNum = (mark.questionNum === '' ? mark.startNum + '-' + mark.endNum : mark.questionNum);
-					let question = {"num": ""};
-					question.num = questionNum;
+					let question = {"n": ""};
+					question.n = mark.summary[0].questionName;
 					this.questionList.push(question);
 				}
 			}

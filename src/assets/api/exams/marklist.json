@@ -8,32 +8,13 @@
         "subject": "语文",
         "grade": "高一",
         "markType": "标准",
-        "markStyle": "single",
         "progress": "60%",
-        "questionType": "解答题",
-        "questionNum": "1",
-        "startNum": "",
-        "endNum": "",
-        "papers": [
+        "summary": [
             {
-                "paperId": "P001",
-                "isBest": false, 
-                "isBad": false, 
-                "isFAQ": false,
-                "isProblemPaper": false,
-                "score": 4, 
-                "paperImg": "assets/api/exams/exam01.png",
-                "markImg": ""
-            },
-            {
-                "paperId": "P002",
-                "isBest": false, 
-                "isBad": false, 
-                "isFAQ": false,
-                "isProblemPaper": false,
-                "score": 4, 
-                "paperImg": "assets/api/exams/exam01.png",
-                "markImg": ""
+                "questionName": "1",
+                "questionType": "解答题",
+                "avgScore": "3.1",
+                "markedNum": 44
             }
         ]
     },
@@ -46,28 +27,13 @@
         "subject": "语文",
         "grade": "高一",
         "markType": "标准",
-        "markStyle": "single",
         "progress": "60%",
-        "questionType": "填空题",
-        "questionNum": "",
-        "startNum": "2",
-        "endNum": "5",
-        "papers": [
+        "summary": [
             {
-                "paperId": "P001",
-                "isBest": false, 
-                "isBad": false, 
-                "isFAQ": false,
-                "isProblemPaper": false,
-                "score": 4, 
-                "steps": {
-                    "2": 0, 
-                    "3": 2,
-                    "4": 2,
-                    "5": 0
-                },
-                "paperImg": "",
-                "markImg": ""
+                "questionName": "2-5",
+                "questionType": "填空题",
+                "avgScore": "4.1",
+                "markedNum": 44
             }
         ]
     },
@@ -80,32 +46,13 @@
         "subject": "语文",
         "grade": "高一",
         "markType": "标准",
-        "markStyle": "single",
         "progress": "60%",
-        "questionType": "解答题",
-        "questionNum": "6",
-        "startNum": "",
-        "endNum": "",
-        "papers": [
+        "summary": [
             {
-                "paperId": "P001",
-                "isBest": false, 
-                "isBad": false, 
-                "isFAQ": false,
-                "isProblemPaper": false,
-                "score": 4, 
-                "paperImg": "",
-                "markImg": ""
-            },
-            {
-                "paperId": "P002",
-                "isBest": false, 
-                "isBad": false, 
-                "isFAQ": false,
-                "isProblemPaper": false,
-                "score": 4, 
-                "paperImg": "",
-                "markImg": ""
+                "questionName": "6",
+                "questionType": "解答题",
+                "avgScore": "3.2",
+                "markedNum": 44
             }
         ]
     },
@@ -118,35 +65,16 @@
         "subject": "语文",
         "grade": "高一",
         "markType": "标准",
-        "markStyle": "single",
         "progress": "60%",
-        "questionType": "解答题",
-        "questionNum": "7",
-        "startNum": "",
-        "endNum": "",
-        "papers": [
+        "summary": [
             {
-                "paperId": "P001",
-                "isBest": false, 
-                "isBad": false, 
-                "isFAQ": false,
-                "isProblemPaper": false,
-                "score": 4, 
-                "paperImg": "",
-                "markImg": ""
-            },
-            {
-                "paperId": "P002",
-                "isBest": false, 
-                "isBad": false, 
-                "isFAQ": false,
-                "isProblemPaper": false,
-                "score": 4, 
-                "paperImg": "",
-                "markImg": ""
+                "questionName": "7",
+                "questionType": "解答题",
+                "avgScore": "8.5",
+                "markedNum": 44
             }
         ]
-    },    
+    },
     {
         "id": "M005",
         "examId": "E001",
@@ -156,28 +84,19 @@
         "subject": "语文",
         "grade": "高一",
         "markType": "问题卷",
-        "markStyle": "single",
         "progress": "60%",
-        "questionType": "",
-        "questionNum": "",
-        "startNum": "",
-        "endNum": "",
-        "papers": [
+        "summary": [
             {
-                "paperId": "P001",
-                "isBest": false, 
-                "isBad": false, 
-                "isFAQ": false,
-                "isProblemPaper": false,
-                "score": 4, 
-                "steps": {
-                    "2": 0, 
-                    "3": 2,
-                    "4": 2,
-                    "5": 0
-                },
-                "paperImg": "",
-                "markImg": ""
+                "questionName": "1",
+                "questionType": "解答题",
+                "avgScore": "3.1",
+                "markedNum": 44
+            },
+            {
+                "questionName": "2-5",
+                "questionType": "填空题",
+                "avgScore": "4.1",
+                "markedNum": 44
             }
         ]
     }
