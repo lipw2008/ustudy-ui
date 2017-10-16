@@ -8,7 +8,7 @@ import { Component, OnInit }  from '@angular/core';
 
 export class WelcomeComponent{
 
-    constructor(private _sharedService: SharedService) {
+    constructor(public _sharedService: SharedService) {
     }
 
     ngOnInit() {

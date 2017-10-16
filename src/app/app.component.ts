@@ -9,7 +9,7 @@ import { SharedService } from './shared.service';
 export class AppComponent {
     pageTitle: string = '蘑菇云后台管理系统';
 
-	constructor(private _sharedService: SharedService, private router: Router) {
+	constructor(public _sharedService: SharedService, private router: Router) {
 
 	}
 
