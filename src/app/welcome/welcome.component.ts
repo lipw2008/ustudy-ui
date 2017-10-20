@@ -1,6 +1,7 @@
-import { Component, OnInit }  from '@angular/core';
- import { SharedService } from '../shared.service';
+import { Component, OnInit, AfterViewInit }  from '@angular/core';
+import { SharedService } from '../shared.service';
 
+declare var $: any;
 
 @Component({
     templateUrl: 'welcome.component.html'
@@ -13,6 +14,14 @@ export class WelcomeComponent{
 
     ngOnInit() {
         this.updateUserStatus();
+    }
+
+    ngAfterViewInit() {
+	    //扁平化布局
+        $('.grid').masonry({
+            itemSelector: '.grid-item'
+        });
+        console.log("masonry is called");
     }
 
 	updateUserStatus() {

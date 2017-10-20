@@ -11,13 +11,13 @@
 <!-- 路径导航 end -->
 
  <!-- 内容 start -->
-<div #rootContainer class="container">
+<div #rootContainer class="container container-fluid-online-marking">
 	<div class="row">
 		<div class="col-sm-9">
 			<div class="panel panel-default online-marking">
 				<div class="panel-heading clearfix">
                     <div class="question-box">
-                        <select #questionSelector class="selectpicker" multiple>
+                        <select #questionSelector class="selectpicker show-tick" data-style="btn-link" multiple data-width="fit" data-max-options="3" data-size="5">
                             <option *ngFor="let question of questionList" [value]="question.n">{{question.n}}</option>
                         </select>
                     </div>
@@ -44,7 +44,7 @@
 				</div>
 				<div class="panel-body">
 					<div>
-                        <div #markContainer style="height: 450px; overflow-x: auto; overflow-y: auto">
+                        <div #markContainer style="overflow-x: auto; overflow-y: auto">
                             <mark-canvas [score]="score" [imgPath]="imgPath"  [editMode]="editMode"></mark-canvas>
                             <mark-canvas [score]="score2" [imgPath]="imgPath2" [editMode]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
                             <mark-canvas [score]="score3" [imgPath]="imgPath3" [editMode]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>

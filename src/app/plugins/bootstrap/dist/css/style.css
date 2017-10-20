@@ -9,6 +9,10 @@
     width: 640px;
   }
 }
+html.full-screen,
+html.full-screen body {
+  height: 100%;
+}
 .container-breadcrumb {
   margin-bottom: 20px;
   background-color: #f2f2f2;
@@ -166,6 +170,9 @@ body {
 .clear-bg {
   background: none;
 }
+.bg-white {
+  background-color: #fff;
+}
 .bg-muted {
   background-color: #f2f2f2;
 }
@@ -281,6 +288,9 @@ body {
   padding-left: 0;
 }
 @media (min-width: 992px) {
+  .register-guide {
+    margin-top: 100px;
+  }
   .register-guide ul {
     margin: 0 auto;
     width: 800px;
@@ -734,41 +744,88 @@ body {
   font-size: 12px;
   border-top: 1px solid #ddd;
 }
+@media (min-width: 992px) {
+  .container.container-fluid-online-marking > .row {
+    position: relative;
+  }
+  .container.container-fluid-online-marking > .row > .col-sm-9 {
+    float: none;
+    padding-right: 300px;
+    width: 100%;
+  }
+  .container.container-fluid-online-marking > .row > .col-sm-3 {
+    float: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    width: 300px;
+  }
+}
+html.full-screen .container.container-fluid-online-marking {
+  padding: 15px;
+  width: 100% !important;
+}
+.container.container-fluid-online-marking {
+  height: 800px;
+}
+.container.container-fluid-online-marking .row,
+.container.container-fluid-online-marking .row > [class^="col-"],
+.container.container-fluid-online-marking .online-marking,
+.container.container-fluid-online-marking .online-marking .panel-body,
+.container.container-fluid-online-marking .online-marking .panel-body .online-marking-wrap,
+html.full-screen .container.container-fluid-online-marking {
+  height: 100%;
+}
 .panel.online-marking {
   border: 1px solid #ddd;
 }
 .panel.online-marking .panel-heading {
   margin: 0;
   padding: 0 10px;
-  background-color: #f2f2f2;
+  width: 100%;
+  background-color: #333;
+  background-image: none;
+}
+@media (min-width: 768px) {
+  .panel.online-marking {
+    position: relative;
+    padding-top: 43px;
+  }
+  .panel.online-marking .panel-heading {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 .panel.online-marking .panel-heading .question-box {
   float: left;
-  padding: 0 10px;
+  padding: 5px 10px;
+}
+.panel.online-marking .panel-heading .question-box .btn-link {
+  color: #ddd;
 }
 .panel.online-marking .panel-heading .progress-box {
   float: left;
   padding: 12px 10px 0;
-  min-width: 200px;
+  width: 100px;
 }
 .panel.online-marking .panel-heading .control-box {
   float: right;
-  padding: 5px 10px 0;
+  padding: 5px 10px;
 }
 .panel.online-marking .panel-heading .control-box a {
   display: inline-block;
   padding: 0 5px;
+  color: #ddd;
   font-size: 24px;
 }
 .panel.online-marking .panel-heading .control-box a:hover,
 .panel.online-marking .panel-heading .control-box a.active {
-  color: #000;
-  background-color: #ddd;
+  color: #fff;
 }
 .panel.online-marking .panel-body {
   padding: 0;
-  height: 451px;
-  border-top: 1px solid #ddd;
   overflow-y: auto;
 }
 .online-marking-wrap {
@@ -831,24 +888,24 @@ body {
   display: block;
   padding: 0 15px 0 5px;
   border: 1px solid #ddd;
-  background-color: #f2f2f2;
+  background-color: #ee3f24;
 }
 .online-marking-wrap .control a {
   display: block;
   float: left;
   padding: 0 5px;
   font-size: 24px;
-  color: #ee3f24;
+  color: #fff;
 }
 .online-marking-wrap .control a:hover,
 .online-marking-wrap .control a.active {
   color: #fff;
-  background-color: #ee3f24;
+  background-color: #e72e12;
 }
 .online-marking-wrap .control .control-drag {
   display: block;
   float: left;
   font-size: 24px;
-  color: #999;
+  color: #fff;
   cursor: move;
 }

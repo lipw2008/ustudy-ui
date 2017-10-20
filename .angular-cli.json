@@ -18,15 +18,16 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+    "app/css/normalize.min.css",
+    "app/plugins/iconfont/css/iconfont.css",
 		"app/plugins/bootstrap/dist/css/bootstrap.css",
+    "app/plugins/bootstrap/dist/css/style.css",
+    "app/css/index.css",
 		"../node_modules/@swimlane/ngx-datatable/release/index.css",
 		"../node_modules/@swimlane/ngx-datatable/release/themes/material.css",
 		"../node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
 		"styles.css",
-		"app/css/normalize.min.css",
-		"app/plugins/iconfont/css/iconfont.css",
 		"app/plugins/bootstrap/dist/css/bootstrap-theme.min.css",
-		"app/plugins/bootstrap/dist/css/style.css",
 		"app/plugins/bootstrapvalidator-master/dist/css/bootstrapValidator.min.css",
     "app/plugins/bootstrap-select/dist/css/bootstrap-select.css"
       ],
@@ -34,6 +35,7 @@
 		"app/plugins/jquery.min.js",
 		"app/plugins/bootstrap/dist/js/bootstrap.min.js",
 		"app/plugins/bootstrapvalidator-master/dist/js/bootstrapValidator.min.js",
+    "app/plugins/masonry-master/dist/masonry.pkgd.min.js",
 		"app/plugins/jquery.common.js",
     "app/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"
 	  ],
