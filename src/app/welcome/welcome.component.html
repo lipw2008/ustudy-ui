@@ -1,7 +1,7 @@
 <!-- 内容 start -->
-<div class="container-index">
 <!-- *********************** 任课老师 *********************** -->
-	<div class="container" *ngIf="_sharedService.userRole==='任课老师' || _sharedService.userRole===''">
+<div class="container-index container-index-3" *ngIf="_sharedService.userRole==='任课老师' || _sharedService.userRole===''">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="grid clearfix">
@@ -91,8 +91,10 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div class="container" *ngIf="_sharedService.userRole==='扫描账号'">
+<div class="container-index container-index-4" *ngIf="_sharedService.userRole==='扫描账号'">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-3">
 				<div class="grid clearfix">
@@ -222,8 +224,10 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div class="container" *ngIf="_sharedService.userRole==='考务老师'">
+<div class="container-index container-index-4" *ngIf="_sharedService.userRole==='考务老师'">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-3">
 				<div class="grid clearfix">
@@ -353,9 +357,11 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <!-- *********************** 班主任 *********************** -->
-	<div class="container" *ngIf="_sharedService.userRole==='班主任'">
+<div class="container-index container-index-3" *ngIf="_sharedService.userRole==='班主任'">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="grid clearfix">
@@ -445,9 +451,11 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <!-- *********************** 备课组长 *********************** -->
-	<div class="container" *ngIf="_sharedService.userRole==='备课组长'">
+<div class="container-index container-index-3" *ngIf="_sharedService.userRole==='备课组长'">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="grid clearfix">
@@ -543,9 +551,11 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <!-- *********************** 学科组长 *********************** -->
-	<div class="container" *ngIf="_sharedService.userRole==='学科组长'">
+<div class="container-index container-index-3" *ngIf="_sharedService.userRole==='学科组长'">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="grid clearfix">
@@ -641,9 +651,11 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <!-- *********************** 年级主任 *********************** -->
-	<div class="container" *ngIf="_sharedService.userRole==='年级主任'">
+<div class="container-index container-index-3" *ngIf="_sharedService.userRole==='年级主任'">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="grid clearfix">
@@ -733,9 +745,11 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <!-- *********************** 校长 *********************** -->
-	<div class="container" *ngIf="_sharedService.userRole==='校长'">
+<div class="container-index container-index-3" *ngIf="_sharedService.userRole==='校长'">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="grid clearfix">
@@ -831,9 +845,11 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <!-- *********************** 教研室主任 *********************** -->
-	<div class="container" *ngIf="_sharedService.userRole==='教研室主任'">
+<div class="container-index container-index-3" *ngIf="_sharedService.userRole==='教研室主任'">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="grid clearfix">
@@ -923,9 +939,11 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <!-- *********************** 教研员 *********************** -->
-	<div class="container" *ngIf="_sharedService.userRole==='教研员'">
+<div class="container-index container-index-3" *ngIf="_sharedService.userRole==='教研员'">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="grid clearfix">
@@ -1021,6 +1039,5 @@
 			</div>
 		</div>
 	</div>
-
 </div>
 <!-- 内容 end -->
