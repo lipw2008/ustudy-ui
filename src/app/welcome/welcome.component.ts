@@ -17,11 +17,6 @@ export class WelcomeComponent{
     }
 
     ngAfterViewInit() {
-	    //扁平化布局
-        $('.grid').masonry({
-            itemSelector: '.grid-item'
-        });
-        console.log("masonry is called");
     }
 
 	updateUserStatus() {
@@ -30,12 +25,29 @@ export class WelcomeComponent{
 			this._sharedService.userName = data.userName ===undefined ? '' : data.userName;
 			this._sharedService.userRole = data.role === undefined ? '' : data.role;
 			console.log("loginId success: user:" + this._sharedService.userName + " role:" + this._sharedService.userRole);
+			setTimeout(()=>{
+				this.masonry();
+			}, 1);
+			//this.masonry();
+			//alert("已登录！");
 		}).catch((error: any) => {
 			this._sharedService.userName = '';
 			this._sharedService.userRole = '';
 			console.log("loginId failed: user:" + this._sharedService.userName + " role:" + this._sharedService.userRole);
 			console.log(error.status);
 			console.log(error.statusText);
+			//this.masonry();
+			setTimeout(()=>{
+				this.masonry();
+			}, 1);
 		});
+	}
+
+	masonry() {
+	    //扁平化布局
+        $('.grid').masonry({
+            itemSelector: '.grid-item'
+        });
+        console.log("masonry is called");
 	}
 }
