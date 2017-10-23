@@ -188,8 +188,8 @@
     background-color: #0c3;
 }
 .container-index .container .col.col-muted>a {
-    color: @gray;
-    background-color: @gray-lighter;
+    color: #999;
+    background-color: #f2f2f2;
 }
 .container-index .container .col {
     padding: 5px;
