@@ -74,47 +74,34 @@ export class SelectSubjectComponent implements OnInit {
 	}
 
 	loadExams() {
-
+		this._sharedService.makeRequest('GET', 'exam/getExams/0', '').then((data: any) => {
+			console.log("data: " + JSON.stringify(data));
+			if (data.success) {
+				this.exams = data.data; 
+			}
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
 	
-	reload(examId) {
-		// //req.open('GET', 'assets/api/teachers/teachers.json');
-		// this._sharedService.makeRequest('GET', 'assets/api/exams/exams.json', '').then((data: any) => {
-		// 	//cache the list
-		// 	console.log("data: " + JSON.stringify(data));
-		// 	for(var t of data) {
-		// 		//科目
-		// 		if (t.subjects && t.subjects.length >0) {
-		// 			var str = "";
-		// 			for (var s of t.subjects) {
-		// 				str += s.n + " ";
-		// 			}
-		// 			t.subjects = str;
-		// 		} else {
-		// 			t.subjects = "";
-		// 		}	
-		// 		//年级
-		// 		if (t.grades && t.grades.length >0) {
-		// 			var str = "";
-		// 			for (var g of t.grades) {
-		// 				str += g.n + " ";
-		// 			}
-		// 			t.grades = str;
-		// 		} else {
-		// 			t.grades = "";
-		// 		}							
-		// 	}
-		// }).catch((error: any) => {
-		// 	console.log(error.status);
-		// 	console.log(error.statusText);
-		// });
+	loadExamSubjects(examId) {
+		this._sharedService.makeRequest('GET', 'examsubject/getExamSubjects/'+examId, '').then((data: any) => {
+			console.log("data: " + JSON.stringify(data));
+			if (data.success) {
+				this.gradesubjects = data.data; 
+			}
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
 
 	getExam() {
 		const examId = this.elementRef.nativeElement.querySelector('#examFilterValue').value;
 		this.examId = examId;
 		if(examId !== "0"){
-			this.reload(examId);
+			this.loadExamSubjects(examId);
 			this.elementRef.nativeElement.querySelector('#editGradeDetailsForm').style.display = '';
 		}else{
 			this.elementRef.nativeElement.querySelector('#editGradeDetailsForm').style.display = 'none';

@@ -24,6 +24,8 @@ export class SetAnswersComponent implements OnInit {
 
 	checkBoxScores = [];
 
+	allsubjects = [];
+
 	subjects = [
 		{id:0,name:'不分科'}
 	];
@@ -53,19 +55,22 @@ export class SetAnswersComponent implements OnInit {
 		this.subjectId = this.route.snapshot.params.subjectId;
 		this.seted = this.route.snapshot.params.seted;
 
-		if(parseInt(this.subjectId) === 10){
-			this.subjects.push({id:7,name:'政治'});
-			this.subjects.push({id:8,name:'历史'});
-			this.subjects.push({id:9,name:'地理'});
+		this.loaAlldSubjects();
 
-			this.issynthesize = true;
-		}else if(parseInt(this.subjectId) === 11){
-			this.subjects.push({id:4,name:'物理'});
-			this.subjects.push({id:5,name:'化学'});
-			this.subjects.push({id:6,name:'生物'});
-
-			this.issynthesize = true;
-		}
+		this.allsubjects.forEach(subject => {
+			if (this.subjectId === subject.id) {
+				if (subject.type === '1' || subject.type === '2') {
+					this.issynthesize = true;
+					this.allsubjects.forEach(subject_ => {
+						if (subject.type === '1' && subject_.type === '3') {
+							this.subjects.push(subject_);
+						} else if (subject.type === '2' && subject_.type === '4') {
+							this.subjects.push(subject_);
+						}
+					})
+				}
+			}
+		});
 
 		if(this.seted){
 			this.reload(this.examId, this.gradeId, this.subjectId);
@@ -75,8 +80,19 @@ export class SetAnswersComponent implements OnInit {
 			this.addAnswers(objective);
 			this.setDefaultCheckBoxScore(objective);			
 		});
-
 		
+	}
+
+	loaAlldSubjects() {
+		this._sharedService.makeRequest('GET', 'exam/getExams/0', '').then((data: any) => {
+			console.log("data: " + JSON.stringify(data));
+			if (data.success) {
+				this.allsubjects = data.data; 
+			}
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
 	}
 	
 	reload(examId,gradeId,subjectId) {
