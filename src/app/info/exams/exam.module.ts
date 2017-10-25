@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule} from '@angular/router';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import { RouterModule } from '@angular/router';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { ExamListComponent } from './exam-list.component';
 
 @NgModule({
   imports: [
     CommonModule,
-      NgxDatatableModule,
+    NgxDatatableModule,
     RouterModule.forChild([
       { path: 'examList', component: ExamListComponent }
     ]),
     ReactiveFormsModule,
-  FormsModule,
+    FormsModule,
     HttpModule
   ],
   declarations: [
@@ -24,4 +24,4 @@ import { ExamListComponent } from './exam-list.component';
   ],
   providers: []
 })
-export class ExamModule {}
+export class ExamModule { }

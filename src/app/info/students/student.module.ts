@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule} from '@angular/router';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import { RouterModule } from '@angular/router';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { StudentListComponent } from './student-list.component';
 import { AddStudentComponent } from './add-student.component';
@@ -22,7 +22,7 @@ import { StudentService } from './student.service';
       { path: 'updateStudent', component: UpdateStudentComponent }
     ]),
     ReactiveFormsModule,
-  FormsModule,
+    FormsModule,
     HttpModule
   ],
   declarations: [
@@ -34,4 +34,4 @@ import { StudentService } from './student.service';
     StudentService
   ]
 })
-export class StudentModule {}
+export class StudentModule { }
