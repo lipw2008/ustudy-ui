@@ -1,0 +1,9 @@
+<div class="col-md-2">
+  <!--<ng2-treeview [node]="textTreeView" (textNodeClick)="onTextNodeClick($event)"></ng2-treeview>-->
+  <ngx-treeview
+    [config]="config"
+    [items]="items"
+    (selectedChange)="onSelectedChange($event)">
+  </ngx-treeview>
+</div>
+<router-outlet></router-outlet>
