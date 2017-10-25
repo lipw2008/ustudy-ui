@@ -61,7 +61,8 @@
 		                    	<a href="#" (click)="checkUserStatus()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据中心 <span class="caret"></span></a>
 							    <ng-container *ngIf="_sharedService.userRole!= ''">
                                     <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">阅卷统计</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''">
+                                            <a [routerLink]="['/data/reviewStatistic']">阅卷统计</a></li>
                                         <li><a href="#">试卷分析</a></li>
                                         <li><a href="#">成绩统计</a></li>
                                         <li><a href="#">报表下载</a></li>
@@ -244,7 +245,7 @@
             //验证修改密码
         $('#modifyPasswordForm').bootstrapValidator();
 	    });
-		
+
 		//添加学生信息
         $("#addStudentInfoBtn").click(function(){
             $("#addStudentInfoModal").modal("show");
@@ -255,7 +256,7 @@
         $(':reset').click(function() {
             $form.data('bootstrapValidator').resetForm(true);
         });
-			
+
 	    //]]>
 	    </script>
 	</body>
