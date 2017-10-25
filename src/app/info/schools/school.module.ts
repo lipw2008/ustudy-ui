@@ -20,7 +20,7 @@ import { SchoolService } from './school.service';
 @NgModule({
   imports: [
     CommonModule,
-	NgxDatatableModule,
+    NgxDatatableModule,
     RouterModule.forChild([
       { path: 'schoolDetails', component: SchoolComponent },
       { path: 'department', component: DepartmentComponent },
@@ -31,9 +31,9 @@ import { SchoolService } from './school.service';
       { path: 'updateClass', component: UpdateClassComponent },
       { path: 'addClassTeacher', component: AddClassTeacherComponent }
     ]),
-	ReactiveFormsModule,
+    ReactiveFormsModule,
   FormsModule,
-	HttpModule
+    HttpModule
   ],
   declarations: [
     SchoolComponent,

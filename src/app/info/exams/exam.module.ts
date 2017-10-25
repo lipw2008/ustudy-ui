@@ -11,13 +11,13 @@ import { ExamListComponent } from './exam-list.component';
 @NgModule({
   imports: [
     CommonModule,
-  	NgxDatatableModule,
+      NgxDatatableModule,
     RouterModule.forChild([
       { path: 'examList', component: ExamListComponent }
     ]),
-	ReactiveFormsModule,
+    ReactiveFormsModule,
   FormsModule,
-	HttpModule
+    HttpModule
   ],
   declarations: [
     ExamListComponent

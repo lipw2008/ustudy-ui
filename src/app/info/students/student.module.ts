@@ -15,20 +15,20 @@ import { StudentService } from './student.service';
 @NgModule({
   imports: [
     CommonModule,
-	NgxDatatableModule,
+    NgxDatatableModule,
     RouterModule.forChild([
       { path: 'studentList', component: StudentListComponent },
-	  { path: 'addStudent', component: AddStudentComponent },
-	  { path: 'updateStudent', component: UpdateStudentComponent }
+      { path: 'addStudent', component: AddStudentComponent },
+      { path: 'updateStudent', component: UpdateStudentComponent }
     ]),
-	ReactiveFormsModule,
+    ReactiveFormsModule,
   FormsModule,
-	HttpModule
+    HttpModule
   ],
   declarations: [
     StudentListComponent,
-	AddStudentComponent,
-	UpdateStudentComponent
+    AddStudentComponent,
+    UpdateStudentComponent
   ],
   providers: [
     StudentService

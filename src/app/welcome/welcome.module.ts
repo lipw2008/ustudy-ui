@@ -20,6 +20,6 @@ import { LoginComponent } from './login.component';
     WelcomeComponent,
     LoginComponent
   ],
-  providers: []  
+  providers: []
 })
 export class WelcomeModule {}

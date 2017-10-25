@@ -13,14 +13,14 @@ import { CanvasComponent } from './canvas.component';
 @NgModule({
   imports: [
     CommonModule,
-  	NgxDatatableModule,
+      NgxDatatableModule,
     RouterModule.forChild([
       { path: 'mark', component: MarkComponent },
       { path: 'markList', component: MarkListComponent }
     ]),
-	ReactiveFormsModule,
+    ReactiveFormsModule,
   FormsModule,
-	HttpModule
+    HttpModule
   ],
   declarations: [
     MarkComponent,

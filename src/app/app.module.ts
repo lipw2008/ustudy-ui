@@ -23,14 +23,14 @@ import { SharedService } from './shared.service';
 @NgModule({
   imports: [
     BrowserModule,
-	  NgxDatatableModule,
+      NgxDatatableModule,
     HttpModule,
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
       { path: 'login', component: LoginComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' }
     ]),
-	StudentModule,
+    StudentModule,
   TeacherModule,
   SchoolModule,
   WelcomeModule,
