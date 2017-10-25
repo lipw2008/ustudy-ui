@@ -31,11 +31,10 @@ export class DataComponent implements OnInit {
 
   }
 
-  constructor(private service: DataService) {
+  constructor() {
   }
 
   ngOnInit() {
-    // this.items = this.service.getBooks()
   }
 
 }
