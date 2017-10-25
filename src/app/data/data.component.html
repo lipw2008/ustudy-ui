@@ -1,9 +1,9 @@
-<div class="col-md-2">
-  <!--<ng2-treeview [node]="textTreeView" (textNodeClick)="onTextNodeClick($event)"></ng2-treeview>-->
-  <ngx-treeview
-    [config]="config"
-    [items]="items"
-    (selectedChange)="onSelectedChange($event)">
-  </ngx-treeview>
+<div class="sidebar col-md-2">
+  <div class="panel panel-default">
+    <div id="sidebar" class="treeview collapse navbar-collapse clear-padding-horizontal"></div>
+  </div>
 </div>
-<router-outlet></router-outlet>
+
+<div class="sidebar col-md-10">
+  <router-outlet></router-outlet>
+</div>

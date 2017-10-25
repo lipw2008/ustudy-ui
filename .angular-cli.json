@@ -30,6 +30,7 @@
 		"app/plugins/bootstrap/dist/css/bootstrap-theme.min.css",
 		"app/plugins/bootstrapvalidator-master/dist/css/bootstrapValidator.min.css",
     "app/plugins/bootstrap-select/dist/css/bootstrap-select.css",
+    "app/plugins/bootstrap-treeview-master/dist/bootstrap-treeview.min.css",
     "../node_modules/font-awesome/css/font-awesome.css"
       ],
       "scripts": [
@@ -38,7 +39,8 @@
 		"app/plugins/bootstrapvalidator-master/dist/js/bootstrapValidator.min.js",
     "app/plugins/masonry-master/dist/masonry.pkgd.min.js",
 		"app/plugins/jquery.common.js",
-    "app/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"
+    "app/plugins/bootstrap-select/dist/js/bootstrap-select.min.js",
+    "app/plugins/bootstrap-treeview-master/dist/bootstrap-treeview.min.js"
 	  ],
       "environmentSource": "environments/environment.ts",
       "environments": {
