@@ -98,7 +98,7 @@
 		                </ul>
                         <ul class="nav navbar-nav navbar-right navbar-right-box hidden-xs hidden-sm">
                             <ng-container *ngIf="_sharedService.userName===''">
-                                <li class="dropdown">
+                                <li class="dropdown" (click)="checkUserStatus()">
                                     <a href="javascript:;" role="button" aria-haspopup="false" aria-expanded="false"><i class="iconfont iconfont-user"></i> 未登录 <span class="caret"></span></a>
                                 </li>
                             </ng-container>
@@ -244,7 +244,7 @@
             //验证修改密码
         $('#modifyPasswordForm').bootstrapValidator();
 	    });
-		
+
 		//添加学生信息
         $("#addStudentInfoBtn").click(function(){
             $("#addStudentInfoModal").modal("show");
@@ -255,7 +255,7 @@
         $(':reset').click(function() {
             $form.data('bootstrapValidator').resetForm(true);
         });
-			
+
 	    //]]>
 	    </script>
 	</body>
