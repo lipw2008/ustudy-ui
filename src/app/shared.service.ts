@@ -10,7 +10,7 @@ export class SharedService {
 	public userName: string = '';
 	public userRole: string = '';
 
-    constructor(private _http: Http) { 
+    constructor(private _http: Http) {
     }
 
 		MD5(pw: string): any {
@@ -45,8 +45,14 @@ content:
 		    xhr.open(method, "" + url + endpoint);
 		    xhr.onload = () => {
 		      if (xhr.status >= 200 && xhr.status < 300) {
-		        resolve(JSON.parse(xhr.response));
+            try {
+              resolve(JSON.parse(xhr.response));
+            }
+            catch (e) {
+              resolve({});
+            }
 		      } else {
+						console.log("error happens: " + url);
 		        reject({
 		        status: xhr.status,
 		        statusText: xhr.statusText
@@ -54,6 +60,7 @@ content:
 		      }
 		    };
 		    xhr.onerror = () => {
+					console.log("error happens: " + url);
 		      reject({
 		        status: xhr.status,
 		        statusText: xhr.statusText
