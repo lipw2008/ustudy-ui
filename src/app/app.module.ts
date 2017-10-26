@@ -4,6 +4,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -26,6 +27,8 @@ import { ReviewStatisticComponent } from './data/review-statistic/review-statist
 // import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 import { TreeviewModule } from 'ngx-treeview';
 import { ClassSelectComponent } from './utils/class-select/class-select.component';
+import { ScheduleDetailsComponent } from './data/schedule-details/schedule-details.component';
+import { ReviewQualityComponent } from './data/review-quality/review-quality.component';
 
 @NgModule({
   imports: [
@@ -38,12 +41,12 @@ import { ClassSelectComponent } from './utils/class-select/class-select.componen
       { path: 'welcome', component: WelcomeComponent },
       { path: 'login', component: LoginComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-      {
-        path: 'data', component: DataComponent, children: [{
-          path: 'reviewStatistic', component: ReviewStatisticComponent
-        }]
-      }
-    ]),
+      { path: 'data', component: DataComponent, children: [
+        { path: 'reviewStatistic', component: ReviewStatisticComponent },
+        { path: 'reviewQuality', component: ReviewQualityComponent },
+        { path: 'scheduleDetails', component: ScheduleDetailsComponent }
+      ]}
+    ], {enableTracing: true}),
     FormsModule,
     StudentModule,
     TeacherModule,
@@ -56,10 +59,13 @@ import { ClassSelectComponent } from './utils/class-select/class-select.componen
     AppComponent,
     DataComponent,
     ReviewStatisticComponent,
-    ClassSelectComponent
+    ClassSelectComponent,
+    ScheduleDetailsComponent,
+    ReviewQualityComponent
   ],
   providers: [
-    SharedService
+    SharedService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
