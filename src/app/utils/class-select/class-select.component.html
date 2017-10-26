@@ -1,0 +1,31 @@
+<form class="panel-heading">
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <form id="editExamForm" method="post" class="form-inline" action="#">
+        <div class="input-group">
+          <span class="input-group-addon">学校</span>
+          <select class="form-control" [(ngModel)]="selectedSchool" name="selectedSchool">
+            <option *ngFor="let school of schools" [value]="grade">{{school.schoolName}}</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">年级</span>
+          <select class="form-control" [(ngModel)]="selectedGrade" name="selectedGrade">
+            <option [value]="all">全年级</option>
+            <option *ngFor="let grade of getGrades(this.selectedSchool)" [value]="grade">{{grade}}</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">学科</span>
+          <select class="form-control" [(ngModel)]="selectedClass" name="selectedClass">
+            <option [value]="all"></option>
+            <option *ngFor="let class of getClasses(this.selectedSchool, this.selectedGrade)">{{class}}</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <a href="#" class="btn btn-default" title="查询">查询</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</form>

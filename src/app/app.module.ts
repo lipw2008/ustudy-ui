@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -24,6 +25,7 @@ import { ReviewStatisticComponent } from './data/review-statistic/review-statist
 // dependency of ngx-treeview
 // import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 import { TreeviewModule } from 'ngx-treeview';
+import { ClassSelectComponent } from './utils/class-select/class-select.component';
 
 @NgModule({
   imports: [
@@ -42,6 +44,7 @@ import { TreeviewModule } from 'ngx-treeview';
         }]
       }
     ]),
+    FormsModule,
     StudentModule,
     TeacherModule,
     SchoolModule,
@@ -52,7 +55,8 @@ import { TreeviewModule } from 'ngx-treeview';
   declarations: [
     AppComponent,
     DataComponent,
-    ReviewStatisticComponent
+    ReviewStatisticComponent,
+    ClassSelectComponent
   ],
   providers: [
     SharedService

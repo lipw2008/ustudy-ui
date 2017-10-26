@@ -1,43 +1,4 @@
-<div class="panel-heading">
-  <div class="row">
-    <div class="col-sm-12 col-lg-12">
-      <form id="editExamForm" method="post" class="form-inline" action="#">
-        <div class="input-group">
-          <span class="input-group-addon">学校</span>
-          <select class="form-control">
-            <option *ngFor="let school of schools">{{school.schoolName}}</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon">年级</span>
-          <select class="form-control">
-            <option>全年级</option>
-            <option *ngFor="let grade of getGrades(school)">高一</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon">学科</span>
-          <select class="form-control">
-            <option></option>
-            <option>语文</option>
-            <option>数学</option>
-            <option>外语</option>
-            <option>物理</option>
-            <option>化学</option>
-            <option>生物</option>
-            <option>政治</option>
-            <option>历史</option>
-            <option>地理</option>
-            <option>全科</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <a href="#" class="btn btn-default" title="查询">查询</a>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+<class-select></class-select>
 
 <div class="table-responsive" data-pattern="priority-columns">
   <table class="table table-hover table-bordered text-center">
