@@ -12,4 +12,8 @@ export class ReviewStatisticComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  selectResult(result) {
+    console.log(result)
+    // XXX: mock
+  }
 }
