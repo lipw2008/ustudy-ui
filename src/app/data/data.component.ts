@@ -38,16 +38,16 @@ export class DataComponent implements OnInit {
   ngOnInit() {
     const defaultData = [{
       text: '阅卷进度统计',
-      href: 'markingProgress.html',
+      href: '#data/reviewStatistic',
       tags: ['1'],
       nodes: [{
         text: '进度明细',
-        href: 'scheduleDetails.html',
+        href: '#data/scheduleDetails',
         tags: ['0']
       }]
     }, {
       text: '阅卷质量',
-      href: 'markingQuality.html',
+      href: '#data/reviewQuality',
       tags: ['0']
     }, {
       text: '阅卷检索',
@@ -61,8 +61,8 @@ export class DataComponent implements OnInit {
       showBorder: false,
       expandIcon: 'glyphicon glyphicon-menu-right',
       collapseIcon: 'glyphicon glyphicon-menu-down',
-      color: "#333",
-      backColor: "transparent",
+      color: '#333',
+      backColor: 'transparent',
       data: defaultData
     });
   }
