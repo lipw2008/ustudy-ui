@@ -37,65 +37,19 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
+          <tr *ngFor="let mark of marks">
             <td><label><input type="checkbox" name="checkbox"></label></td>
-            <td>陶行知</td>
-            <td>高一备课组</td>
-            <td>21、22</td>
-            <td>单评</td>
+            <td>{{mark.teacherName}}</td>
+            <td>{{mark.grade}}</td>
+            <td>{{getQuestionNames(mark)}}</td>
+            <td>{{mark.markType}}</td>
             <td>
               <div class="progress clear-margin-bottom">
                 <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                  60%
+                  {{mark.progress}}
                 </div>
               </div>
             </td>
-          </tr>
-          <tr>
-            <td><label><input type="checkbox" name="checkbox"></label></td>
-            <td>陶行知</td>
-            <td>高一备课组</td>
-            <td>21、22</td>
-            <td>单评</td>
-            <td>
-              <div class="progress clear-margin-bottom">
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                  60%
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
           </tr>
           </tbody>
         </table>
@@ -126,45 +80,15 @@
             <th>题目</th>
             <th>批阅方式</th>
             <th>阅卷教师</th>
-            <th>阅卷进度</th>
+            <th>平均分数</th>
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>11</td>
-            <td>单评</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td>单评</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>13</td>
-            <td>单评</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>14</td>
-            <td>双评</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr *ngFor="let question of questionList">
+            <td>{{question.questionName}}</td>
+            <td>{{question.questionType}}</td>
+            <td>{{question.teacherName}}</td>
+            <td>{{question.avgScore}}</td>
           </tr>
           </tbody>
         </table>
