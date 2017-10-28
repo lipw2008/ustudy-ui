@@ -1,6 +1,8 @@
 [
     {
         "id": "M001",
+        "schoolId": "S001",
+        "schoolName": "师大附中",
         "examId": "E001",
         "examName": "16-17学年上学期期末考试",
         "teacherId": "T001",
@@ -14,12 +16,25 @@
                 "questionName": "1",
                 "questionType": "解答题",
                 "avgScore": "3.1",
-                "markedNum": 44
+                "total": 10,
+                "markedNum": 8,
+                "details": [
+                    { "studentNumber": "000001", "score": 3},
+                    { "studentNumber": "000002", "score": 4},
+                    { "studentNumber": "000003", "score": 4},
+                    { "studentNumber": "000004", "score": 2},
+                    { "studentNumber": "000005", "score": 5},
+                    { "studentNumber": "000006", "score": 4},
+                    { "studentNumber": "000007", "score": 5},
+                    { "studentNumber": "000008", "score": 3}
+                ]
             }
         ]
     },
     {
         "id": "M002",
+        "schoolId": "S001",
+        "schoolName": "师大附中",
         "examId": "E001",
         "examName": "16-17学年上学期期末考试",
         "teacherId": "T001",
@@ -39,6 +54,8 @@
     },
     {
         "id": "M003",
+        "schoolId": "S001",
+        "schoolName": "师大附中",
         "examId": "E001",
         "examName": "16-17学年上学期期末考试",
         "teacherId": "T001",
@@ -58,6 +75,8 @@
     },
     {
         "id": "M004",
+        "schoolId": "S001",
+        "schoolName": "师大附中",
         "examId": "E001",
         "examName": "16-17学年上学期期末考试",
         "teacherId": "T001",
@@ -77,12 +96,14 @@
     },
     {
         "id": "M005",
+        "schoolId": "S001",
+        "schoolName": "师大附中",
         "examId": "E001",
         "examName": "16-17学年上学期期末考试",
         "teacherId": "T001",
         "teacherName": "鲁迅",
         "subject": "语文",
-        "grade": "高一",
+        "grade": "高二",
         "markType": "问题卷",
         "progress": "60%",
         "summary": [
@@ -97,6 +118,37 @@
                 "questionType": "填空题",
                 "avgScore": "4.1",
                 "markedNum": 44
+            }
+        ]
+    },
+    {
+        "id": "M006",
+        "schoolId": "S001",
+        "schoolName": "师大附中",
+        "examId": "E001",
+        "examName": "16-17学年上学期期末考试",
+        "teacherId": "T001",
+        "teacherName": "周树人",
+        "subject": "语文",
+        "grade": "高一",
+        "markType": "标准",
+        "progress": "60%",
+        "summary": [
+            {
+                "questionName": "1",
+                "questionType": "解答题",
+                "avgScore": "3.1",
+                "total": 10,
+                "markedNum": 7,
+                "details": [
+                    { "studentNumber": "000001", "score": 3},
+                    { "studentNumber": "000002", "score": 4},
+                    { "studentNumber": "000004", "score": 2},
+                    { "studentNumber": "000005", "score": 4},
+                    { "studentNumber": "000006", "score": 4},
+                    { "studentNumber": "000007", "score": 5},
+                    { "studentNumber": "000008", "score": 3}
+                ]
             }
         ]
     }
