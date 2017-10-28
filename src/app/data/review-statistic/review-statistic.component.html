@@ -12,9 +12,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
+    <tr *ngFor="let exam of exams">
       <td>
-        <a href="javascript:;">高二语文</a>
+        <a href="javascript:;">{{exam.grades[0].n}}{{exam.subjects[0].n}}</a>
       </td>
       <td>
         <div class="progress clear-margin-bottom">
@@ -23,74 +23,8 @@
           </div>
         </div>
       </td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <a href="javascript:;">高二数学</a>
-      </td>
-      <td>
-        <div class="progress clear-margin-bottom">
-          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-            60%
-          </div>
-        </div>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <a href="javascript:;">高二英语</a>
-      </td>
-      <td>
-        <div class="progress clear-margin-bottom">
-          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-            60%
-          </div>
-        </div>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <a href="javascript:;"></a>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <a href="javascript:;"></a>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <a href="javascript:;"></a>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <a href="javascript:;"></a>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>{{exam.startDate}}</td>
+      <td>{{exam.endDate}}</td>
       <td></td>
     </tr>
     </tbody>
