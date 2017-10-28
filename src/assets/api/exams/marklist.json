@@ -145,9 +145,12 @@
                     { "studentNumber": "000002", "score": 4},
                     { "studentNumber": "000004", "score": 2},
                     { "studentNumber": "000005", "score": 4},
-                    { "studentNumber": "000006", "score": 4},
+                    { "studentNumber": "000006", "score": 3},
                     { "studentNumber": "000007", "score": 5},
-                    { "studentNumber": "000008", "score": 3}
+                    { "studentNumber": "000008", "score": 3},
+                    { "studentNumber": "000009", "score": 4},
+                    { "studentNumber": "000010", "score": 4},
+                    { "studentNumber": "000011", "score": 4}
                 ]
             }
         ]
