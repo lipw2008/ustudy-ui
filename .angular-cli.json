@@ -26,6 +26,7 @@
 		"../node_modules/@swimlane/ngx-datatable/release/index.css",
 		"../node_modules/@swimlane/ngx-datatable/release/themes/material.css",
 		"../node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
+    "../node_modules/chart.js/src/chart.js",
 		"styles.css",
 		"app/plugins/bootstrap/dist/css/bootstrap-theme.min.css",
 		"app/plugins/bootstrapvalidator-master/dist/css/bootstrapValidator.min.css",
