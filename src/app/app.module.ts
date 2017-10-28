@@ -29,6 +29,8 @@ import { TreeviewModule } from 'ngx-treeview';
 import { ClassSelectComponent } from './utils/class-select/class-select.component';
 import { ScheduleDetailsComponent } from './data/schedule-details/schedule-details.component';
 import { ReviewQualityComponent } from './data/review-quality/review-quality.component';
+import { ReviewSearchComponent } from './data/review-search/review-search.component';
+import { ReviewFilterComponent } from './utils/review-filter/review-filter.component';
 
 @NgModule({
   imports: [
@@ -44,6 +46,7 @@ import { ReviewQualityComponent } from './data/review-quality/review-quality.com
       { path: 'data', component: DataComponent, children: [
         { path: 'reviewStatistic', component: ReviewStatisticComponent },
         { path: 'reviewQuality', component: ReviewQualityComponent },
+        { path: 'reviewSearch', component: ReviewSearchComponent },
         { path: 'scheduleDetails', component: ScheduleDetailsComponent }
       ]}
     ], {enableTracing: true}),
@@ -61,7 +64,9 @@ import { ReviewQualityComponent } from './data/review-quality/review-quality.com
     ReviewStatisticComponent,
     ClassSelectComponent,
     ScheduleDetailsComponent,
-    ReviewQualityComponent
+    ReviewQualityComponent,
+    ReviewSearchComponent,
+    ReviewFilterComponent
   ],
   providers: [
     SharedService,

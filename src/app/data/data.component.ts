@@ -51,7 +51,7 @@ export class DataComponent implements OnInit {
       tags: ['0']
     }, {
       text: '阅卷检索',
-      href: 'markingRetrieval.html',
+      href: '#data/reviewSearch',
       tags: ['0']
     }];
 
