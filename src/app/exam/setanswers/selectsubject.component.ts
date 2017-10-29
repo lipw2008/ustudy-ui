@@ -97,7 +97,7 @@ export class SelectSubjectComponent implements OnInit {
 		});
 	}
 
-	getExam() {
+	getExam(evt) {
 		const examId = this.elementRef.nativeElement.querySelector('#examFilterValue').value;
 		this.examId = examId;
 		if(examId !== "0"){

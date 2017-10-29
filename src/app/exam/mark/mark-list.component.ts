@@ -24,8 +24,8 @@ export class MarkListComponent implements OnInit {
 	}
 
 	reload(): void {
-		this._sharedService.makeRequest('GET', 'assets/api/exams/marklist.json', '').then((data: any) => {
-		//this._sharedService.makeRequest('GET', '/exam/marktask/list/', '').then((data: any) => {
+		//this._sharedService.makeRequest('GET', 'assets/api/exams/marklist.json', '').then((data: any) => {
+		this._sharedService.makeRequest('GET', '/exam/marktask/list/', '').then((data: any) => {
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.marks = data;
