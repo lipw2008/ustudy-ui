@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 export class MarkSelectComponent implements OnChanges {
   @Input() marks: any;
   @Input() showQuestions = false;
+  @Input() selectAll = false;
   @Output() selectResult = new EventEmitter();
   schools: any = [{
     'departments': []
@@ -41,8 +42,14 @@ export class MarkSelectComponent implements OnChanges {
   }
 
   filterQuestion() {
-    return _.filter(this.marks, {schoolName: this.selectedSchool, examName: this.selectedExam, grade: this.selectedGrade,
-      subject: this.selectedSubject });
+    let res =  _.filter(this.marks, {schoolName: this.selectedSchool, examName: this.selectedExam});
+    if (this.selectedGrade !== '全部') {
+      res = _.filter(res, {grade: this.selectedGrade})
+    }
+    if (this.selectedSubject !== '全部') {
+      res = _.filter(res, {subject: this.selectedSubject})
+    }
+    return res
   }
 
   getQuestions() {
@@ -61,9 +68,18 @@ export class MarkSelectComponent implements OnChanges {
     console.log('marks ', this.marks);
     this.schools = _.keys(_.groupBy( _.map(this.marks, 'schoolName')));
     this.selectedSchool = _.first(this.schools);
-    this.grades = _.keys(_.groupBy( _.map(this.marks, 'grade')));
+    let res;
+    res = _.keys(_.groupBy( _.map(this.marks, 'grade')));
+    if (this.selectAll) {
+      res = ['全部'].concat(res)
+    }
+    this.grades = res;
     this.selectedGrade = _.first(this.grades);
-    this.subjects = _.keys(_.groupBy( _.map(this.marks, 'subject')));
+    res = _.keys(_.groupBy( _.map(this.marks, 'subject')));
+    if (this.selectAll) {
+      res = ['全部'].concat(res)
+    }
+    this.subjects = res;
     this.selectedSubject = _.first(this.subjects);
     this.exams = _.keys(_.groupBy( _.map(this.marks, 'examName')));
     this.selectedExam = _.first(this.exams);
