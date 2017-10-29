@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {SharedService} from "../../shared.service";
+import {DataService} from '../data.service';
+import { sprintf } from 'sprintf-js';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-schedule-details',
@@ -11,14 +13,13 @@ export class ScheduleDetailsComponent implements OnInit {
   marks: any;
   questionList = [];
 
-  constructor(private _sharedService: SharedService) { }
+  constructor(private _dataService: DataService) { }
 
   ngOnInit() {
     this.reload()
   }
   reload(): void {
-    this._sharedService.makeRequest('GET', 'assets/api/exams/marklist.json', '').then((data: any) => {
-      console.log('data: ' + JSON.stringify(data));
+    this._dataService.getMarks().then((data: any) => {
       this.marks = data;
       for (const mark of this.marks) {
         if (mark.markType === '标准') {
@@ -35,10 +36,22 @@ export class ScheduleDetailsComponent implements OnInit {
   }
 
   getQuestionNames(mark: any ) {
-    let res;
-    res =  mark.summary.map((s) => {
+    return mark.summary.map((s) => {
       return s.questionName
     }).join(',');
-    return res
+  }
+
+  getQuestionProgress(question: any) {
+    return sprintf( '%.2f%%', question.markedNum / question.mark.total * 100)
+  }
+
+  getTeacherProgress(mark) {
+    const progresses = mark.summary.map( (question) => {
+      return question.markedNum / question.mark.total
+    });
+    if (progresses.length === 0) {
+      return '0%'
+    }
+    return sprintf( '%.2f%%', _.sum(progresses) / progresses.length * 100)
   }
 }
