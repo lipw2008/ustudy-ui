@@ -12,6 +12,7 @@ export class DataService {
         for (const mark of data) {
           for (const question of mark.summary) {
             question.teacherName = mark.teacherName;
+            question.mark = mark
           }
         }
         resolve(data)
