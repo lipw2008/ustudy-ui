@@ -69,7 +69,7 @@ export class SelectSubjectComponent implements OnInit {
     }
 
     ngOnInit(): void {
-		this.type = this.route.snapshot.params.type;
+		//this.type = this.route.snapshot.params.type;
 		this.loadExams();
 	}
 

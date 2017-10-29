@@ -12,8 +12,8 @@ import { LoginComponent }  from './welcome/login.component';
 /* Feature Modules */
 import { WelcomeModule } from './welcome/welcome.module';
 
-import { SetAnswersModule } from './examCenter/setanswers/setanswers.module';
-import { TaskAllocationModule } from './examCenter/task/taskallocation.module';
+import { SetAnswersModule } from './exam/setanswers/setanswers.module';
+import { TaskAllocationModule } from './exam/task/taskallocation.module';
 import { StudentModule } from './info/students/student.module';
 import { TeacherModule } from './info/teachers/teacher.module';
 import { SchoolModule } from './info/schools/school.module';
