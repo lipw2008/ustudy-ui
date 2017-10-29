@@ -9,6 +9,7 @@
         "teacherName": "鲁迅",
         "subject": "语文",
         "grade": "高一",
+        "total": 10,
         "markType": "标准",
         "progress": "60%",
         "summary": [
@@ -16,7 +17,7 @@
                 "questionName": "1",
                 "questionType": "解答题",
                 "avgScore": "3.1",
-                "total": 10,
+                "costHours": 8.5,
                 "markedNum": 8,
                 "details": [
                     { "studentNumber": "000001", "score": 3},
@@ -41,6 +42,7 @@
         "teacherName": "鲁迅",
         "subject": "语文",
         "grade": "高一",
+        "total": 20,
         "markType": "标准",
         "progress": "60%",
         "summary": [
@@ -48,7 +50,18 @@
                 "questionName": "2-5",
                 "questionType": "填空题",
                 "avgScore": "4.1",
-                "markedNum": 44
+                "costHours": 8.5,
+                "markedNum": 8,
+                "details": [
+                    { "studentNumber": "000001", "score": 3},
+                    { "studentNumber": "000002", "score": 4},
+                    { "studentNumber": "000003", "score": 4},
+                    { "studentNumber": "000004", "score": 2},
+                    { "studentNumber": "000005", "score": 5},
+                    { "studentNumber": "000006", "score": 4},
+                    { "studentNumber": "000007", "score": 5},
+                    { "studentNumber": "000008", "score": 3}
+                ]
             }
         ]
     },
@@ -62,6 +75,7 @@
         "teacherName": "鲁迅",
         "subject": "语文",
         "grade": "高一",
+        "total": 20,
         "markType": "标准",
         "progress": "60%",
         "summary": [
@@ -69,7 +83,18 @@
                 "questionName": "6",
                 "questionType": "解答题",
                 "avgScore": "3.2",
-                "markedNum": 44
+                "costHours": 8.5,
+                "markedNum": 8,
+                "details": [
+                    { "studentNumber": "000001", "score": 3},
+                    { "studentNumber": "000002", "score": 4},
+                    { "studentNumber": "000003", "score": 4},
+                    { "studentNumber": "000004", "score": 2},
+                    { "studentNumber": "000005", "score": 5},
+                    { "studentNumber": "000006", "score": 4},
+                    { "studentNumber": "000007", "score": 5},
+                    { "studentNumber": "000008", "score": 3}
+                ]
             }
         ]
     },
@@ -83,6 +108,7 @@
         "teacherName": "鲁迅",
         "subject": "语文",
         "grade": "高一",
+        "total": 20,
         "markType": "标准",
         "progress": "60%",
         "summary": [
@@ -90,7 +116,18 @@
                 "questionName": "7",
                 "questionType": "解答题",
                 "avgScore": "8.5",
-                "markedNum": 44
+                "costHours": 8.5,
+                "markedNum": 8,
+                "details": [
+                    { "studentNumber": "000001", "score": 3},
+                    { "studentNumber": "000002", "score": 4},
+                    { "studentNumber": "000003", "score": 4},
+                    { "studentNumber": "000004", "score": 2},
+                    { "studentNumber": "000005", "score": 5},
+                    { "studentNumber": "000006", "score": 4},
+                    { "studentNumber": "000007", "score": 5},
+                    { "studentNumber": "000008", "score": 3}
+                ]
             }
         ]
     },
@@ -104,6 +141,7 @@
         "teacherName": "鲁迅",
         "subject": "语文",
         "grade": "高二",
+        "total": 20,
         "markType": "问题卷",
         "progress": "60%",
         "summary": [
@@ -111,13 +149,35 @@
                 "questionName": "1",
                 "questionType": "解答题",
                 "avgScore": "3.1",
-                "markedNum": 44
+                "costHours": 8.5,
+                "markedNum": 8,
+                "details": [
+                    { "studentNumber": "000001", "score": 3},
+                    { "studentNumber": "000002", "score": 4},
+                    { "studentNumber": "000003", "score": 4},
+                    { "studentNumber": "000004", "score": 2},
+                    { "studentNumber": "000005", "score": 5},
+                    { "studentNumber": "000006", "score": 4},
+                    { "studentNumber": "000007", "score": 5},
+                    { "studentNumber": "000008", "score": 3}
+                ]
             },
             {
                 "questionName": "2-5",
                 "questionType": "填空题",
                 "avgScore": "4.1",
-                "markedNum": 44
+                "costHours": 8.5,
+                "markedNum": 8,
+                "details": [
+                    { "studentNumber": "000001", "score": 3},
+                    { "studentNumber": "000002", "score": 4},
+                    { "studentNumber": "000003", "score": 4},
+                    { "studentNumber": "000004", "score": 2},
+                    { "studentNumber": "000005", "score": 5},
+                    { "studentNumber": "000006", "score": 4},
+                    { "studentNumber": "000007", "score": 5},
+                    { "studentNumber": "000008", "score": 3}
+                ]
             }
         ]
     },
@@ -131,6 +191,7 @@
         "teacherName": "周树人",
         "subject": "语文",
         "grade": "高一",
+        "total": 10,
         "markType": "标准",
         "progress": "60%",
         "summary": [
@@ -138,8 +199,8 @@
                 "questionName": "1",
                 "questionType": "解答题",
                 "avgScore": "3.1",
-                "total": 10,
-                "markedNum": 7,
+                "costHours": 8.5,
+                "markedNum": 10,
                 "details": [
                     { "studentNumber": "000001", "score": 3},
                     { "studentNumber": "000002", "score": 4},
