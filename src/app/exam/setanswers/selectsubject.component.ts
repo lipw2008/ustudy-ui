@@ -36,8 +36,8 @@ export class SelectSubjectComponent implements OnInit {
         { id: '7', subName: '政治', answerSeted: true },
         { id: '8', subName: '历史', answerSeted: false },
         { id: '9', subName: '地理', answerSeted: true }
-      ]    
-},
+      ]
+    },
     {
       id: '11', grade: '高二', subjects: [
         { id: '1', subName: '语文', answerSeted: true },
