@@ -16,13 +16,11 @@ export class MarkComponent implements OnInit {
 
 	//request content
 	reqContent: any = {
-		examId: "",
-		subject: "",
-		grade: "",
-		groupNo: {
-			"start": -1,
-			"end": -1
-		}
+		questions: [
+	//		{"id": "001", "n": "1"}
+		],
+		"startSeq": -1,
+		"endSeq": -1
 	}
 
 	// mark content
@@ -68,25 +66,39 @@ export class MarkComponent implements OnInit {
     }
 
 	ngOnInit(): void {
-		this.reqContent.examId = this.route.snapshot.params.examId;
-		this.reqContent.subject = this.route.snapshot.params.subject;
-		this.reqContent.grade = this.route.snapshot.params.grade;
 		this.questionList = JSON.parse(this.route.snapshot.params.questionList);
 	}
 
     ngAfterViewInit(): void {
 		console.log();
-		this.markQuestions.push(this.route.snapshot.params.questionName);
-		console.log("init mark questions:" + this.markQuestions);
-		$(this.questionSelector.nativeElement).selectpicker('val', this.markQuestions);
+		let question = {"id": "", "n": ""};
+		question.id = this.route.snapshot.params.questionId;
+		question.n = this.route.snapshot.params.questionName;
+		this.markQuestions.push(question);
+		console.log("init mark questions:" + JSON.stringify(this.markQuestions));
+		let questions = [];
+		for (let markQuestion of this.markQuestions) {
+			questions.push(markQuestion.n);
+		}
+		$(this.questionSelector.nativeElement).selectpicker('val', questions);
 		$(this.questionSelector.nativeElement).on('changed.bs.select', {t: this}, this.onQuestionChange);
 		this.reload();
 	}
 
 	onQuestionChange(event: any): void {
 		var t = event.data.t;
-		t.markQuestions = $(t.questionSelector.nativeElement).val();
-		console.log("On question change: " + t.markQuestions);
+		t.markQuestions = [];
+		var questionNames = $(t.questionSelector.nativeElement).val();
+		for(let questionName of questionNames) {
+			for(let question of t.questionList) {
+				if (question.n === questionName) {
+					t.markQuestions.push(question);
+					break;
+				}
+			}
+		}
+		
+		console.log("On question change: " + JSON.stringify(t.markQuestions));
 		// load marks data based on the mark questions.
 		t.reload();
 	}
@@ -97,9 +109,15 @@ export class MarkComponent implements OnInit {
 		- group of papers
 		*/
 		// send the examId, subject, grade and groupNo(optional) to the server side
-		this._sharedService.makeRequest('GET', 'assets/api/exams/multiMark.json', '').then((data: any) => {
-			this.reqContent.groupNo.start = -1;
-			this.reqContent.groupNo.end = -1;
+		for(let markQuestion of this.markQuestions) {
+			let question = {"id": ""};
+			question.id = markQuestion.id;
+			this.reqContent.questions.push(question);
+		}
+
+		this._sharedService.makeRequest('POST', '/exam/marktask/paper/view/', JSON.stringify(this.reqContent)).then((data: any) => {
+		//this._sharedService.makeRequest('GET', 'assets/api/exams/multiMark.json', '').then((data: any) => {
+			this.reqContent.questions = [];
 
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
@@ -109,8 +127,11 @@ export class MarkComponent implements OnInit {
 				alert("没有可阅试卷");
 				return;
 			}
-			if (this.reqContent.groupNo.start === -1 && this.reqContent.groupNo.end === -1) {
+			if (this.reqContent.startSeq === -1 && this.reqContent.endSeq === -1) {
 				this.curPage = this.mark.groups[0].groupNo;
+			} else {
+				this.reqContent.startSeq = -1;
+				this.reqContent.endSeq = -1;
 			}
 
 			if (this.markQuestions.length == 1) {
@@ -243,8 +264,8 @@ export class MarkComponent implements OnInit {
 	previousPage(): void {
 		this.curPage--;
 		if (this.curPage < this.mark.groups[0].groupNo) {
-			this.reqContent.groupNo.start = (this.curPage - 10 < 0 ? 0 : this.curPage - 10);
-			this.reqContent.groupNo.end = this.curPage;
+			this.reqContent.startSeq = (this.curPage - 10 < 0 ? 0 : this.curPage - 10);
+			this.reqContent.endSeq = this.curPage;
 			this.reload();
 		} else {
 			this.updateCanvas();
@@ -297,7 +318,7 @@ export class MarkComponent implements OnInit {
 			}
 		}
 		this.addScore();
-		this._sharedService.makeRequest('POST', '/exam/mark/update', JSON.stringify(this.mark)).then((data: any) => {
+		this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(this.mark)).then((data: any) => {
 			alert("修改成功");
 			this.nextPage();
 		}).catch((error: any) => {
