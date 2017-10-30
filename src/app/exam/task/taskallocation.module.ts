@@ -9,7 +9,8 @@ import { HttpModule } from '@angular/http';
 import { SetObjectivesNoComponent } from './setobjectivesno.component';
 import { TaskAllocationComponent } from './taskallocation.component';
 import { TaskAssignComponent } from './task-assign/task-assign.component';
-import {TaskService} from "app/exam/task/task.service";
+import {TaskService} from 'app/exam/task/task.service';
+import {UtilsModule} from '../../utils/utils.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import {TaskService} from "app/exam/task/task.service";
     ]),
     ReactiveFormsModule,
     FormsModule,
+    UtilsModule,
     HttpModule
   ],
   declarations: [
