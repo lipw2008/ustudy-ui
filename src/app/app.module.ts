@@ -35,6 +35,9 @@ import { ReviewQualityComponent } from './data/review-quality/review-quality.com
 import { ReviewSearchComponent } from './data/review-search/review-search.component';
 import { ReviewFilterComponent } from './utils/review-filter/review-filter.component';
 import { SubjectFilterPipe } from './data/review-statistic/subject-filter.pipe';
+import { ReviewComponent } from './data/review/review.component';
+import { QuestionsAnalysisComponent } from './data/questions-analysis/questions-analysis.component';
+import { AnswerFilterComponent } from './utils/answer-filter/answer-filter.component';
 
 @NgModule({
   imports: [
@@ -49,10 +52,13 @@ import { SubjectFilterPipe } from './data/review-statistic/subject-filter.pipe';
       { path: 'login', component: LoginComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: 'data', component: DataComponent, children: [
-        { path: 'reviewStatistic', component: ReviewStatisticComponent },
-        { path: 'reviewQuality', component: ReviewQualityComponent },
-        { path: 'reviewSearch', component: ReviewSearchComponent },
-        { path: 'scheduleDetails', component: ScheduleDetailsComponent }
+        { path: 'review', component: ReviewComponent, children: [
+          { path: 'reviewStatistic', component: ReviewStatisticComponent },
+          { path: 'reviewQuality', component: ReviewQualityComponent },
+          { path: 'reviewSearch', component: ReviewSearchComponent },
+          { path: 'scheduleDetails', component: ScheduleDetailsComponent }
+        ] },
+        { path: 'questionsAnalysis', component: QuestionsAnalysisComponent },
       ]}
     ], {enableTracing: true}),
     FormsModule,
@@ -72,7 +78,10 @@ import { SubjectFilterPipe } from './data/review-statistic/subject-filter.pipe';
     ReviewQualityComponent,
     ReviewSearchComponent,
     ReviewFilterComponent,
-    SubjectFilterPipe
+    SubjectFilterPipe,
+    ReviewComponent,
+    QuestionsAnalysisComponent,
+    AnswerFilterComponent
   ],
   providers: [
     SharedService,

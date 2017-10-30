@@ -62,8 +62,8 @@
 							    <ng-container *ngIf="_sharedService.userRole!= ''">
                                     <ul class="dropdown-menu" aria-labelledby="dLabel">
                                         <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''">
-                                            <a [routerLink]="['/data/reviewStatistic']">阅卷统计</a></li>
-                                        <li><a href="#">试卷分析</a></li>
+                                            <a [routerLink]="['/data/review/reviewStatistic']">阅卷统计</a></li>
+                                        <li><a [routerLink]="['/data/questionsAnalysis']">试卷分析</a></li>
                                         <li><a href="#">成绩统计</a></li>
                                         <li><a href="#">报表下载</a></li>
                                     </ul>

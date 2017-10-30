@@ -1,0 +1,58 @@
+{
+  "id": "P001",
+  "examId": "E001",
+  "examName": "16-17学年上学期期末考试",
+  "subject": "语文",
+  "grade": "高一",
+  "studentId": "S001",
+  "studentName": "小李",
+  "score": 22,
+  "answers": [
+    { "questionName": "1", "type": "客观题", "answer": "A", "fullScore": 10, "score": 10},
+    { "questionName": "2-5",
+      "type": "填空题",
+      "fullScore": 8,
+      "score": 4,
+      "steps": [
+        {"questionName": "2", "fullScore": 2, "score": 0},
+        {"questionName": "3", "fullScore": 2, "score": 2},
+        {"questionName": "4", "fullScore": 2, "score": 2},
+        {"questionName": "5", "fullScore": 2, "score": 0}
+      ],
+      "answerImg": "",
+      "paperImg": "",
+      "markImg": "",
+      "questionImg": "",
+      "stdAnswerImg": "",
+      "marks" : {
+        "firstMarkId": "M001",
+        "secondMarkId": "",
+        "finalMarkId": "M001"
+      },
+      "status": "complete"
+    },
+    { "questionName": "6",
+      "type": "解答题",
+      "fullScore": 10,
+      "score": 8,
+      "steps": [
+        {"questionName": "6.1", "fullScore": 5, "score": 5},
+        {"questionName": "6.2", "fullScore": 5, "score": 3}
+      ],
+      "answerImg": "",
+      "paperImg": "",
+      "markImg": "",
+      "questionImg": "",
+      "stdAnswerImg": "",
+      "marks" : {
+        "firstMarkId": "",
+        "secondMarkId": "",
+        "finalMarkId": ""
+      },
+      "status": "complete"
+    }
+  ],
+  "type": "标准",
+  "status": "inprogress",
+  "img": ""
+}
