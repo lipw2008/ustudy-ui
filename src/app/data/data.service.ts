@@ -6,6 +6,14 @@ export class DataService {
 
   constructor(private _sharedService: SharedService) { }
 
+  getAnswers() {
+    return new Promise( (resolve, reject) => {
+      this._sharedService.makeRequest('GET', 'assets/api/exams/quesanswerlist.json', '').then((data: any) => {
+        resolve(data)
+      })
+    })
+  }
+
   getMarks() {
     return new Promise( (resolve, reject) => {
       this._sharedService.makeRequest('GET', 'assets/api/exams/marklist.json', '').then((data: any) => {
