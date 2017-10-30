@@ -12,10 +12,11 @@ export class TaskAssignComponent implements OnInit {
   gradeId: string;
   subjectId: string;
   seted: boolean;
-  school: any;
   questions: any;
   assignType = '平均';
   markType = '单评';
+  grade: any;
+  selectedQuestion: any;
 
   constructor(private _taskService: TaskService, private route: ActivatedRoute) { }
 
@@ -24,15 +25,15 @@ export class TaskAssignComponent implements OnInit {
     this.gradeId = this.route.snapshot.params.gradeId;
     this.subjectId = this.route.snapshot.params.subjectId;
     this.seted = this.route.snapshot.params.seted;
-    const schoolId = 1;
-    this._taskService.getSchool(schoolId).then((data) => {
-      this.school = data
+    this._taskService.getGrade(this.gradeId).then((data) => {
+      this.grade = data
     });
-    this._taskService.getQuestions(schoolId).then((data) => {
+    this._taskService.getQuestions(this.gradeId).then((data) => {
       this.questions = data
     })
   }
 
   setSelectedQuestion($event: Event) {
+    console.log(1)
   }
 }

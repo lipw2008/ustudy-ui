@@ -1,4 +1,4 @@
-<div class="container container-sm">
+<div class="container container-sm container-fluid">
   <div class="table-responsive">
     <table class="table">
       <tbody>
@@ -22,7 +22,7 @@
           </div>
         </td>
         <td>
-          {{selectedQuestion.type}}
+          {{selectedQuestion?.type}}
         </td>
       </tr>
       <tr>
@@ -62,5 +62,6 @@
 
       </tbody>
     </table>
+    <teacher-selector [grade]="grade" *ngIf="selectedQuestion"></teacher-selector>
   </div>
 </div>
