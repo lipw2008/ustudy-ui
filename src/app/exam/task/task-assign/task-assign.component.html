@@ -1,0 +1,66 @@
+<div class="container container-sm">
+  <div class="table-responsive">
+    <table class="table">
+      <tbody>
+      <tr>
+        <td>
+          <div class="text">
+            <p><span>题号：</span></p>
+          </div>
+        </td>
+        <td>
+          <select class="form-control" [(ngModel)]="selectedQuestion" (change)="setSelectedQuestion($event)">
+						<option value="0" selected>选择考题</option>
+						<option *ngFor="let question of questions" [ngValue]="question">{{question.questionName}}</option>
+					</select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="text">
+            <p><span>题型：</span></p>
+          </div>
+        </td>
+        <td>
+          {{selectedQuestion.type}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="text">
+            <p><span>任务分配方式：</span></p>
+          </div>
+        </td>
+        <td>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'平均'" (click)="assignType='平均'" [checked]="assignType=='平均'"> 平均
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'动态'" (click)="assignType='动态'" [checked]="assignType=='动态'" disabled> 动态
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="text">
+            <p><span>阅卷模式：</span></p>
+          </div>
+        </td>
+        <td>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'单评'" (click)="markType='单评'" [checked]="markType=='单评'"> 单评
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'双评'" (click)="markType='双评'" [checked]="markType=='双评'"> 双评
+          </label>
+          <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+          <span aria-hidden="true" class="glyphicon glyphicon-time pull-right" style=" ">
+            <input style=" width: 40%; " type="number" title="阅卷时间设置（设置最短时间，限定老师的阅卷速度，单位为秒）">
+          </span>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>

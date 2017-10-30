@@ -8,6 +8,8 @@ import { HttpModule } from '@angular/http';
 
 import { SetObjectivesNoComponent } from './setobjectivesno.component';
 import { TaskAllocationComponent } from './taskallocation.component';
+import { TaskAssignComponent } from './task-assign/task-assign.component';
+import {TaskService} from "app/exam/task/task.service";
 
 @NgModule({
   imports: [
@@ -15,6 +17,7 @@ import { TaskAllocationComponent } from './taskallocation.component';
     NgxDatatableModule,
     RouterModule.forChild([
       { path: 'setobjectivesno', component: SetObjectivesNoComponent },
+      { path: 'taskassign', component: TaskAssignComponent },
       { path: 'taskallocation', component: TaskAllocationComponent }
     ]),
     ReactiveFormsModule,
@@ -23,8 +26,9 @@ import { TaskAllocationComponent } from './taskallocation.component';
   ],
   declarations: [
     SetObjectivesNoComponent,
-    TaskAllocationComponent
+    TaskAllocationComponent,
+    TaskAssignComponent
   ],
-  providers: []
+  providers: [TaskService]
 })
 export class TaskAllocationModule { }

@@ -69,6 +69,7 @@ export class SelectSubjectComponent implements OnInit {
       ]
     }
   ];
+  private examSelected: boolean;
 
   constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
 
@@ -104,13 +105,13 @@ export class SelectSubjectComponent implements OnInit {
   }
 
   getExam(evt) {
-    const examId = this.elementRef.nativeElement.querySelector('#examFilterValue').value;
+    const examId = evt.target.value;
     this.examId = examId;
     if (examId !== "0") {
       this.loadExamSubjects(examId);
-      this.elementRef.nativeElement.querySelector('#editGradeDetailsForm').style.display = '';
+      this.examSelected = true;
     } else {
-      this.elementRef.nativeElement.querySelector('#editGradeDetailsForm').style.display = 'none';
+      this.examSelected = false;
     }
   }
 
@@ -119,10 +120,12 @@ export class SelectSubjectComponent implements OnInit {
   }
 
   setTasks(gradeId, subjectId, seted) {
-    if (this.isCreated) {
-      this.router.navigate(['taskallocation', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
-    } else {
-      this.router.navigate(['setobjectivesno', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
-    }
+    // XXX: skip this step for now
+    // if (this.isCreated) {
+    //   this.router.navigate(['taskallocation', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
+    // } else {
+    //   this.router.navigate(['setobjectivesno', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
+    // }
+    this.router.navigate(['/taskassign', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
   }
 }
