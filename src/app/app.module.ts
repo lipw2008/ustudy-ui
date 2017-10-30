@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppComponent }  from './app.component';
 import { WelcomeComponent }  from './welcome/welcome.component';
@@ -11,8 +12,8 @@ import { LoginComponent }  from './welcome/login.component';
 /* Feature Modules */
 import { WelcomeModule } from './welcome/welcome.module';
 
-import { SetAnswersModule } from './examCenter/setanswers/setanswers.module';
-import { TaskAllocationModule } from './examCenter/task/taskallocation.module';
+import { SetAnswersModule } from './exam/setanswers/setanswers.module';
+import { TaskAllocationModule } from './exam/task/taskallocation.module';
 import { StudentModule } from './info/students/student.module';
 import { TeacherModule } from './info/teachers/teacher.module';
 import { SchoolModule } from './info/schools/school.module';
@@ -44,7 +45,8 @@ import { SharedService } from './shared.service';
     AppComponent
   ],
   providers: [
-    SharedService
+    SharedService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [ AppComponent ]
 })

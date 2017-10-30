@@ -50,10 +50,8 @@
                                     <ul class="dropdown-menu" aria-labelledby="dLabel">
                                         <li *ngIf="_sharedService.userRole!=='学科组长'&&_sharedService.userRole!=='备课组长'&&_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">模板制作</a></li>
                                         <li *ngIf="_sharedService.userRole!=='学科组长'&&_sharedService.userRole!=='备课组长'&&_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">答卷扫描</a></li>
-                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="selectsubject;type=answers">答案设置</a></li>
-                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="selectsubject;type=task">任务分配</a></li>
-                                        <li><a href="selectsubject;type=answers">答案设置</a></li>
-                                        <li><a href="selectsubject;type=task">任务分配</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a [routerLink]="['/selectsubject;type=answers']">答案设置</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a [routerLink]="['/selectsubject;type=task']">任务分配</a></li>
                                         <li><a [routerLink]="['/markList']">网络阅卷</a></li>
                                         <li><a href="#">答题卷中心</a></li>
                                     </ul>
@@ -100,7 +98,7 @@
 		                </ul>
                         <ul class="nav navbar-nav navbar-right navbar-right-box hidden-xs hidden-sm">
                             <ng-container *ngIf="_sharedService.userName===''">
-                                <li class="dropdown">
+                                <li class="dropdown" (click)="checkUserStatus()">
                                     <a href="javascript:;" role="button" aria-haspopup="false" aria-expanded="false"><i class="iconfont iconfont-user"></i> 未登录 <span class="caret"></span></a>
                                 </li>
                             </ng-container>
@@ -246,7 +244,7 @@
             //验证修改密码
         $('#modifyPasswordForm').bootstrapValidator();
 	    });
-		
+
 		//添加学生信息
         $("#addStudentInfoBtn").click(function(){
             $("#addStudentInfoModal").modal("show");
@@ -257,7 +255,7 @@
         $(':reset').click(function() {
             $form.data('bootstrapValidator').resetForm(true);
         });
-			
+
 	    //]]>
 	    </script>
 	</body>

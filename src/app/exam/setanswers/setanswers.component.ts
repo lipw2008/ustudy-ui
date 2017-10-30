@@ -84,7 +84,7 @@ export class SetAnswersComponent implements OnInit {
 	}
 
 	loaAlldSubjects() {
-		this._sharedService.makeRequest('GET', 'exam/getExams/0', '').then((data: any) => {
+		this._sharedService.makeRequest('GET', '/api/exam/getExams/0', '').then((data: any) => {
 			console.log("data: " + JSON.stringify(data));
 			if (data.success) {
 				this.allsubjects = data.data; 
