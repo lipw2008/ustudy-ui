@@ -38,4 +38,13 @@ export class TaskService {
       })
     })
   }
+
+  getGrade(gradeId:any) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', 'assets/api/schools/grade.json', '').then((data: any) => {
+        // resolve(data.data)
+        resolve(data)
+      })
+    })
+  }
 }
