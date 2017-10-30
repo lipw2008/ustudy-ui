@@ -42,7 +42,7 @@ export class LoginComponent{
 
 		console.log("reqContent:" + this.reqContent.data);
 
-		this._sharedService.makeRequest('POST', '/info/login', this.reqContent).then((data: any) => {
+		this._sharedService.makeRequest('POST', '/api/login', this.reqContent).then((data: any) => {
 			alert("登录成功");
 			this._sharedService.userName = data.userName ===undefined ? '' : data.userName;
 			this._sharedService.userRole = data.role === undefined ? '' : data.role;

@@ -2,316 +2,309 @@ import { Component, OnInit, AfterViewInit, ViewChild, Renderer2 }  from '@angula
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from '../../shared.service';
 
+declare var $: any;
+
 @Component({
     templateUrl: 'mark.component.html'
 })
 
 export class MarkComponent implements OnInit {
-
-	/***** Model *****/
-
-	markId: string;
-	mark: any;
-	questionList: any;
-	markQuestions: any = [];
-
-	/***** View *****/
-	@ViewChild('markCanvas') markCanvas;
+	//Dom elements
+	@ViewChild('questionSelector') questionSelector;
 	@ViewChild('markContainer') markContainer;
 	@ViewChild('rootContainer') rootContainer;
 
-	rootContainerElement: any;
-	container: any;
-	canvas: any;
-	cxt: any;
-	img: any;
+	//request content
+	reqContent: any = {
+		examId: "",
+		subject: "",
+		grade: "",
+		groupNo: {
+			"start": -1,
+			"end": -1
+		}
+	}
 
-	// hidden canvas
-	hCanvas: any;
-	hCxt: any;
+	// mark content
+	mark: any = {
+		progress: "0%",
+		groups: [
+			{
+				papers: [
 
-	editMode: string = 'None';
+				]
+			}
+		]
+	};
 
-	// Draw Line
-	isDrawingLine: boolean = false;
+	// question selector
+	questionList: any;
+	markQuestions: any = [];
+	
+	// score board
+	displayScoreBoard: boolean = true;
+	fullScore: string = "0";
+	scoreList = [];
+	scoreUnit = "1";
+	autoSubmit = false;
 
-	// Draw Circle
-	circleBeginX = 0;
-	circleBeginY = 0;
+	// page controller
+	curPage: number = 0;
+	pageCount: number = 0; 
+
+	// canvas
+	editMode: string = "None";
+	score: string = "";
+	score2: string = "";
+	score3: string = "";
+	imgPath : string;
+	imgPath2: string = '';
+	imgPath3: string = '';
+	markCanvas2Display: string = 'none';
+	markCanvas3Display: string = 'none';
 
     constructor(private _sharedService: SharedService, private renderer: Renderer2, private route: ActivatedRoute) {
 
     }
 
-    ngOnInit(): void {
-    	this.markId = this.route.snapshot.params.markId;
+	ngOnInit(): void {
+		this.reqContent.examId = this.route.snapshot.params.examId;
+		this.reqContent.subject = this.route.snapshot.params.subject;
+		this.reqContent.grade = this.route.snapshot.params.grade;
 		this.questionList = JSON.parse(this.route.snapshot.params.questionList);
-		let questionNum = this.route.snapshot.params.questionNum;
-		let startNum = this.route.snapshot.params.startNum;
-		let endNum = this.route.snapshot.params.endNum;
-		this.markQuestions.push(questionNum === '' ? startNum + '-' + endNum : questionNum);
+	}
+
+    ngAfterViewInit(): void {
+		console.log();
+		this.markQuestions.push(this.route.snapshot.params.questionName);
+		console.log("init mark questions:" + this.markQuestions);
+		$(this.questionSelector.nativeElement).selectpicker('val', this.markQuestions);
+		$(this.questionSelector.nativeElement).on('changed.bs.select', {t: this}, this.onQuestionChange);
+		this.reload();
+	}
+
+	onQuestionChange(event: any): void {
+		var t = event.data.t;
+		t.markQuestions = $(t.questionSelector.nativeElement).val();
+		console.log("On question change: " + t.markQuestions);
+		// load marks data based on the mark questions.
+		t.reload();
 	}
 
 	reload(): void {
-		this._sharedService.makeRequest('GET', 'assets/api/exams/mark.json', '').then((data: any) => {
+		/*load the mark information based on markQuestions
+		- total progress %
+		- group of papers
+		*/
+		// send the examId, subject, grade and groupNo(optional) to the server side
+		this._sharedService.makeRequest('GET', 'assets/api/exams/multiMark.json', '').then((data: any) => {
+			this.reqContent.groupNo.start = -1;
+			this.reqContent.groupNo.end = -1;
+
 			//cache the list
 			console.log("data: " + JSON.stringify(data));
 			this.mark = data;
-			this.loadPaper(this.mark.papers[0]);
+			this.pageCount = this.mark.groups.length;
+			if (this.pageCount <= 0) {
+				alert("没有可阅试卷");
+				return;
+			}
+			if (this.reqContent.groupNo.start === -1 && this.reqContent.groupNo.end === -1) {
+				this.curPage = this.mark.groups[0].groupNo;
+			}
+
+			if (this.markQuestions.length == 1) {
+				this.markCanvas2Display = 'none';
+				this.markCanvas3Display = 'none';
+			}
+			if (this.markQuestions.length >= 2) {
+				this.markCanvas2Display = 'block';
+			}
+			if (this.markQuestions.length == 3) {
+				this.markCanvas3Display = 'block';
+			}
+			this.updateCanvas();
+			this.updateFullScore();
 		}).catch((error: any) => {
 			console.log(error.status);
 			console.log(error.statusText);
 		});
 	}	
-	
-	onQuestionChange(event): void {
-		console.log("On question change: " + this.markQuestions);
-		// load marks data based on the mark questions.
-	}
-	
-	ngAfterViewInit(): void {
-		this.container = this.markContainer.nativeElement;
-		this.canvas = this.markCanvas.nativeElement;
-		this.rootContainerElement = this.rootContainer.nativeElement;
-		console.log(this.canvas);
-		
-		// Bind events
 
-    	this.renderer.listen(this.canvas, 'mousedown', (evt) => {
-    		this.mouseDown(evt);
-    	});
-    	
-    	this.renderer.listen(this.canvas, 'mouseup', (evt) => {
-    		this.mouseUp(evt);
-    	});
-    	
-    	this.renderer.listen(this.canvas, 'mousemove', (evt) => {
-    		this.mouseMove(evt);
-    	});
-
-    	this.renderer.listen(this.canvas, 'mouseout', (evt) => {
-    		this.mouseOut(evt);
-    	});
-
-		this.cxt = this.canvas.getContext("2d");
-
-		// hidden canvas
-		this.hCanvas = document.createElement("canvas");
-		this.hCxt = this.hCanvas.getContext("2d");
-
-		this.reload();
-	}
-
-	loadPaper(paper): void {
-
-		console.log("paper: " + JSON.stringify(paper));
-		this.img = new Image();
-
-		let t = this;
-		this.img.onload = function() {
-			t.cxt.canvas.width = t.container.offsetWidth;
-			t.cxt.canvas.height = t.img.height * (t.cxt.canvas.width/t.img.width);
-			t.cxt.drawImage(t.img, 0, 0, t.img.width, t.img.height, 0, 0, t.cxt.canvas.width, t.cxt.canvas.height);
-			//hidden canvas
-			t.hCxt.canvas.width = t.cxt.canvas.width;
-			t.hCxt.canvas.height = t.cxt.canvas.height;
+	updateCanvas(): void {
+		console.log("update canvas for page: " + this.curPage);
+		for (let group of this.mark.groups) {
+			if (group.groupNo === this.curPage) {
+				this.imgPath = group.papers[0].paperImg;
+				if (this.markQuestions.length >= 2) {
+					this.imgPath2 = group.papers[1].paperImg;
+				}
+				if (this.markQuestions.length == 3) {
+					this.imgPath3 = group.papers[2].paperImg;
+				}
+			}
 		}
-		this.img.src = paper.paperImg;
-
-		// fill paper score information in the panel
+		console.log(this.imgPath + this.imgPath2 + this.imgPath3);
+		this.score = this.score2 = this.score3 = "阅卷老师：" + this.mark.teacherId + " 得分：";
 	}
 
-	clear(): void {
-		let t = this;
-		this.img.onload = function() {
-			t.cxt.canvas.width = t.container.offsetWidth;
-			t.cxt.canvas.height = t.img.height * (t.cxt.canvas.width/t.img.width);
-			t.cxt.drawImage(t.img, 0, 0, t.img.width, t.img.height, 0, 0, t.cxt.canvas.width, t.cxt.canvas.height);
-			//hidden canvas
-			t.hCxt.canvas.width = t.cxt.canvas.width;
-			t.hCxt.canvas.height = t.cxt.canvas.height;
-		}
-		this.img.src = 'assets/api/exams/exam01.png';
-	}
-
-	mouseDown(evt): void {
-		switch(this.editMode) {
-			case 'Line':
-				this.cxt.beginPath();
-				this.cxt.moveTo(evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY);
-				
-				//hidden canvas
-				this.hCxt.beginPath();
-				this.hCxt.moveTo(evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY);
-				
-				this.isDrawingLine = true;
-				break;
-			case 'Circle':
-				this.cxt.beginPath();
-
-				//hidden canvas
-				this.hCxt.beginPath();
-
-				this.circleBeginX = evt.offsetX == undefined? evt.layerX: evt.offsetX;
-				this.circleBeginY = evt.offsetY == undefined? evt.layerY: evt.offsetY;
-				break;
-			case 'Text':
-				let textbox = document.createElement("input");
-				textbox.type = "text";
-				textbox.style.position = "absolute";
-				textbox.style.left = evt.clientX + "px";
-				textbox.style.top = evt.clientY + "px";
-				textbox.style.display = "inline";
-				textbox.setAttribute("autofocus", "");
-				let tEvt = evt;
-				this.renderer.listen(textbox, 'keyup', (evt) => {
-    				if(evt.keyCode == 13) {
-    					console.log(textbox.value);
-    					this.cxt.font = '36px serif';
-    					this.cxt.fillStyle = "red";
-    					this.cxt.fillText(textbox.value, (tEvt.offsetX == undefined || tEvt.offsetX == 0) ? tEvt.layerX: tEvt.offsetX, 
-						((tEvt.offsetY == undefined || tEvt.offsetY == 0) ? tEvt.layerY: tEvt.offsetY) + 36);
-
-						//hidden canvas
-    					this.hCxt.font = '36px serif';
-    					this.hCxt.fillStyle = "red";
-    					this.hCxt.fillText(textbox.value, (tEvt.offsetX == undefined || tEvt.offsetX == 0) ? tEvt.layerX: tEvt.offsetX, 
-						((tEvt.offsetY == undefined || tEvt.offsetY == 0) ? tEvt.layerY: tEvt.offsetY) + 36);
-
-						console.log(tEvt.layerX);
-						console.log(tEvt.offsetX);
-						textbox.parentNode.removeChild(textbox);
+	updateFullScore(): void {
+		console.log("before update full score: " + this.fullScore);
+		console.log("before update full score - mark: " + JSON.stringify(this.mark));
+		for (let group of this.mark.groups) {
+			if (group.groupNo === this.curPage) {
+				for(let paper of group.papers) {
+					if (paper.isProblemPaper === true) {
+						continue;
 					}
-    			});
-				this.rootContainerElement.appendChild(textbox);
-				textbox.focus();
-				console.log(textbox);
-				console.log("x: " + evt.clientX + " y: " + evt.clientY);
-				// console.log(this.canvas.offsetLeft);
-				// console.log(evt.offsetX == undefined? evt.layerX: evt.offsetX);
-				break;
-			case 'Help':
-				this.img = new Image();
-				let t = this;
-				this.img.onload = function() {
-					t.cxt.drawImage(t.img, evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY, t.img.width, t.img.height);
-
-					//hidden canvas
-					t.hCxt.drawImage(t.img, evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY, t.img.width, t.img.height);
+					if (paper.steps.length === 0 && paper.score === "") {
+						this.fullScore = paper.fullScore;
+						console.log("after update full score: " + this.fullScore);
+						this.updateScoreBoard();
+						return;
+					} else if (paper.steps.length > 0) {
+						for(let step of paper.steps) {
+							if (step.score === "") {
+								this.fullScore = step.fullScore;
+								console.log("after update full score: " + this.fullScore);
+								this.updateScoreBoard();
+								return;
+							} 
+						}
+					}
 				}
-				this.img.src = 'assets/images/icon-help.png';
-				break;
-			case 'Like':
-				this.img = new Image();
-				t = this;
-				this.img.onload = function() {
-					t.cxt.drawImage(t.img, evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY, t.img.width, t.img.height);
-
-					//hidden canvas
-					t.hCxt.drawImage(t.img, evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY, t.img.width, t.img.height);
-				}
-				this.img.src = 'assets/images/icon-like.png';
-				break;
-			default:
-				console.log("x: " + evt.clientX + " y: " + evt.clientY);
-				//Do Nothing
+			}
+		}
+		if(this.autoSubmit === true) {
+			this.submit();
 		}
 	}
 
-	mouseUp(evt): void {
-		switch(this.editMode) {
-			case 'Line':
-				if (this.isDrawingLine === true) {
-					this.isDrawingLine = false;
-					this.cxt.lineTo(evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY);
-					this.cxt.lineWidth = 3;
-					this.cxt.strokeStyle = "red";
-					this.cxt.stroke();
-					this.cxt.closePath();
+	setScoreUnit(unit): void {
+		this.scoreUnit = unit;
+		this.updateScoreBoard();
+	}
 
-					//hidden canvas
-					this.hCxt.lineTo(evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY);
-					this.hCxt.lineWidth = 3;
-					this.hCxt.strokeStyle = "red";
-					this.hCxt.stroke();
-					this.hCxt.closePath();
-					
+	updateScoreBoard(): void {
+		this.scoreList = [];
+		var score = Number(this.fullScore); 
+		var unit = parseFloat(this.scoreUnit);
+		for (var i=0; i<=score; i+=unit) {
+			this.scoreList.push(i);
+		}
+		console.log(this.scoreList);
+	}
+
+	setFullScore(): void {
+		this.setScore(this.fullScore);
+	}
+
+	setZeroScore(): void {
+		this.setScore("0");
+	}
+
+	setScore(score: string): void {
+		for (let group of this.mark.groups) {
+			if (group.groupNo === this.curPage) {
+				for(let paper of group.papers) {
+					if (paper.isProblemPaper === true) {
+						continue;
+					}
+					if (paper.steps.length === 0 && paper.score === "") {
+						if (score !== 'PROBLEM') {
+							paper.score = score;
+						} else {
+							paper.isProblemPaper = true;
+						}
+						this.updateFullScore();
+						return;
+					} else if (paper.steps.length > 0) {
+						for(let step of paper.steps) {
+							if (step.score === "") {
+								if (score !== 'PROBLEM') {
+									step.score = score;
+								} else {
+									paper.isProblemPaper = true;
+								}
+								this.updateFullScore();
+								return;
+							} 
+						}
+					}
 				}
-				break;
-			case 'Circle':
-				let circleEndX = 0;
-				let circleEndY = 0;
-				// Deal with drawing from right to left
-				if (this.circleBeginX > (evt.offsetX == undefined? evt.layerX: evt.offsetX)) {
-					circleEndX = this.circleBeginX;
-					this.circleBeginX = evt.offsetX == undefined? evt.layerX: evt.offsetX;
+			}
+		}
+	}
+
+	firstPage(): void {
+
+	}
+
+	previousPage(): void {
+		this.curPage--;
+		if (this.curPage < this.mark.groups[0].groupNo) {
+			this.reqContent.groupNo.start = (this.curPage - 10 < 0 ? 0 : this.curPage - 10);
+			this.reqContent.groupNo.end = this.curPage;
+			this.reload();
+		} else {
+			this.updateCanvas();
+			this.updateFullScore();
+		}
+	}
+
+	nextPage(): void {
+		this.curPage++;
+		if (this.curPage > this.mark.groups[this.pageCount - 1].groupNo) {
+			this.reload();
+		} else {
+			this.updateCanvas();
+			this.updateFullScore();
+		}
+	}
+
+	lastPage(): void {
+
+	}
+
+	submit(): void {
+		for (let group of this.mark.groups) {
+			if (group.groupNo === this.curPage) {
+				if (group.papers[0].score !== "") {
+					this.score += group.papers[0].score + "/" + group.papers[0].fullScore;
 				} else {
-					circleEndX = evt.offsetX == undefined? evt.layerX: evt.offsetX;
+					for (let step of group.papers[0].steps) {
+						this.score += step.score + "/" + step.fullScore + " ";
+					}
 				}
-				// Deal with drawing from bottom to top
-				if (this.circleBeginY > (evt.offsetY == undefined? evt.layerY: evt.offsetY)) {
-					circleEndY = this.circleBeginY;
-					this.circleBeginY = evt.offsetY == undefined? evt.layerY: evt.offsetY;
-				} else {
-					circleEndY = evt.offsetY == undefined? evt.layerY: evt.offsetY;
+				if (this.markQuestions.length >= 2) {
+					if (group.papers[1].score !== "") {
+						this.score2 += group.papers[1].score + "/" + group.papers[1].fullScore;
+					} else {
+						for (let step of group.papers[1].steps) {
+							this.score2 += step.score + "/" + step.fullScore + " ";
+						}
+					}
 				}
-				let calX = circleEndX - this.circleBeginX;
-				let calY = circleEndY - this.circleBeginY;
-				let r = Math.pow(calX * calX + calY * calY, 0.5)/2;
-				let a = r;
-				let b = r/2;
-				let centerX = this.circleBeginX + calX/2;
-				let centerY = this.circleBeginY + calY/2;
-				let radioX = a/r;
-				let radioY = b/r;
-				this.cxt.save();
-				this.cxt.scale(radioX, radioY);
-				this.cxt.beginPath();
-				this.cxt.lineWidth = 3;
-				this.cxt.strokeStyle = "red";
-				this.cxt.moveTo((centerX+a)/radioX, centerY/radioY);
-				this.cxt.arc(centerX/radioX, centerY/radioY, r, 0, 2*Math.PI);
-				this.cxt.closePath();
-				this.cxt.stroke();
-				this.cxt.restore();
-
-				// hidden canvas
-				this.hCxt.save();
-				this.hCxt.scale(radioX, radioY);
-				this.hCxt.beginPath();
-				this.hCxt.lineWidth = 3;
-				this.hCxt.strokeStyle = "red";
-				this.hCxt.moveTo((centerX+a)/radioX, centerY/radioY);
-				this.hCxt.arc(centerX/radioX, centerY/radioY, r, 0, 2*Math.PI);
-				this.hCxt.closePath();
-				this.hCxt.stroke();
-				this.hCxt.restore();
-
-				break;
-			default:
-				//Do Nothing
-		}
-	}
-
-	mouseMove(evt): void {
-		switch(this.editMode) {
-			case 'Line':
-				break;
-			default:
-				//Do Nothing
-		}
-	}
-
-	mouseOut(evt): void {
-		switch(this.editMode) {
-			case 'Line':
-				if (this.isDrawingLine === true) {
-					this.mouseUp(evt);
+				if (this.markQuestions.length == 3) {
+					if (group.papers[2].score !== "") {
+						this.score3 += group.papers[2].score + "/" + group.papers[2].fullScore;
+					} else {
+						for (let step of group.papers[2].steps) {
+							this.score3 += step.score + "/" + step.fullScore + " ";
+						}
+					}
 				}
-				break;
-			default:
-				//Do Nothing
+			}
 		}
+		this.addScore();
+		this._sharedService.makeRequest('POST', '/exam/mark/update', JSON.stringify(this.mark)).then((data: any) => {
+			alert("修改成功");
+			this.nextPage();
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+			alert("修改失败！");
+		});
 	}
 
 	drawLine(): void {
@@ -334,58 +327,23 @@ export class MarkComponent implements OnInit {
 		this.editMode = 'Help';
 	}
 
-	saveImage(): void {
-		let dataUrl = this.canvas.toDataURL("image/png");
-		window.open(dataUrl);
-		let hDataUrl = this.hCanvas.toDataURL("image/png");
-		window.open(hDataUrl);
-	}
-
-	addImage(): void {
-		this.img = new Image();
-		let t = this;
-		this.img.onload = function() {
-			// If the size of image is small, scale it to fit the container.
-			console.log("image width:" + t.img.width + " container.width:" + t.container.style.width);
-			// TODO: change 800 to real time container width later.
-			t.cxt.drawImage(t.img, 0, 150, t.img.width, t.img.height-150, 0, 150, t.cxt.canvas.width, t.cxt.canvas.height-150);
-		}
-		this.img.src = 'assets/api/exams/hidden.png';
-	}
-
 	addBestAnswer(): void {
-		this.img = new Image();
-		let t = this;
-		this.img.onload = function() {
-			t.cxt.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-			//hidden canvas
-			t.hCxt.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-		}
-		this.img.src = 'assets/images/icon-bestanswer.png';
+		this.editMode = "BestAnswer";
 	}
 
 	addFAQ(): void {
-		this.img = new Image();
-		let t = this;
-		this.img.onload = function() {
-			t.cxt.drawImage(t.img, 80, 0, t.img.width, t.img.height);
-
-			//hidden canvas
-			t.hCxt.drawImage(t.img, 80, 0, t.img.width, t.img.height);
-		}
-		this.img.src = 'assets/images/icon-faq.png';
+		this.editMode = "FAQ";
 	}
 
 	addQueerAnswer(): void {
-		this.img = new Image();
-		let t = this;
-		this.img.onload = function() {
-			t.cxt.drawImage(t.img, 160, 0, t.img.width, t.img.height);
+		this.editMode = "QueerAnswer";
+	}
 
-			//hidden canvas
-			t.hCxt.drawImage(t.img, 160, 0, t.img.width, t.img.height);
-		}
-		this.img.src = 'assets/images/icon-queerflower.png';
+	addScore(): void {
+		this.editMode = "Score";
+	}
+
+	clear(): void {
+		this.editMode = "Clear";
 	}
 }

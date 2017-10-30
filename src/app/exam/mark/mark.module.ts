@@ -8,6 +8,7 @@ import {HttpModule} from '@angular/http';
 
 import { MarkComponent } from './mark.component';
 import { MarkListComponent } from './mark-list.component';
+import { CanvasComponent } from './canvas.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { MarkListComponent } from './mark-list.component';
   ],
   declarations: [
     MarkComponent,
-    MarkListComponent
+    MarkListComponent,
+    CanvasComponent
   ],
   providers: []
 })

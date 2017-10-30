@@ -8,18 +8,17 @@
     "studentName": "小李",
     "score": 22,
     "answers": [
-        { "questionNum": "1", "type": "客观题", "answer": "A", "fullScore": 10, "score": 10},
-        { "startNum": "2", 
-            "endNum": "5", 
+        { "questionName": "1", "type": "客观题", "answer": "A", "fullScore": 10, "score": 10},
+        { "questionName": "2-5",
             "type": "填空题",
             "fullScore": 8, 
             "score": 4, 
-            "steps": {
-                "2": {"fullScore": 2, "score": 0}, 
-                "3": {"fullScore": 2, "score": 2},
-                "4": {"fullScore": 2, "score": 2},
-                "5": {"fullScore": 2, "score": 0}
-            },
+            "steps": [
+                {"questionName": "2", "fullScore": 2, "score": 0}, 
+                {"questionName": "3", "fullScore": 2, "score": 2},
+                {"questionName": "4", "fullScore": 2, "score": 2},
+                {"questionName": "5", "fullScore": 2, "score": 0}
+            ],
             "answerImg": "",
             "paperImg": "",
             "markImg": "",
@@ -32,14 +31,14 @@
             },
             "status": "complete"            
         },
-        { "questionNum": "6", 
+        { "questionName": "6", 
             "type": "解答题",
             "fullScore": 10, 
             "score": 8, 
-            "steps": {
-                "6.1": {"fullScore": 5, "score": 5}, 
-                "6.2": {"fullScore": 5, "score": 3}
-            },
+            "steps": [
+                {"questionName": "6.1", "fullScore": 5, "score": 5}, 
+                {"questionName": "6.2", "fullScore": 5, "score": 3}
+            ],
             "answerImg": "",
             "paperImg": "",
             "markImg": "",
