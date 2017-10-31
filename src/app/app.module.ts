@@ -18,12 +18,15 @@ import { StudentModule } from './info/students/student.module';
 import { TeacherModule } from './info/teachers/teacher.module';
 import { SchoolModule } from './info/schools/school.module';
 import { ExamModule } from './info/exams/exam.module';
+
 import { MarkModule } from './exam/mark/mark.module';
+
 import { SharedService } from './shared.service';
 
 @NgModule({
   imports: [
     BrowserModule,
+    // Angular2FontawesomeModule,
     NgxDatatableModule,
     HttpModule,
     RouterModule.forRoot([
@@ -48,6 +51,6 @@ import { SharedService } from './shared.service';
     SharedService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
