@@ -47,4 +47,13 @@ export class TaskService {
       })
     })
   }
+
+  submit(json) {
+    return new Promise((resolve, reject) => {
+      resolve({success: true});
+      // this._sharedService.makeRequest('POST', 'marktask/create/', JSON.stringify(json)).then((res) => {
+      //   resolve(res)
+      // })
+    })
+  }
 }

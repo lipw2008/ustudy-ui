@@ -42,7 +42,7 @@
 						</div>
 						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
 							<ng-container *ngFor="let subject of grades.subjects">
-								<button class="btn btn-primary" (click)="setTasks(grades.id, subject.id, false)" [disabled]="subject.answerSeted !== '0'">{{subject.subName}}</button>
+								<button class="btn btn-primary" (click)="setTasks(grades.id, subject.id, false, subject.subName)" [disabled]="subject.answerSeted !== '0'">{{subject.subName}}</button>
 							</ng-container>
 						</div>
 					</div>

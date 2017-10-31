@@ -1,18 +1,11 @@
-<div class="col-lg-12 teacher-selector">
+<div class="col-md-12">
+  <!--<ng2-treeview [node]="textTreeView" (textNodeClick)="onTextNodeCli
   <div class="form-inline">
-    <div class="input-group col-lg-3">
-      <span class="input-group-addon">阅卷老师选择:</span>
-      <select class="form-control" [(ngModel)]="selectedGroup" (change)="refreshTeachers($event)">
-        <option *ngFor="let group of grade?.groups" [ngValue]="group">{{group.name}}</option>
-      </select>
-    </div>
-    <div class="input-group col-lg-3">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"> 未分配任务的老师
-        </label>
-      </div>
-    </div>
-  </div>
+$event)"></ng2-treeview>-->
+  <ngx-treeview
+    [config]="config"
+    [items]="items"
+    (selectedChange)="onSelectedChange($event)">
+  </ngx-treeview>
 </div>
 

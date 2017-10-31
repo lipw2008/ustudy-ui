@@ -53,15 +53,37 @@
           <label class="radio-inline">
             <input type="radio" ng-controll="options" [value]="'双评'" (click)="markType='双评'" [checked]="markType=='双评'"> 双评
           </label>
-          <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
           <span aria-hidden="true" class="glyphicon glyphicon-time pull-right" style=" ">
             <input style=" width: 40%; " type="number" title="阅卷时间设置（设置最短时间，限定老师的阅卷速度，单位为秒）">
           </span>
         </td>
       </tr>
+      <tr>
+        <td>
+          阅卷老师选择:
+        </td>
+        <td>
+          <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedTeacherIds = $event"></teacher-selector>
+        </td>
+      </tr>
+      <tr *ngIf="markType==='双评'">
+        <td>
+          终评老师选择:
+        </td>
+        <td>
+          <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedFinalTeacherIds = $event"
+                            [without]="selectedTeacherIds"></teacher-selector>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button class="btn btn-default col-lg-offset-9" (click)="submit()" [disabled]="this.selectedQuestion?.created">提交</button></td>
+      </tr>
 
       </tbody>
     </table>
-    <teacher-selector [grade]="grade" *ngIf="selectedQuestion"></teacher-selector>
+    <div>
+      <button class="btn btn-primary col-lg-offset-10" (click)="finish()">完成</button>
+    </div>
   </div>
 </div>
