@@ -45,9 +45,12 @@ export class ViewTaskComponent implements OnInit {
 
   setFiltetedTasks() {
     this.tasks = _.filter(this.markTasks, {gradeId: this.selectedGrade.id, subjectId: this.selectedSubject.id})
+    this.tasks.forEach((task) => {
+      task.question = _.find(this.questions, {id: task.questionId})
+    })
   }
 
-  getQuestionName(task: any) {
-    return _.find(this.questions, {id: task.questionId}).questionName
+  getTeachers(task: any) {
+    // return task.teachersIds.map( teacher => )
   }
 }

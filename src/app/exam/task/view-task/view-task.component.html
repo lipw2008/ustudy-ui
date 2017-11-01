@@ -32,8 +32,13 @@
     </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let task of tasks, question=getQuestion(task)">
+      <tr *ngFor="let task of tasks">
+        <td>{{task.question.questionName}}</td>
+        <td>{{task.question.type}}</td>
+        <td>平均</td>
+        <td>{{task.finalMarkTeachersIds.length>0 ? '双评' : '单评'}}</td>
         <td></td>
+        <td>{{getTeachers(task)}}</td>
         <td></td>
       </tr>
     </tbody>
