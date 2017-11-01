@@ -50,8 +50,8 @@
                                     <ul class="dropdown-menu" aria-labelledby="dLabel">
                                         <li *ngIf="_sharedService.userRole!=='学科组长'&&_sharedService.userRole!=='备课组长'&&_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">模板制作</a></li>
                                         <li *ngIf="_sharedService.userRole!=='学科组长'&&_sharedService.userRole!=='备课组长'&&_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#">答卷扫描</a></li>
-                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#/selectsubject;type=answers">答案设置</a></li>
-                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a href="#/selectsubject;type=task">任务分配</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a [routerLink]="['/selectsubject',{type:'answers'}]">答案设置</a></li>
+                                        <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a [routerLink]="['/selectsubject',{type:'task'}]">任务分配</a></li>
                                         <li><a [routerLink]="['/markList']">网络阅卷</a></li>
                                         <li><a href="#">答题卷中心</a></li>
                                     </ul>
