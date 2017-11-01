@@ -117,11 +117,13 @@ export class SelectSubjectComponent implements OnInit {
 		this.router.navigate(['setanswers', {egsId: egsId, examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
 	}
 
-	setTasks(egsId,gradeId,subjectId,seted) {
-		if(this.isCreated){
-			this.router.navigate(['taskallocation', {egsId: egsId, examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
-		}else{
-			this.router.navigate(['setobjectivesno', {egsId: egsId, examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
-		}
+	setTasks(gradeId,subjectId,seted, subName) {
+		// XXX: skip this step for now
+    // if (this.isCreated) {
+    //   this.router.navigate(['taskallocation', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
+    // } else {
+    //   this.router.navigate(['setobjectivesno', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
+    // }
+    this.router.navigate(['/taskassign', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted, subject: subName }]);
 	}
 }
