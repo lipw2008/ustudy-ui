@@ -37,7 +37,7 @@
 					<div class="col-sm-9 btn-toolbar">
 						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'answers'">
 							<ng-container *ngFor="let subject of grades.subjects">
-								<button class="btn btn-primary" (click)="setAnswers(subject.id, grades.id, subject.subId, false)" *ngIf="subject.answerSeted === '0'">{{subject.subName}}</a>
+								<button class="btn btn-primary" (click)="setAnswers(subject.id, grades.id, subject.subId, false)" *ngIf="subject.answerSeted === '0'">{{subject.subName}}</button>
 							</ng-container>
 						</div>
 						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
@@ -63,7 +63,7 @@
 							</div>
 							<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
 								<ng-container *ngFor="let subject of grades.subjects">
-									<a class="btn btn-default" (click)="setTasks(subject.id, grades.id, subject.subId, false)" *ngIf="subject.answerSeted === '1'">**{{subject.subName}}</a>
+									<a class="btn btn-default" (click)="setTasks(subject.id, grades.id, subject.subId, false)" *ngIf="subject.answerSeted === '1'">{{subject.subName}}</a>
 								</ng-container>
 							</div>
 					</div>
