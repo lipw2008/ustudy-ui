@@ -9,492 +9,589 @@ import { SharedService } from '../../shared.service';
 
 export class SetAnswersComponent implements OnInit {
 
-  errorMessage: string;
+	errorMessage: string;
 
-  examId: string;
-  gradeId: string;
-  subjectId: string;
-  seted: boolean;
+	egsId: string;
+	examId: string;
+	gradeId: string;
+	subjectId: string;
+	seted: boolean;	
 
-  issynthesize = false;
+	issynthesize = false;
 
-  currentCheckBox = 2;
+	currentCheckBox = 2;
 
-  options = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+	options = [2,3,4,5,6,7,8,9,10];
 
-  checkBoxScores = [];
+	checkBoxScores = [];
 
-  allsubjects = [];
+	allsubjects = [];
 
-  subjects = [
-    { id: 0, name: '不分科' }
-  ];
+	subjects = [
+		{id:0,name:'不分科'}
+	];
 
-  selectOptions = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+	selectOptions = ['A','B','C','D','E','F','G','H','I','J'];
 
-  objectives = [
-    { id: 1, start: 1, end: 2, type: 1, option: 4, score: 1 },
-    { id: 2, start: 3, end: 4, type: 2, option: 6, score: 1 },
-    { id: 3, start: 5, end: 6, type: 3, option: 2, score: 1 }
-  ];
+	objectives = [
+		{id:1, quesno:0, startno:1,endno:2,type:'单选题',choiceNum:4,score:1},
+		{id:2, quesno:0, startno:3,endno:4,type:'多选题',choiceNum:6,score:1},
+		{id:3, quesno:0, startno:5,endno:6,type:'判断题',choiceNum:2,score:1}
+	];
 
-  objectiveAnswers = [];
+	objectiveAnswers = [];
 
-  radioScore = 0;
-  checkboxScore = 0;
-  judgmentScore = 0;
-  objectiveScore = 0;
+	radioScore = 0;
+	checkboxScore = 0;
+	judgmentScore = 0;
+	objectiveScore = 0;
 
-  constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
+	constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
 
-  }
-
-  ngOnInit(): void {
-    this.examId = this.route.snapshot.params.examId;
-    this.gradeId = this.route.snapshot.params.gradeId;
-    this.subjectId = this.route.snapshot.params.subjectId;
-    this.seted = this.route.snapshot.params.seted;
-
-    this.loaAlldSubjects();
-
-    this.allsubjects.forEach(subject => {
-      if (this.subjectId === subject.id) {
-        if (subject.type === '1' || subject.type === '2') {
-          this.issynthesize = true;
-          this.allsubjects.forEach(subject_ => {
-            if (subject.type === '1' && subject_.type === '3') {
-              this.subjects.push(subject_);
-            } else if (subject.type === '2' && subject_.type === '4') {
-              this.subjects.push(subject_);
-            }
-          })
-        }
-      }
-    });
-
-    if (this.seted) {
-      this.reload(this.examId, this.gradeId, this.subjectId);
     }
 
-    this.objectives.forEach(objective => {
-      this.addAnswers(objective);
-      this.setDefaultCheckBoxScore(objective);
-    });
+    ngOnInit(): void {
+		this.egsId = this.route.snapshot.params.egsId;
+		this.examId = this.route.snapshot.params.examId;
+		this.gradeId = this.route.snapshot.params.gradeId;
+		this.subjectId = this.route.snapshot.params.subjectId;
+		this.seted = this.route.snapshot.params.seted;
 
-  }
+		this.loaAlldSubjects();
 
-  loaAlldSubjects() {
-    this._sharedService.makeRequest('GET', '/api/exam/getExams/0', '').then((data: any) => {
-      console.log("data: " + JSON.stringify(data));
-      if (data.success) {
-        this.allsubjects = data.data;
-      }
-    }).catch((error: any) => {
-      console.log(error.status);
-      console.log(error.statusText);
-    });
-  }
+		this.allsubjects.forEach(subject => {
+			if (this.subjectId === subject.id) {
+				if (subject.type === '1' || subject.type === '2') {
+					this.issynthesize = true;
+					this.allsubjects.forEach(subject_ => {
+						if (subject.type === '1' && subject_.type === '3') {
+							this.subjects.push(subject_);
+						} else if (subject.type === '2' && subject_.type === '4') {
+							this.subjects.push(subject_);
+						}
+					})
+				}
+			}
+		});
 
-  reload(examId, gradeId, subjectId) {
-    // //req.open('GET', 'assets/api/teachers/teachers.json');
-    // this._sharedService.makeRequest('GET', 'assets/api/exams/exams.json', '').then((data: any) => {
-    // 	//cache the list
-    // 	console.log("data: " + JSON.stringify(data));
-    // 	for(var t of data) {
-    // 		//科目
-    // 		if (t.subjects && t.subjects.length >0) {
-    // 			var str = "";
-    // 			for (var s of t.subjects) {
-    // 				str += s.n + " ";
-    // 			}
-    // 			t.subjects = str;
-    // 		} else {
-    // 			t.subjects = "";
-    // 		}	
-    // 		//年级
-    // 		if (t.grades && t.grades.length >0) {
-    // 			var str = "";
-    // 			for (var g of t.grades) {
-    // 				str += g.n + " ";
-    // 			}
-    // 			t.grades = str;
-    // 		} else {
-    // 			t.grades = "";
-    // 		}							
-    // 	}
-    // 	this.temp = [...data];
-    // 	this.rows = data;
-    // }).catch((error: any) => {
-    // 	console.log(error.status);
-    // 	console.log(error.statusText);
-    // });
-  }
+		if(this.seted){
+			this.getQuesAnswers(this.egsId, this.examId, this.gradeId, this.subjectId);
+		}
 
-  addOneRow() {
-    if (this.objectives.length > 0) {
-      const obj = this.objectives[this.objectives.length - 1];
-      const obj_ = { id: new Date().getTime(), start: 1, end: 20, type: 1, option: 4, score: 1 };
-      obj_['start'] = obj['end'] + 1;
-      obj_['end'] = obj_['start'];
-      this.objectives.push(obj_);
+		this.objectives.forEach(objective => {
+			this.addAnswers(objective);
+			this.setDefaultCheckBoxScore(objective);			
+		});
+		
+	}
 
-      this.addAnswers(obj_);
-    } else {
-      const obj = { id: 1, start: 1, end: 20, type: 1, option: 4, score: 1 };
-      this.objectives.push(obj);
+	resetDatas(){
 
-      this.addAnswers(obj);
-    }
-  }
+		this.objectiveAnswers = [];
 
-  removeOneRow(id) {
-    const _objectives = [];
-    for (var i = 0; i < this.objectives.length; i++) {
-      const objective = this.objectives[i];
-      if (objective && objective['id'] !== id) {
-        _objectives.push(objective);
-      } else {
-        this.removeAnswers(objective)
-        this.removeScore(objective);
-      }
-    }
-    this.objectives = _objectives;
-  }
+		this.radioScore = 0;
+		this.checkboxScore = 0;
+		this.judgmentScore = 0;
+		this.objectiveScore = 0;
 
-  addAnswers(objective) {
+		const objectives_ = [];
+		this.objectives.forEach(objective => {
+			if(objective.startno === 0 && objective.endno === 0){
+				objective.startno = objective.quesno;
+				objective.endno = objective.quesno;
+			}
+			objectives_.push(objective);
+			this.addAnswers(objective);
+			this.setDefaultCheckBoxScore(objective);			
+		});
+		this.objectives = objectives_;
 
-    let start = objective['start'];
-    let end = objective['end'];
-    let type = objective['type'];
-    let score = objective['score'];
-    let totalScore = (end - start + 1) * score;
-    this.objectiveScore = this.objectiveScore + totalScore;
+		var subjectives_ = [];
+		this.subjectives.forEach(subjective => {
+			subjective.branch = '不分科';
+			if(subjective.type !== '填空题'){
+				if(subjective.quesno !== 0){
+					subjective.startno = subjective.quesno;
+					subjective.endno = subjective.quesno;
+					subjectives_.push(subjective);
+				}else{
+					if(subjective.startno !== 0){
+						if(subjective.endno === 0){
+							subjective.endno = subjective.startno;
+							subjective.quesno = subjective.startno;
+							subjectives_.push(subjective);
+						}else{
+							const start = subjective.startno;
+							const end = subjective.endno;
+							for(var i=start; i<=end; i++){
+								var obj = '{"id":'+new Date().getTime()+',"type":"'+subjective.type+'","startno":'+i+',"endno":'+i+',"quesno":'+i+',"branch":"不分科","score":'+subjective.score+'}';
+								subjectives_.push(JSON.parse(obj));
+							}
+						}
+					}else if(subjective.endno !== 0){
+						subjective.startno = subjective.endno;
+						subjective.quesno = subjective.endno;
+						subjectives_.push(subjective);
+					}
+				}
+			}else{
+				if(subjective.startno === 0 || subjective.endno === 0){
+					subjective.startno = subjective.quesno;
+					subjective.endno = subjective.quesno;
+				}
+				subjectives_.push(subjective);
+			}
+		});
 
-    let optionCount = objective.option;
-    let _option = [];
+		this.subjectives = subjectives_;
+		this.setSubjectivesScore();
+	}
 
-    if (type === 3) {
-      _option.push({ name: 'Y', checked: true });
-      _option.push({ name: 'N', checked: false });
-    } else {
-      for (var i = 0; i < optionCount; i++) {
-        let checked = false;
-        if (i === 0) checked = true;
-        _option.push({ name: this.selectOptions[i], checked: checked });
-      }
-    }
+	loaAlldSubjects() {
+		this._sharedService.makeRequest('GET', '/api/subject/getSubjects', '').then((data: any) => {
+			console.log("data: " + JSON.stringify(data));
+			if (data.success) {
+				this.allsubjects = data.data; 
+			}
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
+	}
+	
+	getQuesAnswers(egsId,examId,gradeId,subjectId) {
+		this._sharedService.makeRequest('GET', '/api/setanswers/getAnswers/' + egsId, '').then((data: any) => {
+			if (data.success) {
+				data = data.data;
+				const refAnswers = data.refAnswers;
+				const quesAnswers = data.quesAnswers;
+				const quesAnswerDivs = data.quesAnswerDivs;
 
-    for (var j = start; j <= end; j++) {
-      const answer = { no: j, type: objective.type, option: objective.option, options: _option, answer: 'A', subject: 0 };
-      if (type === 3) {
-        answer.answer = 'Y';
-      }
-      this.objectiveAnswers.push(answer);
-    }
+				this.objectives = [];
+				this.subjectives = [];
+				quesAnswers.forEach(quesAnswer => {
+					let type = quesAnswer['type'];
+					if (type === '单选题' || type === '多选题' || type === '判断题') {
+						this.objectives.push(quesAnswer);
+					}else{
+						quesAnswer.branch = '不分科';
+						this.subjectives.push(quesAnswer);
+					}
+				});
 
-    if (type === 1) {
-      this.radioScore = this.radioScore + totalScore;
-    } else if (type === 2) {
-      this.checkboxScore = this.checkboxScore + totalScore;
-    } else if (type === 3) {
-      this.judgmentScore = this.judgmentScore + totalScore;
-    }
+				this.resetDatas();
 
-    this.objectiveAnswers.sort(function(a, b) {
-      return a.no - b.no;
-    });
-  }
+				console.log("refAnswers: " + JSON.stringify(refAnswers));
+				console.log("quesAnswers: " + JSON.stringify(quesAnswers));
+				console.log("quesAnswerDivs: " + JSON.stringify(quesAnswerDivs));
+				//this.allsubjects = data.data; 
+			}
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
+	}
+	
+	addOneRow(){
+		if(this.objectives.length > 0){
+			const obj = this.objectives[this.objectives.length-1];
+			const obj_ = {id:new Date().getTime(), quesno:0, startno:1, endno:20, type:'单选题', choiceNum:4, score:1, branch:'不分科'};
+			obj_['startno'] = obj['endno'] + 1;
+			obj_['endno'] = obj_['startno'];
+			this.objectives.push(obj_);
+	
+			this.addAnswers(obj_);
+		}else{
+			const obj = {id:1, quesno:0, startno:1,endno:20, type:'单选题', choiceNum:4,score:1, branch:'不分科'};
+			this.objectives.push(obj);
 
-  removeAnswers(objective) {
-    const answers = [];
+			this.addAnswers(obj);
+		}		
+	}
+	
+	removeOneRow(id){
+		const _objectives = [];
+		for(var i=0;i<this.objectives.length;i++){
+			const objective = this.objectives[i];
+			if(objective && objective['id'] !== id){
+				_objectives.push(objective);
+			}else{
+				this.removeAnswers(objective)
+				this.removeScore(objective);
+			}
+		}
+		this.objectives = _objectives;
+	}
+	
+	addAnswers(objective){
 
-    let start = objective['start'];
-    let end = objective['end'];
-    let type = objective['type'];
-    for (var j = 0; j < this.objectiveAnswers.length; j++) {
-      const answer = this.objectiveAnswers[j];
-      const no = answer['no'];
-      if (!(no >= start && no <= end && answer['type'] === type)) {
-        answers.push(answer);
-      }
-    }
-    this.objectiveAnswers = answers;
-  }
+		let type = objective['type'];
+		if (type === '单选题' || type === '多选题' || type === '判断题') {
 
-  removeScore(objective) {
-    let start = objective['start'];
-    let end = objective['end'];
-    let type = objective['type'];
-    let score = objective['score'];
-    let total = (end + 1 - start) * score;
-    if (type === 1) {
-      this.radioScore = this.radioScore - total;
-    } else if (type === 2) {
-      this.checkboxScore = this.checkboxScore - total;
-    } else if (type === 3) {
-      this.judgmentScore = this.judgmentScore - total;
-    }
-    this.objectiveScore = this.objectiveScore - total;
-  }
+			let start = objective['startno'];
+			if(start === 0){
+				start = objective['quesno'];
+			}
+			let end = objective['endno'];
+			if(end === 0){
+				end = objective['quesno'];
+			}
+			let score = objective['score'];
+			let totalScore = (end - start + 1) * score; 
+			this.objectiveScore = this.objectiveScore + totalScore;		
+			
+			let choiceNum = objective.choiceNum;
+			let _option = [];
+			
+			if(type === '判断题'){
+				_option.push({name:'Y',checked:true});
+				_option.push({name:'N',checked:false});
+			}else{
+				for(var i=0; i<choiceNum; i++){
+					let checked = false;
+					if(i === 0) checked = true;
+					_option.push({name:this.selectOptions[i],checked:checked});
+				}
+			}
 
-  onValueChange(valueType, id) {
+			for(var j=start;j<=end;j++){
+				const answer = {quesno:j, type:objective.type, option:objective.choiceNum, options:_option, answer:'A', branch:'不分科'};
+				if(type === '判断题'){
+					answer.answer = 'Y';
+				}
+				this.objectiveAnswers.push(answer);
+			}
 
-    const _objectives = [];
-    for (var i = 0; i < this.objectives.length; i++) {
-      const obj = this.objectives[i];
-      if (obj && obj['id'] === id) {
-        let start = obj['start'];
-        let end = obj['end'];
-        let type = obj['type'];
-        let score = obj['score'];
+			if (type === '单选题') {
+				this.radioScore = this.radioScore + totalScore;
+			} else if(type === '多选题'){
+				this.checkboxScore = this.checkboxScore + totalScore;
+			} else if(type === '判断题'){
+				this.judgmentScore = this.judgmentScore + totalScore;
+			}
 
-        this.removeScore(obj);
-        this.removeAnswers(obj);
+			this.objectiveAnswers.sort(function(a,b){
+				return a.quesno - b.quesno;
+			});
+		}
+	}	
 
-        if (valueType === 1) {
-          start = Number(this.elementRef.nativeElement.querySelector('#start_' + id).value);
-          obj['start'] = start;
-        } else if (valueType === 2) {
-          end = Number(this.elementRef.nativeElement.querySelector('#end_' + id).value);
-          obj['end'] = end;
-        } else if (valueType === 3) {
-          type = Number(this.elementRef.nativeElement.querySelector('#type_' + id).value);
-          obj['type'] = type;
-          if (type === 1 || type === 2) {
-            obj['option'] = 4;
-          } else if (type === 3) {
-            obj['option'] = 2;
-          }
-        } else if (valueType === 4) {
-          const option = Number(this.elementRef.nativeElement.querySelector('#option_' + id).value);
-          obj['option'] = option;
-        } else if (valueType === 5) {
-          score = Number(this.elementRef.nativeElement.querySelector('#score_' + id).value);
-          obj['score'] = score;
-        }
+	removeAnswers(objective){
+		const answers = [];
+		
+		let start = objective['startno'];
+		let end = objective['endno'];
+		let type = objective['type'];
+		for(var j=0;j<this.objectiveAnswers.length;j++){
+			const answer = this.objectiveAnswers[j];
+			const quesno = answer['quesno'];
+			if(!(quesno>=start && quesno<=end && answer['type'] === type)){
+				answers.push(answer);
+			}
+		}
+		this.objectiveAnswers = answers;
+	}
 
-        //this.addScore(obj);
-        this.addAnswers(obj);
-        this.setDefaultCheckBoxScore(obj);
-      }
-      _objectives.push(obj);
-    }
-    this.objectives = _objectives;
-  }
+	removeScore(objective){
+		let start = objective['startno'];
+		let end = objective['endno'];
+		let type = objective['type'];
+		let score = objective['score'];
+		let total = (end+1-start)*score;
+		if(type === '单选题'){
+			this.radioScore = this.radioScore - total;
+		}else if(type === '多选题'){
+			this.checkboxScore = this.checkboxScore - total;
+		}else if(type === '判断题'){
+			this.judgmentScore = this.judgmentScore - total;
+		}
+		this.objectiveScore = this.objectiveScore - total;
+	}
 
-  setAnswersOption(id, type, value) {
-    this.objectiveAnswers.forEach(answer => {
-      if (answer.no === id && answer.type === type) {
-        if (type === 2) {
-          let ans = answer.answer;
-          if (ans.indexOf(value) >= 0) {
-            ans = ans.replace(',' + value, '');
-            ans = ans.replace(value, '');
-            if (ans.indexOf(',') === 0) {
-              ans = ans.substring(1);
-            }
-            answer.answer = ans;
-          } else {
-            answer.answer = ans + ',' + value;
-          }
-        } else {
-          answer.answer = value;
-        }
-      }
-    });
-  }
+	onValueChange(valueType,id){
 
-  setAnswersSubject(id, type) {
-    let value = this.elementRef.nativeElement.querySelector('#answersSubject_' + id).value;
-    this.objectiveAnswers.forEach(answer => {
-      if (answer.no === id && answer.type === type) {
-        answer.subject = value;
-      }
-    });
-  }
+		const _objectives = [];
+		for(var i=0;i<this.objectives.length;i++){
+			const obj = this.objectives[i];
+			if(obj && obj['id'] === id){
+				let start = obj['startno'];
+				let end = obj['endno'];
+				let type = obj['type'];
+				let score = obj['score'];
 
-  //-------------------------------Subjectives--------------------------------------
+				this.removeScore(obj);
+				this.removeAnswers(obj);
 
-  subjectives = [
-    { id: 1, type: 4, start: 1, end: 10, subject: 0, score: 2 }
-  ];
+				if(valueType === 1){
+					start = Number(this.elementRef.nativeElement.querySelector('#start_' + id).value);
+					obj['startno'] = start;					
+				}else if(valueType === 2){
+					end = Number(this.elementRef.nativeElement.querySelector('#end_' + id).value);
+					obj['endno'] = end;
+				}else if(valueType === 3){
+					type = this.elementRef.nativeElement.querySelector('#type_' + id).value;
+					obj['type'] = type;
+					if(type === '单选题' || type === '多选题'){
+						obj['choiceNum'] = 4;
+					}else if(type === '判断题'){
+						obj['choiceNum'] = 2;
+					}
+				}else if(valueType === 4){
+					const choiceNum = Number(this.elementRef.nativeElement.querySelector('#option_' + id).value);
+					obj['choiceNum'] = choiceNum;
+				}else if(valueType === 5){
+					score = Number(this.elementRef.nativeElement.querySelector('#score_' + id).value);
+					obj['score'] = score;
+				}
 
-  subjectiveCount = 10;
-  subjectiveScore = 20;
+				//this.addScore(obj);
+				this.addAnswers(obj);
+				this.setDefaultCheckBoxScore(obj);
+			}
+			_objectives.push(obj);
+		}
+		this.objectives = _objectives;
+	}
 
-  addOneSubjectiveRow(id) {
-    if (this.subjectives.length > 0) {
-      if (id > 0) {
-        this.subjectives.forEach(subjective => {
-          if (subjective.id === id) {
-            let childs = subjective['child'];
-            if (!childs) {
-              childs = [];
-            }
-            let child = { id: 1, type: 4, subject: 10, score: 1 };
-            child.id = childs.length + 1;
-            child.type = subjective.type;
-            child.subject = subjective.subject;
-            childs.push(child);
+	setAnswersOption(id, type, value){
+		this.objectiveAnswers.forEach(answer => {
+			if(answer.quesno === id && answer.type === type){
+				if(type === '多选题'){
+					let ans = answer.answer;
+					if(ans.indexOf(value)>=0){
+						ans = ans.replace(','+value,'');
+						ans = ans.replace(value,'');
+						if(ans.indexOf(',') === 0){
+							ans = ans.substring(1);
+						}
+						answer.answer = ans;
+					}else{
+						answer.answer = ans + ',' + value;
+					}
+				}else{
+					answer.answer = value;
+				}
+			}
+		});
+	}
 
-            subjective['child'] = childs;
-          }
-        });
-      } else {
-        const obj = this.subjectives[this.subjectives.length - 1];
-        const obj_ = { id: new Date().getTime(), type: 4, start: 1, end: 10, subject: 0, score: 2 };
-        if (obj['type'] === 4) obj_['start'] = obj['end'] + 1;
-        else obj_['start'] = obj['start'] + 1;
-        obj_['end'] = obj_['start'];
-        this.subjectives.push(obj_);
+	setAnswersSubject(id, type){
+		let value = this.elementRef.nativeElement.querySelector('#answersSubject_' + id).value;
+		this.objectiveAnswers.forEach(answer => {
+			if(answer.quesno === id && answer.type === type){
+				answer.subject = value;				
+			}
+		});
+	}
 
-        this.subjectiveCount = this.subjectiveCount + 1;
-        this.subjectiveScore = this.subjectiveScore + 2;
-      }
+	//-------------------------------Subjectives--------------------------------------
 
-    } else {
-      const obj = { id: new Date().getTime(), type: 4, start: 1, end: 1, subject: 0, score: 1 };
-      debugger;
-      if (this.objectives.length > 0) {
-        let objective = this.objectives[this.objectives.length - 1];
-        obj.start = objective.end + 1;
-        obj.end = objective.end + 1;
-      }
-      this.subjectives.push(obj);
+	subjectives = [
+		{id:1, quesno:0, type:'填空题', startno:1, endno:10, branch:'不分科', score:2}
+	];
 
-      this.subjectiveCount = 1;
-      this.subjectiveScore = 1;
-    }
-  }
+	subjectiveCount = 0;
+	subjectiveScore = 0;
 
-  removeOneSubjectiveRow(id, childId) {
-    const _subjectives = [];
-    for (var i = 0; i < this.subjectives.length; i++) {
-      const subjective = this.subjectives[i];
-      if (subjective && subjective['id'] !== id) {
-        _subjectives.push(subjective);
-      } else if (childId > 0) {
-        let child = subjective['child'];
-        const _child = [];
-        child.forEach(element => {
-          if (element.id !== childId) {
-            element.id = _child.length + 1;
-            _child.push(element);
-          }
-        });
-        subjective['child'] = _child;
+	setSubjectivesScore(){
+		
+		this.subjectiveCount = 0;
+		this.subjectiveScore = 0;
 
-        _subjectives.push(subjective);
-      } else {
-        this.subjectiveCount = this.subjectiveCount - 1;
-        if (subjective.type === 4) {
-          this.subjectiveScore = this.subjectiveScore - (subjective.end - subjective.start + 1) * subjective.score;
-        } else {
-          this.subjectiveScore = this.subjectiveScore - subjective.score;
-        }
-      }
-    }
+		this.subjectives.forEach(subjective => {
+			var count = subjective.endno - subjective.startno + 1;
+			this.subjectiveCount += count;
+			this.subjectiveScore += count*subjective.score;
+		})
+	}
 
-    this.subjectives = _subjectives;
-  }
+	addOneSubjectiveRow(id) {
+		if (this.subjectives.length > 0) {
+			if (id > 0){
+				this.subjectives.forEach(subjective => {
+					if(subjective.id === id){
+						let childs = subjective['child'];
+						if(!childs){
+							childs = [];
+						}
+						let child = {id:1, quesno:0,type:'填空题',branch:'不分科',score:1};
+						child.id = childs.length + 1;
+						child.type = subjective.type;
+						child.branch = subjective.branch;
+						childs.push(child);
 
-  onSubjectiveValueChange(valueType, id, childId) {
-    this.subjectives.forEach(subjective => {
-      if (subjective.id === id) {
-        if (childId > 0) {
-          let childs = subjective['child'];
-          childs.forEach(child => {
-            if (child.id === childId) {
-              let value = Number(this.elementRef.nativeElement.querySelector('#subjective_' + valueType + '_' + id + '_' + childId).value);
-              child[valueType] = value;
-            }
-          });
-        } else {
+						subjective['child'] = childs;
+					}
+				});
+			} else {
+				const obj = this.subjectives[this.subjectives.length-1];
+				const obj_ = {id:new Date().getTime(), quesno:0, type:'填空题', startno:1, endno:10, branch:'不分科', score:2};
+				if(obj['type'] === '填空题') obj_['startno'] = obj['endno'] + 1;
+				else obj_['startno'] = obj['startno'] + 1;
+				obj_['endno'] = obj_['startno'];
+				this.subjectives.push(obj_);
 
-          let value = Number(this.elementRef.nativeElement.querySelector('#subjective_' + valueType + '_' + id).value);
-          if (valueType === 'start') {
-            if (subjective.type === 4) {
-              this.subjectiveCount = this.subjectiveCount + subjective.start - value;
-              this.subjectiveScore = this.subjectiveScore + (subjective.start - value) * subjective.score
-            }
-          } else if (valueType === 'end') {
-            this.subjectiveCount = this.subjectiveCount - subjective.start + value;
-            this.subjectiveScore = this.subjectiveScore + (value - subjective.end) * subjective.score
-          } else if (valueType === 'type') {
-            if (subjective.type === 4 || value === 4) {
-              if (subjective.type === 4) {
-                this.subjectiveCount = this.subjectiveCount - subjective.end + subjective.start;
-                this.subjectiveScore = this.subjectiveScore - (subjective.end - subjective.start) * subjective.score
-              } else {
-                this.subjectiveCount = this.subjectiveCount + subjective.end - subjective.start;
-                this.subjectiveScore = this.subjectiveScore + (subjective.end - subjective.start) * subjective.score
-              }
-            }
-          } else if (valueType === 'score') {
-            debugger;
-            if (subjective.type === 4) {
-              this.subjectiveScore = this.subjectiveScore + (subjective.end - subjective.start + 1) * (value - subjective.score)
-            } else {
-              this.subjectiveScore = this.subjectiveScore + value - subjective.score;
-            }
-          }
+				this.subjectiveCount = this.subjectiveCount + 1;
+				this.subjectiveScore = this.subjectiveScore + 2;
+			}
 
-          subjective[valueType] = value;
-        }
-      }
-    });
-  }
+		}else{
+			const obj = {id:new Date().getTime(), quesno:0, type:'填空题', startno:1, endno:1, branch:'不分科', score:1};
+			if (this.objectives.length > 0) {
+				let objective = this.objectives[this.objectives.length - 1];
+				obj.startno = objective.endno + 1;
+				obj.endno = objective.endno + 1;
+			}
+			this.subjectives.push(obj);
 
-  showCheckBoxScore() {
-    this.elementRef.nativeElement.querySelector('#infoModal').style.display = '';
-  }
+			this.subjectiveCount = 1;
+			this.subjectiveScore = 1;
+		}
+	}
 
-  closeCheckBoxModal() {
-    this.elementRef.nativeElement.querySelector('#infoModal').style.display = 'none';
-  }
+	removeOneSubjectiveRow(id, childId) {
+		const _subjectives = [];
+		for (var i=0;i<this.subjectives.length;i++) {
+			const subjective = this.subjectives[i];
+			if (subjective && subjective['id'] !== id) {
+				_subjectives.push(subjective);
+			} else if(childId > 0) {
+				let child = subjective['child'];
+				const _child = [];
+				child.forEach(element => {
+					if(element.id !== childId){
+						element.id = _child.length + 1;
+						_child.push(element);
+					}
+				});
+				subjective['child'] = _child;
 
-  setDefaultCheckBoxScore(objective) {
-    if (objective.type === 2) {
-      this.checkBoxScores = [];
-      let optionSize = objective['option'];
+				_subjectives.push(subjective);
+			} else {
+				this.subjectiveCount = this.subjectiveCount - 1;
+				if (subjective.type === '填空题'){
+					this.subjectiveScore = this.subjectiveScore - (subjective.endno - subjective.startno + 1) * subjective.score;
+				} else {
+					this.subjectiveScore = this.subjectiveScore - subjective.score;
+				}
+			}
+		}
 
-      for (var i = 2; i <= optionSize; i++) {
-        let scores_ = [];
-        for (var j = 1; j < i; j++) {
-          scores_.push({ count: j, score: 0 });
-        }
-        this.checkBoxScores.push({ size: i, seted: false, scores: scores_ });
-      }
-    }
-  }
+		this.subjectives = _subjectives;
+	}
 
-  setCheckBoxScore(size, count) {
-    let score = this.elementRef.nativeElement.querySelector('#checkBoxScore_' + size + '_' + count).value;
-    this.checkBoxScores.forEach(element => {
-      if (element.size === size) {
-        element.scores.forEach(element_ => {
-          if (element_.count === count) {
-            element_.score = score;
-          }
-        });
-      }
-    });
-  }
+	onSubjectiveValueChange(valueType, id, childId) {
+		this.subjectives.forEach(subjective => {
+			if (subjective.id === id) {
+				if (childId > 0) {
+					let childs = subjective['child'];
+					childs.forEach(child => {
+						if (child.id === childId) {
+							let value = Number(this.elementRef.nativeElement.querySelector('#subjective_'+valueType + '_' + id +'_' + childId).value);
+							child[valueType] = value;
+						}
+					});
+				} else {
+					
+					let value = Number(this.elementRef.nativeElement.querySelector('#subjective_'+valueType+'_' + id).value);
+					if (valueType === 'start') {
+						if(subjective.type === '填空题'){
+							this.subjectiveCount = this.subjectiveCount + subjective.startno - value;
+							this.subjectiveScore = this.subjectiveScore + (subjective.startno - value) * subjective.score
+						}
+					} else if (valueType === 'end') {
+						this.subjectiveCount = this.subjectiveCount - subjective.startno + value;
+						this.subjectiveScore = this.subjectiveScore + (value - subjective.endno ) * subjective.score
+					} else if (valueType === 'type') {
+						if(subjective.type === '填空题' || value === 4){
+							if (subjective.type === '填空题') {
+								this.subjectiveCount = this.subjectiveCount - subjective.endno + subjective.startno;
+								this.subjectiveScore = this.subjectiveScore - (subjective.endno - subjective.startno) * subjective.score
+							} else {
+								this.subjectiveCount = this.subjectiveCount + subjective.endno - subjective.startno;
+								this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno) * subjective.score
+							}
+						}
+					} else if (valueType === 'score') {
+						if(subjective.type === '填空题'){
+							this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * (value - subjective.score)
+						} else {
+							this.subjectiveScore = this.subjectiveScore + value - subjective.score;
+						}
+					}
+					
+					subjective[valueType] = value;
+				}
+			}
+		});
+	}
 
-  setNextCheckBoxScore() {
-    this.checkBoxScores.forEach(element => {
-      if (element.size === this.currentCheckBox) {
-        element.seted = true;
-      }
-    });
+	showCheckBoxScore(){
+		this.elementRef.nativeElement.querySelector('#infoModal').style.display = '';
+	}
 
-    if (this.currentCheckBox < this.checkBoxScores[this.checkBoxScores.length - 1].size) {
-      this.currentCheckBox = this.currentCheckBox + 1;
-    }
-  }
+	closeCheckBoxModal(){
+		this.elementRef.nativeElement.querySelector('#infoModal').style.display = 'none';
+	}
 
-  setCurrentCheckBoxScore(size) {
-    this.currentCheckBox = size;
-  }
+	setDefaultCheckBoxScore(objective){
+		if (objective.type === 2) {
+			this.checkBoxScores = [];
+			let optionSize = objective['choiceNum'];
+	
+			for (var i=2;i <= optionSize; i++) {
+				let scores_ = [];
+				for (var j=1; j < i; j++) {
+					scores_.push({count:j, score:0});
+				}
+				this.checkBoxScores.push({size:i, seted:false, scores:scores_});
+			}
+		}
+	}
+
+	setCheckBoxScore(size, count){
+		let score = this.elementRef.nativeElement.querySelector('#checkBoxScore_' + size + '_' + count).value;
+		this.checkBoxScores.forEach(element => {
+			if (element.size === size) {
+				element.scores.forEach(element_ => {
+					if (element_.count === count) {
+						element_.score = score;
+					}
+				});
+			}
+		});
+	}
+
+	setNextCheckBoxScore(){
+		this.checkBoxScores.forEach(element => {
+			if (element.size === this.currentCheckBox) {
+				element.seted = true;
+			}
+		});
+
+		if (this.currentCheckBox < this.checkBoxScores[this.checkBoxScores.length -1].size) {
+			this.currentCheckBox = this.currentCheckBox + 1;
+		}
+	}
+
+	setCurrentCheckBoxScore(size){
+		this.currentCheckBox = size;
+	}
+
+	commitDatas(){
+		var data = {};
+		data['objectives'] = this.objectives;
+		data['subjectives'] = this.subjectives;
+		data['objectiveAnswers'] = this.objectiveAnswers;
+		console.error(this.objectiveAnswers);
+		this._sharedService.makeRequest('POST', '/api/setanswers/saveAnswers/' + this.egsId, JSON.stringify(data)).then((data: any) => {
+			if (data.success) {
+				alert("保存成功！");
+			}
+		}).catch((error: any) => {
+			console.log(error.status);
+			console.log(error.statusText);
+		});
+	}
 
 }
