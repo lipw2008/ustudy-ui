@@ -11,6 +11,7 @@ import { TaskAllocationComponent } from './taskallocation.component';
 import { TaskAssignComponent } from './task-assign/task-assign.component';
 import {TaskService} from 'app/exam/task/task.service';
 import {UtilsModule} from '../../utils/utils.module';
+import { ViewTaskComponent } from './view-task/view-task.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import {UtilsModule} from '../../utils/utils.module';
     RouterModule.forChild([
       { path: 'setobjectivesno', component: SetObjectivesNoComponent },
       { path: 'taskassign', component: TaskAssignComponent },
+      { path: 'viewTasks', component: ViewTaskComponent },
       { path: 'taskallocation', component: TaskAllocationComponent }
     ]),
     ReactiveFormsModule,
@@ -29,7 +31,8 @@ import {UtilsModule} from '../../utils/utils.module';
   declarations: [
     SetObjectivesNoComponent,
     TaskAllocationComponent,
-    TaskAssignComponent
+    TaskAssignComponent,
+    ViewTaskComponent
   ],
   providers: [TaskService]
 })

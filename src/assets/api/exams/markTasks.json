@@ -1,0 +1,6 @@
+[
+  {"examId":"1","questionId":1,"teachersIds":[31],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]},
+  {"examId":"1","questionId":2,"teachersIds":[32],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]},
+  {"examId":"1","questionId":3,"teachersIds":[33],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]},
+  {"examId":"1","questionId":4,"teachersIds":[34,35],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]}
+]

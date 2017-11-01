@@ -34,7 +34,7 @@ export class TaskAssignComponent implements OnInit {
     this._taskService.getGrade(this.gradeId).then((data) => {
       this.grade = data
     });
-    this._taskService.getQuestions(this.examId).then((data) => {
+    this._taskService.getQuestions(this.examId, null, this.gradeId, this.subjectId).then((data) => {
       this.questions = data
     })
   }
@@ -44,9 +44,9 @@ export class TaskAssignComponent implements OnInit {
   }
 
   submit() {
-    this._taskService.submit({examId: this.examId, questionId: this.selectedQuestion.id,
-      teachersIds: this.selectedTeacherIds, finalMarkTeachersIds: _.without(this.selectedTeacherIds,
-        this.selectedFinalTeacherIds)}).then((data) => {
+    this._taskService.creatMarkTask({examId: this.examId, questionId: this.selectedQuestion.id, teachersIds: this.selectedTeacherIds,
+      gradeId: this.gradeId, subjectId: this.subjectId,
+      finalMarkTeachersIds: _.without(this.selectedFinalTeacherIds, this.selectedTeacherIds)}).then((data) => {
       console.log(data);
       if (_.get(data, 'success')) {
         this.selectedQuestion.created = true;

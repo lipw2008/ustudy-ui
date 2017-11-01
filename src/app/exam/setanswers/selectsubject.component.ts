@@ -81,7 +81,7 @@ export class SelectSubjectComponent implements OnInit {
   }
 
   loadExams() {
-    this._sharedService.makeRequest('GET', '/api/exam/getExams/0', '').then((data: any) => {
+    this._sharedService.makeRequest('GET', '/api/exam/getAllExams', '').then((data: any) => {
       console.log("data: " + JSON.stringify(data));
       if (data.success) {
         this.exams = data.data;
@@ -127,5 +127,9 @@ export class SelectSubjectComponent implements OnInit {
     //   this.router.navigate(['setobjectivesno', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
     // }
     this.router.navigate(['/taskassign', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted, subject: subName }]);
+  }
+
+  viewTasks(gradeId, subjectId, seted) {
+    this.router.navigate(['/taskassign', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
   }
 }
