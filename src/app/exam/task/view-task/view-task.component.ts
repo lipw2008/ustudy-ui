@@ -23,6 +23,7 @@ export class ViewTaskComponent implements OnInit {
   selectedSubject: any;
   questions: any;
   tasks: any[];
+  grade: any;
 
   constructor(private _taskService: TaskService, private route: ActivatedRoute, private router: Router) { }
 
@@ -32,6 +33,9 @@ export class ViewTaskComponent implements OnInit {
     this.subjectId = this.route.snapshot.params.subjectId;
     this.seted = this.route.snapshot.params.seted;
     this.exam = this.route.snapshot.params.exam;
+    this._taskService.getGrade(this.gradeId).then((data) => {
+      this.grade = data
+    });
     this._taskService.getMarkTasks(this.examId).then((data) => {
       this.markTasks = data;
       this._taskService.getExamSubjects(this.examId).then((data) => {
@@ -51,6 +55,10 @@ export class ViewTaskComponent implements OnInit {
   }
 
   getTeachers(task: any) {
-    // return task.teachersIds.map( teacher => )
+    return task.teachersIds.map( teacherId => _.find(this.grade.teachers, {id: teacherId}).name)
+  }
+
+  getOwner(task: any) {
+    return _.find(this.grade.groups, (group) => _.includes(group.name, this.selectedSubject.subName)).ownerName
   }
 }

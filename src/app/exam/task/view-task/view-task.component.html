@@ -37,7 +37,7 @@
         <td>{{task.question.type}}</td>
         <td>平均</td>
         <td>{{task.finalMarkTeachersIds.length>0 ? '双评' : '单评'}}</td>
-        <td></td>
+        <td>{{getOwner(task)}}</td>
         <td>{{getTeachers(task)}}</td>
         <td></td>
       </tr>

@@ -133,15 +133,15 @@
 		}
 	],
   "groups": [
-    { "id": 1, "name": "语文组" },
-    { "id": 2, "name": "数学组" },
-    { "id": 3, "name": "英语组" },
-    { "id": 4, "name": "物理组" },
-    { "id": 5, "name": "化学组" },
-    { "id": 6, "name": "生物组" },
-    { "id": 7, "name": "政治组" },
-    { "id": 8, "name": "历史组" },
-    { "id": 9, "name": "地理组" }
+    { "id": 1, "name": "语文组", "ownerId": 11, "ownerName": "黄药师1" },
+    { "id": 2, "name": "数学组", "ownerId": 21, "ownerName": "黄药师2" },
+    { "id": 3, "name": "英语组", "ownerId": 31, "ownerName": "黄药师3" },
+    { "id": 4, "name": "物理组", "ownerId": 41, "ownerName": "黄药师4" },
+    { "id": 5, "name": "化学组", "ownerId": 51, "ownerName": "黄药师5" },
+    { "id": 6, "name": "生物组", "ownerId": 61, "ownerName": "黄药师6" },
+    { "id": 7, "name": "政治组", "ownerId": 71, "ownerName": "黄药师7" },
+    { "id": 8, "name": "历史组", "ownerId": 81, "ownerName": "黄药师8" },
+    { "id": 9, "name": "地理组", "ownerId": 91, "ownerName": "黄药师9" }
   ],
   "teachers": [
     { "id": 11, "name": "黄药师1", "group": 1, "distributed": false },
