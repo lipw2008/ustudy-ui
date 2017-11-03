@@ -1,6 +1,6 @@
 [
-  {"examId":"1","questionId":1,"ownerId": 31, "teachersIds":[31],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]},
-  {"examId":"1","questionId":2,"ownerId": 32, "teachersIds":[32],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]},
-  {"examId":"1","questionId":3,"ownerId": 31, "teachersIds":[33],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]},
-  {"examId":"1","questionId":4,"ownerId": 31, "teachersIds":[34,35],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]}
+  {"examId":"1","questionId":1,"type": "平均", "teachersIds":[31],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]},
+  {"examId":"1","questionId":2,"type": "平均", "ownerId": 32, "teachersIds":[32],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]},
+  {"examId":"1","questionId":3,"type": "平均", "ownerId": 31, "teachersIds":[33],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]},
+  {"examId":"1","questionId":4,"type": "平均", "ownerId": 31, "teachersIds":[34,35],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[]}
 ]

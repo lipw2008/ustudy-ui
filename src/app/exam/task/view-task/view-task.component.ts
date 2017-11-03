@@ -63,9 +63,13 @@ export class ViewTaskComponent implements OnInit {
   }
 
   setOwner(task: any, $event: any) {
+    if ($event.target.value === 0) {
+      return
+    }
     this._taskService.updateMarkTask({ownerId: $event.target.value}).then((res: any) => {
         if (res.success) {
-          alert('任务：负责人更新成功')
+          alert('任务：负责人更新成功');
+          task.ownerId = Number($event.target.value)
         } else {
           alert('任务：负责人更新失败')
         }
@@ -77,7 +81,11 @@ export class ViewTaskComponent implements OnInit {
     this._taskService.deleteMarkTask(task.id).then((res: any) => {
       if (res.success) {
         alert('任务：负责人删除成功');
-        _.remove(this.tasks, task)
+        // _.remove(this.tasks, task)
+        delete task.ownerId;
+        task.teachersIds = [];
+        task.finalMarkTeachersIds = [];
+        task.type = ''
       } else {
         alert('任务：负责人删除失败')
       }
