@@ -16,8 +16,6 @@ export class ViewTaskComponent implements OnInit {
 
   markTasks: any;
   gradesubjects: any;
-  grades: any[];
-  selectedGrade: any;
   subjects: any;
   exam: any;
   selectedSubject: any;
@@ -39,7 +37,8 @@ export class ViewTaskComponent implements OnInit {
     this._taskService.getMarkTasks(this.examId).then((data) => {
       this.markTasks = data;
       this._taskService.getExamSubjects(this.examId).then((data) => {
-        this.gradesubjects = data;
+        const gradesubjects = data;
+        this.gradesubjects = _.reduce(_.map(gradesubjects, 'subjects'), (res, i) => res.concat(i), [])
       })
     });
     this._taskService.getQuestions(this.examId, null, this.gradeId, this.subjectId).then((data) => {
@@ -48,9 +47,10 @@ export class ViewTaskComponent implements OnInit {
   }
 
   setFiltetedTasks() {
-    this.tasks = _.filter(this.markTasks, {gradeId: this.selectedGrade.id, subjectId: this.selectedSubject.id})
+    this.tasks = _.filter(this.markTasks, {gradeId: this.selectedSubject.gradeId, subjectId: this.selectedSubject.id});
     this.tasks.forEach((task) => {
-      task.question = _.find(this.questions, {id: task.questionId})
+      task.question = _.find(this.questions, {id: task.questionId});
+      task.group = _.find(this.grade.groups, (group) => _.includes(group.name, this.selectedSubject.subName))
     })
   }
 
@@ -58,7 +58,18 @@ export class ViewTaskComponent implements OnInit {
     return task.teachersIds.map( teacherId => _.find(this.grade.teachers, {id: teacherId}).name)
   }
 
-  getOwner(task: any) {
-    return _.find(this.grade.groups, (group) => _.includes(group.name, this.selectedSubject.subName)).ownerName
+  getGroupMember(group) {
+    return _.filter(this.grade.teachers, {group: group.id})
+  }
+
+  setOwner(task: any, $event: any) {
+    this._taskService.updateMarkTask({ownerId: $event.target.value}).then((res: any) => {
+        if (res.success) {
+          alert('任务：负责人更新成功')
+        } else {
+          alert('任务：负责人更新失败')
+        }
+      }
+    )
   }
 }

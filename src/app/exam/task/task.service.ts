@@ -60,6 +60,15 @@ export class TaskService {
     })
   }
 
+  updateMarkTask(json) {
+    return new Promise((resolve, reject) => {
+      console.log('update task:', JSON.stringify(json));
+      resolve({success: true});
+      // this._sharedService.makeRequest('POST', 'marktask/update/', '').then((data: any) => {
+      // }
+    })
+  }
+
   creatMarkTask(json) {
     console.log('create task:', JSON.stringify(json));
     return new Promise((resolve, reject) => {
@@ -79,7 +88,7 @@ export class TaskService {
     })
   }
 
-  getExamSubjects(examId) {
+  getExamSubjects(examId): any {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET', '/api/examsubject/getExamSubjects/' + examId, '').then((data: any) => {
         if (data.success) {

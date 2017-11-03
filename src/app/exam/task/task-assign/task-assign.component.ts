@@ -45,7 +45,7 @@ export class TaskAssignComponent implements OnInit {
 
   submit() {
     this._taskService.creatMarkTask({examId: this.examId, questionId: this.selectedQuestion.id, teachersIds: this.selectedTeacherIds,
-      gradeId: this.gradeId, subjectId: this.subjectId,
+      gradeId: this.gradeId, subjectId: this.subjectId, ownerId: _.find(this.grade.groups, (group) => _.includes(group.name, this.subject)),
       finalMarkTeachersIds: _.without(this.selectedFinalTeacherIds, this.selectedTeacherIds)}).then((data) => {
       console.log(data);
       if (_.get(data, 'success')) {
