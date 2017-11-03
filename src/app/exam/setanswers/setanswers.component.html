@@ -73,7 +73,7 @@
 										<input type="text" class="form-control" id="score_{{objective.id}}" size="5" value="{{objective.score}}" (change)="onValueChange(5,objective.id)">
 										<span class="input-group-addon clear-border clear-bg">分/题</span>
 										<div class="input-group pull-right" *ngIf="objective.type === '多选题'">
-											<a class="btn btn-link" (click)="showCheckBoxScore()"><i class="glyphicon glyphicon-cog"></i></a>
+											<a class="btn btn-link" (click)="showCheckBoxScore(objective.choiceNum,objective.score)"><i class="glyphicon glyphicon-cog"></i></a>
 										</div>
 									</div>
 								</td>
@@ -266,15 +266,15 @@
 								<div class="col-sm-11 btn-toolbar">
 									<div class="extra btn-group" data-toggle="buttons">
 										<ng-container *ngFor="let checkBoxScore of checkBoxScores">
-											<ng-container *ngIf="checkBoxScore.seted">
-												<a class="btn btn-primary" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
+											<ng-container *ngIf="checkBoxScore.size === currentCheckBox">
+												<a class="btn btn-info" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
 											</ng-container>
-											<ng-container *ngIf="!checkBoxScore.seted">
-												<ng-container *ngIf="checkBoxScore.size === currentCheckBox">
-													<a class="btn btn-info" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
+											<ng-container *ngIf="checkBoxScore.size !== currentCheckBox">
+												<ng-container *ngIf="checkBoxScore.seted">
+													<a class="btn btn-primary" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
 												</ng-container>
-												<ng-container *ngIf="checkBoxScore.size !== currentCheckBox">
-													<a class="btn btn-default" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
+												<ng-container *ngIf="!checkBoxScore.seted">
+														<a class="btn btn-default" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
 												</ng-container>
 											</ng-container>
 										</ng-container>
@@ -319,7 +319,12 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeCheckBoxModal()">取消</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="setNextCheckBoxScore()">确定</button>
+						<ng-container *ngIf="currentCheckBox < objectiveChoiceNum">
+							<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="setNextCheckBoxScore()">下一个</button>
+						</ng-container>
+						<ng-container *ngIf="currentCheckBox === objectiveChoiceNum">
+							<button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeCheckBoxModal()">确定</button>
+						</ng-container>
 					</div>
 				</div>
 			</div>

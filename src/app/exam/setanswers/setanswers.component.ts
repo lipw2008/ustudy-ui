@@ -354,10 +354,20 @@ export class SetAnswersComponent implements OnInit {
 
 				if(valueType === 1){
 					start = Number(this.elementRef.nativeElement.querySelector('#start_' + id).value);
-					obj['startno'] = start;					
+					if(!start || start < 1 || start > end){
+						start = obj['startno'];
+					}else{
+						obj['startno'] = start;
+					}
+					this.elementRef.nativeElement.querySelector('#start_' + id).value = start;
 				}else if(valueType === 2){
 					end = Number(this.elementRef.nativeElement.querySelector('#end_' + id).value);
-					obj['endno'] = end;
+					if(!end || end < 1 || end < start){
+						end = obj['endno'];
+					}else{
+						obj['endno'] = end;
+					}
+					this.elementRef.nativeElement.querySelector('#end_' + id).value = end;
 				}else if(valueType === 3){
 					type = this.elementRef.nativeElement.querySelector('#type_' + id).value;
 					obj['type'] = type;
@@ -371,10 +381,14 @@ export class SetAnswersComponent implements OnInit {
 					obj['choiceNum'] = choiceNum;
 				}else if(valueType === 5){
 					score = Number(this.elementRef.nativeElement.querySelector('#score_' + id).value);
-					obj['score'] = score;
+					if(!score || score < 1){
+						score = obj['score'];
+					}else{
+						obj['score'] = score;
+					}
+					this.elementRef.nativeElement.querySelector('#score_' + id).value = score;
 				}
 
-				//this.addScore(obj);
 				this.addAnswers(obj);
 				this.setDefaultCheckBoxScore(obj);
 			}
@@ -518,6 +532,13 @@ export class SetAnswersComponent implements OnInit {
 					childs.forEach(child => {
 						if (child.quesno === childId) {
 							let value = this.elementRef.nativeElement.querySelector('#subjective_'+valueType + '_' + id +'_' + childId).value;
+							if(valueType === 'score'){
+								value = Number(value);
+								if(!value || value < 1){
+									value = child.score;
+									this.elementRef.nativeElement.querySelector('#subjective_'+valueType + '_' + id +'_' + childId).value = value;
+								}
+							}
 							child[valueType] = value;
 						}
 					});
@@ -528,9 +549,16 @@ export class SetAnswersComponent implements OnInit {
 
 						this.subjectiveCount = this.subjectiveCount - (subjective.endno - subjective.startno + 1);
 						this.subjectiveScore = this.subjectiveScore - (subjective.endno - subjective.startno + 1) * subjective.score;
+						
+						value = Number(value);
+						if(!value || value < 1){
+							value = subjective.startno;
+						}else if(value > subjective.endno){
+							value = subjective.endno;
+						}
 
-						subjective.startno = Number(value);
-						subjective.quesno = Number(value);
+						subjective.startno = value;
+						subjective.quesno = value;
 						if(subjective.endno < subjective.startno){
 							subjective.endno = subjective.startno;
 						}
@@ -538,18 +566,19 @@ export class SetAnswersComponent implements OnInit {
 						this.subjectiveCount = this.subjectiveCount + (subjective.endno - subjective.startno + 1);
 						this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * subjective.score;
 
-						// if(subjective.type === '填空题'){
-						// 	this.subjectiveCount = this.subjectiveCount + subjective.startno - value;
-						// 	this.subjectiveScore = this.subjectiveScore + (subjective.startno - value) * subjective.score;
-						// }else{
-						// 	subjective.endno = subjective.startno;
-						// }
 					} else if (valueType === 'end') {
 
 						this.subjectiveCount = this.subjectiveCount - (subjective.endno - subjective.startno + 1);
 						this.subjectiveScore = this.subjectiveScore - (subjective.endno - subjective.startno + 1) * subjective.score;
 
-						subjective.endno = Number(value);
+						value = Number(value);
+						if(!value || value < 1){
+							value = subjective.endno;
+						}else if(value < subjective.startno){
+							value = subjective.startno;
+						}
+
+						subjective.endno = value;
 						if(subjective.endno < subjective.startno){
 							subjective.startno = subjective.endno;
 							subjective.quesno = subjective.endno;
@@ -558,41 +587,54 @@ export class SetAnswersComponent implements OnInit {
 						this.subjectiveCount = this.subjectiveCount + (subjective.endno - subjective.startno + 1);
 						this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * subjective.score;
 
-						// this.subjectiveCount = this.subjectiveCount - subjective.startno + value;
-						// this.subjectiveScore = this.subjectiveScore + (value - subjective.endno ) * subjective.score;
 					} else if (valueType === 'type') {
 						subjective[valueType] = value;
-						// if(subjective.type === '填空题' || value === 4){
-						// 	if (subjective.type === '填空题') {
-						// 		this.subjectiveCount = this.subjectiveCount - subjective.endno + subjective.startno;
-						// 		this.subjectiveScore = this.subjectiveScore - (subjective.endno - subjective.startno) * subjective.score;
-						// 	} else {
-						// 		this.subjectiveCount = this.subjectiveCount + subjective.endno - subjective.startno;
-						// 		this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno) * subjective.score;
-						// 	}
-						// }
 					} else if (valueType === 'score') {
+
+						value = Number(value);
+						if(!value || value < 1){
+							value = subjective.score;
+						}
+
 						this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * (value - subjective.score);
 						subjective[valueType] = value;
-						// if(subjective.type === '填空题'){
-						// 	this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * (value - subjective.score);
-						// } else {
-						// 	this.subjectiveScore = this.subjectiveScore + value - subjective.score;
-						// }
 					}
-					
-					// subjective[valueType] = value;
+					this.elementRef.nativeElement.querySelector('#subjective_'+valueType+'_' + id).value = value;
 				}
 			}
 		});
 	}
 
-	showCheckBoxScore(){
+	objectiveChoiceNum = 2;
+	objectiveScore_ = 1
+
+	showCheckBoxScore(choiceNum, score){
+		this.initCheckBoxScores(choiceNum, score);
 		this.elementRef.nativeElement.querySelector('#infoModal').style.display = '';
 	}
 
+	initCheckBoxScores(choiceNum, score){
+		this.objectiveChoiceNum = choiceNum;
+		this.objectiveScore_ = score;
+		// this.checkBoxScores = [];
+		this.currentCheckBox = 2;
+		if(this.checkBoxScores.length === 0){
+			for (var i=2;i <= choiceNum; i++) {
+				let scores_ = [];
+				for (var j=1; j < i; j++) {
+					scores_.push({count:j, score:0});
+				}
+				this.checkBoxScores.push({size:i, seted:false, scores:scores_});
+			}
+		}
+	}
+
 	closeCheckBoxModal(){
+		if(this.checkBoxScores.length>0){
+			this.checkBoxScores[this.checkBoxScores.length -1].seted = true;
+		}
 		this.elementRef.nativeElement.querySelector('#infoModal').style.display = 'none';
+		console.error(JSON.stringify(this.checkBoxScores));
 	}
 
 	setDefaultCheckBoxScore(objective){
@@ -611,7 +653,13 @@ export class SetAnswersComponent implements OnInit {
 	}
 
 	setCheckBoxScore(size, count){
-		let score = this.elementRef.nativeElement.querySelector('#checkBoxScore_' + size + '_' + count).value;
+		let score = Number(this.elementRef.nativeElement.querySelector('#checkBoxScore_' + size + '_' + count).value);
+		if(!score || score < 0){
+			score = 0;
+		}else if(score > this.objectiveScore_){
+			score = this.objectiveScore_;
+		}
+		this.elementRef.nativeElement.querySelector('#checkBoxScore_' + size + '_' + count).value = score;
 		this.checkBoxScores.forEach(element => {
 			if (element.size === size) {
 				element.scores.forEach(element_ => {
@@ -644,6 +692,21 @@ export class SetAnswersComponent implements OnInit {
 		data['objectives'] = this.objectives;
 		data['subjectives'] = this.subjectives;
 		data['objectiveAnswers'] = this.objectiveAnswers;
+
+		if(this.checkBoxScores.length === 0){
+			this.objectives.forEach(objective => {
+				if(objective.type === '多选题'){
+					if(objective.choiceNum > this.objectiveChoiceNum){
+						this.objectiveChoiceNum = objective.choiceNum;
+					}
+					if(objective.score > this.objectiveScore_){
+						this.objectiveScore_ = objective.score;
+					}
+				}
+			});
+		}
+		this.initCheckBoxScores(this.objectiveChoiceNum, this.objectiveScore_);
+		data['checkBoxScores'] = this.checkBoxScores;
 		//console.error(JSON.stringify(this.subjectives));
 		this._sharedService.makeRequest('POST', '/api/setanswers/saveAnswers/' + this.egsId, JSON.stringify(data)).then((data: any) => {
 			if (data.success) {
