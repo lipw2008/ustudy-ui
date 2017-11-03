@@ -47,7 +47,9 @@
           </div>
         </td>
         <td>{{getTeachers(task)}}</td>
-        <td></td>
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="deleteTask(task)">删除</button>
+        </td>
       </tr>
     </tbody>
   </table>

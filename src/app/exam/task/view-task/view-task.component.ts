@@ -72,4 +72,15 @@ export class ViewTaskComponent implements OnInit {
       }
     )
   }
+
+  deleteTask(task: any) {
+    this._taskService.deleteMarkTask(task.id).then((res: any) => {
+      if (res.success) {
+        alert('任务：负责人删除成功');
+        _.remove(this.tasks, task)
+      } else {
+        alert('任务：负责人删除失败')
+      }
+    })
+  }
 }

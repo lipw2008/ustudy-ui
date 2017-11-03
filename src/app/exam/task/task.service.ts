@@ -60,6 +60,15 @@ export class TaskService {
     })
   }
 
+  deleteMarkTask(id) {
+    return new Promise((resolve, reject) => {
+      console.log('delete task:', id);
+      resolve({success: true});
+      // this._sharedService.makeRequest('POST', 'marktask/delete/' + id, '').then((data: any) => {
+      // }
+    })
+  }
+
   updateMarkTask(json) {
     return new Promise((resolve, reject) => {
       console.log('update task:', JSON.stringify(json));
@@ -97,4 +106,5 @@ export class TaskService {
       })
     })
   }
+
 }
