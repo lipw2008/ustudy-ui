@@ -14,7 +14,7 @@ export class TaskAssignComponent implements OnInit {
   gradeId: string;
   subjectId: string;
   subject: string;
-  seted: boolean;
+  questionId: string;
   questions: any;
   assignType = '平均';
   markType = '单评';
@@ -22,6 +22,8 @@ export class TaskAssignComponent implements OnInit {
   selectedQuestion: any;
   selectedTeacherIds: any;
   selectedFinalTeacherIds = [];
+  withTeachersIds = [];
+  withFinalTeachersIds = [];
 
   constructor(private _taskService: TaskService, private route: ActivatedRoute, private router: Router, private _location: Location) { }
 
@@ -30,12 +32,29 @@ export class TaskAssignComponent implements OnInit {
     this.gradeId = this.route.snapshot.params.gradeId;
     this.subjectId = this.route.snapshot.params.subjectId;
     this.subject = this.route.snapshot.params.subject;
-    this.seted = this.route.snapshot.params.seted;
+    this.questionId = this.route.snapshot.params.questionId;
     this._taskService.getGrade(this.gradeId).then((data) => {
       this.grade = data
     });
-    this._taskService.getQuestions(this.examId).then((data) => {
-      this.questions = data
+    this._taskService.getQuestions(this.examId, null, this.gradeId, this.subjectId).then((data) => {
+      if (this.questionId) {
+        this.questions = _.filter(data, {id: Number(this.questionId)});
+        this.selectedQuestion = this.questions[0]
+      } else {
+        this.questions = data
+      }
+    }).then(() => {
+      if (this.questionId) {
+        this._taskService.getTask(this.examId, this.gradeId, this.subjectId, this.questionId).then((data: any) => {
+          if (_.includes(['平均', '动态'], data.type)) {
+            this.assignType = data.type;
+          }
+          this.markType = _.isEmpty(data.finalMarkTeachersIds) ? '单评' : '双评';
+          this.withTeachersIds = data.teachersIds;
+          this.selectedTeacherIds = _.clone(this.withTeachersIds);
+          this.withFinalTeachersIds = data.finalMarkTeachersIds;
+        })
+      }
     })
   }
 
@@ -44,9 +63,10 @@ export class TaskAssignComponent implements OnInit {
   }
 
   submit() {
-    this._taskService.submit({examId: this.examId, questionId: this.selectedQuestion.id,
-      teachersIds: this.selectedTeacherIds, finalMarkTeachersIds: _.without(this.selectedTeacherIds,
-        this.selectedFinalTeacherIds)}).then((data) => {
+    const method = this.questionId ? this._taskService.creatMarkTask : this._taskService.updateMarkTask;
+    method({examId: this.examId, questionId: this.selectedQuestion.id, teachersIds: this.selectedTeacherIds, type: this.assignType,
+      gradeId: this.gradeId, subjectId: this.subjectId, ownerId: _.find(this.grade.groups, (group) => _.includes(group.name, this.subject)),
+      finalMarkTeachersIds: _.without(this.selectedFinalTeacherIds, this.selectedTeacherIds)}).then((data) => {
       console.log(data);
       if (_.get(data, 'success')) {
         this.selectedQuestion.created = true;

@@ -178,7 +178,7 @@ export class SetAnswersComponent implements OnInit {
   }
 
   loaAlldSubjects() {
-    this._sharedService.makeRequest('GET', '/api/subject/getSubjects', '').then((data: any) => {
+    this._sharedService.makeRequest('GET', '/api/subjects', '').then((data: any) => {
       if (data.success) {
         this.allsubjects = data.data;
       }
@@ -189,7 +189,7 @@ export class SetAnswersComponent implements OnInit {
   }
 
   getQuesAnswers(egsId, examId, gradeId, subjectId) {
-    this._sharedService.makeRequest('GET', '/api/setanswers/getAnswers/' + egsId, '').then((data: any) => {
+    this._sharedService.makeRequest('GET', '/api/setanswers/answers/' + egsId, '').then((data: any) => {
       if (data.success) {
         data = data.data;
         const quesAnswers = data.quesAnswers;
@@ -702,7 +702,7 @@ export class SetAnswersComponent implements OnInit {
     }
     this.initCheckBoxScores(this.objectiveChoiceNum, this.objectiveScore_);
     data['checkBoxScores'] = this.checkBoxScores;
-    this._sharedService.makeRequest('POST', '/api/setanswers/saveAnswers/' + this.egsId, JSON.stringify(data)).then((data: any) => {
+    this._sharedService.makeRequest('POST', '/api/setanswers/answers/' + this.egsId, JSON.stringify(data)).then((data: any) => {
       if (data.success) {
         alert("保存成功！");
       }

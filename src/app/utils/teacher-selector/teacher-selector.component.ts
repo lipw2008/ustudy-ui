@@ -11,6 +11,7 @@ export class TeacherSelectorComponent implements OnInit, OnChanges {
   @Input() grade: any;
   @Input() subject: string;
   @Input() without = [];
+  @Input() with = [];
   @Output() selectResult = new EventEmitter();
   config = TreeviewConfig.create({
     hasAllCheckBox: false,
@@ -31,7 +32,8 @@ export class TeacherSelectorComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change) {
-    if (change.grade && change.grade.currentValue || change.without && change.without.currentValue) {
+    if (change.grade && change.grade.currentValue || change.without && change.without.currentValue
+      || change.with && change.with.currentValue) {
       this.buildTreeViewData()
     }
   }
@@ -46,11 +48,12 @@ export class TeacherSelectorComponent implements OnInit, OnChanges {
         teacher.text = teacher.name;
         teacher.value = teacher.id;
         teacher.disabled = _.includes(this.without, teacher.id);
+        teacher.checked = _.includes(this.with, teacher.id);
         return teacher
       });
       let item;
       item = new TreeviewItem(group);
-      item.setCheckedRecursive(false);
+      // item.setCheckedRecursive(false);
       items.push(item)
     }
     this.items = items
