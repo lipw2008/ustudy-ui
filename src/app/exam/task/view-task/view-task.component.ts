@@ -9,9 +9,9 @@ import * as _ from 'lodash';
   styleUrls: ['./view-task.component.css']
 })
 export class ViewTaskComponent implements OnInit {
-  examId: string;
-  gradeId: string;
-  subjectId: string;
+  examId: number;
+  gradeId: number;
+  subjectId: number;
   seted: boolean;
 
   markTasks: any;
@@ -26,9 +26,9 @@ export class ViewTaskComponent implements OnInit {
   constructor(private _taskService: TaskService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.examId = this.route.snapshot.params.examId;
-    this.gradeId = this.route.snapshot.params.gradeId;
-    this.subjectId = this.route.snapshot.params.subjectId;
+    this.examId = Number(this.route.snapshot.params.examId);
+    this.gradeId = Number(this.route.snapshot.params.gradeId);
+    this.subjectId = Number(this.route.snapshot.params.subjectId);
     this.seted = this.route.snapshot.params.seted;
     this.exam = this.route.snapshot.params.exam;
     this._taskService.getGrade(this.gradeId).then((data) => {
@@ -38,24 +38,33 @@ export class ViewTaskComponent implements OnInit {
       this.markTasks = data;
       this._taskService.getExamSubjects(this.examId).then((data) => {
         const gradesubjects = data;
-        this.gradesubjects = _.reduce(_.map(gradesubjects, 'subjects'), (res, i) => res.concat(i), [])
+        this.gradesubjects = _.reduce(_.map(gradesubjects, 'subjects'), (res, i) => res.concat(i), []);
+        if (this.subjectId) {
+          for (const subject of this.gradesubjects) {
+            if (subject.subId === this.subjectId && subject.gradeId === this.gradeId && subject.examid === this.examId) {
+              this.selectedSubject = subject;
+              this.setFiltetedTasks()
+            }
+          }
+        }
       })
     });
-    this._taskService.getQuestions(this.examId, null, this.gradeId, this.subjectId).then((data) => {
-      this.questions = data
-    })
   }
 
   setFiltetedTasks() {
-    this.tasks = _.filter(this.markTasks, {gradeId: this.selectedSubject.gradeId, subjectId: this.selectedSubject.id});
-    this.tasks.forEach((task) => {
-      task.question = _.find(this.questions, {id: task.questionId});
-      task.group = _.find(this.grade.groups, (group) => _.includes(group.name, this.selectedSubject.subName))
+    this._taskService.getQuestions(this.examId, null, this.selectedSubject.gradeId, this.selectedSubject.subId).then((data) => {
+      this.questions = data;
+      this.tasks = _.filter(this.markTasks, {gradeId: this.selectedSubject.gradeId, subjectId: this.selectedSubject.id});
+      this.tasks.forEach((task) => {
+        task.question = _.find(this.questions, {id: task.questionId});
+        task.group = _.find(this.grade.groups, (group) => _.includes(group.name, this.selectedSubject.subName))
+      })
     })
   }
 
   getTeachers(task: any) {
     return task.teachersIds.map( teacherId => _.find(this.grade.teachers, {id: teacherId}).name)
+      .concat( task.finalMarkTeachersIds.map( teacherId => _.find(this.grade.teachers, {id: teacherId}).name))
   }
 
   getGroupMember(group) {
@@ -91,4 +100,11 @@ export class ViewTaskComponent implements OnInit {
       }
     })
   }
+
+  editTask(task: any) {
+    this.router.navigate(['/taskassign', { examId: this.examId, gradeId: this.gradeId,
+      subjectId: this.selectedSubject.id, questionId: task.questionId, subject: this.selectedSubject.subName}]);
+  }
+
+
 }

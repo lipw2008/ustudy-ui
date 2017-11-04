@@ -10,7 +10,9 @@
   <div class="form-inline">
     <div class="input-group">
       <select class="form-control" [(ngModel)]="selectedSubject" (change)="setFiltetedTasks()">
-        <option *ngFor="let subject of gradesubjects" [ngValue]="subject">{{subject.gradeName}}{{subject.subName}}</option>
+        <option *ngFor="let subject of gradesubjects" [ngValue]="subject">
+          {{subject.gradeName}}{{subject.subName}}
+        </option>
       </select>
     </div>
 
@@ -49,6 +51,7 @@
         </td>
         <td>{{getTeachers(task)}}</td>
         <td>
+          <button class="btn btn-sm btn-primary" (click)="editTask(task)">编辑</button>
           <button class="btn btn-sm btn-primary" (click)="deleteTask(task)">删除</button>
         </td>
       </tr>

@@ -18,8 +18,8 @@
         </td>
         <td>
           <select class="form-control" [(ngModel)]="selectedQuestion" (change)="setSelectedQuestion($event)">
-						<option value="0" selected>选择考题</option>
-						<option *ngFor="let question of questions" [ngValue]="question">{{question.questionName}}</option>
+            <option value="0" [selected]="!questionId">选择考题</option>
+						<option *ngFor="let question of questions" [ngValue]="question" [selected]="questionId === question.id">{{question.questionName}}</option>
 					</select>
         </td>
       </tr>
@@ -71,7 +71,8 @@
           阅卷老师选择:
         </td>
         <td>
-          <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedTeacherIds = $event"></teacher-selector>
+          <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedTeacherIds = $event"
+                            [with]="withTeachersIds"></teacher-selector>
         </td>
       </tr>
       <tr *ngIf="markType==='双评'">
@@ -80,7 +81,7 @@
         </td>
         <td>
           <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedFinalTeacherIds = $event"
-                            [without]="selectedTeacherIds"></teacher-selector>
+                            [without]="selectedTeacherIds" [with]="withFinalTeachersIds"></teacher-selector>
         </td>
       </tr>
       <tr>
