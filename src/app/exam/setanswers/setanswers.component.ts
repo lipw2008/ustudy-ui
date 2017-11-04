@@ -77,11 +77,6 @@ export class SetAnswersComponent implements OnInit {
 		if(this.seted){
 			this.getQuesAnswers(this.egsId, this.examId, this.gradeId, this.subjectId);
 		}
-
-		// this.objectives.forEach(objective => {
-		// 	this.addAnswers(objective);
-		// 	this.setDefaultCheckBoxScore(objective);			
-		// });
 		
 	}
 
@@ -197,9 +192,8 @@ export class SetAnswersComponent implements OnInit {
 		this._sharedService.makeRequest('GET', '/api/setanswers/getAnswers/' + egsId, '').then((data: any) => {
 			if (data.success) {
 				data = data.data;
-				const refAnswers = data.refAnswers;
 				const quesAnswers = data.quesAnswers;
-
+				
 				this.objectives = [];
 				this.subjectives = [];
 				quesAnswers.forEach(quesAnswer => {
@@ -211,10 +205,12 @@ export class SetAnswersComponent implements OnInit {
 						this.subjectives.push(quesAnswer);
 					}
 				});
-
+				
 				this.resetDatas();
-				this.objectiveAnswers = refAnswers;
+				this.objectiveAnswers = data.refAnswers;
 				this.resetOptions();
+
+				this.checkBoxScores = data.checkBoxScores;
 			}
 		}).catch((error: any) => {
 			console.log(error.status);
@@ -634,7 +630,6 @@ export class SetAnswersComponent implements OnInit {
 			this.checkBoxScores[this.checkBoxScores.length -1].seted = true;
 		}
 		this.elementRef.nativeElement.querySelector('#infoModal').style.display = 'none';
-		console.error(JSON.stringify(this.checkBoxScores));
 	}
 
 	setDefaultCheckBoxScore(objective){
@@ -707,7 +702,6 @@ export class SetAnswersComponent implements OnInit {
 		}
 		this.initCheckBoxScores(this.objectiveChoiceNum, this.objectiveScore_);
 		data['checkBoxScores'] = this.checkBoxScores;
-		//console.error(JSON.stringify(this.subjectives));
 		this._sharedService.makeRequest('POST', '/api/setanswers/saveAnswers/' + this.egsId, JSON.stringify(data)).then((data: any) => {
 			if (data.success) {
 				alert("保存成功！");
