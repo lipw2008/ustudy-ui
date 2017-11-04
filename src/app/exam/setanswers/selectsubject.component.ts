@@ -80,27 +80,27 @@ export class SelectSubjectComponent implements OnInit {
     this.loadExams();
   }
 
-	loadExams() {
-		this._sharedService.makeRequest('GET', '/api/exam/getExams/0', '').then((data: any) => {
-			if (data.success) {
-				this.exams = data.data; 
-			}
-		}).catch((error: any) => {
-			console.error(error.status);
-			console.error(error.statusText);
-		});
-	}
-	
-	loadExamSubjects(examId) {
-		this._sharedService.makeRequest('GET', '/api/examsubject/getExamSubjects/'+examId, '').then((data: any) => {
-			if (data.success) {
-				this.gradesubjects = data.data; 
-			}
-		}).catch((error: any) => {
-			console.error(error.status);
-			console.error(error.statusText);
-		});
-	}
+  loadExams() {
+    this._sharedService.makeRequest('GET', '/api/exam/getExams/0', '').then((data: any) => {
+      if (data.success) {
+        this.exams = data.data;
+      }
+    }).catch((error: any) => {
+      console.error(error.status);
+      console.error(error.statusText);
+    });
+  }
+
+  loadExamSubjects(examId) {
+    this._sharedService.makeRequest('GET', '/api/examsubject/getExamSubjects/' + examId, '').then((data: any) => {
+      if (data.success) {
+        this.gradesubjects = data.data;
+      }
+    }).catch((error: any) => {
+      console.error(error.status);
+      console.error(error.statusText);
+    });
+  }
 
   getExam(evt) {
     const examId = evt.target.value;
@@ -113,17 +113,17 @@ export class SelectSubjectComponent implements OnInit {
     }
   }
 
-	setAnswers(egsId,gradeId,subjectId,seted) {
-		this.router.navigate(['setanswers', {egsId: egsId, examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
-	}
+  setAnswers(egsId, gradeId, subjectId, seted) {
+    this.router.navigate(['setanswers', { egsId: egsId, examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
+  }
 
-	setTasks(gradeId,subjectId,seted, subName) {
-		// XXX: skip this step for now
+  setTasks(gradeId, subjectId, seted, subName) {
+    // XXX: skip this step for now
     // if (this.isCreated) {
     //   this.router.navigate(['taskallocation', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
     // } else {
     //   this.router.navigate(['setobjectivesno', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
     // }
     this.router.navigate(['/taskassign', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted, subject: subName }]);
-	}
+  }
 }
