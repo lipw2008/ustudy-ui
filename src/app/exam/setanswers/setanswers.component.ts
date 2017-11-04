@@ -117,7 +117,7 @@ export class SetAnswersComponent implements OnInit {
 
   resetDatas() {
 
-    this.objectiveAnswers = [];
+    //this.objectiveAnswers = [];
 
     this.radioScore = 0;
     this.checkboxScore = 0;
@@ -206,11 +206,11 @@ export class SetAnswersComponent implements OnInit {
           }
         });
 
-        this.resetDatas();
         this.objectiveAnswers = data.refAnswers;
-        this.resetOptions();
-
         this.checkBoxScores = data.checkBoxScores;
+        
+        this.resetDatas();
+        this.resetOptions();
       }
     }).catch((error: any) => {
       console.log(error.status);
@@ -281,11 +281,20 @@ export class SetAnswersComponent implements OnInit {
       }
 
       for (var j = start; j <= end; j++) {
-        const answer = { quesno: j, type: objective.type, choiceNum: objective.choiceNum, options: _option, answer: 'A', branch: '不分科' };
-        if (type === '判断题') {
-          answer.answer = 'Y';
+        var answersSeted = false;
+        this.objectiveAnswers.forEach(objectiveAnswer =>{
+          if(objectiveAnswer.quesno === j){
+            answersSeted = true;
+          }
+        });
+  
+        if(!answersSeted){
+          const answer = { quesno: j, type: objective.type, choiceNum: objective.choiceNum, options: _option, answer: 'A', branch: '不分科' };
+          if (type === '判断题') {
+            answer.answer = 'Y';
+          }
+          this.objectiveAnswers.push(answer);
         }
-        this.objectiveAnswers.push(answer);
       }
 
       if (type === '单选题') {
