@@ -221,14 +221,14 @@ export class SetAnswersComponent implements OnInit {
   addOneRow() {
     if (this.objectives.length > 0) {
       const obj = this.objectives[this.objectives.length - 1];
-      const obj_ = { id: new Date().getTime(), quesno: 0, startno: 1, endno: 20, type: '单选题', choiceNum: 4, score: 1, branch: '不分科' };
+      const obj_ = { id: 0-new Date().getTime(), quesno: 0, startno: 1, endno: 10, type: '单选题', choiceNum: 4, score: 1, branch: '不分科' };
       obj_['startno'] = obj['endno'] + 1;
       obj_['endno'] = obj_['startno'];
       this.objectives.push(obj_);
 
       this.addAnswers(obj_);
     } else {
-      const obj = { id: 1, quesno: 0, startno: 1, endno: 20, type: '单选题', choiceNum: 4, score: 1, branch: '不分科' };
+      const obj = { id: 0-new Date().getTime(), quesno: 0, startno: 1, endno: 10, type: '单选题', choiceNum: 4, score: 1, branch: '不分科' };
       this.objectives.push(obj);
 
       this.addAnswers(obj);
@@ -343,59 +343,243 @@ export class SetAnswersComponent implements OnInit {
     this.objectiveScore = this.objectiveScore - total;
   }
 
+  startValueChange(oldStart,newStart,type,score){
+    let total = (oldStart - newStart) * score;
+    if (type === '单选题') {
+      this.radioScore = this.radioScore + total;
+    } else if (type === '多选题') {
+      this.checkboxScore = this.checkboxScore + total;
+    } else if (type === '判断题') {
+      this.judgmentScore = this.judgmentScore + total;
+    }
+    this.objectiveScore = this.objectiveScore + total;
+    if(oldStart > newStart){
+      let choiceNum = 4;
+      let _option = [];
+
+      if (type === '判断题') {
+        _option.push({ name: 'Y', checked: true });
+        _option.push({ name: 'N', checked: false });
+      } else {
+        for (var i = 0; i < choiceNum; i++) {
+          let checked = false;
+          if (i === 0) checked = true;
+          _option.push({ name: this.selectOptions[i], checked: checked });
+        }
+      }
+
+      for (var j = newStart; j < oldStart; j++) {
+        var answersSeted = false;
+        this.objectiveAnswers.forEach(objectiveAnswer =>{
+          if(objectiveAnswer.quesno === j){
+            answersSeted = true;
+          }
+        });
+  
+        if(!answersSeted){
+          const answer = { quesno: j, type: type, choiceNum: choiceNum, options: _option, answer: 'A', branch: '不分科' };
+          if (type === '判断题') {
+            answer.answer = 'Y';
+          }
+          this.objectiveAnswers.push(answer);
+        }
+      }
+    }else if(oldStart < newStart){
+      const answers = [];
+      
+      this.objectiveAnswers.forEach(answer => {
+        const quesno = answer['quesno'];
+        if (!(quesno >= oldStart && quesno < newStart && answer['type'] === type)) {
+          answers.push(answer);
+        }
+        
+      });
+      this.objectiveAnswers = answers;
+    }
+  }
+
+  endValueChange(oldEnd,newEnd,type,score){
+    let total = (newEnd - oldEnd) * score;
+    if (type === '单选题') {
+      this.radioScore = this.radioScore + total;
+    } else if (type === '多选题') {
+      this.checkboxScore = this.checkboxScore + total;
+    } else if (type === '判断题') {
+      this.judgmentScore = this.judgmentScore + total;
+    }
+    this.objectiveScore = this.objectiveScore + total;
+    if(oldEnd < newEnd){
+      let choiceNum = 4;
+      let _option = [];
+
+      if (type === '判断题') {
+        _option.push({ name: 'Y', checked: true });
+        _option.push({ name: 'N', checked: false });
+      } else {
+        for (var i = 0; i < choiceNum; i++) {
+          let checked = false;
+          if (i === 0) checked = true;
+          _option.push({ name: this.selectOptions[i], checked: checked });
+        }
+      }
+
+      for (var j = oldEnd + 1; j <= newEnd; j++) {
+        var answersSeted = false;
+        this.objectiveAnswers.forEach(objectiveAnswer =>{
+          if(objectiveAnswer.quesno === j){
+            answersSeted = true;
+          }
+        });
+  
+        if(!answersSeted){
+          const answer = { quesno: j, type: type, choiceNum: choiceNum, options: _option, answer: 'A', branch: '不分科' };
+          if (type === '判断题') {
+            answer.answer = 'Y';
+          }
+          this.objectiveAnswers.push(answer);
+        }
+      }
+    }else if(oldEnd > newEnd){
+      const answers = [];
+      
+      this.objectiveAnswers.forEach(answer => {
+        const quesno = answer['quesno'];
+        if (!(quesno > newEnd && quesno <= oldEnd && answer['type'] === type)) {
+          answers.push(answer);
+        }
+        
+      });
+      this.objectiveAnswers = answers;
+    }
+  }
+
+  typeValueChange(start,end,type){
+    let choiceNum = 4;
+    let _option = [];
+
+    if (type === '判断题') {
+      choiceNum = 2;
+      _option.push({ name: 'Y', checked: true });
+      _option.push({ name: 'N', checked: false });
+    } else {
+      for (var i = 0; i < choiceNum; i++) {
+        let checked = false;
+        if (i === 0) checked = true;
+        _option.push({ name: this.selectOptions[i], checked: checked });
+      }
+    }
+
+    const answers = [];
+    this.objectiveAnswers.forEach(objectiveAnswer =>{
+      // var answer = objectiveAnswer;
+      for (var j = start; j <= end; j++) {
+        if(objectiveAnswer.quesno === j){
+          objectiveAnswer['options'] = _option;
+          objectiveAnswer['type'] = type;
+          objectiveAnswer['choiceNum'] = choiceNum;
+          if (type === '判断题') {
+            objectiveAnswer['answer'] = 'Y';
+          }else{            
+            objectiveAnswer['answer'] = 'A';
+          }
+        }
+      }
+      answers.push(objectiveAnswer);
+    });
+
+    this.objectiveAnswers = answers;
+  }  
+
+  choiceNumValueChange(start,end,type,choiceNum){
+
+    if (type !== '判断题') {      
+      let _option = [];
+      for (var i = 0; i < choiceNum; i++) {
+        let checked = false;
+        if (i === 0) checked = true;
+        _option.push({ name: this.selectOptions[i], checked: checked });
+      }
+      const answers = [];
+      this.objectiveAnswers.forEach(objectiveAnswer =>{
+        // var answer = objectiveAnswer;
+        for (var j = start; j <= end; j++) {
+          if(objectiveAnswer.quesno === j){
+            objectiveAnswer['options'] = _option;
+            objectiveAnswer['answer'] = 'A';
+          }
+        }
+        answers.push(objectiveAnswer);
+      });
+  
+      this.objectiveAnswers = answers;
+    }
+  }
+
+  scoreValueChange(start,end,type,oldScore,newScore){
+    let total = (end - start + 1) * (newScore - oldScore);
+    if (type === '单选题') {
+      this.radioScore = this.radioScore + total;
+    } else if (type === '多选题') {
+      this.checkboxScore = this.checkboxScore + total;
+    } else if (type === '判断题') {
+      this.judgmentScore = this.judgmentScore + total;
+    }
+    this.objectiveScore = this.objectiveScore + total;
+  }
+
   onValueChange(valueType, id) {
 
     const _objectives = [];
     for (var i = 0; i < this.objectives.length; i++) {
       const obj = this.objectives[i];
       if (obj && obj['id'] === id) {
-        let start = obj['startno'];
-        let end = obj['endno'];
-        let type = obj['type'];
-        let score = obj['score'];
-
-        this.removeScore(obj);
-        this.removeAnswers(obj);
+        let start_ = obj['startno'];
+        let end_ = obj['endno'];
+        let type_ = obj['type'];
+        let score_ = obj['score'];
 
         if (valueType === 1) {
-          start = Number(this.elementRef.nativeElement.querySelector('#start_' + id).value);
-          if (!start || start < 1 || start > end) {
+          var start = Number(this.elementRef.nativeElement.querySelector('#start_' + id).value);
+          if (!start || start < 1 || start > obj['endno']) {
             start = obj['startno'];
           } else {
             obj['startno'] = start;
           }
           this.elementRef.nativeElement.querySelector('#start_' + id).value = start;
+          this.startValueChange(start_,start,type_,score_);
         } else if (valueType === 2) {
-          end = Number(this.elementRef.nativeElement.querySelector('#end_' + id).value);
-          if (!end || end < 1 || end < start) {
+          var end = Number(this.elementRef.nativeElement.querySelector('#end_' + id).value);
+          if (!end || end < 1 || end < obj['startno']) {
             end = obj['endno'];
           } else {
             obj['endno'] = end;
           }
           this.elementRef.nativeElement.querySelector('#end_' + id).value = end;
+          this.endValueChange(end_,end,type_,score_);
         } else if (valueType === 3) {
-          type = this.elementRef.nativeElement.querySelector('#type_' + id).value;
+          var type = this.elementRef.nativeElement.querySelector('#type_' + id).value;
           obj['type'] = type;
           if (type === '单选题' || type === '多选题') {
             obj['choiceNum'] = 4;
           } else if (type === '判断题') {
             obj['choiceNum'] = 2;
           }
+          this.typeValueChange(start_,end_,type);
         } else if (valueType === 4) {
           const choiceNum = Number(this.elementRef.nativeElement.querySelector('#option_' + id).value);
           obj['choiceNum'] = choiceNum;
+          this.choiceNumValueChange(start_,end_,type_,choiceNum);
+          this.setDefaultCheckBoxScore(obj);
         } else if (valueType === 5) {
-          score = Number(this.elementRef.nativeElement.querySelector('#score_' + id).value);
+          var score = Number(this.elementRef.nativeElement.querySelector('#score_' + id).value);
           if (!score || score < 1) {
             score = obj['score'];
           } else {
             obj['score'] = score;
           }
           this.elementRef.nativeElement.querySelector('#score_' + id).value = score;
+          this.scoreValueChange(start_,end_,type_,score_,score);
         }
-
-        this.addAnswers(obj);
-        this.setDefaultCheckBoxScore(obj);
       }
       _objectives.push(obj);
     }
@@ -436,7 +620,7 @@ export class SetAnswersComponent implements OnInit {
   //-------------------------------Subjectives--------------------------------------
 
   subjectives = [
-    { id: 1, quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 }
+    { id: 0-new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 }
   ];
 
   subjectiveCount = 0;
@@ -456,7 +640,7 @@ export class SetAnswersComponent implements OnInit {
 
   addOneSubjectiveRow(id) {
     if (this.subjectives.length > 0) {
-      if (id > 0) {
+      if (id !== 0) {
         this.subjectives.forEach(subjective => {
           if (subjective.id === id) {
             let childs = subjective['child'];
@@ -473,7 +657,7 @@ export class SetAnswersComponent implements OnInit {
         });
       } else {
         const obj = this.subjectives[this.subjectives.length - 1];
-        const obj_ = { id: new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 };
+        const obj_ = { id: 0-new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 };
         if (obj['type'] === '填空题') obj_['startno'] = obj['endno'] + 1;
         else obj_['startno'] = obj['startno'] + 1;
         obj_['endno'] = obj_['startno'];
@@ -485,7 +669,7 @@ export class SetAnswersComponent implements OnInit {
       }
 
     } else {
-      const obj = { id: new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 1, branch: '不分科', score: 1 };
+      const obj = { id: 0-new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 1, branch: '不分科', score: 1 };
       if (this.objectives.length > 0) {
         let objective = this.objectives[this.objectives.length - 1];
         obj.startno = objective.endno + 1;
@@ -714,6 +898,7 @@ export class SetAnswersComponent implements OnInit {
     this._sharedService.makeRequest('POST', '/api/setanswers/answers/' + this.egsId, JSON.stringify(data)).then((data: any) => {
       if (data.success) {
         alert("保存成功！");
+        this.getQuesAnswers(this.egsId, this.examId, this.gradeId, this.subjectId);
       }
     }).catch((error: any) => {
       console.log(error.status);
