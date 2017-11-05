@@ -10,12 +10,23 @@ export class SharedService {
 	public userName: string = '';
 	public userRole: string = '';
 
-    constructor(private _http: Http) {
-    }
+	private baseUrl: string = "http://ustudypaper.oss-cn-hangzhou.aliyuncs.com/"; 
 
-		MD5(pw: string): any {
-			return Md5.hashStr(pw);
-		}
+	constructor(private _http: Http) {
+  }
+
+	getImgUrl(paperImg: string, region: any) : string {
+	  let url = this.baseUrl + paperImg + "?x-oss-process=image/crop,";
+		url += "x_" + region.x + ",";
+		url += "y_" + region.y + ",";
+		url += "w_" + region.w + ",";
+		url += "h_" + region.h;
+		return url;
+	}
+
+  MD5(pw: string): any {
+	  return Md5.hashStr(pw);
+	}
 
 /* Do a http request
 method: http method

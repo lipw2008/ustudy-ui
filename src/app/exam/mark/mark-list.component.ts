@@ -32,7 +32,7 @@ export class MarkListComponent implements OnInit {
 			for (let mark of this.marks) {
 				if (mark.markType === "标准") {
 					let question = {"id": "", "n": ""};
-					question.id = mark.summary[0].questionId;
+					question.id = mark.summary[0].quesid;
 					question.n = mark.summary[0].questionName;
 					this.questionList.push(question);
 				}

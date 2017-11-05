@@ -55,9 +55,45 @@ export class MarkComponent implements OnInit {
 	score: string = "";
 	score2: string = "";
 	score3: string = "";
-	imgPath : string;
-	imgPath2: string = '';
-	imgPath3: string = '';
+	answer = {
+		region: {
+			x: "",
+			y: "",
+			w: "",
+			h: ""
+		},
+		paperImg: "",
+		answerImg: "",
+		answerImgData: "",
+		markImg: "",
+		markImgData: ""
+	};
+	answer2 = {
+		region: {
+			x: "",
+			y: "",
+			w: "",
+			h: ""
+		},
+		paperImg: "",
+		answerImg: "",
+		answerImgData: "",
+		markImg: "",
+		markImgData: ""
+	};
+	answer3 = {
+		region: {
+			x: "",
+			y: "",
+			w: "",
+			h: ""
+		},
+		paperImg: "",
+		answerImg: "",
+		answerImgData: "",
+		markImg: "",
+		markImgData: ""
+	};
 	markCanvas2Display: string = 'none';
 	markCanvas3Display: string = 'none';
 
@@ -76,11 +112,7 @@ export class MarkComponent implements OnInit {
 		question.n = this.route.snapshot.params.questionName;
 		this.markQuestions.push(question);
 		console.log("init mark questions:" + JSON.stringify(this.markQuestions));
-		let questions = [];
-		for (let markQuestion of this.markQuestions) {
-			questions.push(markQuestion.n);
-		}
-		$(this.questionSelector.nativeElement).selectpicker('val', questions);
+		$(this.questionSelector.nativeElement).selectpicker('val', question.n);
 		$(this.questionSelector.nativeElement).on('changed.bs.select', {t: this}, this.onQuestionChange);
 		this.reload();
 	}
@@ -104,11 +136,6 @@ export class MarkComponent implements OnInit {
 	}
 
 	reload(): void {
-		/*load the mark information based on markQuestions
-		- total progress %
-		- group of papers
-		*/
-		// send the examId, subject, grade and groupNo(optional) to the server side
 		for(let markQuestion of this.markQuestions) {
 			let question = {"id": ""};
 			question.id = markQuestion.id;
@@ -149,6 +176,7 @@ export class MarkComponent implements OnInit {
 		}).catch((error: any) => {
 			console.log(error.status);
 			console.log(error.statusText);
+			alert("无法加载试卷");
 		});
 	}	
 
@@ -156,17 +184,34 @@ export class MarkComponent implements OnInit {
 		console.log("update canvas for page: " + this.curPage);
 		for (let group of this.mark.groups) {
 			if (group.groupNo === this.curPage) {
-				this.imgPath = group.papers[0].paperImg;
+				this.answer.region = group.papers[0].region;
+				this.answer.paperImg = group.papers[0].paperImg;
+				this.answer.answerImg = group.papers[0].answerImg;
+				this.answer.answerImgData = group.papers[0].answerImgData;
+				this.answer.markImg = group.papers[0].markImg;
+				this.answer.markImgData = group.papers[0].markImgData;
+				this.score = "阅卷老师：" + this.mark.teacherId + " 得分：";
 				if (this.markQuestions.length >= 2) {
-					this.imgPath2 = group.papers[1].paperImg;
+					this.answer2.region = group.papers[1].region;
+					this.answer2.paperImg = group.papers[1].paperImg;
+					this.answer2.answerImg = group.papers[1].answerImg;
+					this.answer2.answerImgData = group.papers[1].answerImgData;
+					this.answer2.markImg = group.papers[1].markImg;
+					this.answer2.markImgData = group.papers[1].markImgData;
+					this.score2 = this.score;
 				}
 				if (this.markQuestions.length == 3) {
-					this.imgPath3 = group.papers[2].paperImg;
+					this.answer3.region = group.papers[2].region;
+					this.answer3.paperImg = group.papers[2].paperImg;
+					this.answer3.answerImg = group.papers[2].answerImg;
+					this.answer3.answerImgData = group.papers[2].answerImgData;
+					this.answer3.markImg = group.papers[2].markImg;
+					this.answer3.markImgData = group.papers[2].markImgData;
+					this.score3 = this.score;
 				}
+				break;
 			}
 		}
-		console.log(this.imgPath + this.imgPath2 + this.imgPath3);
-		this.score = this.score2 = this.score3 = "阅卷老师：" + this.mark.teacherId + " 得分：";
 	}
 
 	updateFullScore(): void {
@@ -318,14 +363,38 @@ export class MarkComponent implements OnInit {
 			}
 		}
 		this.addScore();
-		this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(this.mark)).then((data: any) => {
-			alert("修改成功");
-			this.nextPage();
-		}).catch((error: any) => {
-			console.log(error.status);
-			console.log(error.statusText);
-			alert("修改失败！");
-		});
+	}
+
+	updatePaper() {
+		if (this.answer.markImgData === "" ||
+		(this.markQuestions.length >= 2 && this.answer2.markImgData === "") ||
+		(this.markQuestions.length === 3 && this.answer3.markImgData === "")) {
+			return;
+		}
+		for (let group of this.mark.groups) {
+			if (group.groupNo === this.curPage) {
+				if (group.papers.length >= 1) {
+					group.papers[0].answerImgData = this.answer.answerImgData;
+					group.papers[0].markImgData = this.answer.markImgData;
+				}
+				if (group.papers.length >= 2) {
+					group.papers[1].answerImgData = this.answer2.answerImgData;
+					group.papers[1].markImgData = this.answer2.markImgData;
+				}
+				if (group.papers.length === 3) {
+					group.papers[2].answerImgData = this.answer3.answerImgData;
+					group.papers[2].markImgData = this.answer3.markImgData;
+				}
+				this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(group)).then((data: any) => {
+					alert("修改成功");
+					this.nextPage();
+				}).catch((error: any) => {
+					console.log(error.status);
+					console.log(error.statusText);
+					alert("修改失败！");
+				});
+			}
+		}
 	}
 
 	drawLine(): void {
@@ -349,6 +418,7 @@ export class MarkComponent implements OnInit {
 	}
 
 	addBestAnswer(): void {
+		//To DO: bese; faq; bad should not be specified at the same time
 		this.editMode = "BestAnswer";
 	}
 

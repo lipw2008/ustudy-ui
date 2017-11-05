@@ -11,7 +11,7 @@
         "progress": "60%",
         "summary": [
             {
-                "questionId": "1",
+                "quesid": "1",
                 "questionName": "1",
                 "questionType": "解答题",
                 "avgScore": "3.1",
@@ -31,7 +31,7 @@
         "progress": "60%",
         "summary": [
             {
-                "questionId": "2",
+                "quesid": "2",
                 "questionName": "2-5",
                 "questionType": "填空题",
                 "avgScore": "4.1",
@@ -51,7 +51,7 @@
         "progress": "60%",
         "summary": [
             {
-                "questionId": "3",
+                "quesid": "3",
                 "questionName": "6",
                 "questionType": "解答题",
                 "avgScore": "3.2",
@@ -71,7 +71,7 @@
         "progress": "60%",
         "summary": [
             {
-                "questionId": "4",
+                "quesid": "4",
                 "questionName": "7",
                 "questionType": "解答题",
                 "avgScore": "8.5",
@@ -91,14 +91,14 @@
         "progress": "60%",
         "summary": [
             {
-                "questionId": "1",
+                "quesid": "1",
                 "questionName": "1",
                 "questionType": "解答题",
                 "avgScore": "3.1",
                 "markedNum": 44
             },
             {
-                "questionId": "2",
+                "quesid": "2",
                 "questionName": "2-5",
                 "questionType": "填空题",
                 "avgScore": "4.1",
