@@ -48,7 +48,7 @@ export class TeacherSelectorComponent implements OnInit, OnChanges {
         teacher.text = teacher.name;
         teacher.value = teacher.id;
         teacher.disabled = _.includes(this.without, teacher.id);
-        teacher.checked = _.includes(this.with, teacher.id);
+        teacher.checked = _.includes(this.with, teacher.id) && !_.includes(this.without, teacher.id);
         return teacher
       });
       let item;

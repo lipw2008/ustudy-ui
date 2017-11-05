@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SharedService } from "../../shared.service";
+import { SharedService } from '../../shared.service';
 
 @Injectable()
 export class TaskService {
@@ -51,7 +51,7 @@ export class TaskService {
     })
   }
 
-  getGrade(gradeId:any) {
+  getGrade(gradeId: any) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET', 'assets/api/schools/grade.json', '').then((data: any) => {
         // resolve(data.data)
@@ -110,6 +110,16 @@ export class TaskService {
   getTask(examId: string, gradeId: string, subjectId: string, questionId: string) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET', 'assets/api/exams/markTask' + questionId + '.json', '').then((data: any) => {
+        // resolve(data.data)
+        resolve(data)
+      })
+    })
+  }
+
+  getWorkingTeachers() {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET',
+        `assets/api/exams/markTask/workingTeachers.json`, '').then((data: any) => {
         // resolve(data.data)
         resolve(data)
       })

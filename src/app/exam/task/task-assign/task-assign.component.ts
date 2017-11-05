@@ -18,6 +18,7 @@ export class TaskAssignComponent implements OnInit {
   questions: any;
   assignType = '平均';
   markType = '单评';
+  teacherType = '全体';
   grade: any;
   selectedQuestion: any;
   selectedTeacherIds: any;
@@ -25,6 +26,9 @@ export class TaskAssignComponent implements OnInit {
   withTeachersIds = [];
   withFinalTeachersIds = [];
   timeLimit: Number;
+  workingTeachersIds = [];
+  finalTeachersWithoutIds = [];
+  teachersWithoutIds = [];
 
   constructor(private _taskService: TaskService, private route: ActivatedRoute, private router: Router, private _location: Location) { }
 
@@ -57,11 +61,15 @@ export class TaskAssignComponent implements OnInit {
           this.timeLimit = Number(data.timeLimit)
         })
       }
-    })
+    });
+    this._taskService.getWorkingTeachers().then((data: any) => {
+      this.workingTeachersIds = _.map(data, 'id');
+      this.updateWithoutTeachersIds();
+      this.updateFinalWithoutTeachersIds()
+    });
   }
 
-  setSelectedQuestion($event: Event) {
-    console.log(1)
+  onSelectedQuestion($event: Event) {
   }
 
   submit() {
@@ -94,5 +102,38 @@ export class TaskAssignComponent implements OnInit {
     } else {
       alert('还有未完成科目')
     }
+  }
+
+  onTeachersSelect($event: any) {
+    this.selectedTeacherIds = $event;
+    this.updateFinalWithoutTeachersIds()
+  }
+
+  onSelectTeacherType(type: string) {
+    this.teacherType = type;
+    this.updateWithoutTeachersIds();
+    this.updateFinalWithoutTeachersIds()
+  }
+
+  updateWithoutTeachersIds() {
+    if (!this.teacherType) {
+      return
+    }
+    if (this.teacherType === '全体') {
+      this.teachersWithoutIds = new Array;
+      return
+    }
+    this.teachersWithoutIds = _.clone(this.workingTeachersIds);
+  }
+
+  updateFinalWithoutTeachersIds() {
+    if (!this.teacherType) {
+      return
+    }
+    if (this.teacherType === '全体') {
+      this.finalTeachersWithoutIds = [].concat(this.selectedTeacherIds);
+      return
+    }
+    this.finalTeachersWithoutIds = this.selectedTeacherIds.concat(this.workingTeachersIds)
   }
 }
