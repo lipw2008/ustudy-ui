@@ -62,7 +62,7 @@
             <input type="radio" ng-controll="options" [value]="'双评'" (click)="markType='双评'" [checked]="markType=='双评'"> 双评
           </label>
           <span aria-hidden="true" class="glyphicon glyphicon-time pull-right" style=" ">
-            <input style=" width: 40%; " type="number" title="阅卷时间设置（设置最短时间，限定老师的阅卷速度，单位为秒）">
+            <input style=" width: 40%; " type="number" title="阅卷时间设置（设置最短时间，限定老师的阅卷速度，单位为秒）" [ngModel]="timeLimit">
           </span>
         </td>
       </tr>

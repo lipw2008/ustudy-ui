@@ -24,6 +24,7 @@ export class TaskAssignComponent implements OnInit {
   selectedFinalTeacherIds = [];
   withTeachersIds = [];
   withFinalTeachersIds = [];
+  timeLimit: Number;
 
   constructor(private _taskService: TaskService, private route: ActivatedRoute, private router: Router, private _location: Location) { }
 
@@ -53,6 +54,7 @@ export class TaskAssignComponent implements OnInit {
           this.withTeachersIds = data.teachersIds;
           this.selectedTeacherIds = _.clone(this.withTeachersIds);
           this.withFinalTeachersIds = data.finalMarkTeachersIds;
+          this.timeLimit = Number(data.timeLimit)
         })
       }
     })
@@ -66,7 +68,8 @@ export class TaskAssignComponent implements OnInit {
     const method = this.questionId ? this._taskService.creatMarkTask : this._taskService.updateMarkTask;
     method({examId: this.examId, questionId: this.selectedQuestion.id, teachersIds: this.selectedTeacherIds, type: this.assignType,
       gradeId: this.gradeId, subjectId: this.subjectId, ownerId: _.find(this.grade.groups, (group) => _.includes(group.name, this.subject)),
-      finalMarkTeachersIds: _.without(this.selectedFinalTeacherIds, this.selectedTeacherIds)}).then((data) => {
+      finalMarkTeachersIds: _.without(this.selectedFinalTeacherIds, this.selectedTeacherIds),
+      timeLimit: this.timeLimit}).then((data) => {
       console.log(data);
       if (_.get(data, 'success')) {
         this.selectedQuestion.created = true;

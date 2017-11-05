@@ -1,1 +1,1 @@
-{"examId":"1","questionId":4,"type": "平均", "ownerId": 31, "teachersIds":[34,35],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[31, 32]}
+{"examId":"1","questionId":4,"type": "平均", "timeLimit": 10, "ownerId": 31, "teachersIds":[34,35],"gradeId":1,"subjectId":1,"finalMarkTeachersIds":[31, 32]}
