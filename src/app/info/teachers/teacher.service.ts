@@ -10,42 +10,42 @@ import { ITeacher } from './teacher';
 
 @Injectable()
 export class TeacherService {
-    private _teacherUrl = 'api/teachers/teachers.json';
-	
-	private grades = ["高一", "高二", "高三"];
-	
-	private roles = ["任课老师", "班主任", "备课组长", "学科组长", "年级主任", "校长", "考务老师"];
-	
-	private subjects = ["语文", "数学", "英语", "物理", "化学", "生物", "政治", "历史", "地理"];
+  private _teacherUrl = 'api/teachers/teachers.json';
 
-    constructor(private _http: Http) { }
+  private grades = ["高一", "高二", "高三"];
 
-	getGrades(): string[] {
-		return this.grades;
-	}
+  private roles = ["任课老师", "班主任", "备课组长", "学科组长", "年级主任", "校长", "考务老师"];
 
-	getSubjects(): string[] {
-		return this.subjects;
-	}
+  private subjects = ["语文", "数学", "英语", "物理", "化学", "生物", "政治", "历史", "地理"];
 
-	getRoles(): string[] {
-		return this.roles;
-	}
+  constructor(private _http: Http) { }
 
-    getDefaultTeacher(): ITeacher {
-        return {
-			"teacherId" : "",
-			"teacherName" : "",
-			"grades" : [{"n":""}],
-			"subjects" : [{"n":""}],
-			"roles" : [{"n":""}]
-	    }
+  getGrades(): string[] {
+    return this.grades;
+  }
+
+  getSubjects(): string[] {
+    return this.subjects;
+  }
+
+  getRoles(): string[] {
+    return this.roles;
+  }
+
+  getDefaultTeacher(): ITeacher {
+    return {
+      "teacherId": "",
+      "teacherName": "",
+      "grades": [{ "n": "" }],
+      "subjects": [{ "n": "" }],
+      "roles": [{ "n": "" }]
     }
+  }
 
-    private handleError(error: Response) {
-        // in a real world app, we may send the server to some remote logging infrastructure
-        // instead of just logging it to the console
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
-    }
+  private handleError(error: Response) {
+    // in a real world app, we may send the server to some remote logging infrastructure
+    // instead of just logging it to the console
+    console.error(error);
+    return Observable.throw(error.json().error || 'Server error');
+  }
 }

@@ -1,0 +1,11 @@
+<div class="col-md-12">
+  <!--<ng2-treeview [node]="textTreeView" (textNodeClick)="onTextNodeCli
+  <div class="form-inline">
+$event)"></ng2-treeview>-->
+  <ngx-treeview
+    [config]="config"
+    [items]="items"
+    (selectedChange)="onSelectedChange($event)">
+  </ngx-treeview>
+</div>
+

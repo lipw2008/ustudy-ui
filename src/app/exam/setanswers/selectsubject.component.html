@@ -3,28 +3,29 @@
 	<ol class="breadcrumb">
 		<li><a href="../">首页</a></li>
 		<li><a href="selectsubject;type=answers">考试中心</a></li>
-		<li class="active">答案设置</li>
+		<li class="active" *ngIf="type === 'answers'">答案设置</li>
+		<li class="active" *ngIf="type === 'task'">任务分配</li>
 	</ol>
 </div>
 <!-- 路径导航 end -->
 <!-- 内容 start -->
-<div class="container">
+<div class="container container-sm">
 	<!-- 检索 start -->
 	<div class="row margin-bottom-lg">
 		<div class="col-sm-12 col-lg-12">
 			<div class="form-inline" >
-				<div class="input-group" >	
+				<div class="input-group" >
 					<span class="input-group-addon">考试</span>
 					<select class="form-control" id="examFilterValue" (change)="getExam($event)">
 						<option value="0" selected>请选择一场考试</option>
-						<option *ngFor="let exam of exams" value={{exam.id}}>{{exam.name}}</option>
+						<option *ngFor="let exam of exams" value={{exam.id}}>{{exam.examName}}</option>
 					</select>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- 检索 end -->
-	<div id="editGradeDetailsForm" class="form-horizontal" style="display:none;">
+	<div id="editGradeDetailsForm" class="form-horizontal" *ngIf="examSelected">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="clear-margin"><strong>选择科目：</strong></h4>
@@ -36,12 +37,12 @@
 					<div class="col-sm-9 btn-toolbar">
 						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'answers'">
 							<ng-container *ngFor="let subject of grades.subjects">
-								<a class="btn btn-primary" (click)="setAnswers(grades.id, subject.id, false)" *ngIf="!subject.seted">{{subject.name}}</a>
+								<button class="btn btn-primary" (click)="setAnswers(subject.id, grades.id, subject.subId, false)" *ngIf="subject.answerSeted === '0'">{{subject.subName}}</button>
 							</ng-container>
 						</div>
 						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
 							<ng-container *ngFor="let subject of grades.subjects">
-								<a class="btn btn-primary" (click)="setTasks(grades.id, subject.id, false)" *ngIf="!subject.seted">{{subject.name}}</a>
+								<button class="btn btn-primary" (click)="setTasks(grades.id, subject.id, false, subject.subName)" [disabled]="false && subject.answerSeted !== '0'">{{subject.subName}}</button>
 							</ng-container>
 						</div>
 					</div>
@@ -57,12 +58,12 @@
 					<div class="col-sm-9 btn-toolbar">
 							<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'answers'">
 								<ng-container *ngFor="let subject of grades.subjects">
-									<a class="btn btn-default" (click)="setAnswers(grades.id, subject.id, false)" *ngIf="subject.seted">{{subject.name}}</a>
+									<a class="btn btn-default" (click)="setAnswers(subject.id, grades.id, subject.subId, false)" *ngIf="subject.answerSeted === '1'">{{subject.subName}}</a>
 								</ng-container>
 							</div>
 							<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
 								<ng-container *ngFor="let subject of grades.subjects">
-									<a class="btn btn-default" (click)="setTasks(grades.id, subject.id, false)" *ngIf="subject.seted">{{subject.name}}</a>
+									<a class="btn btn-default" *ngIf="subject.answerSeted === '1'" [routerLink]="['/viewTasks',{gradeId:grades.id,subjectId:subject.id,examId:examId,seted:seted}]">{{subject.subName}}</a>
 								</ng-container>
 							</div>
 					</div>
@@ -71,4 +72,4 @@
 		</div>
 	</div>
 </div>
-<!-- 内容 end -->	
+<!-- 内容 end -->

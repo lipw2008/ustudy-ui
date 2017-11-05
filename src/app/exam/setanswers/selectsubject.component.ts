@@ -1,122 +1,133 @@
-import { Component, OnInit, ElementRef }  from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../../shared.service';
 
 @Component({
-    templateUrl: 'selectsubject.component.html'
+  templateUrl: 'selectsubject.component.html'
 })
 
 export class SelectSubjectComponent implements OnInit {
 
-	errorMessage: string;
-	examId: string;
-	type = 'answers';
+  errorMessage: string;
+  examId: string;
+  type = 'answers';
 
-	isCreated = false;
+  isCreated = false;
 
-	exams = [
-		{ id: '1', name: '铜川一中16-17学年上学期期末考试1' },
-		{ id: '2', name: '铜川一中16-17学年上学期期末考试2' },
-		{ id: '3', name: '铜川一中16-17学年上学期期末考试3' },
-		{ id: '4', name: '铜川一中16-17学年上学期期末考试4' },
-		{ id: '5', name: '铜川一中16-17学年上学期期末考试5' },
-		{ id: '6', name: '铜川一中16-17学年上学期期末考试6' }
-	];
+  exams = [
+    { id: '1', examName: '铜川一中16-17学年上学期期末考试1' },
+    { id: '2', examName: '铜川一中16-17学年上学期期末考试2' },
+    { id: '3', examName: '铜川一中16-17学年上学期期末考试3' },
+    { id: '4', examName: '铜川一中16-17学年上学期期末考试4' },
+    { id: '5', examName: '铜川一中16-17学年上学期期末考试5' },
+    { id: '6', examName: '铜川一中16-17学年上学期期末考试6' }
+  ];
 
-	gradesubjects = [
-		{ id:'10', grade: '高一', subjects: [
-			{id: '1', name: '语文', seted:true},
-			{id: '2', name: '数学', seted:false},
-			{id: '3', name: '英语', seted:true},
-			{id: '4', name: '物理', seted:false},
-			{id: '5', name: '化学', seted:true},
-			{id: '6', name: '生物', seted:false},
-			{id: '7', name: '政治', seted:true},
-			{id: '8', name: '历史', seted:false},
-			{id: '9', name: '地理', seted:true}
-		]},
-		{ id:'11', grade: '高二', subjects: [
-			{id: '1', name: '语文', seted:true},
-			{id: '2', name: '数学', seted:false},
-			{id: '3', name: '英语', seted:true},
-			{id: '4', name: '物理', seted:false},
-			{id: '5', name: '化学', seted:false},
-			{id: '6', name: '生物', seted:false},
-			{id: '7', name: '政治', seted:true},
-			{id: '8', name: '历史', seted:false},
-			{id: '9', name: '地理', seted:true},
-			{id: '10', name: '文综', seted:false},
-			{id: '11', name: '理综', seted:true}
-		]},
-		{ id:'12', grade: '高三', subjects: [
-			{id: '1', name: '语文', seted:true},
-			{id: '2', name: '数学', seted:false},
-			{id: '3', name: '英语', seted:true},
-			{id: '4', name: '物理', seted:false},
-			{id: '5', name: '化学', seted:true},
-			{id: '6', name: '生物', seted:false},
-			{id: '7', name: '政治', seted:false},
-			{id: '8', name: '历史', seted:false},
-			{id: '9', name: '地理', seted:false},
-			{id: '10', name: '文综', seted:true},
-			{id: '11', name: '理综', seted:false}
-		]}
-	];
-
-    constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
-
+  gradesubjects = [
+    {
+      id: '10', grade: '高一', subjects: [
+        { id: '1', subName: '语文', answerSeted: true },
+        { id: '2', subName: '数学', answerSeted: false },
+        { id: '3', subName: '英语', answerSeted: true },
+        { id: '4', subName: '物理', answerSeted: false },
+        { id: '5', subName: '化学', answerSeted: true },
+        { id: '6', subName: '生物', answerSeted: false },
+        { id: '7', subName: '政治', answerSeted: true },
+        { id: '8', subName: '历史', answerSeted: false },
+        { id: '9', subName: '地理', answerSeted: true }
+      ]
+    },
+    {
+      id: '11', grade: '高二', subjects: [
+        { id: '1', subName: '语文', answerSeted: true },
+        { id: '2', subName: '数学', answerSeted: false },
+        { id: '3', subName: '英语', answerSeted: true },
+        { id: '4', subName: '物理', answerSeted: false },
+        { id: '5', subName: '化学', answerSeted: false },
+        { id: '6', subName: '生物', answerSeted: false },
+        { id: '7', subName: '政治', answerSeted: true },
+        { id: '8', subName: '历史', answerSeted: false },
+        { id: '9', subName: '地理', answerSeted: true },
+        { id: '10', subName: '文综', answerSeted: false },
+        { id: '11', subName: '理综', answerSeted: true }
+      ]
+    },
+    {
+      id: '12', grade: '高三', subjects: [
+        { id: '1', subName: '语文', answerSeted: true },
+        { id: '2', subName: '数学', answerSeted: false },
+        { id: '3', subName: '英语', answerSeted: true },
+        { id: '4', subName: '物理', answerSeted: false },
+        { id: '5', subName: '化学', answerSeted: true },
+        { id: '6', subName: '生物', answerSeted: false },
+        { id: '7', subName: '政治', answerSeted: false },
+        { id: '8', subName: '历史', answerSeted: false },
+        { id: '9', subName: '地理', answerSeted: false },
+        { id: '10', subName: '文综', answerSeted: true },
+        { id: '11', subName: '理综', answerSeted: false }
+      ]
     }
+  ];
+  private examSelected: boolean;
 
-    ngOnInit(): void {
-		//this.type = this.route.snapshot.params.type;
-		this.loadExams();
-	}
+  constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
 
-	loadExams() {
-		this._sharedService.makeRequest('GET', 'exam/getExams/0', '').then((data: any) => {
-			console.log("data: " + JSON.stringify(data));
-			if (data.success) {
-				this.exams = data.data; 
-			}
-		}).catch((error: any) => {
-			console.log(error.status);
-			console.log(error.statusText);
-		});
-	}
-	
-	loadExamSubjects(examId) {
-		this._sharedService.makeRequest('GET', 'examsubject/getExamSubjects/'+examId, '').then((data: any) => {
-			console.log("data: " + JSON.stringify(data));
-			if (data.success) {
-				this.gradesubjects = data.data; 
-			}
-		}).catch((error: any) => {
-			console.log(error.status);
-			console.log(error.statusText);
-		});
-	}
+  }
 
-	getExam(evt) {
-		const examId = this.elementRef.nativeElement.querySelector('#examFilterValue').value;
-		this.examId = examId;
-		if(examId !== "0"){
-			this.loadExamSubjects(examId);
-			this.elementRef.nativeElement.querySelector('#editGradeDetailsForm').style.display = '';
-		}else{
-			this.elementRef.nativeElement.querySelector('#editGradeDetailsForm').style.display = 'none';
-		}
-	}	
+  ngOnInit(): void {
+    this.type = this.route.snapshot.params.type;
+    this.loadExams();
+  }
 
-	setAnswers(gradeId,subjectId,seted) {
-		this.router.navigate(['setanswers', {examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
-	}
+  loadExams() {
+    this._sharedService.makeRequest('GET', '/api/exams/0', '').then((data: any) => {
+      if (data.success) {
+        this.exams = data.data;
+      }
+    }).catch((error: any) => {
+      console.error(error.status);
+      console.error(error.statusText);
+    });
+  }
 
-	setTasks(gradeId,subjectId,seted) {
-		if(this.isCreated){
-			this.router.navigate(['taskallocation', {examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
-		}else{
-			this.router.navigate(['setobjectivesno', {examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted}]);
-		}
-	}
+  loadExamSubjects(examId) {
+    this._sharedService.makeRequest('GET', '/api/examsubjects/' + examId, '').then((data: any) => {
+      if (data.success) {
+        this.gradesubjects = data.data;
+      }
+    }).catch((error: any) => {
+      console.error(error.status);
+      console.error(error.statusText);
+    });
+  }
+
+  getExam(evt) {
+    const examId = evt.target.value;
+    this.examId = examId;
+    if (examId !== "0") {
+      this.loadExamSubjects(examId);
+      this.examSelected = true;
+    } else {
+      this.examSelected = false;
+    }
+  }
+
+  setAnswers(egsId, gradeId, subjectId, seted) {
+    this.router.navigate(['setanswers', { egsId: egsId, examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
+  }
+
+  setTasks(gradeId, subjectId, seted, subName) {
+    // XXX: skip this step for now
+    // if (this.isCreated) {
+    //   this.router.navigate(['taskallocation', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
+    // } else {
+    //   this.router.navigate(['setobjectivesno', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
+    // }
+    this.router.navigate(['/taskassign', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted, subject: subName }]);
+  }
+
+  viewTasks(gradeId, subjectId, seted) {
+    this.router.navigate(['/taskassign', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
+  }
 }
