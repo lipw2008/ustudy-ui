@@ -25,8 +25,8 @@
     "angular2-fontawesome": "^0.9.3",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
-    "ngx-treeview": "^1.2.4",
-    "rxjs": "^5.1.0",
+    "ngx-treeview": "git+https://github.com/iJetLi/ngx-treeview-dist",
+    "rxjs": "^5.5.2",
     "ts-md5": "^1.2.0",
     "zone.js": "^0.8.4"
   },
