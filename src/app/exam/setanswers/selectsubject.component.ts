@@ -69,7 +69,7 @@ export class SelectSubjectComponent implements OnInit {
       ]
     }
   ];
-  private examSelected: boolean;
+  public examSelected: boolean;
 
   constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
 
