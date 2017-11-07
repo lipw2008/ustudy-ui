@@ -37,7 +37,7 @@
 					<div class="col-sm-9 btn-toolbar">
 						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'answers'">
 							<ng-container *ngFor="let subject of grades.subjects">
-								<button class="btn btn-primary" (click)="setAnswers(grades.id, subject.id, false)" [disabled]="subject.answerSeted !== '0'">{{subject.subName}}</button>
+								<button class="btn btn-primary" (click)="setAnswers(subject.id, grades.id, subject.subId, false)" *ngIf="subject.answerSeted === '0'">{{subject.subName}}</button>
 							</ng-container>
 						</div>
 						<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
@@ -58,14 +58,12 @@
 					<div class="col-sm-9 btn-toolbar">
 							<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'answers'">
 								<ng-container *ngFor="let subject of grades.subjects">
-									<a class="btn btn-default" (click)="setAnswers(grades.id, subject.id, false)" *ngIf="subject.answerSeted === '1'">{{subject.subName}}</a>
+									<a class="btn btn-default" (click)="setAnswers(subject.id, grades.id, subject.subId, false)" *ngIf="subject.answerSeted === '1'">{{subject.subName}}</a>
 								</ng-container>
 							</div>
 							<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
 								<ng-container *ngFor="let subject of grades.subjects">
-									<a class="btn btn-default" *ngIf="subject.answerSeted === '1'"
-                     [routerLink]="['/viewTasks',{gradeId:grades.id,subjectId:subject.id,examId:examId,seted:seted}]"
-                     >{{subject.subName}}</a>
+									<a class="btn btn-default" *ngIf="subject.answerSeted === '1'" [routerLink]="['/viewTasks',{gradeId:grades.id,subjectId:subject.id,examId:examId,seted:seted}]">{{subject.subName}}</a>
 								</ng-container>
 							</div>
 					</div>

@@ -8,8 +8,8 @@ export class TaskService {
 
   getExams() {
     return new Promise((resolve, reject) => {
-      // XXX: should use /getExams/{examStatus}
-      this._sharedService.makeRequest('GET', '/exam/getAllExams', '').then((data: any) => {
+      // XXX: should use /exams/{examStatus}
+      this._sharedService.makeRequest('GET', '/exams', '').then((data: any) => {
         if (!data.data) {
           reject('no data');
         }
@@ -20,8 +20,8 @@ export class TaskService {
 
   getExam(examId) {
     return new Promise((resolve, reject) => {
-      // XXX: should use /getExams/{examStatus}
-      this._sharedService.makeRequest('GET', '/exam/getExam/' + examId, '').then((data: any) => {
+      // XXX: should use /exams/{examStatus}
+      this._sharedService.makeRequest('GET', '/exam/' + examId, '').then((data: any) => {
         if (!data.data) {
           reject('no data');
         }
@@ -99,7 +99,7 @@ export class TaskService {
 
   getExamSubjects(examId): any {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', '/api/examsubject/getExamSubjects/' + examId, '').then((data: any) => {
+      this._sharedService.makeRequest('GET', '/api/examsubjects/' + examId, '').then((data: any) => {
         if (data.success) {
           resolve(data.data)
         }

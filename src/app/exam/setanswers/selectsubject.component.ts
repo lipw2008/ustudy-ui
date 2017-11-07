@@ -69,7 +69,7 @@ export class SelectSubjectComponent implements OnInit {
       ]
     }
   ];
-  private examSelected: boolean;
+  public examSelected: boolean;
 
   constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
 
@@ -81,26 +81,24 @@ export class SelectSubjectComponent implements OnInit {
   }
 
   loadExams() {
-    this._sharedService.makeRequest('GET', '/api/exam/getAllExams', '').then((data: any) => {
-      console.log("data: " + JSON.stringify(data));
+    this._sharedService.makeRequest('GET', '/api/exams/0', '').then((data: any) => {
       if (data.success) {
         this.exams = data.data;
       }
     }).catch((error: any) => {
-      console.log(error.status);
-      console.log(error.statusText);
+      console.error(error.status);
+      console.error(error.statusText);
     });
   }
 
   loadExamSubjects(examId) {
-    this._sharedService.makeRequest('GET', '/api/examsubject/getExamSubjects/' + examId, '').then((data: any) => {
-      console.log("data: " + JSON.stringify(data));
+    this._sharedService.makeRequest('GET', '/api/examsubjects/' + examId, '').then((data: any) => {
       if (data.success) {
         this.gradesubjects = data.data;
       }
     }).catch((error: any) => {
-      console.log(error.status);
-      console.log(error.statusText);
+      console.error(error.status);
+      console.error(error.statusText);
     });
   }
 
@@ -115,8 +113,8 @@ export class SelectSubjectComponent implements OnInit {
     }
   }
 
-  setAnswers(gradeId, subjectId, seted) {
-    this.router.navigate(['setanswers', { examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
+  setAnswers(egsId, gradeId, subjectId, seted) {
+    this.router.navigate(['setanswers', { egsId: egsId, examId: this.examId, gradeId: gradeId, subjectId: subjectId, seted: seted }]);
   }
 
   setTasks(gradeId, subjectId, seted, subName) {

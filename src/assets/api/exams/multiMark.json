@@ -10,16 +10,19 @@
     "progress": "60%",
     "summary": [
         {
+            "quesid": "1",
             "questionName": "1",
             "avgScore": "3.1",
             "markedNum": 44
         },
         {
+            "quesid": "2",
             "questionName": "2-5",
             "avgScore": "4.1",
             "markedNum": 44
         },
         {
+            "quesid": "6",
             "questionName": "6",
             "avgScore": "3.2",
             "markedNum": 44
@@ -30,30 +33,37 @@
             "groupNo": 3,
             "papers": [
                 {
+                    "quesid": "1",
                     "questionName": "1",
                     "questionType": "解答题",
                     "markStyle": "single",
                     "isMarked": false,
                     "paperId": "P001",
-                    "isBest": false, 
-                    "isBad": false, 
-                    "isFAQ": false,
+                    "answerType": "", 
                     "isProblemPaper": false,
                     "fullScore": "5",
                     "score": "", 
                     "steps": [],
-                    "paperImg": "assets/api/exams/exam01.png",
-                    "markImg": ""
+                    "region": {
+                        "x": "2420",
+                        "y": "1796",
+                        "w": "33",
+                        "h": "23"
+                    },
+                    "paperImg": "student99999_exam01_grade10_yuwen.png",
+                    "answerImg": "student99999_exam01_grade10_yuwen_1.png",
+                    "answerImgData": "",
+                    "markImg": "student99999_exam01_grade10_yuwen_1_mark.png",
+                    "markImgData": ""
                 },
                 {
+                    "quesid": "2",
                     "questionName": "2-5",
                     "questionType": "填空题",
                     "markStyle": "single",
                     "isMarked": false,
                     "paperId": "P001",
-                    "isBest": false, 
-                    "isBad": false, 
-                    "isFAQ": false,
+                    "answerType": "",
                     "isProblemPaper": false,
                     "fullScore": "10",
                     "score": "", 
@@ -79,173 +89,42 @@
                             "score": ""
                         }
                     ],
-                    "paperImg": "assets/api/exams/small.png",
-                    "markImg": ""
+                    "region": {
+                        "x": "2507",
+                        "y": "1796",
+                        "w": "33",
+                        "h": "23"
+                    },
+                    "paperImg": "student99999_exam01_grade10_yuwen.png",
+                    "answerImg": "student99999_exam01_grade10_yuwen_1.png",
+                    "answerImgData": "",
+                    "markImg": "student99999_exam01_grade10_yuwen_1_mark.png",
+                    "markImgData": ""
                 },
                 {
+                    "quesid": "6",
                     "questionName": "6",
                     "questionType": "解答题",
                     "markStyle": "single",
                     "isMarked": false,
                     "paperId": "P001",
-                    "isBest": false, 
-                    "isBad": false, 
-                    "isFAQ": false,
+                    "answerType": "",
                     "isProblemPaper": false,
                     "fullScore": "15",
                     "score": "", 
                     "steps": [],
-                    "paperImg": "assets/api/exams/exam01.png",
-                    "markImg": ""
-                }                    
-            ]
-        },
-        {
-            "groupNo": 4,
-            "papers": [
-                {
-                    "questionName": "1",
-                    "questionType": "解答题",
-                    "markStyle": "single",
-                    "isMarked": false,
-                    "paperId": "P002",
-                    "isBest": false, 
-                    "isBad": false, 
-                    "isFAQ": false,
-                    "isProblemPaper": false,
-                    "fullScore": "5",
-                    "score": "", 
-                    "steps": [],
-                    "paperImg": "assets/api/exams/small.png",
-                    "markImg": ""
-                },
-                {
-                    "questionName": "2-5",
-                    "questionType": "填空题",
-                    "markStyle": "single",
-                    "isMarked": false,
-                    "paperId": "P002",
-                    "isBest": false, 
-                    "isBad": false, 
-                    "isFAQ": false,
-                    "isProblemPaper": false,
-                    "fullScore": "10",
-                    "score": "", 
-                    "steps": [
-                        {   
-                            "name" : "2",
-                            "fullScore": "2",
-                            "score": ""
-                        },
-                        {   
-                            "name" : "3",
-                            "fullScore": "2",
-                            "score": ""
-                        },
-                        {   
-                            "name" : "4",
-                            "fullScore": "3",
-                            "score": ""
-                        },
-                        {   
-                            "name" : "5",
-                            "fullScore": "3",
-                            "score": ""
-                        }
-                    ],
-                    "paperImg": "assets/api/exams/exam01.png",
-                    "markImg": ""
-                },
-                {
-                    "questionName": "6",
-                    "questionType": "解答题",
-                    "markStyle": "single",
-                    "isMarked": false,
-                    "paperId": "P002",
-                    "isBest": false, 
-                    "isBad": false, 
-                    "isFAQ": false,
-                    "isProblemPaper": false,
-                    "fullScore": "15",
-                    "score": "", 
-                    "steps": [],
-                    "paperImg": "assets/api/exams/small.png",
-                    "markImg": ""
-                }                    
-            ]
-        },
-        {
-            "groupNo": 5,
-            "papers": [
-                {
-                    "questionName": "1",
-                    "questionType": "解答题",
-                    "markStyle": "single",
-                    "isMarked": false,
-                    "paperId": "P003",
-                    "isBest": false, 
-                    "isBad": false, 
-                    "isFAQ": false,
-                    "isProblemPaper": false,
-                    "fullScore": "5",
-                    "score": "", 
-                    "steps": [],
-                    "paperImg": "assets/api/exams/small.png",
-                    "markImg": ""
-                },
-                {
-                    "questionName": "2-5",
-                    "questionType": "填空题",
-                    "markStyle": "single",
-                    "isMarked": false,
-                    "paperId": "P003",
-                    "isBest": false, 
-                    "isBad": false, 
-                    "isFAQ": false,
-                    "isProblemPaper": false,
-                    "fullScore": "10",
-                    "score": "", 
-                    "steps": [
-                        {   
-                            "name" : "2",
-                            "fullScore": "2",
-                            "score": ""
-                        },
-                        {   
-                            "name" : "3",
-                            "fullScore": "2",
-                            "score": ""
-                        },
-                        {   
-                            "name" : "4",
-                            "fullScore": "3",
-                            "score": ""
-                        },
-                        {   
-                            "name" : "5",
-                            "fullScore": "3",
-                            "score": ""
-                        }
-                    ],
-                    "paperImg": "assets/api/exams/exam01.png",
-                    "markImg": ""
-                },
-                {
-                    "questionName": "6",
-                    "questionType": "解答题",
-                    "markStyle": "single",
-                    "isMarked": false,
-                    "paperId": "P003",
-                    "isBest": false, 
-                    "isBad": false, 
-                    "isFAQ": false,
-                    "isProblemPaper": false,
-                    "fullScore": "15",
-                    "score": "", 
-                    "steps": [],
-                    "paperImg": "assets/api/exams/small.png",
-                    "markImg": ""
-                }                    
+                    "region": {
+                        "x": "2594",
+                        "y": "1796",
+                        "w": "33",
+                        "h": "23"
+                    },
+                    "paperImg": "student99999_exam01_grade10_yuwen.png",
+                    "answerImg": "student99999_exam01_grade10_yuwen_1.png",
+                    "answerImgData": "",
+                    "markImg": "student99999_exam01_grade10_yuwen_1_mark.png",
+                    "markImgData": ""
+                }                 
             ]
         }
     ]
