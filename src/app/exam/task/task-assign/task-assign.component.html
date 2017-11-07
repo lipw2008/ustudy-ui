@@ -17,8 +17,9 @@
           </div>
         </td>
         <td>
-          <select class="form-control" [(ngModel)]="selectedQuestion" (change)="onSelectedQuestion($event)">
-            <option value="0" [selected]="!questionId">选择考题</option>
+          <select id="selectQuestion" class="form-control" [(ngModel)]="selectedQuestion" (change)="onSelectedQuestion($event)"
+                  [@flyInOut]="animationState">
+            <option value="0" [selected]="!questionId" [@flyInOut]="'in'">选择考题</option>
 						<option *ngFor="let question of questions" [ngValue]="question" [selected]="questionId === question.id">{{question.questionName}}</option>
 					</select>
         </td>

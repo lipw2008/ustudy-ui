@@ -2,12 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { TaskService } from '../task.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import * as _ from 'lodash';
+
+declare var jQuery: any;
 
 @Component({
   selector: 'app-task-assign',
   templateUrl: './task-assign.component.html',
-  styleUrls: ['./task-assign.component.css']
+  styleUrls: ['./task-assign.component.css'],
+  animations: [
+    trigger('flyInOut', [
+      state('done', style({
+        backgroundColor: 'white',
+        transform: 'scale(1)'
+      })),
+      state('switching',   style({
+        backgroundColor: '#cfd8dc',
+        transform: 'scale(0.9)'
+      })),
+      transition('switching => done', animate('300ms ease-in')),
+      transition('done => switching', animate('300ms ease-out'))
+    ])
+  ]
 })
 export class TaskAssignComponent implements OnInit {
   examId: string;
@@ -29,6 +46,7 @@ export class TaskAssignComponent implements OnInit {
   workingTeachersIds = [];
   finalTeachersWithoutIds = [];
   teachersWithoutIds = [];
+  animationState = 'done';
 
   constructor(private _taskService: TaskService, private route: ActivatedRoute, private router: Router, private _location: Location) { }
 
@@ -70,6 +88,7 @@ export class TaskAssignComponent implements OnInit {
   }
 
   onSelectedQuestion($event: Event) {
+
   }
 
   submit() {
@@ -84,7 +103,14 @@ export class TaskAssignComponent implements OnInit {
         const index = _.findIndex(this.questions, this.selectedQuestion);
         if (index + 1 < this.questions.length) {
           this.selectedQuestion = this.questions[index + 1];
-          alert('题目设置成功，自动跳到题目：' + this.selectedQuestion.questionName);
+          jQuery('html,body').animate({scrollTop: jQuery('#selectQuestion').offset().top}, 300);
+          setTimeout(() => {
+            this.animationState = 'switching';
+            setTimeout(() => {
+              this.animationState = 'done';
+            }, 300);
+          }, 300);
+          // alert('题目设置成功，自动跳到题目：' + this.selectedQuestion.questionName);
         } else {
           alert('所有题目设置完成，可以点击完成返回');
         }
