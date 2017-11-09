@@ -9,7 +9,7 @@ export class TaskService {
   getExams() {
     return new Promise((resolve, reject) => {
       // XXX: should use /exams/{examStatus}
-      this._sharedService.makeRequest('GET', '/exams', '').then((data: any) => {
+      this._sharedService.makeRequest('GET', 'api/allexams', '').then((data: any) => {
         if (!data.data) {
           reject('no data');
         }
@@ -21,7 +21,7 @@ export class TaskService {
   getExam(examId) {
     return new Promise((resolve, reject) => {
       // XXX: should use /exams/{examStatus}
-      this._sharedService.makeRequest('GET', '/exam/' + examId, '').then((data: any) => {
+      this._sharedService.makeRequest('GET', 'api/exam/' + examId, '').then((data: any) => {
         if (!data.data) {
           reject('no data');
         }
@@ -32,13 +32,12 @@ export class TaskService {
 
   getQuestions(examId, schoolId, gradeId, subjectId) {
     return new Promise((resolve, reject) => {
-      // XXX: should use exam/{examId}/questions
-      this._sharedService.makeRequest('GET', 'assets/api/exams/questions.json', '').then((data: any) => {
-        // if (!data.data) {
-        //   reject('no data');
-        // }
-        // resolve(data.data)
-        resolve(data)
+      this._sharedService.makeRequest('GET', `/api/task/allocation/questions/${examId}/${gradeId}/${subjectId}`,
+        '').then((data: any) => {
+        if (!data.data) {
+          reject('no data');
+        }
+        resolve(data.data)
       })
     })
   }
@@ -88,9 +87,9 @@ export class TaskService {
     })
   }
 
-  getMarkTasks(examId) {
+  getMarkTasks(examId, gradeId, subjectId) {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', 'assets/api/exams/markTasks.json', '').then((data: any) => {
+      this._sharedService.makeRequest('GET', `/api/exam/marktask/list/${examId}/${gradeId}/${subjectId}`, '').then((data: any) => {
         // resolve(data.data)
         resolve(data)
       })

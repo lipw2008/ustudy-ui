@@ -34,7 +34,7 @@ export class ViewTaskComponent implements OnInit {
     this._taskService.getGrade(this.gradeId).then((data) => {
       this.grade = data
     });
-    this._taskService.getMarkTasks(this.examId).then((data) => {
+    this._taskService.getMarkTasks(this.examId, this.gradeId, this.subjectId).then((data) => {
       this.markTasks = data;
       this._taskService.getExamSubjects(this.examId).then((data) => {
         const gradesubjects = data;
@@ -54,9 +54,9 @@ export class ViewTaskComponent implements OnInit {
   setFiltetedTasks() {
     this._taskService.getQuestions(this.examId, null, this.selectedSubject.gradeId, this.selectedSubject.subId).then((data) => {
       this.questions = data;
-      this.tasks = _.filter(this.markTasks, {gradeId: this.selectedSubject.gradeId, subjectId: this.selectedSubject.id});
+      this.tasks = _.filter(this.markTasks, {gradeId: String(this.selectedSubject.gradeId), subId: String(this.selectedSubject.id)});
       this.tasks.forEach((task) => {
-        task.question = _.find(this.questions, {id: task.questionId});
+        task.question = _.find(this.questions, {id: Number(task.questionId)});
         task.group = _.find(this.grade.groups, (group) => _.includes(group.name, this.selectedSubject.subName))
       })
     })
