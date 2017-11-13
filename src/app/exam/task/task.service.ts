@@ -52,9 +52,8 @@ export class TaskService {
 
   getGrade(gradeId: any) {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', 'assets/api/schools/grade.json', '').then((data: any) => {
-        // resolve(data.data)
-        resolve(data)
+      this._sharedService.makeRequest('GET', `/api/task/allocation/grade/${gradeId}`, '').then((data: any) => {
+        resolve(data.data)
       })
     })
   }
@@ -89,7 +88,8 @@ export class TaskService {
 
   getMarkTasks(examId, gradeId, subjectId) {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', `/api/exam/marktask/list/${examId}/${gradeId}/${subjectId}`, '').then((data: any) => {
+      this._sharedService.makeRequest('GET', `/exam/marktasks/${examId}/${gradeId}/${subjectId}`,
+        JSON.stringify({examId: examId, gradeId: gradeId, subjectId: subjectId})).then((data: any) => {
         // resolve(data.data)
         resolve(data)
       })
