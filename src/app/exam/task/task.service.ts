@@ -90,8 +90,11 @@ export class TaskService {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET', `/exam/marktasks/${examId}/${gradeId}/${subjectId}`,
         JSON.stringify({examId: examId, gradeId: gradeId, subjectId: subjectId})).then((data: any) => {
-        // resolve(data.data)
-        resolve(data)
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject(data.success)
+        }
       })
     })
   }
@@ -108,9 +111,13 @@ export class TaskService {
 
   getTask(examId: string, gradeId: string, subjectId: string, questionId: string) {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', 'assets/api/exams/markTask' + questionId + '.json', '').then((data: any) => {
-        // resolve(data.data)
-        resolve(data)
+      this._sharedService.makeRequest('GET', `/exam/marktasks/${examId}/${gradeId}/${subjectId}/${questionId}`,
+        '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject(data.success)
+        }
       })
     })
   }
