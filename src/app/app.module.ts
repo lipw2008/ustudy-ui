@@ -23,6 +23,7 @@ import { ExamModule } from './info/exams/exam.module';
 import { MarkModule } from './exam/mark/mark.module';
 
 import { SharedService } from './shared.service';
+import {AnswerPaperModule} from './exam/answer-paper/answer-paper.module';
 
 @NgModule({
   imports: [
@@ -41,9 +42,9 @@ import { SharedService } from './shared.service';
     TeacherModule,
     SchoolModule,
     WelcomeModule,
-    MarkModule,
     TaskAllocationModule,
     SetAnswersModule,
+    AnswerPaperModule,
     ExamModule,
     MarkModule
   ],
