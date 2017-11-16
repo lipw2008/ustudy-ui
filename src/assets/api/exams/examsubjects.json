@@ -24,7 +24,15 @@
         "blankAnswerPaper": "null",
         "blankQuestionsPaper": "null",
         "xmlServerPath": "null",
-        "originalData": "null"
+        "originalData": "null",
+        "paper_uri": "http:xxxx",
+        "answer_uri": "http:xxxx",
+        "questions": [
+          {
+            "id": 1,
+            "quesno": "1-3"
+          }
+        ]
       }
     ]
   }
