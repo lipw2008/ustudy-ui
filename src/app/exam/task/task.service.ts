@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SharedService } from "../../shared.service";
+import { SharedService } from '../../shared.service';
 
 @Injectable()
 export class TaskService {
@@ -9,7 +9,7 @@ export class TaskService {
   getExams() {
     return new Promise((resolve, reject) => {
       // XXX: should use /exams/{examStatus}
-      this._sharedService.makeRequest('GET', '/exams', '').then((data: any) => {
+      this._sharedService.makeRequest('GET', 'api/allexams', '').then((data: any) => {
         if (!data.data) {
           reject('no data');
         }
@@ -21,7 +21,7 @@ export class TaskService {
   getExam(examId) {
     return new Promise((resolve, reject) => {
       // XXX: should use /exams/{examStatus}
-      this._sharedService.makeRequest('GET', '/exam/' + examId, '').then((data: any) => {
+      this._sharedService.makeRequest('GET', 'api/exam/' + examId, '').then((data: any) => {
         if (!data.data) {
           reject('no data');
         }
@@ -32,13 +32,12 @@ export class TaskService {
 
   getQuestions(examId, schoolId, gradeId, subjectId) {
     return new Promise((resolve, reject) => {
-      // XXX: should use exam/{examId}/questions
-      this._sharedService.makeRequest('GET', 'assets/api/exams/questions.json', '').then((data: any) => {
-        // if (!data.data) {
-        //   reject('no data');
-        // }
-        // resolve(data.data)
-        resolve(data)
+      this._sharedService.makeRequest('GET', `/api/task/allocation/questions/${examId}/${gradeId}/${subjectId}`,
+        '').then((data: any) => {
+        if (!data.data) {
+          reject('no data');
+        }
+        resolve(data.data)
       })
     })
   }
@@ -51,11 +50,10 @@ export class TaskService {
     })
   }
 
-  getGrade(gradeId:any) {
+  getGrade(gradeId: any) {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', 'assets/api/schools/grade.json', '').then((data: any) => {
-        // resolve(data.data)
-        resolve(data)
+      this._sharedService.makeRequest('GET', `/api/task/allocation/grade/${gradeId}`, '').then((data: any) => {
+        resolve(data.data)
       })
     })
   }
@@ -88,11 +86,15 @@ export class TaskService {
     })
   }
 
-  getMarkTasks(examId) {
+  getMarkTasks(examId, gradeId, subjectId) {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', 'assets/api/exams/markTasks.json', '').then((data: any) => {
-        // resolve(data.data)
-        resolve(data)
+      this._sharedService.makeRequest('GET', `/exam/marktasks/${examId}/${gradeId}/${subjectId}`,
+        JSON.stringify({examId: examId, gradeId: gradeId, subjectId: subjectId})).then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject(data.success)
+        }
       })
     })
   }
@@ -109,7 +111,21 @@ export class TaskService {
 
   getTask(examId: string, gradeId: string, subjectId: string, questionId: string) {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', 'assets/api/exams/markTask' + questionId + '.json', '').then((data: any) => {
+      this._sharedService.makeRequest('GET', `/exam/marktasks/${examId}/${gradeId}/${subjectId}/${questionId}`,
+        '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject(data.success)
+        }
+      })
+    })
+  }
+
+  getWorkingTeachers() {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET',
+        `assets/api/exams/markTask/workingTeachers.json`, '').then((data: any) => {
         // resolve(data.data)
         resolve(data)
       })

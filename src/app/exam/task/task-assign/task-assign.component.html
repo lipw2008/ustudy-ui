@@ -17,8 +17,9 @@
           </div>
         </td>
         <td>
-          <select class="form-control" [(ngModel)]="selectedQuestion" (change)="setSelectedQuestion($event)">
-            <option value="0" [selected]="!questionId">选择考题</option>
+          <select id="selectQuestion" class="form-control" [(ngModel)]="selectedQuestion" (change)="onSelectedQuestion($event)"
+                  [@flyInOut]="animationState">
+            <option value="0" [selected]="!questionId" [@flyInOut]="'in'">选择考题</option>
 						<option *ngFor="let question of questions" [ngValue]="question" [selected]="questionId === question.id">{{question.questionName}}</option>
 					</select>
         </td>
@@ -62,17 +63,31 @@
             <input type="radio" ng-controll="options" [value]="'双评'" (click)="markType='双评'" [checked]="markType=='双评'"> 双评
           </label>
           <span aria-hidden="true" class="glyphicon glyphicon-time pull-right" style=" ">
-            <input style=" width: 40%; " type="number" title="阅卷时间设置（设置最短时间，限定老师的阅卷速度，单位为秒）">
+            <input style=" width: 40%; " type="number" title="阅卷时间设置（设置最短时间，限定老师的阅卷速度，单位为秒）" [ngModel]="timeLimit">
           </span>
         </td>
       </tr>
       <tr>
         <td>
+          <div class="text">
+            <p><span>教师选择：</span></p>
+          </div>
+        </td>
+        <td>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'全体'" (click)="onSelectTeacherType('全体')" [checked]="teacherType=='全体'"> 全体
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'未安排任务的教师'" (click)="onSelectTeacherType('未安排任务的教师')" [checked]="teacherType=='未安排任务的教师'"> 未安排任务的教师
+          </label>
+        </td>
+      </tr>      <tr>
+        <td>
           阅卷老师选择:
         </td>
         <td>
-          <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedTeacherIds = $event"
-                            [with]="withTeachersIds"></teacher-selector>
+          <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="onTeachersSelect($event)"
+                            [without]="teachersWithoutIds" [with]="withTeachersIds"></teacher-selector>
         </td>
       </tr>
       <tr *ngIf="markType==='双评'">
@@ -81,7 +96,7 @@
         </td>
         <td>
           <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedFinalTeacherIds = $event"
-                            [without]="selectedTeacherIds" [with]="withFinalTeachersIds"></teacher-selector>
+                            [without]="finalTeachersWithoutIds" [with]="withFinalTeachersIds"></teacher-selector>
         </td>
       </tr>
       <tr>

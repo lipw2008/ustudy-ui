@@ -1,0 +1,29 @@
+<exams-filter (result)="this.subjects = $event"></exams-filter>
+
+<table class="table table-striped text-center">
+  <thead>
+   <tr>
+     <th>考试</th>
+     <th>试卷</th>
+     <th>标准答案</th>
+     <th>FAQ答案</th>
+     <th>班级答卷</th>
+   </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let subject of subjects">
+      <td>{{ subject.examName }}<br>({{ subject.gradeName }})</td>
+      <td>{{ subject.subName }}</td>
+      <td>
+        <span *ngFor="let question of subject.questions, last as isLast"><a href="#">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
+      </td>
+      <td>
+        <span *ngFor="let question of subject.questions, last as isLast"><a href="#">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
+      </td>
+      <td>
+        <span *ngFor="let question of subject.questions, last as isLast"><a href="#">{{ getQuestionName(question) }}</a><span>,</span></span>
+        <span><a>答题卡</a></span>
+      </td>
+    </tr>
+  </tbody>
+</table>

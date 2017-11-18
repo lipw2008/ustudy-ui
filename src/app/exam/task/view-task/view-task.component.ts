@@ -34,7 +34,7 @@ export class ViewTaskComponent implements OnInit {
     this._taskService.getGrade(this.gradeId).then((data) => {
       this.grade = data
     });
-    this._taskService.getMarkTasks(this.examId).then((data) => {
+    this._taskService.getMarkTasks(this.examId, this.gradeId, this.subjectId).then((data) => {
       this.markTasks = data;
       this._taskService.getExamSubjects(this.examId).then((data) => {
         const gradesubjects = data;
@@ -43,10 +43,12 @@ export class ViewTaskComponent implements OnInit {
           for (const subject of this.gradesubjects) {
             if (subject.subId === this.subjectId && subject.gradeId === this.gradeId && subject.examid === this.examId) {
               this.selectedSubject = subject;
-              this.setFiltetedTasks()
             }
           }
+        } else {
+          this.selectedSubject = _.first(gradesubjects)
         }
+        this.setFiltetedTasks()
       })
     });
   }
@@ -54,9 +56,9 @@ export class ViewTaskComponent implements OnInit {
   setFiltetedTasks() {
     this._taskService.getQuestions(this.examId, null, this.selectedSubject.gradeId, this.selectedSubject.subId).then((data) => {
       this.questions = data;
-      this.tasks = _.filter(this.markTasks, {gradeId: this.selectedSubject.gradeId, subjectId: this.selectedSubject.id});
+      this.tasks = _.filter(this.markTasks, {gradeId: String(this.selectedSubject.gradeId), subjectId: String(this.selectedSubject.id)});
       this.tasks.forEach((task) => {
-        task.question = _.find(this.questions, {id: task.questionId});
+        task.question = _.find(this.questions, {id: Number(task.questionId)});
         task.group = _.find(this.grade.groups, (group) => _.includes(group.name, this.selectedSubject.subName))
       })
     })
@@ -64,11 +66,12 @@ export class ViewTaskComponent implements OnInit {
 
   getTeachers(task: any) {
     return task.teachersIds.map( teacherId => _.find(this.grade.teachers, {id: teacherId}).name)
-      .concat( task.finalMarkTeachersIds.map( teacherId => _.find(this.grade.teachers, {id: teacherId}).name))
+      .concat( task.finalMarkTeachersIds.map( teacherId => _.get(_.find(this.grade.teachers, {id: teacherId}), 'name')))
+      .filter((teacher) => !_.isEmpty(teacher))
   }
 
   getGroupMember(group) {
-    return _.filter(this.grade.teachers, {group: group.id})
+    return _.filter(this.grade.teachers, (teacher) => _.includes(teacher.groups, group.name))
   }
 
   setOwner(task: any, $event: any) {

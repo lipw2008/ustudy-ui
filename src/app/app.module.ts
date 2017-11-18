@@ -8,6 +8,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { LoginComponent } from './welcome/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /* Feature Modules */
 import { WelcomeModule } from './welcome/welcome.module';
@@ -22,6 +23,7 @@ import { ExamModule } from './info/exams/exam.module';
 import { MarkModule } from './exam/mark/mark.module';
 
 import { SharedService } from './shared.service';
+import {AnswerPaperModule} from './exam/answer-paper/answer-paper.module';
 
 @NgModule({
   imports: [
@@ -29,6 +31,8 @@ import { SharedService } from './shared.service';
     // Angular2FontawesomeModule,
     NgxDatatableModule,
     HttpModule,
+    BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
       { path: 'login', component: LoginComponent },
@@ -38,9 +42,9 @@ import { SharedService } from './shared.service';
     TeacherModule,
     SchoolModule,
     WelcomeModule,
-    MarkModule,
     TaskAllocationModule,
     SetAnswersModule,
+    AnswerPaperModule,
     ExamModule,
     MarkModule
   ],

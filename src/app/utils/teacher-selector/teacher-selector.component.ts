@@ -40,15 +40,16 @@ export class TeacherSelectorComponent implements OnInit, OnChanges {
 
   private buildTreeViewData() {
     const items = [];
+    if (!this.grade) return;
     for (const group of this.grade.groups) {
       group.text = group.name;
       group.value = group.id;
       group.collapsed = !_.includes(group.name, this.subject);
-      group.children = _.filter(this.grade.teachers, {group: group.id}).map((teacher) => {
+      group.children = _.filter(this.grade.teachers, (teacher) => _.includes(teacher.groups, group.name)).map((teacher) => {
         teacher.text = teacher.name;
         teacher.value = teacher.id;
         teacher.disabled = _.includes(this.without, teacher.id);
-        teacher.checked = _.includes(this.with, teacher.id);
+        teacher.checked = _.includes(this.with, teacher.id) && !_.includes(this.without, teacher.id);
         return teacher
       });
       let item;
