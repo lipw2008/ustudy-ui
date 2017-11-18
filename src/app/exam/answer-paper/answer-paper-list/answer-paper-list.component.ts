@@ -6,10 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./answer-paper-list.component.css']
 })
 export class AnswerPaperListComponent implements OnInit {
+  sbujects = [];
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  getQuestionName(question: any) {
+    if (question.quesno) {
+      return question.quesno
+    } else {
+      return `${question.startno}-${question.endno}`
+    }
+  }
 }

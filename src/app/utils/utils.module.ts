@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {TeacherSelectorComponent} from './teacher-selector/teacher-selector.component';
 import {FormsModule} from '@angular/forms';
 import {TreeviewModule} from 'ngx-treeview';
@@ -11,6 +12,8 @@ import {ExamService} from '../exam/exam.service';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    BsDatepickerModule.forRoot(),
     TreeviewModule.forRoot(),
     FormsModule
   ],

@@ -30,6 +30,7 @@
 		"app/plugins/bootstrap/dist/css/bootstrap-theme.min.css",
 		"app/plugins/bootstrapvalidator-master/dist/css/bootstrapValidator.min.css",
     "app/plugins/bootstrap-select/dist/css/bootstrap-select.css",
+    "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
     "../node_modules/font-awesome/css/font-awesome.css"
       ],
       "scripts": [
