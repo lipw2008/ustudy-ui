@@ -16,11 +16,16 @@ export class SharedService {
   }
 
 	getImgUrl(paperImg: string, region: any) : string {
-	  let url = this.baseUrl + paperImg + "?x-oss-process=image/crop,";
-		url += "x_" + region.x + ",";
-		url += "y_" + region.y + ",";
-		url += "w_" + region.w + ",";
-		url += "h_" + region.h;
+    let url = "";
+    if (region === "") {
+      url = this.baseUrl + paperImg;
+    } else {
+      url = this.baseUrl + paperImg + "?x-oss-process=image/crop,";
+  		url += "x_" + region.x + ",";
+  		url += "y_" + region.y + ",";
+  		url += "w_" + region.w + ",";
+  		url += "h_" + region.h;
+    }
 		return url;
 	}
 

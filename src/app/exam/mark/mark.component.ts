@@ -63,8 +63,7 @@ export class MarkComponent implements OnInit {
 			h: ""
 		},
 		paperImg: "",
-		answerImg: "",
-		answerImgData: "",
+		answerType: "",
 		markImg: "",
 		markImgData: ""
 	};
@@ -76,8 +75,7 @@ export class MarkComponent implements OnInit {
 			h: ""
 		},
 		paperImg: "",
-		answerImg: "",
-		answerImgData: "",
+		answerType: "",
 		markImg: "",
 		markImgData: ""
 	};
@@ -89,8 +87,7 @@ export class MarkComponent implements OnInit {
 			h: ""
 		},
 		paperImg: "",
-		answerImg: "",
-		answerImgData: "",
+		answerType: "",
 		markImg: "",
 		markImgData: ""
 	};
@@ -142,8 +139,8 @@ export class MarkComponent implements OnInit {
 			this.reqContent.questions.push(question);
 		}
 
-		this._sharedService.makeRequest('POST', '/exam/marktask/paper/view/', JSON.stringify(this.reqContent)).then((data: any) => {
-		//this._sharedService.makeRequest('GET', 'assets/api/exams/multiMark.json', '').then((data: any) => {
+		//this._sharedService.makeRequest('POST', '/exam/marktask/paper/view/', JSON.stringify(this.reqContent)).then((data: any) => {
+		this._sharedService.makeRequest('GET', 'assets/api/exams/multiMark.json', '').then((data: any) => {
 			this.reqContent.questions = [];
 
 			//cache the list
@@ -155,7 +152,7 @@ export class MarkComponent implements OnInit {
 				return;
 			}
 			if (this.reqContent.startSeq === -1 && this.reqContent.endSeq === -1) {
-				this.curPage = this.mark.groups[0].groupNo;
+				this.curPage = this.mark.groups[0].paperSeq;
 			} else {
 				this.reqContent.startSeq = -1;
 				this.reqContent.endSeq = -1;
@@ -183,19 +180,17 @@ export class MarkComponent implements OnInit {
 	updateCanvas(): void {
 		console.log("update canvas for page: " + this.curPage);
 		for (let group of this.mark.groups) {
-			if (group.groupNo === this.curPage) {
+			if (group.paperSeq === this.curPage) {
 				this.answer.region = group.papers[0].region;
 				this.answer.paperImg = group.papers[0].paperImg;
-				this.answer.answerImg = group.papers[0].answerImg;
-				this.answer.answerImgData = group.papers[0].answerImgData;
+				this.answer.answerType = group.papers[0].answerType;
 				this.answer.markImg = group.papers[0].markImg;
 				this.answer.markImgData = group.papers[0].markImgData;
 				this.score = "阅卷老师：" + this.mark.teacherId + " 得分：";
 				if (this.markQuestions.length >= 2) {
 					this.answer2.region = group.papers[1].region;
 					this.answer2.paperImg = group.papers[1].paperImg;
-					this.answer2.answerImg = group.papers[1].answerImg;
-					this.answer2.answerImgData = group.papers[1].answerImgData;
+					this.answer2.answerType = group.papers[1].answerType;
 					this.answer2.markImg = group.papers[1].markImg;
 					this.answer2.markImgData = group.papers[1].markImgData;
 					this.score2 = this.score;
@@ -203,8 +198,7 @@ export class MarkComponent implements OnInit {
 				if (this.markQuestions.length == 3) {
 					this.answer3.region = group.papers[2].region;
 					this.answer3.paperImg = group.papers[2].paperImg;
-					this.answer3.answerImg = group.papers[2].answerImg;
-					this.answer3.answerImgData = group.papers[2].answerImgData;
+					this.answer3.answerType = group.papers[2].answerType;
 					this.answer3.markImg = group.papers[2].markImg;
 					this.answer3.markImgData = group.papers[2].markImgData;
 					this.score3 = this.score;
@@ -218,7 +212,7 @@ export class MarkComponent implements OnInit {
 		console.log("before update full score: " + this.fullScore);
 		console.log("before update full score - mark: " + JSON.stringify(this.mark));
 		for (let group of this.mark.groups) {
-			if (group.groupNo === this.curPage) {
+			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
 					if (paper.isProblemPaper === true) {
 						continue;
@@ -271,7 +265,7 @@ export class MarkComponent implements OnInit {
 
 	setScore(score: string): void {
 		for (let group of this.mark.groups) {
-			if (group.groupNo === this.curPage) {
+			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
 					if (paper.isProblemPaper === true) {
 						continue;
@@ -308,7 +302,7 @@ export class MarkComponent implements OnInit {
 
 	previousPage(): void {
 		this.curPage--;
-		if (this.curPage < this.mark.groups[0].groupNo) {
+		if (this.curPage < this.mark.groups[0].paperSeq) {
 			this.reqContent.startSeq = (this.curPage - 10 < 0 ? 0 : this.curPage - 10);
 			this.reqContent.endSeq = this.curPage;
 			this.reload();
@@ -320,7 +314,7 @@ export class MarkComponent implements OnInit {
 
 	nextPage(): void {
 		this.curPage++;
-		if (this.curPage > this.mark.groups[this.pageCount - 1].groupNo) {
+		if (this.curPage > this.mark.groups[this.pageCount - 1].paperSeq) {
 			this.reload();
 		} else {
 			this.updateCanvas();
@@ -334,7 +328,7 @@ export class MarkComponent implements OnInit {
 
 	submit(): void {
 		for (let group of this.mark.groups) {
-			if (group.groupNo === this.curPage) {
+			if (group.paperSeq === this.curPage) {
 				if (group.papers[0].score !== "") {
 					this.score += group.papers[0].score + "/" + group.papers[0].fullScore;
 				} else {
@@ -372,18 +366,18 @@ export class MarkComponent implements OnInit {
 			return;
 		}
 		for (let group of this.mark.groups) {
-			if (group.groupNo === this.curPage) {
+			if (group.paperSeq === this.curPage) {
 				if (group.papers.length >= 1) {
-					group.papers[0].answerImgData = this.answer.answerImgData;
 					group.papers[0].markImgData = this.answer.markImgData;
+					group.papers[0].answerType = this.answer.answerType;
 				}
 				if (group.papers.length >= 2) {
-					group.papers[1].answerImgData = this.answer2.answerImgData;
 					group.papers[1].markImgData = this.answer2.markImgData;
+					group.papers[1].answerType = this.answer2.answerType;
 				}
 				if (group.papers.length === 3) {
-					group.papers[2].answerImgData = this.answer3.answerImgData;
 					group.papers[2].markImgData = this.answer3.markImgData;
+					group.papers[2].answerType = this.answer3.answerType;
 				}
 				this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(group)).then((data: any) => {
 					alert("修改成功");
