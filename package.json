@@ -31,7 +31,7 @@
     "font-awesome": "^4.7.0",
     "ng2-charts": "^1.6.0",
     "ngx-bootstrap": "^2.0.0-beta.8",
-    "ngx-treeview": "git+https://github.com/iJetLi/ngx-treeview-dist",
+    "ngx-treeview": "git+https://github.com/iJetLi/ngx-treeview-dist.git",
     "rxjs": "^5.5.2",
     "sprintf-js": "^1.1.1",
     "ts-md5": "^1.2.0",
