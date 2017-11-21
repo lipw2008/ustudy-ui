@@ -76,13 +76,12 @@ export class TaskService {
     })
   }
 
-  creatMarkTask(json) {
+  createMarkTask(json) {
     console.log('create task:', JSON.stringify(json));
     return new Promise((resolve, reject) => {
-      resolve({success: true});
-      // this._sharedService.makeRequest('POST', 'marktask/create/', JSON.stringify(json)).then((res) => {
-      //   resolve(res)
-      // })
+      this._sharedService.makeRequest('POST', '/exam/marktask/create/', JSON.stringify(json)).then((res) => {
+        resolve(res)
+      })
     })
   }
 

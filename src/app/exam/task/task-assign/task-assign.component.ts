@@ -92,9 +92,9 @@ export class TaskAssignComponent implements OnInit {
   }
 
   submit() {
-    const method = this.questionId ? this._taskService.creatMarkTask : this._taskService.updateMarkTask;
-    method({examId: this.examId, questionId: this.selectedQuestion.id, teachersIds: this.selectedTeacherIds, type: this.assignType,
-      gradeId: this.gradeId, subjectId: this.subjectId, ownerId: _.find(this.grade.groups, (group) => _.includes(group.name, this.subject)),
+    const method = this.questionId ? this._taskService.updateMarkTask : this._taskService.createMarkTask;
+    method.call(this._taskService, {examId: this.examId, questionId: this.selectedQuestion.id, teachersIds: this.selectedTeacherIds, type: this.assignType,
+      gradeId: this.gradeId, subjectId: this.subjectId, ownerId: _.get(_.find(this.grade.groups, (group) => _.includes(group.name, this.subject)), 'owner'),
       finalMarkTeachersIds: _.without(this.selectedFinalTeacherIds, this.selectedTeacherIds),
       timeLimit: this.timeLimit}).then((data) => {
       console.log(data);
