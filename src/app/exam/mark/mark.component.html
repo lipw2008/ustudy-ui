@@ -45,9 +45,9 @@
 				<div class="panel-body">
 					<div>
                         <div #markContainer style="overflow-x: auto; overflow-y: auto">
-                            <mark-canvas [score]="score" [imgPath]="imgPath"  [editMode]="editMode"></mark-canvas>
-                            <mark-canvas [score]="score2" [imgPath]="imgPath2" [editMode]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
-                            <mark-canvas [score]="score3" [imgPath]="imgPath3" [editMode]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
+                            <mark-canvas [score]="score"  [(answer)]="answer"  [editMode]="editMode"></mark-canvas>
+                            <mark-canvas [score]="score2" [(answer)]="answer2" [editMode]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
+                            <mark-canvas [score]="score3" [(answer)]="answer3" [editMode]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
                         </div>
 					</div>
 				</div>
@@ -56,9 +56,9 @@
 						<!--控制条 strat-->
                     	<div class="control extra clearfix" data-toggle="buttons" style="bottom: 15px;left: 15px;">
                             <span class="control-drag"><i class="iconfont-optionvertical"></i></span>
-                        	<a (click)='addBestAnswer()' title="优秀标注"><i class="iconfont-bestanswer"></i></a>
-                        	<a (click)='addFAQ()' title="FAQ"><i class="iconfont-faq"></i></a>
-                        	<a (click)='addQueerAnswer()' title="奇葩"><i class="iconfont-queerflower"></i></a>
+                        	<a (click)='addBestAnswer()' title="点击答题卡，标注优秀"><i class="iconfont-bestanswer"></i></a>
+                        	<a (click)='addFAQ()' title="点击答题卡，标注FAQ"><i class="iconfont-faq"></i></a>
+                        	<a (click)='addQueerAnswer()' title="点击答题卡，标注奇葩"><i class="iconfont-queerflower"></i></a>
                         	<a (click)='drawLine()' title="双横线"><i class="iconfont-markdoubleline"></i></a>
                         	<a (click)='drawCircle()' title="圈注"><i class="iconfont-markcircle"></i></a>
                         	<a (click)='addHelp()' title="疑问"><i class="iconfont-help"></i></a>
@@ -116,7 +116,7 @@
                 </div>
                 <div class="form-group form-inline">
                     <ng-container *ngFor="let group of mark.groups">
-                        <ng-container *ngIf="group.groupNo === curPage">
+                        <ng-container *ngIf="group.paperSeq === curPage">
                             <ng-container *ngFor="let paper of group.papers">
                                 <ng-container *ngIf="paper.steps.length === 0">
                                     <label for="">{{paper.questionName}}题: </label>
@@ -169,7 +169,9 @@
                     </ul>
                     <!-- 翻页 end -->
                 </div>
-                <div class="padding text-center bg-muted">平均给分：<span>3.1</span>分/已阅题：<span>44</span></div>
+                <ng-container *ngFor="let question of mark.summary">
+                    <div class="padding text-center bg-muted">{{question.questionName}}题： 平均给分：<span>{{question.avgScore}}</span>/已阅题：<span>{{question.markedNum}}</span></div>
+                </ng-container>
 			</form>
 		</div>
 	</div>

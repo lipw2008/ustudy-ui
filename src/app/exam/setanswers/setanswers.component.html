@@ -40,9 +40,9 @@
 							<tr *ngFor="let objective of objectives">
 								<td class="clearfix">
 									<div class="input-group">
-										<input type="text" class="form-control" id="start_{{objective.id}}" name="start" size="5" placeholder="" value="{{objective.start}}" (change)="onValueChange(1,objective.id)">
+										<input type="text" class="form-control" id="start_{{objective.id}}" name="start" size="5" placeholder="" value="{{objective.startno}}" (change)="onValueChange(1,objective.id)">
 										<span class="input-group-addon clear-border clear-bg">至</span>
-										<input type="text" class="form-control" id="end_{{objective.id}}" name="end" size="5" placeholder="" value="{{objective.end}}" (change)="onValueChange(2,objective.id)">
+										<input type="text" class="form-control" id="end_{{objective.id}}" name="end" size="5" placeholder="" value="{{objective.endno}}" (change)="onValueChange(2,objective.id)">
 									</div>
 									<div class="input-group pull-right">
 										<a class="btn btn-link" (click)="removeOneRow(objective.id)">
@@ -52,19 +52,19 @@
 								</td>
 								<td>
 									<select id="type_{{objective.id}}" class="form-control" (change)="onValueChange(3,objective.id)">
-										<option *ngIf="objective.type === 1" selected="selected" value="1">单选题</option>
-										<option *ngIf="objective.type !== 1" value="1">单选题</option>
-										<option *ngIf="objective.type === 2" selected="selected" value="2">多选题</option>
-										<option *ngIf="objective.type !== 2" value="2">多选题</option>
-										<option *ngIf="objective.type === 3" selected="selected" value="3">判断题</option>
-										<option *ngIf="objective.type !== 3" value="3">判断题</option>
+										<option *ngIf="objective.type === '单选题'" selected="selected" value="单选题">单选题</option>
+										<option *ngIf="objective.type !== '单选题'" value="单选题">单选题</option>
+										<option *ngIf="objective.type === '多选题'" selected="selected" value="多选题">多选题</option>
+										<option *ngIf="objective.type !== '多选题'" value="多选题">多选题</option>
+										<option *ngIf="objective.type === '判断题'" selected="selected" value="判断题">判断题</option>
+										<option *ngIf="objective.type !== '判断题'" value="判断题">判断题</option>
 									</select>
 								</td>
 								<td>
 									<select id="option_{{objective.id}}" class="form-control" (change)="onValueChange(4,objective.id)">
 										<ng-container *ngFor="let option of options">
-											<option *ngIf="objective.option === option" selected="selected" value="{{option}}">{{option}}</option>
-											<option *ngIf="objective.option !== option" value="{{option}}">{{option}}</option>
+											<option *ngIf="objective.choiceNum === option" selected="selected" value="{{option}}">{{option}}</option>
+											<option *ngIf="objective.choiceNum !== option" value="{{option}}">{{option}}</option>
 										</ng-container>
 									</select>
 								</td>
@@ -72,8 +72,8 @@
 									<div class="input-group">
 										<input type="text" class="form-control" id="score_{{objective.id}}" size="5" value="{{objective.score}}" (change)="onValueChange(5,objective.id)">
 										<span class="input-group-addon clear-border clear-bg">分/题</span>
-										<div class="input-group pull-right" *ngIf="objective.type === 2">
-											<a class="btn btn-link" (click)="showCheckBoxScore()"><i class="glyphicon glyphicon-cog"></i></a>
+										<div class="input-group pull-right" *ngIf="objective.type === '多选题'">
+											<a class="btn btn-link" (click)="showCheckBoxScore(objective.choiceNum,objective.score)"><i class="glyphicon glyphicon-cog"></i></a>
 										</div>
 									</div>
 								</td>
@@ -95,27 +95,27 @@
 						</thead>
 						<tbody>
 							<tr *ngFor="let answer of objectiveAnswers">
-								<td>{{answer.no}}</td>
+								<td>{{answer.quesno}}</td>
 								<td>
 									<div class="extra" data-toggle="buttons">
 										<ng-container *ngFor="let option of answer.options">
-											<label class="btn btn-default active" *ngIf="option.checked" (click)="setAnswersOption(answer.no,answer.type,option.name)">
-												<input *ngIf="answer.type !== 2" type="radio" value="{{option.name}}">
-												<input *ngIf="answer.type === 2" type="checkbox" value="{{option.name}}"> {{option.name}}
+											<label class="btn btn-default active" *ngIf="option.checked" (click)="setAnswersOption(answer.quesno,answer.type,option.name)">
+												<input *ngIf="answer.type !== '多选题'" type="radio" value="{{option.name}}">
+												<input *ngIf="answer.type === '多选题'" type="checkbox" value="{{option.name}}"> {{option.name}}
 											</label>
-											<label class="btn btn-default" *ngIf="!option.checked" (click)="setAnswersOption(answer.no,answer.type,option.name)">
-												<input *ngIf="answer.type !== 2" type="radio" value="{{option.name}}">
-												<input *ngIf="answer.type === 2" type="checkbox" value="{{option.name}}"> {{option.name}}
+											<label class="btn btn-default" *ngIf="!option.checked" (click)="setAnswersOption(answer.quesno,answer.type,option.name)">
+												<input *ngIf="answer.type !== '多选题'" type="radio" value="{{option.name}}">
+												<input *ngIf="answer.type === '多选题'" type="checkbox" value="{{option.name}}"> {{option.name}}
 											</label>
 										</ng-container>
 									</div>
 								</td>
 								<td>{{answer.answer}}</td>
 								<td *ngIf="issynthesize">
-									<select id="answersSubject_{{answer.no}}" class="form-control" (change)="setAnswersSubject(answer.no,answer.type)">
+									<select id="answersSubject_{{answer.quesno}}" class="form-control" (change)="setAnswersSubject(answer.quesno,answer.type)">
 										<ng-container *ngFor="let subject of subjects">
-											<option *ngIf="answer.subject === subject.id" selected="selected" value="{{subject.id}}">{{subject.name}}</option>
-											<option *ngIf="answer.subject !== subject.id" value="{{subject.id}}">{{subject.name}}</option>
+											<option *ngIf="answer.subject === subject.name" selected="selected" value="{{subject.name}}">{{subject.name}}</option>
+											<option *ngIf="answer.subject !== subject.name" value="{{subject.name}}">{{subject.name}}</option>
 										</ng-container>
 									</select>
 								</td>
@@ -125,10 +125,6 @@
 				</div>
 				<!--表格end-->
 				<p>单选题合计{{radioScore}}分，多选题合计{{checkboxScore}}分，判断题合计{{judgmentScore}}分，客观题总计分数：{{objectiveScore}}分</p>
-				<div class="padding-vertical text-center">
-					<button type="button" class="btn btn-default">取消</button>
-					<button type="submit" class="btn btn-primary">保存</button>
-				</div>
 			</form>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="tab2">
@@ -156,9 +152,9 @@
 								<tr>
 									<td>
 										<div class="input-group">
-											<input type="text" class="form-control" size="5" id="subjective_start_{{subjective.id}}" value="{{subjective.start}}" (change)="onSubjectiveValueChange('start',subjective.id,0)">
-											<span class="input-group-addon clear-border clear-bg" *ngIf="subjective.type === 4">至</span>
-											<input type="text" class="form-control" size="5" id="subjective_end_{{subjective.id}}" value="{{subjective.end}}" *ngIf="subjective.type === 4" (change)="onSubjectiveValueChange('end',subjective.id,0)">
+											<input type="text" class="form-control" size="5" id="subjective_start_{{subjective.id}}" value="{{subjective.startno}}" (change)="onSubjectiveValueChange('start',subjective.id,0)">
+											<span class="input-group-addon clear-border clear-bg" *ngIf="subjective.type === '填空题'">至</span>
+											<input type="text" class="form-control" size="5" id="subjective_end_{{subjective.id}}" value="{{subjective.endno}}" *ngIf="subjective.type === '填空题'" (change)="onSubjectiveValueChange('end',subjective.id,0)">
 										</div>
 										<div class="input-group pull-right">
 											<a class="btn btn-link" (click)="removeOneSubjectiveRow(subjective.id,0)">
@@ -169,30 +165,30 @@
 									<td *ngIf="issynthesize">
 										<select id="subjective_subject_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('subject',subjective.id,0)">
 											<ng-container *ngFor="let subject of subjects">
-												<option *ngIf="subjective.subject === subject.id" selected="selected" value="{{subject.id}}">{{subject.name}}</option>
-												<option *ngIf="subjective.subject !== subject.id" value="{{subject.id}}">{{subject.name}}</option>
+												<option *ngIf="subjective.subject === subject.name" selected="selected" value="{{subject.name}}">{{subject.name}}</option>
+												<option *ngIf="subjective.subject !== subject.name" value="{{subject.name}}">{{subject.name}}</option>
 											</ng-container>
 										</select>
 									</td>
 									<td>
 										<select id="subjective_type_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('type',subjective.id,0)">
-											<option *ngIf="subjective.type === 4" selected="selected" value="4">填空题</option>
-											<option *ngIf="subjective.type !== 4" value="4">填空题</option>
-											<option *ngIf="subjective.type === 5" selected="selected" value="5">解答题</option>
-											<option *ngIf="subjective.type !== 5" value="5">解答题</option>
-											<option *ngIf="subjective.type === 6" selected="selected" value="6">证明题</option>
-											<option *ngIf="subjective.type !== 6" value="6">证明题</option>
-											<option *ngIf="subjective.type === 7" selected="selected" value="7">论述题</option>
-											<option *ngIf="subjective.type !== 7" value="7">论述题</option>
-											<option *ngIf="subjective.type === 8" selected="selected" value="8">作文题</option>
-											<option *ngIf="subjective.type !== 8" value="8">作文题</option>
+											<option *ngIf="subjective.type === '填空题'" selected="selected" value="填空题">填空题</option>
+											<option *ngIf="subjective.type !== '填空题'" value="填空题">填空题</option>
+											<option *ngIf="subjective.type === '解答题'" selected="selected" value="解答题">解答题</option>
+											<option *ngIf="subjective.type !== '解答题'" value="解答题">解答题</option>
+											<option *ngIf="subjective.type === '证明题'" selected="selected" value="证明题">证明题</option>
+											<option *ngIf="subjective.type !== '证明题'" value="证明题">证明题</option>
+											<option *ngIf="subjective.type === '论述题'" selected="selected" value="论述题">论述题</option>
+											<option *ngIf="subjective.type !== '论述题'" value="论述题">论述题</option>
+											<option *ngIf="subjective.type === '作文题'" selected="selected" value="作文题">作文题</option>
+											<option *ngIf="subjective.type !== '作文题'" value="作文题">作文题</option>
 										</select>
 									</td>
 									<td>
 										<div class="input-group">
 											<input type="text" class="form-control" size="5" id="subjective_score_{{subjective.id}}" value="{{subjective.score}}" (change)="onSubjectiveValueChange('score',subjective.id,0)">
 											<span class="input-group-addon clear-border clear-bg">分/题</span>
-											<div class="input-group pull-right" *ngIf="subjective.type !== 4">
+											<div class="input-group pull-right" *ngIf="subjective.type !== '填空题'">
 												<a class="btn btn-link" (click)="addOneSubjectiveRow(subjective.id)">
 													<i class="glyphicon glyphicon-plus" ></i>
 												</a>
@@ -205,37 +201,37 @@
 								</tr>
 								<tr class="child" *ngFor="let child of subjective.child">
 									<td>
-										{{subjective.start}}.{{child.id}}
+										{{subjective.startno}}.{{child.quesno}}
 										<div class="input-group pull-right">
-											<a class="btn btn-link" (click)="removeOneSubjectiveRow(subjective.id,child.id)">
+											<a class="btn btn-link" (click)="removeOneSubjectiveRow(subjective.id,child.quesno)">
 												<i class="glyphicon glyphicon-trash"></i>
 											</a>
 										</div>
 									</td>
-									<td>
-										<select  id="subjective_subject_{{subjective.id}}_{{child.id}}" class="form-control" (change)="onSubjectiveValueChange('subject',subjective.id,child.id)">
+									<td *ngIf="issynthesize">
+										<select  id="subjective_subject_{{subjective.id}}_{{child.quesno}}" class="form-control" (change)="onSubjectiveValueChange('subject',subjective.id,child.quesno)">
 											<ng-container *ngFor="let subject of subjects">
-												<option *ngIf="child.subject === subject.id" selected="selected" value="{{subject.id}}">{{subject.name}}</option>
-												<option *ngIf="child.subject !== subject.id" value="{{subject.id}}">{{subject.name}}</option>
+												<option *ngIf="child.subject === subject.name" selected="selected" value="{{subject.name}}">{{subject.name}}</option>
+												<option *ngIf="child.subject !== subject.name" value="{{subject.name}}">{{subject.name}}</option>
 											</ng-container>
 										</select>
 									</td>
 									<td>
-										<select id="subjective_type_{{subjective.id}}_{{child.id}}" class="form-control" (change)="onSubjectiveValueChange('type',subjective.id,child.id)">
-											<option *ngIf="child.type === 4" selected="selected" value="4">填空题</option>
-											<option *ngIf="child.type !== 4" value="4">填空题</option>
-											<option *ngIf="child.type === 5" selected="selected" value="5">解答题</option>
-											<option *ngIf="child.type !== 5" value="5">解答题</option>
-											<option *ngIf="child.type === 6" selected="selected" value="6">证明题</option>
-											<option *ngIf="child.type !== 6" value="6">证明题</option>
-											<option *ngIf="child.type === 7" selected="selected" value="7">论述题</option>
-											<option *ngIf="child.type !== 7" value="7">论述题</option>
-											<option *ngIf="child.type === 8" selected="selected" value="8">作文题</option>
-											<option *ngIf="child.type !== 8" value="8">作文题</option>
+										<select id="subjective_type_{{subjective.id}}_{{child.quesno}}" class="form-control" (change)="onSubjectiveValueChange('type',subjective.id,child.quesno)">
+											<option *ngIf="child.type === '填空题'" selected="selected" value="填空题">填空题</option>
+											<option *ngIf="child.type !== '填空题'" value="填空题">填空题</option>
+											<option *ngIf="child.type === '解答题'" selected="selected" value="解答题">解答题</option>
+											<option *ngIf="child.type !== '解答题'" value="解答题">解答题</option>
+											<option *ngIf="child.type === '证明题'" selected="selected" value="证明题">证明题</option>
+											<option *ngIf="child.type !== '证明题'" value="证明题">证明题</option>
+											<option *ngIf="child.type === '论述题'" selected="selected" value="论述题">论述题</option>
+											<option *ngIf="child.type !== '论述题'" value="论述题">论述题</option>
+											<option *ngIf="child.type === '作文题'" selected="selected" value="作文题">作文题</option>
+											<option *ngIf="child.type !== '作文题'" value="作文题">作文题</option>
 										</select>
 									</td>
 									<td>
-										<input type="text" class="form-control" size="5" id="subjective_score_{{subjective.id}}_{{child.id}}" value="{{child.score}}" (change)="onSubjectiveValueChange('score',subjective.id,child.id)">
+										<input type="text" class="form-control" size="5" id="subjective_score_{{subjective.id}}_{{child.quesno}}" value="{{child.score}}" (change)="onSubjectiveValueChange('score',subjective.id,child.quesno)">
 									</td>
 								</tr>
 							</ng-container>
@@ -244,11 +240,11 @@
 				</div>
 				<!--表格end-->
 				<p>主观题共{{subjectiveCount}}道题，合计分数：{{subjectiveScore}}分</p>
-				<div class="padding-vertical text-center">
-					<button type="button" class="btn btn-default">取消</button>
-					<button type="submit" class="btn btn-primary">保存</button>
-				</div>
 			</form>
+		</div>		
+		<div class="padding-vertical text-center">
+			<button type="button" class="btn btn-default">取消</button>
+			<button type="button" class="btn btn-primary" (click)="commitDatas()">保存</button>
 		</div>
 	</div>
 	<!-- 多选题答案得分设置 start -->
@@ -270,15 +266,15 @@
 								<div class="col-sm-11 btn-toolbar">
 									<div class="extra btn-group" data-toggle="buttons">
 										<ng-container *ngFor="let checkBoxScore of checkBoxScores">
-											<ng-container *ngIf="checkBoxScore.seted">
-												<a class="btn btn-primary" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
+											<ng-container *ngIf="checkBoxScore.size === currentCheckBox">
+												<a class="btn btn-info" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
 											</ng-container>
-											<ng-container *ngIf="!checkBoxScore.seted">
-												<ng-container *ngIf="checkBoxScore.size === currentCheckBox">
-													<a class="btn btn-info" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
+											<ng-container *ngIf="checkBoxScore.size !== currentCheckBox">
+												<ng-container *ngIf="checkBoxScore.seted">
+													<a class="btn btn-primary" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
 												</ng-container>
-												<ng-container *ngIf="checkBoxScore.size !== currentCheckBox">
-													<a class="btn btn-default" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
+												<ng-container *ngIf="!checkBoxScore.seted">
+														<a class="btn btn-default" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
 												</ng-container>
 											</ng-container>
 										</ng-container>
@@ -323,7 +319,12 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeCheckBoxModal()">取消</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="setNextCheckBoxScore()">确定</button>
+						<ng-container *ngIf="currentCheckBox < objectiveChoiceNum">
+							<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="setNextCheckBoxScore()">下一个</button>
+						</ng-container>
+						<ng-container *ngIf="currentCheckBox === objectiveChoiceNum">
+							<button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeCheckBoxModal()">确定</button>
+						</ng-container>
 					</div>
 				</div>
 			</div>

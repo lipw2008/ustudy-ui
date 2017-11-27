@@ -1,0 +1,113 @@
+<!-- 路径导航 start -->
+<div class="container">
+	<ol class="breadcrumb">
+		<li><a [routerLink]="['/']">首页</a></li>
+		<li><a [routerLink]="['/selectsubject',{type:'task'}]">考试中心</a></li>
+		<li class="active">任务分配</li>
+	</ol>
+</div>
+<div class="container container-sm container-fluid">
+  <div class="table-responsive">
+    <table class="table">
+      <tbody>
+      <tr>
+        <td>
+          <div class="text">
+            <p><span>题号：</span></p>
+          </div>
+        </td>
+        <td>
+          <select id="selectQuestion" class="form-control" [(ngModel)]="selectedQuestion" (change)="onSelectedQuestion($event)"
+                  [@flyInOut]="animationState">
+            <option value="0" [selected]="!questionId" [@flyInOut]="'in'">选择考题</option>
+						<option *ngFor="let question of questions" [ngValue]="question" [selected]="questionId === question.id">{{question.questionName}}</option>
+					</select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="text">
+            <p><span>题型：</span></p>
+          </div>
+        </td>
+        <td>
+          {{selectedQuestion?.type}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="text">
+            <p><span>任务分配方式：</span></p>
+          </div>
+        </td>
+        <td>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'平均'" (click)="assignType='平均'" [checked]="assignType=='平均'"> 平均
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'动态'" (click)="assignType='动态'" [checked]="assignType=='动态'" disabled> 动态
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="text">
+            <p><span>阅卷模式：</span></p>
+          </div>
+        </td>
+        <td>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'单评'" (click)="markType='单评'" [checked]="markType=='单评'"> 单评
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'双评'" (click)="markType='双评'" [checked]="markType=='双评'"> 双评
+          </label>
+          <span aria-hidden="true" class="glyphicon glyphicon-time pull-right" style=" ">
+            <input style=" width: 40%; " type="number" title="阅卷时间设置（设置最短时间，限定老师的阅卷速度，单位为秒）" [ngModel]="timeLimit">
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="text">
+            <p><span>教师选择：</span></p>
+          </div>
+        </td>
+        <td>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'全体'" (click)="onSelectTeacherType('全体')" [checked]="teacherType=='全体'"> 全体
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-controll="options" [value]="'未安排任务的教师'" (click)="onSelectTeacherType('未安排任务的教师')" [checked]="teacherType=='未安排任务的教师'"> 未安排任务的教师
+          </label>
+        </td>
+      </tr>      <tr>
+        <td>
+          阅卷老师选择:
+        </td>
+        <td>
+          <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="onTeachersSelect($event)"
+                            [without]="teachersWithoutIds" [with]="withTeachersIds"></teacher-selector>
+        </td>
+      </tr>
+      <tr *ngIf="markType==='双评'">
+        <td>
+          终评老师选择:
+        </td>
+        <td>
+          <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedFinalTeacherIds = $event"
+                            [without]="finalTeachersWithoutIds" [with]="withFinalTeachersIds"></teacher-selector>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button class="btn btn-default col-lg-offset-9" (click)="submit()" [disabled]="this.selectedQuestion?.created">提交</button></td>
+      </tr>
+
+      </tbody>
+    </table>
+    <div>
+      <button class="btn btn-primary col-lg-offset-10" (click)="finish()">完成</button>
+    </div>
+  </div>
+</div>

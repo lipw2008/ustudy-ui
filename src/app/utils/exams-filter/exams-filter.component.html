@@ -1,0 +1,35 @@
+<div class="col-sm-12">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <div id="selectExamForm" class="form-inline">
+          <div class="input-group">
+            <span class="input-group-addon">学科</span>
+            <select class="form-control" [(ngModel)]="selectedSubject">
+              <option value="" >选择学科</option>
+              <option *ngFor="let subject of examOptions?.subjects" [ngValue]="subject">{{subject.name}}</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">年级</span>
+            <select class="form-control" [(ngModel)]="selectedGrade">
+              <option value="" >选择年级</option>
+              <option *ngFor="let grade of examOptions?.grades" [ngValue]="grade">{{grade.grade_name}}</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">考试时间</span>
+            <input class="form-control" #drp="bsDaterangepicker" style="width: 200px;" bsDaterangepicker [(ngModel)]="bsRangeValue">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">考试名称</span>
+            <input class="form-control" type="text" [(ngModel)]="name">
+          </div>
+          <div class="input-group">
+            <a class="btn btn-default" title="查询" (click)="returnResult()">查询</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

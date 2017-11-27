@@ -1,0 +1,10 @@
+.teacher-selector{
+  border: 2px solid gray;
+  padding: 10px 10px;
+}
+
+/*ngx-treeview-item > div > div {*/
+/deep/ .teachers-container {
+  display: flex;
+  flex-wrap: wrap;
+}

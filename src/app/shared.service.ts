@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Md5 } from 'ts-md5/dist/md5';
-import {any} from "codelyzer/util/function";
 /*
 This shared service provides common utilitis and constants to the whole project.
 */
