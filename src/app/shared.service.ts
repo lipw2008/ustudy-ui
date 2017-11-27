@@ -10,10 +10,26 @@ export class SharedService {
   public userName: string = '';
   public userRole: string = '';
 
-	private baseUrl: string = "http://ustudypaper.oss-cn-hangzhou.aliyuncs.com/"; 
+  private baseUrl: string = "http://ustudypaper.oss-cn-hangzhou.aliyuncs.com/";
+  private getUrl: Promise<string>;
 
-	constructor(private _http: Http) {
-  }
+  constructor(private _http: Http) {
+    this.getUrl = new Promise(function(resolve, reject) {
+      const configXhr = new XMLHttpRequest();
+      configXhr.open('GET', 'assets/config.json');
+      configXhr.onload = () => {
+        resolve(JSON.parse(configXhr.response).url);
+      };
+      configXhr.onerror = () => {
+        console.log(`The request is rejected when getting configured URL. Status: ${configXhr.status} Text: ${configXhr.statusText}`);
+        reject({
+          status: configXhr.status,
+          statusText: configXhr.statusText
+        });
+      };
+      configXhr.send();
+    })
+  };
 
 	getImgUrl(paperImg: string, region: any) : string {
     let url = "";
@@ -43,32 +59,28 @@ export class SharedService {
       - JSON: {"data": "", "reqContentType": "", "resContentType": ""}
   */
   makeRequest(method: string, endpoint: string, content: any) {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       // parse the content
       let data = (content.data === undefined ? content : content.data);
       let reqContentType = (content.reqContentType === undefined ? "application/json" : content.reqContentType);
       let resContentType = (content.resContentType === undefined ? "application/json" : content.resContentType);
 
       // get the configured URL
-      var configXhr = new XMLHttpRequest();
-      configXhr.open('GET', 'assets/config.json');
-      configXhr.onload = () => {
-        var url = "";
-        if (endpoint.substring(0, 6) !== "assets") {
-          url = JSON.parse(configXhr.response).url;
+      this.getUrl.then((url) => {
+        if (endpoint.substring(0, 6) === 'assets') {
+          url = ''
         }
-        var xhr = new XMLHttpRequest();
-        xhr.open(method, "" + url + endpoint);
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, `${url}${endpoint}`);
         xhr.onload = () => {
           if (xhr.status >= 200 && xhr.status < 300) {
             try {
               resolve(JSON.parse(xhr.response));
-            }
-            catch (e) {
+            } catch (e) {
               resolve({});
             }
           } else {
-            console.log("error happens: " + url);
+            console.log('error happens: ' + url);
             reject({
               status: xhr.status,
               statusText: xhr.statusText
@@ -76,7 +88,7 @@ export class SharedService {
           }
         };
         xhr.onerror = () => {
-          console.log("error happens: " + url);
+          console.log('error happens: ' + url);
           reject({
             status: xhr.status,
             statusText: xhr.statusText
@@ -84,21 +96,12 @@ export class SharedService {
         };
         xhr.withCredentials = true;
         if (method === 'POST') {
-          xhr.setRequestHeader("Content-type", reqContentType);
+          xhr.setRequestHeader('Content-type', reqContentType);
           xhr.send(data);
-        }
-        else {
+        } else {
           xhr.send();
         }
-      }
-      configXhr.onerror = () => {
-        console.log("The request is rejected when getting configured URL. Status: " + configXhr.status + " Text: " + configXhr.statusText);
-        reject({
-          status: configXhr.status,
-          statusText: configXhr.statusText
-        });
-      }
-      configXhr.send();
+      });
     });
   }
 }
