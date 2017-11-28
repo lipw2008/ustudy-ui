@@ -15,7 +15,7 @@
       <td>{{ subject.examName }}<br>({{ subject.gradeName }})</td>
       <td>{{ subject.subName }}</td>
       <td>
-        <span *ngFor="let question of subject.questions, last as isLast"><a href="#">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
+        <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers',{gradeId:subject.gradeId,subjectId:subject.subId,examId:subject.examid,questionId:question.id}]">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
       </td>
       <td>
         <span *ngFor="let question of subject.questions, last as isLast"><a href="#">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
