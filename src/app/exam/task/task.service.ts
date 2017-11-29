@@ -58,21 +58,21 @@ export class TaskService {
     })
   }
 
-  deleteMarkTask(id) {
+  deleteMarkTask(examId, gradeId, subjectId, questionId) {
     return new Promise((resolve, reject) => {
-      console.log('delete task:', id);
-      resolve({success: true});
-      // this._sharedService.makeRequest('POST', 'marktask/delete/' + id, '').then((data: any) => {
-      // }
+      console.log('delete task:', examId, gradeId, subjectId, questionId);
+      this._sharedService.makeRequest('POST', `/exam/marktask/delete/${examId}/${gradeId}/${subjectId}/${questionId}`, '').then((res) => {
+        resolve(res)
+      })
     })
   }
 
   updateMarkTask(json) {
     return new Promise((resolve, reject) => {
       console.log('update task:', JSON.stringify(json));
-      resolve({success: true});
-      // this._sharedService.makeRequest('POST', 'marktask/update/', '').then((data: any) => {
-      // }
+      this._sharedService.makeRequest('POST', '/exam/marktask/update/', JSON.stringify(json)).then((res) => {
+        resolve(res)
+      })
     })
   }
 

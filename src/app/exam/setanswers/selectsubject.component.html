@@ -63,7 +63,7 @@
 							</div>
 							<div class="extra btn-group" data-toggle="buttons" *ngIf="type === 'task'">
 								<ng-container *ngFor="let subject of grades.subjects">
-									<a class="btn btn-default" *ngIf="subject.answerSeted === '1'" [routerLink]="['/viewTasks',{gradeId:grades.id,subjectId:subject.id,examId:examId,seted:seted}]">{{subject.subName}}</a>
+									<a class="btn btn-default" *ngIf="subject.answerSeted === '1'" [routerLink]="['/viewTasks',{gradeId:grades.id,subjectId:subject.subId,examId:examId,seted:seted}]">{{subject.subName}}</a>
 								</ng-container>
 							</div>
 					</div>
