@@ -58,10 +58,10 @@ export class TaskService {
     })
   }
 
-  deleteMarkTask(examId, gradeId, subjectId, questionId) {
+  deleteMarkTask(task) {
     return new Promise((resolve, reject) => {
-      console.log('delete task:', examId, gradeId, subjectId, questionId);
-      this._sharedService.makeRequest('POST', `/exam/marktask/delete/${examId}/${gradeId}/${subjectId}/${questionId}`, '').then((res) => {
+      console.log('delete task:', task);
+      this._sharedService.makeRequest('POST', `/exam/marktask/delete/`, JSON.stringify(task)).then((res) => {
         resolve(res)
       })
     })

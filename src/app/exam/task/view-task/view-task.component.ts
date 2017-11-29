@@ -90,7 +90,7 @@ export class ViewTaskComponent implements OnInit {
   }
 
   deleteTask(task: any) {
-    this._taskService.deleteMarkTask( this.examId, this.gradeId, this.selectedSubject.subId, task.questionId).then((res: any) => {
+    this._taskService.deleteMarkTask(task).then((res: any) => {
       if (res.success) {
         alert('任务：负责人删除成功');
         // _.remove(this.tasks, task)
