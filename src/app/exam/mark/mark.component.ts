@@ -41,7 +41,7 @@ export class MarkComponent implements OnInit {
 	
 	// score board
 	displayScoreBoard: boolean = true;
-	fullScore: number = 0;
+	fullScore: string = "0";
 	scoreList = [];
 	scoreUnit = "1";
 	autoSubmit = false;
@@ -58,7 +58,8 @@ export class MarkComponent implements OnInit {
 	answer = {
 		regions: [
 			{
-				fileName: "",
+				quesName: "",
+				ansName: "",
 				x: 0,
 				y: 0,
 				w: 0,
@@ -72,7 +73,8 @@ export class MarkComponent implements OnInit {
 	answer2 = {
 		regions: [
 			{
-				fileName: "",
+				quesName: "",
+				ansName: "",
 				x: 0,
 				y: 0,
 				w: 0,
@@ -86,7 +88,8 @@ export class MarkComponent implements OnInit {
 	answer3 = {
 		regions: [
 			{
-				fileName: "",
+				quesName: "",
+				ansName: "",
 				x: 0,
 				y: 0,
 				w: 0,
@@ -220,14 +223,14 @@ export class MarkComponent implements OnInit {
 					if (paper.isProblemPaper === true) {
 						continue;
 					}
-					if (paper.steps.length === 0 && paper.score === null) {
+					if (paper.steps.length === 0 && paper.score === "") {
 						this.fullScore = paper.fullScore;
 						console.log("after update full score: " + this.fullScore);
 						this.updateScoreBoard();
 						return;
 					} else if (paper.steps.length > 0) {
 						for(let step of paper.steps) {
-							if (step.score === null) {
+							if (step.score === "") {
 								this.fullScore = step.fullScore;
 								console.log("after update full score: " + this.fullScore);
 								this.updateScoreBoard();
@@ -250,15 +253,16 @@ export class MarkComponent implements OnInit {
 
 	updateScoreBoard(): void {
 		this.scoreList = [];
+		var score = Number(this.fullScore);
 		var unit = parseFloat(this.scoreUnit);
-		for (var i=0; i<=this.fullScore; i+=unit) {
+		for (var i=0; i<=score; i+=unit) {
 			this.scoreList.push(i);
 		}
 		console.log(this.scoreList);
 	}
 
 	setFullScore(): void {
-		this.setScore("" + this.fullScore);
+		this.setScore(this.fullScore);
 	}
 
 	setZeroScore(): void {
@@ -272,7 +276,7 @@ export class MarkComponent implements OnInit {
 					if (paper.isProblemPaper === true) {
 						continue;
 					}
-					if (paper.steps.length === 0 && paper.score === null) {
+					if (paper.steps.length === 0 && paper.score === "") {
 						if (score !== 'PROBLEM') {
 							paper.score = score;
 						} else {
@@ -282,7 +286,7 @@ export class MarkComponent implements OnInit {
 						return;
 					} else if (paper.steps.length > 0) {
 						for(let step of paper.steps) {
-							if (step.score === null) {
+							if (step.score === "") {
 								if (score !== 'PROBLEM') {
 									step.score = score;
 								} else {
@@ -331,7 +335,7 @@ export class MarkComponent implements OnInit {
 	submit(): void {
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
-				if (group.papers[0].score !== null) {
+				if (group.papers[0].score !== "") {
 					this.score += group.papers[0].score + "/" + group.papers[0].fullScore;
 				} else {
 					for (let step of group.papers[0].steps) {
@@ -339,7 +343,7 @@ export class MarkComponent implements OnInit {
 					}
 				}
 				if (this.markQuestions.length >= 2) {
-					if (group.papers[1].score !== null) {
+					if (group.papers[1].score !== "") {
 						this.score2 += group.papers[1].score + "/" + group.papers[1].fullScore;
 					} else {
 						for (let step of group.papers[1].steps) {
@@ -348,7 +352,7 @@ export class MarkComponent implements OnInit {
 					}
 				}
 				if (this.markQuestions.length == 3) {
-					if (group.papers[2].score !== null) {
+					if (group.papers[2].score !== "") {
 						this.score3 += group.papers[2].score + "/" + group.papers[2].fullScore;
 					} else {
 						for (let step of group.papers[2].steps) {
@@ -370,47 +374,15 @@ export class MarkComponent implements OnInit {
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				if (group.papers.length >= 1) {
-					let paper = group.papers[0];
-					paper.markImgData = this.answer.markImgData;
-					paper.answerType = this.answer.answerType;
-					if (paper.steps.length === 0 && paper.score !== null) {
-						paper.score = "" + paper.score;
-					} else if (paper.steps.length > 0 ) {
-						for(let step of paper.steps) {
-							if (step.score !== null) {
-								step.score = "" + step.score;
-							} 
-						}
-					}
+					group.papers[0].markImgData = this.answer.markImgData;
+					group.papers[0].answerType = this.answer.answerType;
 				}
 				if (group.papers.length >= 2) {
-					let paper = group.papers[1];
-					paper.markImgData = this.answer2.markImgData;
-					paper.answerType = this.answer2.answerType;
-					if (paper.steps.length === 0 && paper.score !== null) {
-						paper.score = "" + paper.score;
-					} else if (paper.steps.length > 0 ) {
-						for(let step of paper.steps) {
-							if (step.score !== null) {
-								step.score = "" + step.score;
-							} 
-						}
-					}
-				}
+					group.papers[1].markImgData = this.answer2.markImgData;
+					group.papers[1].answerType = this.answer2.answerType;				}
 				if (group.papers.length === 3) {
-					let paper = group.papers[2];
-					paper.markImgData = this.answer3.markImgData;
-					paper.answerType = this.answer3.answerType;
-					if (paper.steps.length === 0 && paper.score !== null) {
-						paper.score = "" + paper.score;
-					} else if (paper.steps.length > 0 ) {
-						for(let step of paper.steps) {
-							if (step.score !== null) {
-								step.score = "" + step.score;
-							} 
-						}
-					}
-				}
+					group.papers[2].markImgData = this.answer3.markImgData;
+					group.papers[2].answerType = this.answer3.answerType;				}
 				this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(group)).then((data: any) => {
 					alert("修改成功");
 					this.nextPage();

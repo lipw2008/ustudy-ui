@@ -50,8 +50,8 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngOnChanges(): void {
-		if (this.curPaperImg !== this.answer.regions[0].fileName || this.editMode === 'Clear') {
-			this.curPaperImg = this.answer.regions[0].fileName;
+		if (this.curPaperImg !== this.answer.regions[0].ansImg || this.editMode === 'Clear') {
+			this.curPaperImg = this.answer.regions[0].ansImg;
 			this.loadPaper();
 		} else if (this.editMode === "Score") {
 			this.addScore();
@@ -117,7 +117,7 @@ export class CanvasComponent implements OnInit {
 			}
 			markImg.src = t._sharedService.getImgUrl(t.answer.markImg, "");
 		}
-		paperImg.src = this._sharedService.getImgUrl(this.answer.regions[0].fileName, this.answer.regions[0]);
+		paperImg.src = this._sharedService.getImgUrl(this.answer.regions[0].ansImg, this.answer.regions[0]);
 	}
 
 	clear(): void {
