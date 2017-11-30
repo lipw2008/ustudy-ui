@@ -50,8 +50,8 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngOnChanges(): void {
-		if (this.curPaperImg !== this.answer.paperImg || this.editMode === 'Clear') {
-			this.curPaperImg = this.answer.paperImg;
+		if (this.curPaperImg !== this.answer.regions[0].fileName || this.editMode === 'Clear') {
+			this.curPaperImg = this.answer.regions[0].fileName;
 			this.loadPaper();
 		} else if (this.editMode === "Score") {
 			this.addScore();
@@ -117,7 +117,7 @@ export class CanvasComponent implements OnInit {
 			}
 			markImg.src = t._sharedService.getImgUrl(t.answer.markImg, "");
 		}
-		paperImg.src = this._sharedService.getImgUrl(this.answer.paperImg, this.answer.region);
+		paperImg.src = this._sharedService.getImgUrl(this.answer.regions[0].fileName, this.answer.regions[0]);
 	}
 
 	clear(): void {
@@ -212,7 +212,7 @@ export class CanvasComponent implements OnInit {
 					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
 					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
-					this.answer.answerType = "Best";
+					this.answer.answerType = "BEST";
 				}
 				this.img.src = 'assets/images/icon-bestanswer.png';
 				break;
@@ -240,7 +240,7 @@ export class CanvasComponent implements OnInit {
 					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
 					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
-					this.answer.answerType = "Bad";
+					this.answer.answerType = "BAD";
 				}
 				this.img.src = 'assets/images/icon-queerflower.png';
 				break;
