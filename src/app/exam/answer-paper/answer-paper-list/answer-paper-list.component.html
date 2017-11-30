@@ -6,6 +6,7 @@
      <th>考试</th>
      <th>试卷</th>
      <th>标准答案</th>
+     <th>优标答案</th>
      <th>FAQ答案</th>
      <th>班级答卷</th>
    </tr>
@@ -15,13 +16,15 @@
       <td>{{ subject.examName }}<br>({{ subject.gradeName }})</td>
       <td>{{ subject.subName }}</td>
       <td>
-        <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers',{gradeId:subject.gradeId,subjectId:subject.subId,examId:subject.examid,questionId:question.id}]">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
       </td>
       <td>
-        <span *ngFor="let question of subject.questions, last as isLast"><a href="#">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
+        <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers',{gradeId:subject.gradeId,subjectId:subject.subId,examId:subject.examid,questionId:question.id,type:'优标'}]">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
       </td>
       <td>
-        <span *ngFor="let question of subject.questions, last as isLast"><a href="#">{{ getQuestionName(question) }}</a><span>,</span></span>
+        <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers',{gradeId:subject.gradeId,subjectId:subject.subId,examId:subject.examid,questionId:question.id,type:'faq'}]">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
+      </td>
+      <td>
+        <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers',{gradeId:subject.gradeId,subjectId:subject.subId,examId:subject.examid,questionId:question.id,type:'class'}]">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
         <span><a>答题卡</a></span>
       </td>
     </tr>

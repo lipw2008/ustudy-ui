@@ -31,7 +31,7 @@
     </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let task of tasks">
+      <tr *ngFor="let task of tasks, let i = index">
         <td>{{task.question.questionName}}</td>
         <td>{{task.question.type}}</td>
         <td>{{task.type}}</td>
@@ -52,7 +52,7 @@
         <td>{{getTeachers(task)}}</td>
         <td>
           <button class="btn btn-sm btn-primary" (click)="editTask(task)">编辑</button>
-          <button class="btn btn-sm btn-primary" (click)="deleteTask(task)">删除</button>
+          <button class="btn btn-sm btn-primary" (click)="deleteTask(task, i)">删除</button>
         </td>
       </tr>
     </tbody>

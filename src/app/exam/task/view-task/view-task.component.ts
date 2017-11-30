@@ -56,7 +56,7 @@ export class ViewTaskComponent implements OnInit {
   setFiltetedTasks() {
     this._taskService.getQuestions(this.examId, null, this.selectedSubject.gradeId, this.selectedSubject.subId).then((data) => {
       this.questions = data;
-      this.tasks = _.filter(this.markTasks, {gradeId: String(this.selectedSubject.gradeId), subjectId: String(this.selectedSubject.id)});
+      this.tasks = _.filter(this.markTasks, {gradeId: String(this.selectedSubject.gradeId), subjectId: String(this.selectedSubject.subId)});
       this.tasks.forEach((task) => {
         task.question = _.find(this.questions, {id: Number(task.questionId)});
         task.group = _.find(this.grade.groups, (group) => _.includes(group.name, this.selectedSubject.subName))
@@ -89,15 +89,13 @@ export class ViewTaskComponent implements OnInit {
     )
   }
 
-  deleteTask(task: any) {
-    this._taskService.deleteMarkTask(task.id).then((res: any) => {
+  deleteTask(task: any, i) {
+    this._taskService.deleteMarkTask(task).then((res: any) => {
       if (res.success) {
         alert('任务：负责人删除成功');
         // _.remove(this.tasks, task)
-        delete task.ownerId;
-        task.teachersIds = [];
-        task.finalMarkTeachersIds = [];
-        task.type = ''
+        this.tasks.splice(i, 1);
+        _.remove(this.markTasks, (t) => t === task)
       } else {
         alert('任务：负责人删除失败')
       }
@@ -106,7 +104,7 @@ export class ViewTaskComponent implements OnInit {
 
   editTask(task: any) {
     this.router.navigate(['/taskassign', { examId: this.examId, gradeId: this.gradeId,
-      subjectId: this.selectedSubject.id, questionId: task.questionId, subject: this.selectedSubject.subName}]);
+      subjectId: this.selectedSubject.subId, questionId: task.questionId, subject: this.selectedSubject.subName}]);
   }
 
 
