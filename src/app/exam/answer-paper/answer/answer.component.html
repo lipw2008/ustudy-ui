@@ -1,0 +1,42 @@
+<div class="col-sm-12">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <div id="selectExamForm" class="form-inline">
+          <div class="input-group">
+            <span class="input-group-addon">题目</span>
+            <select class="form-control" [(ngModel)]="selectedQuestion">
+              <option *ngFor="let question of subject?.questions" [ngValue]="question" [selected]="question.id==questionId">{{subject.subName + '-' + getQuestionName(question)}}</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <button class="btn" (click)="moveQuestion(-1)" [disabled]="selectedQuestion==subject?.questions[0]">上一题</button>
+            <button class="btn" (click)="moveQuestion(+1)" [disabled]="selectedQuestion==subject?.questions[subject?.questions.length-1]">下一题</button>
+          </div>
+          <div class="input-group" *ngIf="type=='class'">
+            <input type="checkbox" [(ngModel)]="viewAnswerPaper">
+            <span>查看答题卡</span>
+          </div>
+          <div class="input-group">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">班级</span>
+            <select class="form-control" [(ngModel)]="selectedClass">
+              <option *ngFor="let class of grade?.classes" [ngValue]="class">{{class.className}}</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <input class="form-control" type="text" [(ngModel)]="text">
+          </div>
+          <div class="input-group">
+            <a class="btn btn-default" title="查询" (click)="returnResult()">查询</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr/>
+<div class="container-fluid">
+  <img src="" alt="..." class="img-thumbnail">
+</div>
