@@ -13,11 +13,11 @@ import { IStudent } from './student';
 export class StudentService {
   private _studentUrl = 'api/students/students.json';
 
-  private grades = ['七年级', '八年级', '九年级', '高一', '高二', '高三'];
+  private grades = ["七年级", "八年级", "九年级", "高一", "高二", "高三"];
 
-  private classes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  private classes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
-  private types = ['普通', '体育', '艺术'];
+  private types = ["普通", "体育", "艺术"];
 
   constructor(private _http: Http) { }
 
@@ -47,12 +47,12 @@ export class StudentService {
 
   getDefaultStudent(): IStudent {
     return {
-      'studentId': '',
-      'studentName': '',
-      'grade': '',
-      'class': '',
-      'type': '',
-      'isTemp': false
+      "studentId": "",
+      "studentName": "",
+      "grade": "",
+      "class": "",
+      "type": "",
+      "isTemp": false
     }
   }
 

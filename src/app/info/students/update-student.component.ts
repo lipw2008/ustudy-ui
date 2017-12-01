@@ -17,12 +17,12 @@ export class UpdateStudentComponent implements OnInit {
   errorMessage: string;
 
   student: IStudent = {
-    'studentId': '',
-    'studentName': '',
-    'grade': '',
-    'class': '',
-    'type': '',
-    'isTemp': false
+    "studentId": "",
+    "studentName": "",
+    "grade": "",
+    "class": "",
+    "type": "",
+    "isTemp": false
   };
 
   grades = [];
@@ -40,19 +40,19 @@ export class UpdateStudentComponent implements OnInit {
   }
 
   update(event) {
-    if (this.updateForm.status == 'INVALID') {
-      alert('信息不完整');
+    if (this.updateForm.status == "INVALID") {
+      alert("信息不完整");
       return;
     }
 
     this._sharedService.makeRequest('POST', '/info/student/update', JSON.stringify(this.student)).then((data: any) => {
-      alert('修改成功');
+      alert("修改成功");
       //go back to the teacher list page
       this.router.navigate(['studentList']);
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);
-      alert('修改失败！');
+      alert("修改失败！");
       //go back to the teacher list page
       this.router.navigate(['studentList']);
     });
@@ -60,11 +60,11 @@ export class UpdateStudentComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateForm = this.fb.group({
-      studentId: ['', Validators.required],
-      studentName: ['', Validators.required],
-      gradeName: ['', Validators.required],
-      className: ['', Validators.required],
-      typeName: ['', Validators.required],
+      studentId: ["", Validators.required],
+      studentName: ["", Validators.required],
+      gradeName: ["", Validators.required],
+      className: ["", Validators.required],
+      typeName: ["", Validators.required],
       isTemp: [false]
     });
     this.student.studentId = this.route.snapshot.params.studentId;
@@ -72,7 +72,7 @@ export class UpdateStudentComponent implements OnInit {
     this.student.grade = this.route.snapshot.params.grade;
     this.student.class = this.route.snapshot.params.class;
     this.student.type = this.route.snapshot.params.type;
-    this.student.isTemp = this.route.snapshot.params.isTemp === 'false' ? false : true;
+    this.student.isTemp = this.route.snapshot.params.isTemp === "false" ? false : true;
     this.student.id = this.route.snapshot.params.id;
     this.grades = this._studentService.getGrades();
     this.classes = this._studentService.getClasses();

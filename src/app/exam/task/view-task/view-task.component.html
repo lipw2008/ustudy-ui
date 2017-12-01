@@ -1,0 +1,60 @@
+<!-- 路径导航 start -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a [routerLink]="['/']">首页</a></li>
+    <li><a [routerLink]="['/selectsubject',{type:'task'}]">考试中心</a></li>
+    <li class="active">任务列表</li>
+  </ol>
+</div>
+<div class="col-sm-12 col-lg-12">
+  <div class="form-inline">
+    <div class="input-group">
+      <select class="form-control" [(ngModel)]="selectedSubject" (change)="setFiltetedTasks()">
+        <option *ngFor="let subject of gradesubjects" [ngValue]="subject">
+          {{subject.gradeName}}{{subject.subName}}
+        </option>
+      </select>
+    </div>
+
+
+  </div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>题号</th>
+      <th>题型</th>
+      <th>任务分配方式</th>
+      <th>阅卷模式</th>
+      <th>阅卷负责人</th>
+      <th>阅卷老师</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks, let i = index">
+        <td>{{task.question.questionName}}</td>
+        <td>{{task.question.type}}</td>
+        <td>{{task.type}}</td>
+        <td>{{task.finalMarkTeachersIds.length>0 ? '双评' : '单评'}}</td>
+        <td>
+          <div *ngIf="false">
+            {{task.group.ownerName}}
+          </div>
+          <div>
+            <div class="input-group">
+              <select class="form-control" (change)="setOwner(task, $event)">
+                <option value="0"></option>
+                <option *ngFor="let owner of getGroupMember(task.group)" [value]="owner.id" [selected]="owner.id===task.ownerId">{{owner.name}}</option>
+              </select>
+            </div>
+          </div>
+        </td>
+        <td>{{getTeachers(task)}}</td>
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="editTask(task)">编辑</button>
+          <button class="btn btn-sm btn-primary" (click)="deleteTask(task, i)">删除</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

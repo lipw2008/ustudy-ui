@@ -18,7 +18,7 @@ export class UpdateDepartmentComponent implements OnInit {
 
   teachers = [];
 
-  endpoints = { '高中部': 'high', '初中部': 'junior', '小学部': 'primary', '其他': 'other' };
+  endpoints = { "高中部": "high", "初中部": "junior", "小学部": "primary", "其他": "other" };
 
   constructor(private _schoolService: SchoolService, private _sharedService: SharedService, private route: ActivatedRoute, private router: Router) {
 
@@ -31,11 +31,11 @@ export class UpdateDepartmentComponent implements OnInit {
   }
 
   update(event) {
-    for (const subject of this.subjects) {
+    for (let subject of this.subjects) {
       subject.owners = [];
-      for (const option of subject.options) {
+      for (let option of subject.options) {
         if (option.selected === true) {
-          const owner = { 'id': option.id, 'n': option.value };
+          let owner = { "id": option.id, "n": option.value };
           subject.owners.push(owner);
         }
       }
@@ -44,7 +44,7 @@ export class UpdateDepartmentComponent implements OnInit {
     this._sharedService.makeRequest('POST', '/info/school/departsubs/update/' + this.endpoints[this.departmentName], JSON.stringify(this.subjects)).then((data: any) => {
       this.subjects = [];
       this.teachers = [];
-      alert('修改成功');
+      alert("修改成功");
       //go back to the depart list page
       this.router.navigate(['department', { departmentName: this.departmentName }]);
     }).catch((error: any) => {
@@ -52,7 +52,7 @@ export class UpdateDepartmentComponent implements OnInit {
       this.teachers = [];
       console.log(error.status);
       console.log(error.statusText);
-      alert('修改失败！');
+      alert("修改失败！");
       //go back to the student list page
       this.router.navigate(['department', { departmentName: this.departmentName }]);
     });
@@ -63,8 +63,8 @@ export class UpdateDepartmentComponent implements OnInit {
     this.departmentName = this.route.snapshot.params.departmentName;
 
     if (this.route.snapshot.params.subject) {
-      console.log('subject routed:' + this.route.snapshot.params.subject);
-      const subject = JSON.parse(this.route.snapshot.params.subject);
+      console.log("subject routed:" + this.route.snapshot.params.subject);
+      let subject = JSON.parse(this.route.snapshot.params.subject);
       this.subjects.push(subject);
       this.loadTeachers();
     } else {
@@ -76,7 +76,7 @@ export class UpdateDepartmentComponent implements OnInit {
     //req.open('GET', 'assets/api/schools/subjects.json');
     this._sharedService.makeRequest('GET', '/info/school/departsubs/' + this.endpoints[this.departmentName], '').then((data: any) => {
       //cache the list
-      console.log('data: ' + JSON.stringify(data));
+      console.log("data: " + JSON.stringify(data));
       this.subjects = data;
       this.loadTeachers();
     }).catch((error: any) => {
@@ -90,23 +90,23 @@ export class UpdateDepartmentComponent implements OnInit {
     //req.open('GET', 'assets/api/teachers/teachers.json');
     this._sharedService.makeRequest('GET', '/info/school/departteac/' + this.endpoints[this.departmentName], '').then((data: any) => {
       //cache the list
-      console.log('data: ' + JSON.stringify(data));
+      console.log("data: " + JSON.stringify(data));
       this.teachers = data;
-      for (const subject of this.subjects) {
+      for (let subject of this.subjects) {
         subject.options = [];
-        for (const teacher of this.teachers) {
+        for (let teacher of this.teachers) {
           let ret = false;
-          for (const ts of teacher.subjects) {
+          for (let ts of teacher.subjects) {
             if (ts.n === subject.subject) {
               ret = true;
               break;
             }
           }
           if (ret === true) {
-            const t = { 'id': '', 'value': '', 'selected': false }
+            let t = { "id": "", "value": "", "selected": false }
             t.id = teacher.teacherId;
             t.value = teacher.teacherName;
-            for (const owner of subject.owners) {
+            for (let owner of subject.owners) {
               if (t.id === owner.id) {
                 t.selected = true;
                 break;
@@ -116,7 +116,7 @@ export class UpdateDepartmentComponent implements OnInit {
           }
         }
       }
-      console.log('subjects: ' + JSON.stringify(this.subjects));
+      console.log("subjects: " + JSON.stringify(this.subjects));
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);

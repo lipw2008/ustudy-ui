@@ -1,29 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MarkSelectComponent} from "./mark-select/mark-select.component";
-import {FormsModule} from "@angular/forms";
-import {SubjectFilterPipe} from "../data/review-statistic/subject-filter.pipe";
-import {TreeviewModule} from "ngx-treeview";
-import {ReviewFilterComponent} from "./review-filter/review-filter.component";
-import {AnswerFilterComponent} from "./answer-filter/answer-filter.component";
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import {TeacherSelectorComponent} from './teacher-selector/teacher-selector.component';
+import {FormsModule} from '@angular/forms';
+import {TreeviewModule} from 'ngx-treeview';
+import { ExamsFilterComponent } from './exams-filter/exams-filter.component';
+import {ExamService} from '../exam/exam.service';
+// dependency of ngx-treeview
+// import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    BsDatepickerModule.forRoot(),
     TreeviewModule.forRoot(),
+    FormsModule
   ],
-  declarations: [
-    MarkSelectComponent,
-    SubjectFilterPipe,
-    ReviewFilterComponent,
-    AnswerFilterComponent,
-  ],
-  exports: [
-    MarkSelectComponent,
-    SubjectFilterPipe,
-    ReviewFilterComponent,
-    AnswerFilterComponent,
-  ]
+  exports: [TeacherSelectorComponent, ExamsFilterComponent],
+  declarations: [TeacherSelectorComponent, ExamsFilterComponent],
+  providers: [ExamService]
 })
 export class UtilsModule { }

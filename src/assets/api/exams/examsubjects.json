@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "grade": "高一",
+    "subjects": [
+      {
+        "id": 1,
+        "examid": 1,
+        "gradeId": 1,
+        "gradeName": "高一",
+        "subId": 1,
+        "subName": "英语",
+        "stuNum": 50,
+        "teacNum": 10,
+        "examPaper": 0,
+        "examAnswer": 0,
+        "examPaperNum": 50,
+        "template": 0,
+        "objItemNum": 10,
+        "subItemNum": 20,
+        "taskDispatch": 0,
+        "answerSeted": "1",
+        "uploadBathCount": 50,
+        "blankAnswerPaper": "null",
+        "blankQuestionsPaper": "null",
+        "xmlServerPath": "null",
+        "originalData": "null",
+        "paper_uri": "http:xxxx",
+        "answer_uri": "http:xxxx",
+        "questions": [
+          {
+            "id": 1,
+            "quesno": "1-3"
+          }
+        ]
+      }
+    ]
+  }
+]
+

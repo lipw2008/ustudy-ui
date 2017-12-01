@@ -17,12 +17,12 @@ export class AddStudentComponent implements OnInit {
   errorMessage: string;
 
   student: IStudent = {
-    'studentId': '',
-    'studentName': '',
-    'grade': '',
-    'class': '',
-    'type': '',
-    'isTemp': false
+    "studentId": "",
+    "studentName": "",
+    "grade": "",
+    "class": "",
+    "type": "",
+    "isTemp": false
   };
 
   grades = [];
@@ -40,19 +40,19 @@ export class AddStudentComponent implements OnInit {
   }
 
   add(event) {
-    if (this.addForm.status == 'INVALID') {
-      alert('信息不完整');
+    if (this.addForm.status == "INVALID") {
+      alert("信息不完整");
       return;
     }
 
     this._sharedService.makeRequest('POST', '/info/student/add', JSON.stringify(this.student)).then((data: any) => {
-      alert('添加成功');
+      alert("添加成功");
       //go back to the teacher list page
       this.router.navigate(['studentList']);
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);
-      alert('添加失败！');
+      alert("添加失败！");
       //go back to the teacher list page
       this.router.navigate(['studentList']);
     });
@@ -62,11 +62,11 @@ export class AddStudentComponent implements OnInit {
     this.student = this._studentService.getDefaultStudent();
 
     this.addForm = this.fb.group({
-      studentId: ['', Validators.required],
-      studentName: ['', Validators.required],
-      gradeName: ['', Validators.required],
-      className: ['', Validators.required],
-      typeName: ['', Validators.required],
+      studentId: ["", Validators.required],
+      studentName: ["", Validators.required],
+      gradeName: ["", Validators.required],
+      className: ["", Validators.required],
+      typeName: ["", Validators.required],
       isTemp: [false, Validators.required]
     });
 

@@ -17,11 +17,11 @@ export class AddTeacherComponent implements OnInit {
   errorMessage: string;
 
   teacher: ITeacher = {
-    'teacherId': '',
-    'teacherName': '',
-    'grades': [{ 'n': '' }],
-    'subjects': [{ 'n': '' }],
-    'roles': [{ 'n': '' }]
+    "teacherId": "",
+    "teacherName": "",
+    "grades": [{ "n": "" }],
+    "subjects": [{ "n": "" }],
+    "roles": [{ "n": "" }]
   };
 
   inputGrade: string;
@@ -45,8 +45,8 @@ export class AddTeacherComponent implements OnInit {
   }
 
   add(event) {
-    if (this.addForm.status == 'INVALID') {
-      alert('信息不完整');
+    if (this.addForm.status == "INVALID") {
+      alert("信息不完整");
       return;
     }
 
@@ -55,13 +55,13 @@ export class AddTeacherComponent implements OnInit {
     this.teacher.roles[0].n = this.inputRole;
 
     this._sharedService.makeRequest('POST', '/info/teacher/add', JSON.stringify(this.teacher)).then((data: any) => {
-      alert('添加成功');
+      alert("添加成功");
       //go back to the teacher list page
       this.router.navigate(['teacherList']);
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);
-      alert('添加失败！');
+      alert("添加失败！");
       //go back to the teacher list page
       this.router.navigate(['teacherList']);
     });
@@ -71,11 +71,11 @@ export class AddTeacherComponent implements OnInit {
     this.teacher = this._teacherService.getDefaultTeacher();
 
     this.addForm = this.fb.group({
-      teacherId: ['', Validators.required],
-      teacherName: ['', Validators.required],
-      grade: ['', Validators.required],
-      subject: ['', Validators.required],
-      role: ['', Validators.required]
+      teacherId: ["", Validators.required],
+      teacherName: ["", Validators.required],
+      grade: ["", Validators.required],
+      subject: ["", Validators.required],
+      role: ["", Validators.required]
     });
 
     this.grades = this._teacherService.getGrades();

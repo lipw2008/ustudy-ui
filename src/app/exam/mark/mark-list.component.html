@@ -20,8 +20,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-3" *ngFor="let mark of marks">
-                            <a [routerLink]="['/mark', {examId: mark.examId, subject: mark.subject, grade: mark.grade, 
-                            questionList: stringify(questionList), questionName: mark.summary[0].questionName}]">
+                            <a [routerLink]="['/mark', {questionList: stringify(questionList), questionId: mark.summary[0].quesid, questionName: mark.summary[0].questionName}]">
                                 <dl class="widget text-center">
                                 	<ng-container *ngIf="mark.markType !== '标准'">
 	                                    <div class="triangle-bottom-right warning"></div>
@@ -35,7 +34,7 @@
                                     <dd>
                                         <ul class="list-inline text-muted clear-margin">
                                             <li *ngIf="mark.markType === '标准'">{{mark.summary[0].questionType}}</li>
-                                            <li>{{mark.subject}}</li>
+                                            <li>{{mark.grade}} {{mark.subject}}</li>
                                         </ul>
                                     </dd>
                                 </dl>

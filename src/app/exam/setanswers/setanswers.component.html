@@ -1,0 +1,335 @@
+<!-- 路径导航 start -->
+<div class="container">
+	<ol class="breadcrumb">
+		<li><a href="../">首页</a></li>
+		<li><a href="selectsubject;type=answers">考试中心</a></li>
+		<li class="active">答案设置</li>
+	</ol>
+</div>
+<!-- 路径导航 end -->
+<!-- 内容 start -->
+<div class="container">
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs margin-bottom-lg" role="tablist">
+		<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">客观题设置</a></li>
+		<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">主观题设置</a></li>
+	</ul>
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="tab1">
+			<!--表格 start-->
+			<form>
+				<div class="table-responsive clear-border-horizontal" data-pattern="priority-columns">
+					<table class="table table-hover table-bordered table-lighter table-striped form-inline">
+						<thead>
+							<tr>
+								<th class="clearfix">
+									题号 
+									<div class="input-group pull-right">
+										<a class="btn btn-link clear-padding-vertical" (click)="addOneRow()">
+											<i class="glyphicon glyphicon-plus"></i>
+										</a>
+									</div>
+								</th>
+								<th>题型</th>
+								<th>选项</th>
+								<th>分值</th>
+							</tr>
+						</thead>
+						<tbody id="objective">
+							<tr *ngFor="let objective of objectives">
+								<td class="clearfix">
+									<div class="input-group">
+										<input type="text" class="form-control" id="start_{{objective.id}}" name="start" size="5" placeholder="" value="{{objective.startno}}" (change)="onValueChange(1,objective.id)">
+										<span class="input-group-addon clear-border clear-bg">至</span>
+										<input type="text" class="form-control" id="end_{{objective.id}}" name="end" size="5" placeholder="" value="{{objective.endno}}" (change)="onValueChange(2,objective.id)">
+									</div>
+									<div class="input-group pull-right">
+										<a class="btn btn-link" (click)="removeOneRow(objective.id)">
+											<i class="glyphicon glyphicon-trash"></i>
+										</a>
+									</div>
+								</td>
+								<td>
+									<select id="type_{{objective.id}}" class="form-control" (change)="onValueChange(3,objective.id)">
+										<option *ngIf="objective.type === '单选题'" selected="selected" value="单选题">单选题</option>
+										<option *ngIf="objective.type !== '单选题'" value="单选题">单选题</option>
+										<option *ngIf="objective.type === '多选题'" selected="selected" value="多选题">多选题</option>
+										<option *ngIf="objective.type !== '多选题'" value="多选题">多选题</option>
+										<option *ngIf="objective.type === '判断题'" selected="selected" value="判断题">判断题</option>
+										<option *ngIf="objective.type !== '判断题'" value="判断题">判断题</option>
+									</select>
+								</td>
+								<td>
+									<select id="option_{{objective.id}}" class="form-control" (change)="onValueChange(4,objective.id)">
+										<ng-container *ngFor="let option of options">
+											<option *ngIf="objective.choiceNum === option" selected="selected" value="{{option}}">{{option}}</option>
+											<option *ngIf="objective.choiceNum !== option" value="{{option}}">{{option}}</option>
+										</ng-container>
+									</select>
+								</td>
+								<td>
+									<div class="input-group">
+										<input type="text" class="form-control" id="score_{{objective.id}}" size="5" value="{{objective.score}}" (change)="onValueChange(5,objective.id)">
+										<span class="input-group-addon clear-border clear-bg">分/题</span>
+										<div class="input-group pull-right" *ngIf="objective.type === '多选题'">
+											<a class="btn btn-link" (click)="showCheckBoxScore(objective.choiceNum,objective.score)"><i class="glyphicon glyphicon-cog"></i></a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--表格end-->
+				<!--表格 start-->
+				<div class="table-responsive" data-pattern="priority-columns">
+					<table class="table table-hover table-bordered form-inline">
+						<thead>
+							<tr>
+								<th>题号</th>
+								<th>选项</th>
+								<th>正确答案</th>
+								<th *ngIf="issynthesize">分科设置</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let answer of objectiveAnswers">
+								<td>{{answer.quesno}}</td>
+								<td>
+									<div class="extra" data-toggle="buttons">
+										<ng-container *ngFor="let option of answer.options">
+											<label class="btn btn-default active" *ngIf="option.checked" (click)="setAnswersOption(answer.quesno,answer.type,option.name)">
+												<input *ngIf="answer.type !== '多选题'" type="radio" value="{{option.name}}">
+												<input *ngIf="answer.type === '多选题'" type="checkbox" value="{{option.name}}"> {{option.name}}
+											</label>
+											<label class="btn btn-default" *ngIf="!option.checked" (click)="setAnswersOption(answer.quesno,answer.type,option.name)">
+												<input *ngIf="answer.type !== '多选题'" type="radio" value="{{option.name}}">
+												<input *ngIf="answer.type === '多选题'" type="checkbox" value="{{option.name}}"> {{option.name}}
+											</label>
+										</ng-container>
+									</div>
+								</td>
+								<td>{{answer.answer}}</td>
+								<td *ngIf="issynthesize">
+									<select id="answersSubject_{{answer.quesno}}" class="form-control" (change)="setAnswersSubject(answer.quesno,answer.type)">
+										<ng-container *ngFor="let subject of subjects">
+											<option *ngIf="answer.subject === subject.name" selected="selected" value="{{subject.name}}">{{subject.name}}</option>
+											<option *ngIf="answer.subject !== subject.name" value="{{subject.name}}">{{subject.name}}</option>
+										</ng-container>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--表格end-->
+				<p>单选题合计{{radioScore}}分，多选题合计{{checkboxScore}}分，判断题合计{{judgmentScore}}分，客观题总计分数：{{objectiveScore}}分</p>
+			</form>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="tab2">
+			<!--表格 start-->
+			<form>
+				<div class="table-responsive clear-border-horizontal" data-pattern="priority-columns">
+					<table class="table table-hover table-bordered table-lighter table-striped form-inline table-questions">
+						<thead>
+							<tr>
+								<th class="clearfix">
+									题号 
+									<div class="input-group pull-right">
+										<a class="btn btn-link clear-padding-vertical" (click)="addOneSubjectiveRow(0)">
+											<i class="glyphicon glyphicon-plus"></i>
+										</a>
+									</div>
+								</th>
+								<th *ngIf="issynthesize">分科</th>
+								<th>题型</th>
+								<th>分值</th>
+							</tr>
+						</thead>
+						<tbody>
+							<ng-container *ngFor="let subjective of subjectives">
+								<tr>
+									<td>
+										<div class="input-group">
+											<input type="text" class="form-control" size="5" id="subjective_start_{{subjective.id}}" value="{{subjective.startno}}" (change)="onSubjectiveValueChange('start',subjective.id,0)">
+											<span class="input-group-addon clear-border clear-bg" *ngIf="subjective.type === '填空题'">至</span>
+											<input type="text" class="form-control" size="5" id="subjective_end_{{subjective.id}}" value="{{subjective.endno}}" *ngIf="subjective.type === '填空题'" (change)="onSubjectiveValueChange('end',subjective.id,0)">
+										</div>
+										<div class="input-group pull-right">
+											<a class="btn btn-link" (click)="removeOneSubjectiveRow(subjective.id,0)">
+												<i class="glyphicon glyphicon-trash"></i>
+											</a>
+										</div>
+									</td>
+									<td *ngIf="issynthesize">
+										<select id="subjective_subject_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('subject',subjective.id,0)">
+											<ng-container *ngFor="let subject of subjects">
+												<option *ngIf="subjective.subject === subject.name" selected="selected" value="{{subject.name}}">{{subject.name}}</option>
+												<option *ngIf="subjective.subject !== subject.name" value="{{subject.name}}">{{subject.name}}</option>
+											</ng-container>
+										</select>
+									</td>
+									<td>
+										<select id="subjective_type_{{subjective.id}}" class="form-control" (change)="onSubjectiveValueChange('type',subjective.id,0)">
+											<option *ngIf="subjective.type === '填空题'" selected="selected" value="填空题">填空题</option>
+											<option *ngIf="subjective.type !== '填空题'" value="填空题">填空题</option>
+											<option *ngIf="subjective.type === '解答题'" selected="selected" value="解答题">解答题</option>
+											<option *ngIf="subjective.type !== '解答题'" value="解答题">解答题</option>
+											<option *ngIf="subjective.type === '证明题'" selected="selected" value="证明题">证明题</option>
+											<option *ngIf="subjective.type !== '证明题'" value="证明题">证明题</option>
+											<option *ngIf="subjective.type === '论述题'" selected="selected" value="论述题">论述题</option>
+											<option *ngIf="subjective.type !== '论述题'" value="论述题">论述题</option>
+											<option *ngIf="subjective.type === '作文题'" selected="selected" value="作文题">作文题</option>
+											<option *ngIf="subjective.type !== '作文题'" value="作文题">作文题</option>
+										</select>
+									</td>
+									<td>
+										<div class="input-group">
+											<input type="text" class="form-control" size="5" id="subjective_score_{{subjective.id}}" value="{{subjective.score}}" (change)="onSubjectiveValueChange('score',subjective.id,0)">
+											<span class="input-group-addon clear-border clear-bg">分/题</span>
+											<div class="input-group pull-right" *ngIf="subjective.type !== '填空题'">
+												<a class="btn btn-link" (click)="addOneSubjectiveRow(subjective.id)">
+													<i class="glyphicon glyphicon-plus" ></i>
+												</a>
+												<a class="btn btn-link">
+													<i class="glyphicon glyphicon-screenshot"></i>
+												</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr class="child" *ngFor="let child of subjective.child">
+									<td>
+										{{subjective.startno}}.{{child.quesno}}
+										<div class="input-group pull-right">
+											<a class="btn btn-link" (click)="removeOneSubjectiveRow(subjective.id,child.quesno)">
+												<i class="glyphicon glyphicon-trash"></i>
+											</a>
+										</div>
+									</td>
+									<td *ngIf="issynthesize">
+										<select  id="subjective_subject_{{subjective.id}}_{{child.quesno}}" class="form-control" (change)="onSubjectiveValueChange('subject',subjective.id,child.quesno)">
+											<ng-container *ngFor="let subject of subjects">
+												<option *ngIf="child.subject === subject.name" selected="selected" value="{{subject.name}}">{{subject.name}}</option>
+												<option *ngIf="child.subject !== subject.name" value="{{subject.name}}">{{subject.name}}</option>
+											</ng-container>
+										</select>
+									</td>
+									<td>
+										<select id="subjective_type_{{subjective.id}}_{{child.quesno}}" class="form-control" (change)="onSubjectiveValueChange('type',subjective.id,child.quesno)">
+											<option *ngIf="child.type === '填空题'" selected="selected" value="填空题">填空题</option>
+											<option *ngIf="child.type !== '填空题'" value="填空题">填空题</option>
+											<option *ngIf="child.type === '解答题'" selected="selected" value="解答题">解答题</option>
+											<option *ngIf="child.type !== '解答题'" value="解答题">解答题</option>
+											<option *ngIf="child.type === '证明题'" selected="selected" value="证明题">证明题</option>
+											<option *ngIf="child.type !== '证明题'" value="证明题">证明题</option>
+											<option *ngIf="child.type === '论述题'" selected="selected" value="论述题">论述题</option>
+											<option *ngIf="child.type !== '论述题'" value="论述题">论述题</option>
+											<option *ngIf="child.type === '作文题'" selected="selected" value="作文题">作文题</option>
+											<option *ngIf="child.type !== '作文题'" value="作文题">作文题</option>
+										</select>
+									</td>
+									<td>
+										<input type="text" class="form-control" size="5" id="subjective_score_{{subjective.id}}_{{child.quesno}}" value="{{child.score}}" (change)="onSubjectiveValueChange('score',subjective.id,child.quesno)">
+									</td>
+								</tr>
+							</ng-container>
+						</tbody>
+					</table>
+				</div>
+				<!--表格end-->
+				<p>主观题共{{subjectiveCount}}道题，合计分数：{{subjectiveScore}}分</p>
+			</form>
+		</div>		
+		<div class="padding-vertical text-center">
+			<button type="button" class="btn btn-default">取消</button>
+			<button type="button" class="btn btn-primary" (click)="commitDatas()">保存</button>
+		</div>
+	</div>
+	<!-- 多选题答案得分设置 start -->
+	 <div id="infoModal" tabindex="-1" role="dialog" style="display: none;overflow: hidden;position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1050;">
+		<form id="infoForm" method="post" class="form-horizontal" action="#">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeCheckBoxModal()"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">多选题给分设置</h4>
+					</div>
+					<div class="modal-body">
+						<div class="panel-heading">
+							<h4 class="clear-margin"><strong>设置选项：</strong></h4>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<div class="col-sm-1 btn-toolbar"></div>
+								<div class="col-sm-11 btn-toolbar">
+									<div class="extra btn-group" data-toggle="buttons">
+										<ng-container *ngFor="let checkBoxScore of checkBoxScores">
+											<ng-container *ngIf="checkBoxScore.size === currentCheckBox">
+												<a class="btn btn-info" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
+											</ng-container>
+											<ng-container *ngIf="checkBoxScore.size !== currentCheckBox">
+												<ng-container *ngIf="checkBoxScore.seted">
+													<a class="btn btn-primary" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
+												</ng-container>
+												<ng-container *ngIf="!checkBoxScore.seted">
+														<a class="btn btn-default" (click)="setCurrentCheckBoxScore(checkBoxScore.size)">{{checkBoxScore.size}}</a>
+												</ng-container>
+											</ng-container>
+										</ng-container>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel-heading">
+							<h4 class="clear-margin"><strong>设置得分：</strong></h4>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<div class="col-sm-1 btn-toolbar"></div>
+								<div class="col-sm-11 btn-toolbar">
+									<table class="table table-hover table-bordered form-inline">
+										<thead>
+											<tr>
+												<th>正确选项</th>
+												<th>得分</th>
+											</tr>
+										</thead>
+										<tbody>
+											<ng-container *ngFor="let checkBoxScore of checkBoxScores">
+												<ng-container *ngIf="checkBoxScore.size === currentCheckBox">
+													<ng-container *ngFor="let score of checkBoxScore.scores">
+														<tr>
+															<td>{{score.count}}</td>
+															<td>
+																<div class="extra" data-toggle="buttons">
+																	<input type="text" class="form-control" id="checkBoxScore_{{checkBoxScore.size}}_{{score.count}}" size="5" value="{{score.score}}" (change)="setCheckBoxScore(checkBoxScore.size,score.count)">
+																</div>
+															</td>
+														</tr>
+													</ng-container>
+												</ng-container>
+											</ng-container>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeCheckBoxModal()">取消</button>
+						<ng-container *ngIf="currentCheckBox < objectiveChoiceNum">
+							<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="setNextCheckBoxScore()">下一个</button>
+						</ng-container>
+						<ng-container *ngIf="currentCheckBox === objectiveChoiceNum">
+							<button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeCheckBoxModal()">确定</button>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 多选题答案得分设置 end -->
+</div>
+<!-- 内容 end -->

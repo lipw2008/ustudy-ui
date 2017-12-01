@@ -12,10 +12,10 @@ export class SchoolComponent implements OnInit {
   errorMessage: string;
 
   school: any = {
-    'departments': []
+    "departments": []
   };
 
-  types = ['初中', '完中', '九年制', '小学', '十二年制', '补习', '其他', '高中'];
+  types = ["初中", "完中", "九年制", "小学", "十二年制", "补习", "其他", "高中"];
 
   constructor(private _schoolService: SchoolService, private _sharedService: SharedService) {
 
@@ -29,7 +29,7 @@ export class SchoolComponent implements OnInit {
     //req.open('GET', 'assets/api/schools/school.json');
     this._sharedService.makeRequest('GET', '/info/school/detail', '').then((data: any) => {
       //cache the list
-      console.log('data: ' + JSON.stringify(data));
+      console.log("data: " + JSON.stringify(data));
       this.school = data;
     }).catch((error: any) => {
       console.log(error.status);

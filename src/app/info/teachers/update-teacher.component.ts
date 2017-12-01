@@ -17,9 +17,9 @@ export class UpdateTeacherComponent implements OnInit {
   errorMessage: string;
 
   teacher: ITeacher = {
-    'id': '',
-    'teacherId': '',
-    'teacherName': ''
+    "id": "",
+    "teacherId": "",
+    "teacherName": ""
   };
 
   constructor(private _teacherService: TeacherService, private _sharedService: SharedService, public fb: FormBuilder, public route: ActivatedRoute, private router: Router) {
@@ -31,19 +31,19 @@ export class UpdateTeacherComponent implements OnInit {
   }
 
   update(event) {
-    if (this.updateForm.status == 'INVALID') {
-      alert('信息不完整');
+    if (this.updateForm.status == "INVALID") {
+      alert("信息不完整");
       return;
     }
 
     this._sharedService.makeRequest('POST', '/info/teacher/update', JSON.stringify(this.teacher)).then((data: any) => {
-      alert('修改成功');
+      alert("修改成功");
       //go back to the teacher list page
       this.router.navigate(['teacherList']);
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);
-      alert('修改失败！');
+      alert("修改失败！");
       //go back to the teacher list page
       this.router.navigate(['teacherList']);
     });
@@ -51,8 +51,8 @@ export class UpdateTeacherComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateForm = this.fb.group({
-      teacherId: ['', Validators.required],
-      teacherName: ['', Validators.required]
+      teacherId: ["", Validators.required],
+      teacherName: ["", Validators.required]
     });
     this.teacher.teacherId = this.route.snapshot.params.teacherId;
     this.teacher.teacherName = this.route.snapshot.params.teacherName;

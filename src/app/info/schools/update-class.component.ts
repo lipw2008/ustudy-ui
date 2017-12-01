@@ -17,9 +17,9 @@ export class UpdateClassComponent implements OnInit {
   departmentName: string;
 
   class: any = {
-    classType: '',
-    classOwner: { 'id': '', 'n': '' },
-    otherClassOwner: { 'id': '', 'n': '' }
+    classType: "",
+    classOwner: { "id": "", "n": "" },
+    otherClassOwner: { "id": "", "n": "" }
   };
 
   teachers = [];
@@ -44,18 +44,18 @@ export class UpdateClassComponent implements OnInit {
   }
 
   update(event) {
-    for (const subject of this.class.subjects) {
+    for (let subject of this.class.subjects) {
       delete subject.options;
     }
     this._sharedService.makeRequest('POST', '/info/school/class/update/' + this.classId, JSON.stringify(this.class)).then((data: any) => {
-      alert('修改成功');
-      // go back to the student list page
+      alert("修改成功");
+      //go back to the student list page
       this.router.navigate(['class', { departmentName: this.departmentName, gradeId: this.gradeId }]);
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);
-      alert('修改失败！');
-      // go back to the student list page
+      alert("修改失败！");
+      //go back to the student list page
       this.router.navigate(['class', { departmentName: this.departmentName, gradeId: this.gradeId }]);
     });
   }
@@ -75,10 +75,10 @@ export class UpdateClassComponent implements OnInit {
   }
 
   loadClass() {
-    // req.open('GET', 'assets/api/schools/class.json');
+    //req.open('GET', 'assets/api/schools/class.json');
     this._sharedService.makeRequest('GET', '/info/school/class/' + this.classId, '').then((data: any) => {
-      // cache the list
-      console.log('data: ' + JSON.stringify(data));
+      //cache the list
+      console.log("data: " + JSON.stringify(data));
       this.class = data;
       this.loadTeachers();
     }).catch((error: any) => {
@@ -88,25 +88,24 @@ export class UpdateClassComponent implements OnInit {
   }
 
   loadTeachers() {
-    // req.open('GET', 'assets/api/teachers/classTeachers.json');
+    //req.open('GET', 'assets/api/teachers/classTeachers.json');
     this._sharedService.makeRequest('GET', '/info/school/gradeteac/' + this.gradeId, '').then((data: any) => {
-      // cache the list
-      console.log('data: ' + JSON.stringify(data));
+      //cache the list
+      console.log("data: " + JSON.stringify(data));
       this.teachers = data;
-      for (const subject of this.class.subjects) {
+      for (let subject of this.class.subjects) {
         subject.options = [];
-        for (const teacher of this.teachers) {
-          const t = { 'id': '', 'value': '' };
+        for (let teacher of this.teachers) {
+          let t = { "id": "", "value": "" }
           t.id = teacher.teacherId;
           t.value = teacher.teacherName;
-          for (const ts of teacher.subjects) {
-            if (ts.n === subject.subject) {
+          for (let ts of teacher.subjects) {
+            if (ts.n === subject.subject)
               subject.options.push(t);
-            }
           }
         }
       }
-      console.log('subjects: ' + JSON.stringify(this.class.subjects));
+      console.log("subjects: " + JSON.stringify(this.class.subjects));
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);

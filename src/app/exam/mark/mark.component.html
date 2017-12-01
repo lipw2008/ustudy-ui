@@ -45,9 +45,9 @@
 				<div class="panel-body">
 					<div>
                         <div #markContainer style="overflow-x: auto; overflow-y: auto">
-                            <mark-canvas [score]="score" [imgPath]="imgPath"  [editMode]="editMode"></mark-canvas>
-                            <mark-canvas [score]="score2" [imgPath]="imgPath2" [editMode]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
-                            <mark-canvas [score]="score3" [imgPath]="imgPath3" [editMode]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
+                            <mark-canvas [score]="score"  [(answer)]="answer"  [editMode]="editMode"></mark-canvas>
+                            <mark-canvas [score]="score2" [(answer)]="answer2" [editMode]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
+                            <mark-canvas [score]="score3" [(answer)]="answer3" [editMode]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
                         </div>
 					</div>
 				</div>

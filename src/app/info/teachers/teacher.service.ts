@@ -12,11 +12,11 @@ import { ITeacher } from './teacher';
 export class TeacherService {
   private _teacherUrl = 'api/teachers/teachers.json';
 
-  private grades = ['高一', '高二', '高三'];
+  private grades = ["高一", "高二", "高三"];
 
-  private roles = ['任课老师', '班主任', '备课组长', '学科组长', '年级主任', '校长', '考务老师'];
+  private roles = ["任课老师", "班主任", "备课组长", "学科组长", "年级主任", "校长", "考务老师"];
 
-  private subjects = ['语文', '数学', '英语', '物理', '化学', '生物', '政治', '历史', '地理'];
+  private subjects = ["语文", "数学", "英语", "物理", "化学", "生物", "政治", "历史", "地理"];
 
   constructor(private _http: Http) { }
 
@@ -34,11 +34,11 @@ export class TeacherService {
 
   getDefaultTeacher(): ITeacher {
     return {
-      'teacherId': '',
-      'teacherName': '',
-      'grades': [{ 'n': '' }],
-      'subjects': [{ 'n': '' }],
-      'roles': [{ 'n': '' }]
+      "teacherId": "",
+      "teacherName": "",
+      "grades": [{ "n": "" }],
+      "subjects": [{ "n": "" }],
+      "roles": [{ "n": "" }]
     }
   }
 

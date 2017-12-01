@@ -13,11 +13,11 @@ export class GradeComponent implements OnInit {
   errorMessage: string;
 
   grade: any = {
-    id: '',
-    gradeOwner: { 'id': '', 'n': '' }
+    id: "",
+    gradeOwner: { "id": "", "n": "" }
   };
 
-  gradeId = '';
+  gradeId: string = "";
 
   constructor(private _schoolService: SchoolService, private _sharedService: SharedService, private route: ActivatedRoute) {
 
@@ -32,7 +32,7 @@ export class GradeComponent implements OnInit {
     //req.open('GET', 'assets/api/schools/grade.json');
     this._sharedService.makeRequest('GET', '/info/school/grade/' + this.gradeId, '').then((data: any) => {
       //cache the list
-      console.log('data: ' + JSON.stringify(data));
+      console.log("data: " + JSON.stringify(data));
       this.grade = data;
     }).catch((error: any) => {
       console.log(error.status);

@@ -12,7 +12,7 @@ export class DepartmentComponent implements OnInit {
   errorMessage: string;
 
   school: any = {
-    'departments': []
+    "departments": []
   };
 
   constructor(private _schoolService: SchoolService, private _sharedService: SharedService) {
@@ -27,7 +27,7 @@ export class DepartmentComponent implements OnInit {
     //req.open('GET', 'assets/api/schools/school.json');
     this._sharedService.makeRequest('GET', '/info/school/detail', '').then((data: any) => {
       //cache the list
-      console.log('data: ' + JSON.stringify(data));
+      console.log("data: " + JSON.stringify(data));
       this.school = data;
     }).catch((error: any) => {
       console.log(error.status);

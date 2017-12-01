@@ -21,10 +21,10 @@ export class WelcomeComponent {
 
   updateUserStatus() {
     this._sharedService.makeRequest('GET', '/api/loginId', '').then((data: any) => {
-      console.log('data: ' + data);
+      console.log("data: " + data);
       this._sharedService.userName = data.userName === undefined ? '' : data.userName;
       this._sharedService.userRole = data.role === undefined ? '' : data.role;
-      console.log('loginId success: user:' + this._sharedService.userName + ' role:' + this._sharedService.userRole);
+      console.log("loginId success: user:" + this._sharedService.userName + " role:" + this._sharedService.userRole);
       setTimeout(() => {
         this.masonry();
       }, 1);
@@ -33,7 +33,7 @@ export class WelcomeComponent {
     }).catch((error: any) => {
       this._sharedService.userName = '';
       this._sharedService.userRole = '';
-      console.log('loginId failed: user:' + this._sharedService.userName + ' role:' + this._sharedService.userRole);
+      console.log("loginId failed: user:" + this._sharedService.userName + " role:" + this._sharedService.userRole);
       console.log(error.status);
       console.log(error.statusText);
       //this.masonry();
@@ -48,6 +48,6 @@ export class WelcomeComponent {
     $('.grid').masonry({
       itemSelector: '.grid-item'
     });
-    console.log('masonry is called');
+    console.log("masonry is called");
   }
 }

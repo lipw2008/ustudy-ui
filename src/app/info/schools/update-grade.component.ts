@@ -14,7 +14,7 @@ export class UpdateGradeComponent implements OnInit {
 
   gradeId: string;
 
-  gradeOwner: any = { 'id': '', 'n': '' };
+  gradeOwner: any = { "id": "", "n": "" };
 
   subjects = [];
 
@@ -31,7 +31,7 @@ export class UpdateGradeComponent implements OnInit {
   }
 
   update(event) {
-    if (this.gradeOwner.id !== '') {
+    if (this.gradeOwner.id !== "") {
       this.updateGradeOwner(event);
     }
     if (this.subjects.length > 0) {
@@ -44,26 +44,26 @@ export class UpdateGradeComponent implements OnInit {
     this.teachers = [];
     delete this.gradeOwner.options;
     this._sharedService.makeRequest('POST', '/info/school/grade/updateOwner/' + this.gradeId, JSON.stringify(this.gradeOwner)).then((data: any) => {
-      alert('修改成功');
+      alert("修改成功");
       //go back to the student list page
       this.router.navigate(['grade', { gradeId: this.gradeId }]);
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);
-      alert('修改失败！');
+      alert("修改失败！");
       //go back to the student list page
       this.router.navigate(['grade', { gradeId: this.gradeId }]);
     });
   }
 
   updateSubjects(event) {
-    for (const subject of this.subjects) {
+    for (let subject of this.subjects) {
       delete subject.options;
     }
     this._sharedService.makeRequest('POST', '/info/school/grade/update/' + this.gradeId, JSON.stringify(this.subjects)).then((data: any) => {
       this.subjects = [];
       this.teachers = [];
-      alert('修改成功');
+      alert("修改成功");
       //go back to the student list page
       this.router.navigate(['grade', { gradeId: this.gradeId }]);
     }).catch((error: any) => {
@@ -71,7 +71,7 @@ export class UpdateGradeComponent implements OnInit {
       this.teachers = [];
       console.log(error.status);
       console.log(error.statusText);
-      alert('修改失败！');
+      alert("修改失败！");
       //go back to the student list page
       this.router.navigate(['grade', { gradeId: this.gradeId }]);
     });
@@ -85,10 +85,11 @@ export class UpdateGradeComponent implements OnInit {
       this.gradeOwner = JSON.parse(this.route.snapshot.params.gradeOwner);
       this.loadTeachers();
     } else if (this.route.snapshot.params.subject) {
-      const subject = JSON.parse(this.route.snapshot.params.subject);
+      let subject = JSON.parse(this.route.snapshot.params.subject);
       this.subjects.push(subject);
       this.loadTeachers();
-    } else {
+    }
+    else {
       this.loadSubjects();
     }
   }
@@ -97,7 +98,7 @@ export class UpdateGradeComponent implements OnInit {
     //req.open('GET', 'assets/api/schools/grade.json');
     this._sharedService.makeRequest('GET', '/info/school/grade/' + this.gradeId, '').then((data: any) => {
       //cache the list
-      console.log('data: ' + JSON.stringify(data));
+      console.log("data: " + JSON.stringify(data));
       this.subjects = data.subjects;
       this.gradeOwner = data.gradeOwner;
       this.loadTeachers();
@@ -112,12 +113,12 @@ export class UpdateGradeComponent implements OnInit {
     //req.open('GET', 'assets/api/teachers/gradeTeachers.json');
     this._sharedService.makeRequest('GET', '/info/school/gradeteac/' + this.gradeId, '').then((data: any) => {
       //cache the list
-      console.log('data: ' + JSON.stringify(data));
+      console.log("data: " + JSON.stringify(data));
       this.teachers = data;
-      if (this.gradeOwner.id !== '') {
+      if (this.gradeOwner.id !== "") {
         this.gradeOwner.options = [];
-        for (const teacher of this.teachers) {
-          const t = { 'id': '', 'value': '' }
+        for (let teacher of this.teachers) {
+          let t = { "id": "", "value": "" }
           t.id = teacher.teacherId;
           t.value = teacher.teacherName;
           this.gradeOwner.options.push(t);
@@ -125,16 +126,16 @@ export class UpdateGradeComponent implements OnInit {
       }
 
       if (this.subjects.length > 0) {
-        for (const subject of this.subjects) {
+        for (let subject of this.subjects) {
           subject.options = [];
-          for (const teacher of this.teachers) {
-            const t = { 'id': '', 'value': '' }
+          for (let teacher of this.teachers) {
+            let t = { "id": "", "value": "" }
             t.id = teacher.teacherId;
             t.value = teacher.teacherName;
             subject.options.push(t);
           }
         }
-        console.log('subjects: ' + JSON.stringify(this.subjects));
+        console.log("subjects: " + JSON.stringify(this.subjects));
       }
     }).catch((error: any) => {
       console.log(error.status);
