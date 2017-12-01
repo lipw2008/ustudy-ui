@@ -20,7 +20,10 @@ export class ExamsFilterComponent implements OnInit {
   ngOnInit() {
     this._examService.getExamOptions().then((data) => {
       this.examOptions = data
-    })
+    });
+    this._examService.getLastExamSubjects().then((data) => {
+      this.result.emit(data)
+    });
   }
 
   onSelected($event: Event) {
