@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DataService} from 'app/data/data.service';
+import { DataService } from 'app/data/data.service';
 import * as _ from 'lodash';
 import { sprintf } from 'sprintf-js';
 
@@ -39,13 +39,13 @@ export class ReviewStatisticComponent implements OnInit {
     const names = _.uniq(_.map(questions, 'questionName')).sort();
     const progresses = _.map(names, (name) => {
       let total = 0, markedNum = 0;
-      for (const question of _.filter(questions, {questionName: name})) {
+      for (const question of _.filter(questions, { questionName: name })) {
         total = total + question.mark.total;
         markedNum = markedNum + question.details.length
       }
       return markedNum / total;
     });
     const finalProgress = progresses.length === 0 ? 0 : _.sum(progresses) / progresses.length;
-    return sprintf( '%.2f%%', finalProgress * 100)
+    return sprintf('%.2f%%', finalProgress * 100)
   }
 }

@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {StudentService} from '../../info/students/student.service';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { StudentService } from '../../info/students/student.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -37,17 +37,19 @@ export class MarkSelectComponent implements OnChanges {
   returnResult() {
     let res;
     res = this.filterQuestion();
-    this.selectResult.emit({marks: res, selectedQuestion: this.selectedQuestion, examName: this.selectedExam,
-      selectedSchool: this.selectedSchool, selectedGrade: this.selectedGrade, selectedSubject: this.selectedSubject})
+    this.selectResult.emit({
+      marks: res, selectedQuestion: this.selectedQuestion, examName: this.selectedExam,
+      selectedSchool: this.selectedSchool, selectedGrade: this.selectedGrade, selectedSubject: this.selectedSubject
+    })
   }
 
   filterQuestion() {
-    let res =  _.filter(this.marks, {schoolName: this.selectedSchool, examName: this.selectedExam});
+    let res = _.filter(this.marks, { schoolName: this.selectedSchool, examName: this.selectedExam });
     if (this.selectedGrade !== '全部') {
-      res = _.filter(res, {grade: this.selectedGrade})
+      res = _.filter(res, { grade: this.selectedGrade })
     }
     if (this.selectedSubject !== '全部') {
-      res = _.filter(res, {subject: this.selectedSubject})
+      res = _.filter(res, { subject: this.selectedSubject })
     }
     return res
   }
@@ -57,7 +59,7 @@ export class MarkSelectComponent implements OnChanges {
     if (!this.showQuestions) { return; }
     res = this.filterQuestion();
     res = _.reduce(_.map(res, 'summary'), (r, i) => {
-        return r.concat(i);
+      return r.concat(i);
     }, []);
     this.questions = _.keys(_.groupBy(_.map(res, 'questionName')));
     this.selectedQuestion = _.first(this.questions);
@@ -66,22 +68,22 @@ export class MarkSelectComponent implements OnChanges {
 
   reload() {
     console.log('marks ', this.marks);
-    this.schools = _.keys(_.groupBy( _.map(this.marks, 'schoolName')));
+    this.schools = _.keys(_.groupBy(_.map(this.marks, 'schoolName')));
     this.selectedSchool = _.first(this.schools);
     let res;
-    res = _.keys(_.groupBy( _.map(this.marks, 'grade')));
+    res = _.keys(_.groupBy(_.map(this.marks, 'grade')));
     if (this.selectAll) {
       res = ['全部'].concat(res)
     }
     this.grades = res;
     this.selectedGrade = _.first(this.grades);
-    res = _.keys(_.groupBy( _.map(this.marks, 'subject')));
+    res = _.keys(_.groupBy(_.map(this.marks, 'subject')));
     if (this.selectAll) {
       res = ['全部'].concat(res)
     }
     this.subjects = res;
     this.selectedSubject = _.first(this.subjects);
-    this.exams = _.keys(_.groupBy( _.map(this.marks, 'examName')));
+    this.exams = _.keys(_.groupBy(_.map(this.marks, 'examName')));
     this.selectedExam = _.first(this.exams);
     this.getQuestions();
   }

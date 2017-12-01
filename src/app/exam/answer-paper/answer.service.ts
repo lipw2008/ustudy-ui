@@ -10,11 +10,11 @@ export class AnswerService {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET', `/api/examsubject/${examId}/${gradeId}/${subjectId}`,
         '').then((data: any) => {
-        if (!data.data) {
-          reject('no data');
-        }
-        resolve(data.data)
-      })
+          if (!data.data) {
+            reject('no data');
+          }
+          resolve(data.data)
+        })
     })
   }
 

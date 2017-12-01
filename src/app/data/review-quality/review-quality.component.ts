@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
-import {DataService} from '../data.service';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-review-quality',
@@ -14,7 +14,7 @@ export class ReviewQualityComponent implements OnInit {
 
 
   // for chart
-  public barChartOptions:any = {
+  public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true,
     scales: {
@@ -27,21 +27,21 @@ export class ReviewQualityComponent implements OnInit {
       }]
     },
   };
-  public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType:string = 'bar';
-  public barChartLegend:boolean = true;
+  public barChartLabels: string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
 
-  public barChartData:any[] = [
-    {data: [0, 0, 0, 0, 0, 0, 0], label: 'Series A'},
-    {data: [0, 0, 0, 0, 0, 0, 0], label: 'Series A'},
+  public barChartData: any[] = [
+    { data: [0, 0, 0, 0, 0, 0, 0], label: 'Series A' },
+    { data: [0, 0, 0, 0, 0, 0, 0], label: 'Series A' },
   ];
 
   // events
-  public chartClicked(e:any):void {
+  public chartClicked(e: any): void {
     console.log(e);
   }
 
-  public chartHovered(e:any):void {
+  public chartHovered(e: any): void {
     console.log(e);
   }
 
@@ -86,7 +86,7 @@ export class ReviewQualityComponent implements OnInit {
             data.push(0)
           }
         }
-        barChartData.push({data: data, label: mark.teacherName});
+        barChartData.push({ data: data, label: mark.teacherName });
         break
       }
     }

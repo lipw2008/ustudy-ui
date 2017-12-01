@@ -37,7 +37,7 @@ export class SubjectFilterPipe implements PipeTransform {
       }
     });
     _.forEach(tmp, (v, k) => {
-      subjects.push({name: k, marks: v})
+      subjects.push({ name: k, marks: v })
     });
     return subjects;
   }
