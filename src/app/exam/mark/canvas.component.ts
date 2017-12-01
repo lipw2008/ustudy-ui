@@ -22,11 +22,16 @@ export class CanvasComponent implements OnInit {
 	container: any;
 	canvas: any;
 	ctx: any;
-	img: any;
 
-	// hidden canvas
+	// image scale proportion
+	scale: any;
+
+	// mark canvas
 	hCanvas: any;
 	hCtx: any;
+
+	// stamp image
+	img: any;
 
 	// Draw Line
 	isDrawingLine: boolean = false;
@@ -88,32 +93,35 @@ export class CanvasComponent implements OnInit {
 
 	loadPaper(): void {
 
-		this.img = new Image();
+		let paperImg = new Image();
 
-		this.img.crossOrigin = "anonymous";
+		paperImg.crossOrigin = "anonymous";
 		let t = this;
-		this.img.onload = function() {
+		paperImg.onload = function() {
+			//resize the image to fit the canvas.
 			t.ctx.canvas.width = t.container.offsetWidth;
-			t.ctx.canvas.height = t.img.height * (t.ctx.canvas.width/t.img.width);
-			t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height, 0, 0, t.ctx.canvas.width, t.ctx.canvas.height);
+			t.scale = t.ctx.canvas.width/paperImg.width;
+			t.ctx.canvas.height = paperImg.height * t.scale;
+			t.ctx.drawImage(paperImg, 0, 0, paperImg.width, paperImg.height, 0, 0, t.ctx.canvas.width, t.ctx.canvas.height);
 			//hidden canvas
 			t.hCtx.canvas.width = t.ctx.canvas.width;
 			t.hCtx.canvas.height = t.ctx.canvas.height;
+
+			let markImg = new Image();
+			markImg.crossOrigin = "anonymous";
+			markImg.onload = function() {
+				t.ctx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, 0, t.ctx.canvas.width, t.ctx.canvas.height);
+
+				// hidden canvas
+				t.hCtx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, 0, t.hCtx.canvas.width, t.hCtx.canvas.height);
+			}
+			markImg.src = t._sharedService.getImgUrl(t.answer.markImg, "");
 		}
-		this.img.src = this._sharedService.getImgUrl(this.answer.paperImg, this.answer.region);
+		paperImg.src = this._sharedService.getImgUrl(this.answer.paperImg, this.answer.region);
 	}
 
 	clear(): void {
-		let t = this;
-		this.img.onload = function() {
-			t.ctx.canvas.width = t.container.offsetWidth;
-			t.ctx.canvas.height = t.img.height * (t.ctx.canvas.width/t.img.width);
-			t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height, 0, 0, t.ctx.canvas.width, t.ctx.canvas.height);
-			//hidden canvas
-			t.hCtx.canvas.width = t.ctx.canvas.width;
-			t.hCtx.canvas.height = t.ctx.canvas.height;
-		}
-		this.img.src = this._sharedService.getImgUrl(this.answer.paperImg, this.answer.region);
+		this.loadPaper();
 	}
 
 	mouseDown(evt): void {
@@ -197,30 +205,42 @@ export class CanvasComponent implements OnInit {
 				this.img = new Image();
 				this.img.onload = function() {
 					console.log("img height:" + t.img.height);
+					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
 					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 					//hidden canvas
+					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
 					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
+
+					this.answer.answerType = "Best";
 				}
 				this.img.src = 'assets/images/icon-bestanswer.png';
 				break;
 			case 'FAQ':
 				this.img = new Image();
 				this.img.onload = function() {
-					t.ctx.drawImage(t.img, 90, 0, t.img.width, t.img.height);
+					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
+					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 					//hidden canvas
-					t.hCtx.drawImage(t.img, 90, 0, t.img.width, t.img.height);
+					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
+					t.hCtx.drawImage(t.img, 0, 0, t. img.width, t.img.height);
+
+					this.answer.answerType = "FAQ";
 				}
 				this.img.src = 'assets/images/icon-faq.png';
 				break;
 			case 'QueerAnswer':
 				this.img = new Image();
 				this.img.onload = function() {
-					t.ctx.drawImage(t.img, 180, 0, t.img.width, t.img.height);
+					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
+					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 					//hidden canvas
-					t.hCtx.drawImage(t.img, 180, 0, t.img.width, t.img.height);
+					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
+					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
+
+					this.answer.answerType = "Bad";
 				}
 				this.img.src = 'assets/images/icon-queerflower.png';
 				break;
@@ -326,11 +346,15 @@ export class CanvasComponent implements OnInit {
 		}
 	}
 
-	saveImage(): void {
-		let dataUrl = this.canvas.toDataURL("image/png");
-		window.open(dataUrl);
-		let hDataUrl = this.hCanvas.toDataURL("image/png");
-		window.open(hDataUrl);
+	getDataUrl(): any {
+		console.log("scale is : " + this.scale);
+		let tmpCanvas = document.createElement("canvas");
+		let tmpCtx = tmpCanvas.getContext("2d");
+		tmpCtx.canvas.width = this.canvas.width/this.scale;
+		tmpCtx.canvas.height = this.canvas.height/this.scale;
+		tmpCtx.drawImage(this.hCanvas, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		return tmpCanvas.toDataURL("image/png");
+		// window.open(hDataUrl);
 	}
 
 	addImage(): void {
@@ -390,10 +414,9 @@ export class CanvasComponent implements OnInit {
 		this.hCtx.font = '28px serif';
 		this.hCtx.fillStyle = "red";
 		this.hCtx.fillText(this.score, 250, 28);
-		// TO Do: resize to resume the original size
+
 		if (this.answer.paperImg !== "") {
-			this.answer.answerImgData = this.canvas.toDataURL("image/png");
-			this.answer.markImgData = this.hCanvas.toDataURL("image/png");
+			this.answer.markImgData = this.getDataUrl();
 			this.parent.updatePaper();
 		}
 	}
