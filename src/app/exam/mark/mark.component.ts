@@ -208,17 +208,10 @@ export class MarkComponent implements OnInit {
 
 	updateCanvas(): void {
 		console.log("update canvas for page: " + this.curPage);
-		this.editMode = "None";
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
-				console.log("before:");
-				console.log("ans img:" + this.answer.regions[0].ansImg);
-				console.log("ans type:" + this.answer.answerType);
 				this.answer.regions = group.papers[0].regions;
 				this.answer.answerType = group.papers[0].answerType;
-				console.log("after:");
-				console.log("ans img:" + this.answer.regions[0].ansImg);
-				console.log("ans type:" + this.answer.answerType);
 				this.score = "阅卷老师：" + this.mark.teacherId + " 得分：";
 				if (this.markQuestions.length >= 2) {
 					this.answer2.regions = group.papers[1].regions;
@@ -230,6 +223,7 @@ export class MarkComponent implements OnInit {
 					this.answer3.answerType = group.papers[2].answerType;
 					this.score3 = this.score;
 				}
+				this.editMode = "" + this.curPage;
 				break;
 			}
 		}
@@ -244,14 +238,14 @@ export class MarkComponent implements OnInit {
 						continue;
 					}
 					if (paper.steps.length === 0 && paper.score === "") {
-						this.fullScore = paper.fullScore;
+						this.fullScore = paper.fullscore;
 						console.log("after update full score: " + this.fullScore);
 						this.updateScoreBoard();
 						return;
 					} else if (paper.steps.length > 0) {
 						for(let step of paper.steps) {
 							if (step.score === "") {
-								this.fullScore = step.fullScore;
+								this.fullScore = step.fullscore;
 								console.log("after update full score: " + this.fullScore);
 								this.updateScoreBoard();
 								return;
@@ -338,11 +332,15 @@ export class MarkComponent implements OnInit {
 	}
 
 	previousPage(): void {
-		this.curPage--;
-		if (this.curPage === 1) {
+		if (this.curPage === 2) {
 			this.firstPageEnabled = "disabled";
 			this.prePageEnabled = "disabled";			
+		} else if (this.curPage <= 1) {
+			return;
 		}
+		
+		this.curPage--;
+
 		if (this.curPage < this.mark.groups[0].paperSeq) {
 			this.reqContent.startSeq = (this.curPage - 20 < 0 ? 0 : this.curPage - 20);
 			this.reqContent.endSeq = this.curPage;
@@ -373,27 +371,27 @@ export class MarkComponent implements OnInit {
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				if (group.papers[0].score !== "") {
-					this.score += group.papers[0].score + "/" + group.papers[0].fullScore;
+					this.score += group.papers[0].score + "/" + group.papers[0].fullscore;
 				} else {
 					for (let step of group.papers[0].steps) {
-						this.score += step.score + "/" + step.fullScore + " ";
+						this.score += step.score + "/" + step.fullscore + " ";
 					}
 				}
 				if (this.markQuestions.length >= 2) {
 					if (group.papers[1].score !== "") {
-						this.score2 += group.papers[1].score + "/" + group.papers[1].fullScore;
+						this.score2 += group.papers[1].score + "/" + group.papers[1].fullscore;
 					} else {
 						for (let step of group.papers[1].steps) {
-							this.score2 += step.score + "/" + step.fullScore + " ";
+							this.score2 += step.score + "/" + step.fullscore + " ";
 						}
 					}
 				}
 				if (this.markQuestions.length == 3) {
 					if (group.papers[2].score !== "") {
-						this.score3 += group.papers[2].score + "/" + group.papers[2].fullScore;
+						this.score3 += group.papers[2].score + "/" + group.papers[2].fullscore;
 					} else {
 						for (let step of group.papers[2].steps) {
-							this.score3 += step.score + "/" + step.fullScore + " ";
+							this.score3 += step.score + "/" + step.fullscore + " ";
 						}
 					}
 				}
