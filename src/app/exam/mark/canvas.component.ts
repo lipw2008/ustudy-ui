@@ -47,8 +47,9 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngOnChanges(): void {
+		console.log("ngOnChanges()");	
 		// the view is not inited yet OR it's a canvas not used
-		if (this.canvas === undefined || this.answer.regions[0].ansName === null) {
+		if (this.canvas === undefined || this.answer.regions[0].ansImg === null) {
 			return;
 		}
 
@@ -92,12 +93,13 @@ export class CanvasComponent implements OnInit {
     	});
 
 		// it's a canvas not used
-		if (this.answer.regions[0].ansName !== null) {
+		if (this.answer.regions[0].ansImg !== null) {
 			this.loadPaper();
 		}
 	}
 
 	loadPaper(): void {
+		console.log("loadPaper()");
 		// total canvas width
 		let canvasW = this.container.clientWidth - 20; //leave 20px for the scroll bar
 
