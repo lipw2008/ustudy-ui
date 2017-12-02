@@ -369,13 +369,16 @@ export class CanvasComponent implements OnInit {
 		}
 	}
 
-	getDataUrl(region: any): any {
+	setDataUrl(region: any): any {
 		let tmpCanvas = document.createElement("canvas");
 		let tmpCtx = tmpCanvas.getContext("2d");
 		tmpCtx.canvas.width = region.w;
 		tmpCtx.canvas.height = region.h;
 		tmpCtx.drawImage(this.hCanvas, 0, region.canvasY, this.hCtx.canvas.width, region.canvasH, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
-		return tmpCanvas.toDataURL("image/png");
+		region.markImgData = tmpCanvas.toDataURL("image/png");
+		tmpCtx.clearRect(0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		tmpCtx.drawImage(this.canvas, 0, region.canvasY, this.ctx.canvas.width, region.canvasH, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		region.ansMarkImgData = tmpCanvas.toDataURL("image/png");		
 		// window.open(hDataUrl);
 	}
 
@@ -438,7 +441,7 @@ export class CanvasComponent implements OnInit {
 		this.hCtx.fillText(this.score, 250, 28);
 
 		for (let region of this.answer.regions) {
-			region.markImgData = this.getDataUrl(region);
+			this.setDataUrl(region);
 		}
 		this.parent.updatePaper();
 	}

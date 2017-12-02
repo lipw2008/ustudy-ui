@@ -395,8 +395,8 @@ export class MarkComponent implements OnInit {
 						delete region.scale;
 						delete region.canvasH;
 						delete region.canvasY;
-						region.ansMarkImg = region.ansImg.slice(1, -4) + "_AM_" + this.mark.teacherId + region.ansImg.slice(-4);
-						region.markImg = region.ansImg.slice(1, -4) + "_M_" + this.mark.teacherId + region.ansImg.slice(-4);
+						region.ansMarkImg = region.ansImg.slice(0, -4) + "_AM_" + this.mark.teacherId + region.ansImg.slice(-4);
+						region.markImg = region.ansImg.slice(0, -4) + "_M_" + this.mark.teacherId + region.ansImg.slice(-4);
 					}
 				}
 				this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(group)).then((data: any) => {
