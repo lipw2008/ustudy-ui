@@ -47,8 +47,8 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngOnChanges(): void {
-		// the view is not inited yet
-		if (this.canvas === undefined) {
+		// the view is not inited yet OR it's a canvas not used
+		if (this.canvas === undefined || this.answer.regions[0].ansName === null) {
 			return;
 		}
 
@@ -61,6 +61,7 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngAfterViewInit(): void {
+
 		this.container = this.parent.markContainer.nativeElement;
 		this.rootContainerElement = this.parent.rootContainer.nativeElement;
 
@@ -90,13 +91,16 @@ export class CanvasComponent implements OnInit {
     		this.mouseOut(evt);
     	});
 
-		this.loadPaper();
+		// it's a canvas not used
+		if (this.answer.regions[0].ansName !== null) {
+			this.loadPaper();
+		}
 	}
 
 	loadPaper(): void {
 		// total canvas width
 		let canvasW = this.container.clientWidth - 20; //leave 20px for the scroll bar
-		console.log("clientWidth:" + this.container.clientWidth + " offsetWidth:" + this.container.scrollWidth);
+
 		// total canvas height
 		let canvasH = 0;
 
@@ -435,7 +439,7 @@ export class CanvasComponent implements OnInit {
 
 		for (let region of this.answer.regions) {
 			region.markImgData = this.getDataUrl(region);
-			this.parent.updatePaper();
 		}
+		this.parent.updatePaper();
 	}
 }

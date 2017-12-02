@@ -58,10 +58,10 @@ export class MarkComponent implements OnInit {
 	answer = {
 		regions: [
 			{
-				quesName: "",
-				ansName: "",
-				markImg: "",
-				markImgData: "",
+				quesName: null,
+				ansName: null,
+				markImg: null,
+				markImgData: null,
 				scale: 1,
 				canvasH: 0,
 				canvasY: 0,
@@ -76,10 +76,10 @@ export class MarkComponent implements OnInit {
 	answer2 = {
 		regions: [
 			{
-				quesName: "",
-				ansName: "",
-				markImg: "",
-				markImgData: "",
+				quesName: null,
+				ansName: null,
+				markImg: null,
+				markImgData: null,
 				scale: 1,
 				canvasH: 0,
 				canvasY: 0,
@@ -94,10 +94,10 @@ export class MarkComponent implements OnInit {
 	answer3 = {
 		regions: [
 			{
-				quesName: "",
-				ansName: "",
-				markImg: "",
-				markImgData: "",
+				quesName: null,
+				ansName: null,
+				markImg: null,
+				markImgData: null,
 				scale: 1,
 				canvasH: 0,
 				canvasY: 0,
@@ -371,22 +371,34 @@ export class MarkComponent implements OnInit {
 	}
 
 	updatePaper() {
-		for(let region of this.answer.regions) {
-			if (region.markImgData === "") return;
+		console.log("update paper: " + this.markQuestions.length);
+		if (this.answer.regions[0].markImgData === null ||
+			(this.markQuestions.length >= 2 && this.answer2.regions[0].markImgData === null) ||
+			(this.markQuestions.length === 3 && this.answer3.regions[0].markImgData === null)) {		
+			return;
 		}
 
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
-				// if (group.papers.length >= 1) {
-				// 	group.papers[0].markImgData = this.answer.markImgData;
-				// 	group.papers[0].answerType = this.answer.answerType;
-				// }
-				// if (group.papers.length >= 2) {
-				// 	group.papers[1].markImgData = this.answer2.markImgData;
-				// 	group.papers[1].answerType = this.answer2.answerType;				}
-				// if (group.papers.length === 3) {
-				// 	group.papers[2].markImgData = this.answer3.markImgData;
-				// 	group.papers[2].answerType = this.answer3.answerType;				}
+
+				if (group.papers.length >= 1) {
+					group.papers[0].answerType = this.answer.answerType;
+				}
+				if (group.papers.length >= 2) {
+					group.papers[1].answerType = this.answer2.answerType;				
+				}
+				if (group.papers.length === 3) {
+					group.papers[2].answerType = this.answer3.answerType;				
+				}
+				for (let paper of group.papers) {
+					for (let region of paper.regions) {
+						delete region.scale;
+						delete region.canvasH;
+						delete region.canvasY;
+						region.ansMarkImg = region.ansImg.slice(1, -4) + "_AM_" + this.mark.teacherId + region.ansImg.slice(-4);
+						region.markImg = region.ansImg.slice(1, -4) + "_M_" + this.mark.teacherId + region.ansImg.slice(-4);
+					}
+				}
 				this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(group)).then((data: any) => {
 					alert("修改成功");
 					this.nextPage();
