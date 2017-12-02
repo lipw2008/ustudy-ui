@@ -1,0 +1,65 @@
+{
+    "id": null,
+    "examId": null,
+    "examName": null,
+    "teacherId": null,
+    "teacherName": null,
+    "subject": "英语",
+    "grade": "高一",
+    "markType": "标准",
+    "progress": null,
+    "summary": [
+        {
+            "quesid": "18",
+            "questionName": "41",
+            "avgScore": 0,
+            "markedNum": 0
+        }
+    ],
+    "groups": [
+        {
+            "paperSeq": 1,
+            "papers": [
+                {
+                    "quesid": null,
+                    "questionName": "41",
+                    "questionType": "判断题",
+                    "markStyle": null,
+                    "isMarked": false,
+                    "paperId": null,
+                    "answerType": null,
+                    "isProblemPaper": false,
+                    "fullScore": "5",
+                    "score": "", 
+                    "steps": [],
+                    "regions": [
+                        {
+                            "quesImg": "tpl1.1png",
+                            "ansImg": "E1_8788658733000007902.png",
+                            "ansMarkImg": null,
+                            "ansMarkImgData": null,
+                            "markImg": null,
+                            "markImgData": null,
+                            "x": 221,
+                            "y": 223,
+                            "w": 971,
+                            "h": 739
+                        },
+                        {
+                            "quesImg": "tpl1.0png",
+                            "ansImg": "E1_8788658733000007901.png",
+                            "ansMarkImg": null,
+                            "ansMarkImgData": null,
+                            "markImg": null,
+                            "markImgData": null,
+                            "x": 262,
+                            "y": 1506,
+                            "w": 968,
+                            "h": 263
+                        }
+                    ]
+                }                 
+            ]
+        }
+    ]
+}

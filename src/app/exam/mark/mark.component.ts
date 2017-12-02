@@ -60,45 +60,54 @@ export class MarkComponent implements OnInit {
 			{
 				quesName: "",
 				ansName: "",
+				markImg: "",
+				markImgData: "",
+				scale: 1,
+				canvasH: 0,
+				canvasY: 0,
 				x: 0,
 				y: 0,
 				w: 0,
 				h: 0
 			}
 		],
-		answerType: "",
-		markImg: "",
-		markImgData: ""
+		answerType: ""
 	};
 	answer2 = {
 		regions: [
 			{
 				quesName: "",
 				ansName: "",
+				markImg: "",
+				markImgData: "",
+				scale: 1,
+				canvasH: 0,
+				canvasY: 0,
 				x: 0,
 				y: 0,
 				w: 0,
 				h: 0
 			}
 		],
-		answerType: "",
-		markImg: "",
-		markImgData: ""
+		answerType: ""
 	};
 	answer3 = {
 		regions: [
 			{
 				quesName: "",
 				ansName: "",
+				markImg: "",
+				markImgData: "",
+				scale: 1,
+				canvasH: 0,
+				canvasY: 0,
 				x: 0,
 				y: 0,
 				w: 0,
 				h: 0
 			}
 		],
-		answerType: "",
-		markImg: "",
-		markImgData: ""
+		answerType: ""
 	};
 	markCanvas2Display: string = 'none';
 	markCanvas3Display: string = 'none';
@@ -112,7 +121,6 @@ export class MarkComponent implements OnInit {
 	}
 
     ngAfterViewInit(): void {
-		console.log();
 		let question = {"id": "", "n": ""};
 		question.id = this.route.snapshot.params.questionId;
 		question.n = this.route.snapshot.params.questionName;
@@ -127,6 +135,9 @@ export class MarkComponent implements OnInit {
 		var t = event.data.t;
 		t.markQuestions = [];
 		var questionNames = $(t.questionSelector.nativeElement).val();
+		if (questionNames == null || questionNames.length === 0) {
+			alert("请选择题号加载试卷！");
+		}
 		for(let questionName of questionNames) {
 			for(let question of t.questionList) {
 				if (question.n === questionName) {
@@ -192,21 +203,15 @@ export class MarkComponent implements OnInit {
 			if (group.paperSeq === this.curPage) {
 				this.answer.regions = group.papers[0].regions;
 				this.answer.answerType = group.papers[0].answerType;
-				this.answer.markImg = group.papers[0].markImg;
-				this.answer.markImgData = group.papers[0].markImgData;
 				this.score = "阅卷老师：" + this.mark.teacherId + " 得分：";
 				if (this.markQuestions.length >= 2) {
-					this.answer2.regions = group.papers[1].region;
+					this.answer2.regions = group.papers[1].regions;
 					this.answer2.answerType = group.papers[1].answerType;
-					this.answer2.markImg = group.papers[1].markImg;
-					this.answer2.markImgData = group.papers[1].markImgData;
 					this.score2 = this.score;
 				}
 				if (this.markQuestions.length == 3) {
-					this.answer3.regions = group.papers[2].region;
+					this.answer3.regions = group.papers[2].regions;
 					this.answer3.answerType = group.papers[2].answerType;
-					this.answer3.markImg = group.papers[2].markImg;
-					this.answer3.markImgData = group.papers[2].markImgData;
 					this.score3 = this.score;
 				}
 				break;
@@ -366,23 +371,22 @@ export class MarkComponent implements OnInit {
 	}
 
 	updatePaper() {
-		if (this.answer.markImgData === "" ||
-		(this.markQuestions.length >= 2 && this.answer2.markImgData === "") ||
-		(this.markQuestions.length === 3 && this.answer3.markImgData === "")) {
-			return;
+		for(let region of this.answer.regions) {
+			if (region.markImgData === "") return;
 		}
+
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
-				if (group.papers.length >= 1) {
-					group.papers[0].markImgData = this.answer.markImgData;
-					group.papers[0].answerType = this.answer.answerType;
-				}
-				if (group.papers.length >= 2) {
-					group.papers[1].markImgData = this.answer2.markImgData;
-					group.papers[1].answerType = this.answer2.answerType;				}
-				if (group.papers.length === 3) {
-					group.papers[2].markImgData = this.answer3.markImgData;
-					group.papers[2].answerType = this.answer3.answerType;				}
+				// if (group.papers.length >= 1) {
+				// 	group.papers[0].markImgData = this.answer.markImgData;
+				// 	group.papers[0].answerType = this.answer.answerType;
+				// }
+				// if (group.papers.length >= 2) {
+				// 	group.papers[1].markImgData = this.answer2.markImgData;
+				// 	group.papers[1].answerType = this.answer2.answerType;				}
+				// if (group.papers.length === 3) {
+				// 	group.papers[2].markImgData = this.answer3.markImgData;
+				// 	group.papers[2].answerType = this.answer3.answerType;				}
 				this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(group)).then((data: any) => {
 					alert("修改成功");
 					this.nextPage();

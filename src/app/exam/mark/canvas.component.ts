@@ -23,9 +23,6 @@ export class CanvasComponent implements OnInit {
 	canvas: any;
 	ctx: any;
 
-	// image scale proportion
-	scale: any;
-
 	// mark canvas
 	hCanvas: any;
 	hCtx: any;
@@ -50,6 +47,11 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngOnChanges(): void {
+		// the view is not inited yet
+		if (this.canvas === undefined) {
+			return;
+		}
+
 		if (this.curPaperImg !== this.answer.regions[0].ansImg || this.editMode === 'Clear') {
 			this.curPaperImg = this.answer.regions[0].ansImg;
 			this.loadPaper();
@@ -92,32 +94,49 @@ export class CanvasComponent implements OnInit {
 	}
 
 	loadPaper(): void {
+		// total canvas width
+		let canvasW = this.container.clientWidth - 20; //leave 20px for the scroll bar
+		console.log("clientWidth:" + this.container.clientWidth + " offsetWidth:" + this.container.scrollWidth);
+		// total canvas height
+		let canvasH = 0;
 
-		let paperImg = new Image();
-
-		paperImg.crossOrigin = "anonymous";
-		let t = this;
-		paperImg.onload = function() {
-			//resize the image to fit the canvas.
-			t.ctx.canvas.width = t.container.offsetWidth;
-			t.scale = t.ctx.canvas.width/paperImg.width;
-			t.ctx.canvas.height = paperImg.height * t.scale;
-			t.ctx.drawImage(paperImg, 0, 0, paperImg.width, paperImg.height, 0, 0, t.ctx.canvas.width, t.ctx.canvas.height);
-			//hidden canvas
-			t.hCtx.canvas.width = t.ctx.canvas.width;
-			t.hCtx.canvas.height = t.ctx.canvas.height;
-
-			let markImg = new Image();
-			markImg.crossOrigin = "anonymous";
-			markImg.onload = function() {
-				t.ctx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, 0, t.ctx.canvas.width, t.ctx.canvas.height);
-
-				// hidden canvas
-				t.hCtx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, 0, t.hCtx.canvas.width, t.hCtx.canvas.height);
-			}
-			markImg.src = t._sharedService.getImgUrl(t.answer.markImg, "");
+		for (let region of this.answer.regions) {
+			region.scale = canvasW/region.w; 
+			region.canvasH = region.h * region.scale;
+			region.canvasY = canvasH;
+			canvasH += region.canvasH;
 		}
-		paperImg.src = this._sharedService.getImgUrl(this.answer.regions[0].ansImg, this.answer.regions[0]);
+
+		// set the total size of the canvas
+		this.ctx.canvas.width = canvasW;
+		this.ctx.canvas.height = canvasH;
+		// hidden canvas
+		this.hCtx.canvas.width = this.ctx.canvas.width;
+		this.hCtx.canvas.height = this.ctx.canvas.height;
+
+		// load images
+		for (let region of this.answer.regions) {
+			let paperImg = new Image();
+
+			paperImg.crossOrigin = "anonymous";
+			let t = this;
+			paperImg.onload = function() {
+				t.ctx.drawImage(paperImg, 0, 0, paperImg.width, paperImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+				//load marking record image
+				if (region.markImg !== null) {
+					let markImg = new Image();
+					markImg.crossOrigin = "anonymous";
+					markImg.onload = function() {
+						t.ctx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+
+						// hidden canvas
+						t.hCtx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.hCtx.canvas.width, region.canvasH);
+					}
+					markImg.src = t._sharedService.getImgUrl(region.markImg, "");
+				}
+			}
+			paperImg.src = this._sharedService.getImgUrl(region.ansImg, region);
+		}
 	}
 
 	clear(): void {
@@ -212,7 +231,7 @@ export class CanvasComponent implements OnInit {
 					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
 					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
-					this.answer.answerType = "BEST";
+					t.answer.answerType = "BEST";
 				}
 				this.img.src = 'assets/images/icon-bestanswer.png';
 				break;
@@ -226,7 +245,7 @@ export class CanvasComponent implements OnInit {
 					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
 					t.hCtx.drawImage(t.img, 0, 0, t. img.width, t.img.height);
 
-					this.answer.answerType = "FAQ";
+					t.answer.answerType = "FAQ";
 				}
 				this.img.src = 'assets/images/icon-faq.png';
 				break;
@@ -240,7 +259,7 @@ export class CanvasComponent implements OnInit {
 					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
 					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
-					this.answer.answerType = "BAD";
+					t.answer.answerType = "BAD";
 				}
 				this.img.src = 'assets/images/icon-queerflower.png';
 				break;
@@ -346,13 +365,12 @@ export class CanvasComponent implements OnInit {
 		}
 	}
 
-	getDataUrl(): any {
-		console.log("scale is : " + this.scale);
+	getDataUrl(region: any): any {
 		let tmpCanvas = document.createElement("canvas");
 		let tmpCtx = tmpCanvas.getContext("2d");
-		tmpCtx.canvas.width = this.canvas.width/this.scale;
-		tmpCtx.canvas.height = this.canvas.height/this.scale;
-		tmpCtx.drawImage(this.hCanvas, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		tmpCtx.canvas.width = region.w;
+		tmpCtx.canvas.height = region.h;
+		tmpCtx.drawImage(this.hCanvas, 0, region.canvasY, this.hCtx.canvas.width, region.canvasH, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
 		return tmpCanvas.toDataURL("image/png");
 		// window.open(hDataUrl);
 	}
@@ -415,8 +433,8 @@ export class CanvasComponent implements OnInit {
 		this.hCtx.fillStyle = "red";
 		this.hCtx.fillText(this.score, 250, 28);
 
-		if (this.answer.paperImg !== "") {
-			this.answer.markImgData = this.getDataUrl();
+		for (let region of this.answer.regions) {
+			region.markImgData = this.getDataUrl(region);
 			this.parent.updatePaper();
 		}
 	}
