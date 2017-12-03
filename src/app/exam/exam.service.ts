@@ -33,4 +33,15 @@ export class ExamService {
     })
   }
 
+  getLastExamSubjects() {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/last/examsubjects`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 }
