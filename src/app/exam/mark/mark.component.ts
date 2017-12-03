@@ -60,7 +60,7 @@ export class MarkComponent implements OnInit {
 	answer = {
 		regions: [
 			{
-				quesName: null,
+				quesImg: null,
 				ansImg: null,
 				markImg: null,
 				markImgData: null,
@@ -78,7 +78,7 @@ export class MarkComponent implements OnInit {
 	answer2 = {
 		regions: [
 			{
-				quesName: null,
+				quesImg: null,
 				ansImg: null,
 				markImg: null,
 				markImgData: null,
@@ -96,7 +96,7 @@ export class MarkComponent implements OnInit {
 	answer3 = {
 		regions: [
 			{
-				quesName: null,
+				quesImg: null,
 				ansImg: null,
 				markImg: null,
 				markImgData: null,
@@ -223,7 +223,7 @@ export class MarkComponent implements OnInit {
 					this.answer3.answerType = group.papers[2].answerType;
 					this.score3 = this.score;
 				}
-				this.editMode = "" + this.curPage;
+				this.editMode = "" + this.curPage + Math.round(new Date().getTime()/1000);
 				break;
 			}
 		}

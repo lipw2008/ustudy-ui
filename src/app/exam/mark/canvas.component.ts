@@ -13,7 +13,7 @@ export class CanvasComponent implements OnInit {
 	@Input() editMode: string;
 	@Input() score: string;
 
-	curPaperImg: string = "";
+	curPaperImg: string = null;
 
 	/***** View *****/
 	@ViewChild('markCanvas') markCanvas;
@@ -47,13 +47,18 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngOnChanges(): void {
-		console.log("ngOnChanges()");	
+		console.log("ngOnChanges(): editmode:" + this.editMode);
+		console.log("this.curPaperImg:" + this.curPaperImg);
+		console.log("this.answer.regions[0].ansImg:" + this.answer.regions[0].ansImg);
+		console.log("this.answer.regions[0].scale:" + this.answer.regions[0].scale);
+		console.log("this.answer.regions[0]" + this.answer.regions[0]);
 		// the view is not inited yet OR it's a canvas not used
 		if (this.canvas === undefined || this.answer.regions[0].ansImg === null) {
 			return;
 		}
 
-		if (this.curPaperImg !== this.answer.regions[0].ansImg || this.editMode === 'Clear') {
+		if (this.answer.regions[0].scale == undefined || this.curPaperImg !== this.answer.regions[0].ansImg 
+		|| this.editMode === 'Clear') {
 			this.curPaperImg = this.answer.regions[0].ansImg;
 			this.loadPaper();
 		} else if (this.editMode === "Score") {
@@ -372,6 +377,8 @@ export class CanvasComponent implements OnInit {
 	}
 
 	setDataUrl(region: any): any {
+		console.log("set data url for :" + region.ansImg);
+		console.log("region is: " + JSON.stringify(region));
 		let tmpCanvas = document.createElement("canvas");
 		let tmpCtx = tmpCanvas.getContext("2d");
 		tmpCtx.canvas.width = region.w;
@@ -380,8 +387,7 @@ export class CanvasComponent implements OnInit {
 		region.markImgData = tmpCanvas.toDataURL("image/png");
 		tmpCtx.clearRect(0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
 		tmpCtx.drawImage(this.canvas, 0, region.canvasY, this.ctx.canvas.width, region.canvasH, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
-		region.ansMarkImgData = tmpCanvas.toDataURL("image/png");		
-		// window.open(hDataUrl);
+		region.ansMarkImgData = tmpCanvas.toDataURL("image/png");	
 	}
 
 	addImage(): void {
