@@ -149,7 +149,7 @@ export class MarkComponent implements OnInit {
 			}
 		}
 		
-		console.log("On question change: " + JSON.stringify(t.markQuestions));
+		// console.log("On question change: " + JSON.stringify(t.markQuestions));
 		// load marks data based on the mark questions.
 		t.reload();
 	}
@@ -207,7 +207,7 @@ export class MarkComponent implements OnInit {
 	}	
 
 	updateCanvas(): void {
-		console.log("update canvas for page: " + this.curPage);
+		// console.log("update canvas for page: " + this.curPage);
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				this.answer.regions = group.papers[0].regions;
@@ -230,7 +230,7 @@ export class MarkComponent implements OnInit {
 	}
 
 	updateFullScore(): void {
-		console.log("before update full score: " + this.fullScore);
+		// console.log("before update full score: " + this.fullScore);
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
@@ -239,14 +239,14 @@ export class MarkComponent implements OnInit {
 					}
 					if (paper.steps.length === 0 && paper.score === "") {
 						this.fullScore = paper.fullscore;
-						console.log("after update full score: " + this.fullScore);
+						// console.log("after update full score: " + this.fullScore);
 						this.updateScoreBoard();
 						return;
 					} else if (paper.steps.length > 0) {
 						for(let step of paper.steps) {
 							if (step.score === "") {
 								this.fullScore = step.fullscore;
-								console.log("after update full score: " + this.fullScore);
+								// console.log("after update full score: " + this.fullScore);
 								this.updateScoreBoard();
 								return;
 							} 
@@ -401,7 +401,7 @@ export class MarkComponent implements OnInit {
 	}
 
 	updatePaper() {
-		console.log("update paper: " + this.markQuestions.length);
+		// console.log("update paper: " + this.markQuestions.length);
 		if (this.answer.regions[0].markImgData === null ||
 			(this.markQuestions.length >= 2 && this.answer2.regions[0].markImgData === null) ||
 			(this.markQuestions.length === 3 && this.answer3.regions[0].markImgData === null)) {		
@@ -472,7 +472,6 @@ export class MarkComponent implements OnInit {
 	}
 
 	addBestAnswer(): void {
-		//To DO: bese; faq; bad should not be specified at the same time
 		this.editMode = "BestAnswer";
 	}
 

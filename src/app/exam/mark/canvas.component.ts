@@ -47,11 +47,11 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngOnChanges(): void {
-		console.log("ngOnChanges(): editmode:" + this.editMode);
-		console.log("this.curPaperImg:" + this.curPaperImg);
-		console.log("this.answer.regions[0].ansImg:" + this.answer.regions[0].ansImg);
-		console.log("this.answer.regions[0].scale:" + this.answer.regions[0].scale);
-		console.log("this.answer.regions[0]" + this.answer.regions[0]);
+		// console.log("ngOnChanges(): editmode:" + this.editMode);
+		// console.log("this.curPaperImg:" + this.curPaperImg);
+		// console.log("this.answer.regions[0].ansImg:" + this.answer.regions[0].ansImg);
+		// console.log("this.answer.regions[0].scale:" + this.answer.regions[0].scale);
+		// console.log("this.answer.regions[0]" + this.answer.regions[0]);
 		// the view is not inited yet OR it's a canvas not used
 		if (this.canvas === undefined || this.answer.regions[0].ansImg === null) {
 			return;
@@ -377,17 +377,17 @@ export class CanvasComponent implements OnInit {
 	}
 
 	setDataUrl(region: any): any {
-		console.log("set data url for :" + region.ansImg);
-		console.log("region is: " + JSON.stringify(region));
+		// console.log("set data url for :" + region.ansImg);
+		// console.log("region is: " + JSON.stringify(region));
 		let tmpCanvas = document.createElement("canvas");
 		let tmpCtx = tmpCanvas.getContext("2d");
 		tmpCtx.canvas.width = region.w;
 		tmpCtx.canvas.height = region.h;
 		tmpCtx.drawImage(this.hCanvas, 0, region.canvasY, this.hCtx.canvas.width, region.canvasH, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
 		region.markImgData = tmpCanvas.toDataURL("image/png");
-		tmpCtx.clearRect(0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
-		tmpCtx.drawImage(this.canvas, 0, region.canvasY, this.ctx.canvas.width, region.canvasH, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
-		region.ansMarkImgData = tmpCanvas.toDataURL("image/png");	
+		// tmpCtx.clearRect(0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		// tmpCtx.drawImage(this.canvas, 0, region.canvasY, this.ctx.canvas.width, region.canvasH, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		// region.ansMarkImgData = tmpCanvas.toDataURL("image/png");	
 	}
 
 	addImage(): void {
