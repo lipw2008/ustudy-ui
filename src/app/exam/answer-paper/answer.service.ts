@@ -21,7 +21,7 @@ export class AnswerService {
   getAnswerPapers(params: any) {
     console.log(`getAnswerPapers: `, JSON.stringify(params));
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', `/api/answers`, JSON.stringify(params)).then((data: any) => {
+      this._sharedService.makeRequest('GET', `/api/answer/papers`, params).then((data: any) => {
         if (!data.data) {
           reject('no data');
         }

@@ -6,12 +6,14 @@ import { UtilsModule } from '../../utils/utils.module';
 import { AnswerComponent } from './answer/answer.component';
 import { FormsModule } from '@angular/forms';
 import { AnswerService } from './answer.service';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     UtilsModule,
     FormsModule,
+    ModalModule.forRoot(),
     RouterModule.forChild([
       { path: 'answerPapers', component: AnswerPaperListComponent },
       { path: 'answers', component: AnswerComponent },
