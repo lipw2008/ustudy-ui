@@ -13,7 +13,7 @@ export class CanvasComponent implements OnInit {
 	@Input() editMode: string;
 	@Input() score: string;
 
-	curPaperImg: string = "";
+	curPaperImg: string = null;
 
 	/***** View *****/
 	@ViewChild('markCanvas') markCanvas;
@@ -22,11 +22,13 @@ export class CanvasComponent implements OnInit {
 	container: any;
 	canvas: any;
 	ctx: any;
-	img: any;
 
-	// hidden canvas
+	// mark canvas
 	hCanvas: any;
 	hCtx: any;
+
+	// stamp image
+	img: any;
 
 	// Draw Line
 	isDrawingLine: boolean = false;
@@ -45,8 +47,19 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngOnChanges(): void {
-		if (this.curPaperImg !== this.answer.paperImg || this.editMode === 'Clear') {
-			this.curPaperImg = this.answer.paperImg;
+		// console.log("ngOnChanges(): editmode:" + this.editMode);
+		// console.log("this.curPaperImg:" + this.curPaperImg);
+		// console.log("this.answer.regions[0].ansImg:" + this.answer.regions[0].ansImg);
+		// console.log("this.answer.regions[0].scale:" + this.answer.regions[0].scale);
+		// console.log("this.answer.regions[0]" + this.answer.regions[0]);
+		// the view is not inited yet OR it's a canvas not used
+		if (this.canvas === undefined || this.answer.regions[0].ansImg === null) {
+			return;
+		}
+
+		if (this.answer.regions[0].scale == undefined || this.curPaperImg !== this.answer.regions[0].ansImg 
+		|| this.editMode === 'Clear') {
+			this.curPaperImg = this.answer.regions[0].ansImg;
 			this.loadPaper();
 		} else if (this.editMode === "Score") {
 			this.addScore();
@@ -54,6 +67,7 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngAfterViewInit(): void {
+
 		this.container = this.parent.markContainer.nativeElement;
 		this.rootContainerElement = this.parent.rootContainer.nativeElement;
 
@@ -83,37 +97,61 @@ export class CanvasComponent implements OnInit {
     		this.mouseOut(evt);
     	});
 
-		this.loadPaper();
+		// it's a canvas not used
+		if (this.answer.regions[0].ansImg !== null) {
+			this.loadPaper();
+		}
 	}
 
 	loadPaper(): void {
+		console.log("loadPaper()");
+		// total canvas width
+		let canvasW = this.container.clientWidth - 20; //leave 20px for the scroll bar
 
-		this.img = new Image();
+		// total canvas height
+		let canvasH = 0;
 
-		this.img.crossOrigin = "anonymous";
-		let t = this;
-		this.img.onload = function() {
-			t.ctx.canvas.width = t.container.offsetWidth;
-			t.ctx.canvas.height = t.img.height * (t.ctx.canvas.width/t.img.width);
-			t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height, 0, 0, t.ctx.canvas.width, t.ctx.canvas.height);
-			//hidden canvas
-			t.hCtx.canvas.width = t.ctx.canvas.width;
-			t.hCtx.canvas.height = t.ctx.canvas.height;
+		for (let region of this.answer.regions) {
+			region.scale = canvasW/region.w; 
+			region.canvasH = region.h * region.scale;
+			region.canvasY = canvasH;
+			canvasH += region.canvasH;
 		}
-		this.img.src = this._sharedService.getImgUrl(this.answer.paperImg, this.answer.region);
+
+		// set the total size of the canvas
+		this.ctx.canvas.width = canvasW;
+		this.ctx.canvas.height = canvasH;
+		// hidden canvas
+		this.hCtx.canvas.width = this.ctx.canvas.width;
+		this.hCtx.canvas.height = this.ctx.canvas.height;
+
+		// load images
+		for (let region of this.answer.regions) {
+			let paperImg = new Image();
+
+			paperImg.crossOrigin = "anonymous";
+			let t = this;
+			paperImg.onload = function() {
+				t.ctx.drawImage(paperImg, 0, 0, paperImg.width, paperImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+				//load marking record image
+				if (region.markImg !== null) {
+					let markImg = new Image();
+					markImg.crossOrigin = "anonymous";
+					markImg.onload = function() {
+						t.ctx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+
+						// hidden canvas
+						t.hCtx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.hCtx.canvas.width, region.canvasH);
+					}
+					markImg.src = t._sharedService.getImgUrl(region.markImg, "");
+				}
+			}
+			paperImg.src = this._sharedService.getImgUrl(region.ansImg, region);
+		}
 	}
 
 	clear(): void {
-		let t = this;
-		this.img.onload = function() {
-			t.ctx.canvas.width = t.container.offsetWidth;
-			t.ctx.canvas.height = t.img.height * (t.ctx.canvas.width/t.img.width);
-			t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height, 0, 0, t.ctx.canvas.width, t.ctx.canvas.height);
-			//hidden canvas
-			t.hCtx.canvas.width = t.ctx.canvas.width;
-			t.hCtx.canvas.height = t.ctx.canvas.height;
-		}
-		this.img.src = this._sharedService.getImgUrl(this.answer.paperImg, this.answer.region);
+		this.loadPaper();
 	}
 
 	mouseDown(evt): void {
@@ -197,30 +235,42 @@ export class CanvasComponent implements OnInit {
 				this.img = new Image();
 				this.img.onload = function() {
 					console.log("img height:" + t.img.height);
+					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
 					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 					//hidden canvas
+					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
 					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
+
+					t.answer.answerType = "BEST";
 				}
 				this.img.src = 'assets/images/icon-bestanswer.png';
 				break;
 			case 'FAQ':
 				this.img = new Image();
 				this.img.onload = function() {
-					t.ctx.drawImage(t.img, 90, 0, t.img.width, t.img.height);
+					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
+					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 					//hidden canvas
-					t.hCtx.drawImage(t.img, 90, 0, t.img.width, t.img.height);
+					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
+					t.hCtx.drawImage(t.img, 0, 0, t. img.width, t.img.height);
+
+					t.answer.answerType = "FAQ";
 				}
 				this.img.src = 'assets/images/icon-faq.png';
 				break;
 			case 'QueerAnswer':
 				this.img = new Image();
 				this.img.onload = function() {
-					t.ctx.drawImage(t.img, 180, 0, t.img.width, t.img.height);
+					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
+					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 					//hidden canvas
-					t.hCtx.drawImage(t.img, 180, 0, t.img.width, t.img.height);
+					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
+					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
+
+					t.answer.answerType = "BAD";
 				}
 				this.img.src = 'assets/images/icon-queerflower.png';
 				break;
@@ -326,11 +376,18 @@ export class CanvasComponent implements OnInit {
 		}
 	}
 
-	saveImage(): void {
-		let dataUrl = this.canvas.toDataURL("image/png");
-		window.open(dataUrl);
-		let hDataUrl = this.hCanvas.toDataURL("image/png");
-		window.open(hDataUrl);
+	setDataUrl(region: any): any {
+		// console.log("set data url for :" + region.ansImg);
+		// console.log("region is: " + JSON.stringify(region));
+		let tmpCanvas = document.createElement("canvas");
+		let tmpCtx = tmpCanvas.getContext("2d");
+		tmpCtx.canvas.width = region.w;
+		tmpCtx.canvas.height = region.h;
+		tmpCtx.drawImage(this.hCanvas, 0, region.canvasY, this.hCtx.canvas.width, region.canvasH, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		region.markImgData = tmpCanvas.toDataURL("image/png");
+		// tmpCtx.clearRect(0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		// tmpCtx.drawImage(this.canvas, 0, region.canvasY, this.ctx.canvas.width, region.canvasH, 0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		// region.ansMarkImgData = tmpCanvas.toDataURL("image/png");	
 	}
 
 	addImage(): void {
@@ -390,11 +447,10 @@ export class CanvasComponent implements OnInit {
 		this.hCtx.font = '28px serif';
 		this.hCtx.fillStyle = "red";
 		this.hCtx.fillText(this.score, 250, 28);
-		// TO Do: resize to resume the original size
-		if (this.answer.paperImg !== "") {
-			this.answer.answerImgData = this.canvas.toDataURL("image/png");
-			this.answer.markImgData = this.hCanvas.toDataURL("image/png");
-			this.parent.updatePaper();
+
+		for (let region of this.answer.regions) {
+			this.setDataUrl(region);
 		}
+		this.parent.updatePaper();
 	}
 }

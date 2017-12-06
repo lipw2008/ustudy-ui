@@ -47,8 +47,10 @@ export class MarkComponent implements OnInit {
 	autoSubmit = false;
 
 	// page controller
-	curPage: number = 0;
+	curPage: number = 1;
 	pageCount: number = 0; 
+	firstPageEnabled: string = "";
+	prePageEnabled: string = "";
 
 	// canvas
 	editMode: string = "None";
@@ -56,43 +58,58 @@ export class MarkComponent implements OnInit {
 	score2: string = "";
 	score3: string = "";
 	answer = {
-		region: {
-			x: "",
-			y: "",
-			w: "",
-			h: ""
-		},
-		paperImg: "",
-		answerImg: "",
-		answerImgData: "",
-		markImg: "",
-		markImgData: ""
+		regions: [
+			{
+				quesImg: null,
+				ansImg: null,
+				markImg: null,
+				markImgData: null,
+				scale: 1,
+				canvasH: 0,
+				canvasY: 0,
+				x: 0,
+				y: 0,
+				w: 0,
+				h: 0
+			}
+		],
+		answerType: ""
 	};
 	answer2 = {
-		region: {
-			x: "",
-			y: "",
-			w: "",
-			h: ""
-		},
-		paperImg: "",
-		answerImg: "",
-		answerImgData: "",
-		markImg: "",
-		markImgData: ""
+		regions: [
+			{
+				quesImg: null,
+				ansImg: null,
+				markImg: null,
+				markImgData: null,
+				scale: 1,
+				canvasH: 0,
+				canvasY: 0,
+				x: 0,
+				y: 0,
+				w: 0,
+				h: 0
+			}
+		],
+		answerType: ""
 	};
 	answer3 = {
-		region: {
-			x: "",
-			y: "",
-			w: "",
-			h: ""
-		},
-		paperImg: "",
-		answerImg: "",
-		answerImgData: "",
-		markImg: "",
-		markImgData: ""
+		regions: [
+			{
+				quesImg: null,
+				ansImg: null,
+				markImg: null,
+				markImgData: null,
+				scale: 1,
+				canvasH: 0,
+				canvasY: 0,
+				x: 0,
+				y: 0,
+				w: 0,
+				h: 0
+			}
+		],
+		answerType: ""
 	};
 	markCanvas2Display: string = 'none';
 	markCanvas3Display: string = 'none';
@@ -106,7 +123,6 @@ export class MarkComponent implements OnInit {
 	}
 
     ngAfterViewInit(): void {
-		console.log();
 		let question = {"id": "", "n": ""};
 		question.id = this.route.snapshot.params.questionId;
 		question.n = this.route.snapshot.params.questionName;
@@ -121,6 +137,9 @@ export class MarkComponent implements OnInit {
 		var t = event.data.t;
 		t.markQuestions = [];
 		var questionNames = $(t.questionSelector.nativeElement).val();
+		if (questionNames == null || questionNames.length === 0) {
+			alert("请选择题号加载试卷！");
+		}
 		for(let questionName of questionNames) {
 			for(let question of t.questionList) {
 				if (question.n === questionName) {
@@ -130,7 +149,7 @@ export class MarkComponent implements OnInit {
 			}
 		}
 		
-		console.log("On question change: " + JSON.stringify(t.markQuestions));
+		// console.log("On question change: " + JSON.stringify(t.markQuestions));
 		// load marks data based on the mark questions.
 		t.reload();
 	}
@@ -143,7 +162,7 @@ export class MarkComponent implements OnInit {
 		}
 
 		this._sharedService.makeRequest('POST', '/exam/marktask/paper/view/', JSON.stringify(this.reqContent)).then((data: any) => {
-		//this._sharedService.makeRequest('GET', 'assets/api/exams/multiMark.json', '').then((data: any) => {
+		//this._sharedService.makeRequest('GET', 'assets/api/exams/singleMark.json', '').then((data: any) => {
 			this.reqContent.questions = [];
 
 			//cache the list
@@ -155,7 +174,14 @@ export class MarkComponent implements OnInit {
 				return;
 			}
 			if (this.reqContent.startSeq === -1 && this.reqContent.endSeq === -1) {
-				this.curPage = this.mark.groups[0].groupNo;
+				this.curPage = this.mark.groups[0].paperSeq;
+				if(this.curPage === 1) {
+					this.firstPageEnabled = "disabled";
+					this.prePageEnabled = "disabled";
+				} else {
+					this.firstPageEnabled = "";
+					this.prePageEnabled = "";
+				}
 			} else {
 				this.reqContent.startSeq = -1;
 				this.reqContent.endSeq = -1;
@@ -181,58 +207,46 @@ export class MarkComponent implements OnInit {
 	}	
 
 	updateCanvas(): void {
-		console.log("update canvas for page: " + this.curPage);
+		// console.log("update canvas for page: " + this.curPage);
 		for (let group of this.mark.groups) {
-			if (group.groupNo === this.curPage) {
-				this.answer.region = group.papers[0].region;
-				this.answer.paperImg = group.papers[0].paperImg;
-				this.answer.answerImg = group.papers[0].answerImg;
-				this.answer.answerImgData = group.papers[0].answerImgData;
-				this.answer.markImg = group.papers[0].markImg;
-				this.answer.markImgData = group.papers[0].markImgData;
+			if (group.paperSeq === this.curPage) {
+				this.answer.regions = group.papers[0].regions;
+				this.answer.answerType = group.papers[0].answerType;
 				this.score = "阅卷老师：" + this.mark.teacherId + " 得分：";
 				if (this.markQuestions.length >= 2) {
-					this.answer2.region = group.papers[1].region;
-					this.answer2.paperImg = group.papers[1].paperImg;
-					this.answer2.answerImg = group.papers[1].answerImg;
-					this.answer2.answerImgData = group.papers[1].answerImgData;
-					this.answer2.markImg = group.papers[1].markImg;
-					this.answer2.markImgData = group.papers[1].markImgData;
+					this.answer2.regions = group.papers[1].regions;
+					this.answer2.answerType = group.papers[1].answerType;
 					this.score2 = this.score;
 				}
 				if (this.markQuestions.length == 3) {
-					this.answer3.region = group.papers[2].region;
-					this.answer3.paperImg = group.papers[2].paperImg;
-					this.answer3.answerImg = group.papers[2].answerImg;
-					this.answer3.answerImgData = group.papers[2].answerImgData;
-					this.answer3.markImg = group.papers[2].markImg;
-					this.answer3.markImgData = group.papers[2].markImgData;
+					this.answer3.regions = group.papers[2].regions;
+					this.answer3.answerType = group.papers[2].answerType;
 					this.score3 = this.score;
 				}
+				this.editMode = "" + this.curPage + Math.round(new Date().getTime()/1000);
 				break;
 			}
 		}
 	}
 
 	updateFullScore(): void {
-		console.log("before update full score: " + this.fullScore);
-		console.log("before update full score - mark: " + JSON.stringify(this.mark));
+		// console.log("before update full score: " + this.fullScore);
 		for (let group of this.mark.groups) {
-			if (group.groupNo === this.curPage) {
+			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
 					if (paper.isProblemPaper === true) {
 						continue;
 					}
 					if (paper.steps.length === 0 && paper.score === "") {
-						this.fullScore = paper.fullScore;
-						console.log("after update full score: " + this.fullScore);
+						this.fullScore = paper.fullscore;
+						// console.log("after update full score: " + this.fullScore);
 						this.updateScoreBoard();
 						return;
 					} else if (paper.steps.length > 0) {
 						for(let step of paper.steps) {
 							if (step.score === "") {
-								this.fullScore = step.fullScore;
-								console.log("after update full score: " + this.fullScore);
+								this.fullScore = step.fullscore;
+								// console.log("after update full score: " + this.fullScore);
 								this.updateScoreBoard();
 								return;
 							} 
@@ -244,6 +258,7 @@ export class MarkComponent implements OnInit {
 		if(this.autoSubmit === true) {
 			this.submit();
 		}
+		console.log("after update full score");
 	}
 
 	setScoreUnit(unit): void {
@@ -253,7 +268,7 @@ export class MarkComponent implements OnInit {
 
 	updateScoreBoard(): void {
 		this.scoreList = [];
-		var score = Number(this.fullScore); 
+		var score = Number(this.fullScore);
 		var unit = parseFloat(this.scoreUnit);
 		for (var i=0; i<=score; i+=unit) {
 			this.scoreList.push(i);
@@ -271,7 +286,7 @@ export class MarkComponent implements OnInit {
 
 	setScore(score: string): void {
 		for (let group of this.mark.groups) {
-			if (group.groupNo === this.curPage) {
+			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
 					if (paper.isProblemPaper === true) {
 						continue;
@@ -303,13 +318,31 @@ export class MarkComponent implements OnInit {
 	}
 
 	firstPage(): void {
-
+		this.curPage = 1;
+		this.firstPageEnabled = "disabled";
+		this.prePageEnabled = "disabled";
+		if (this.curPage < this.mark.groups[0].paperSeq) {
+			this.reqContent.startSeq = 1;
+			this.reqContent.endSeq = 20;
+			this.reload();
+		} else {
+			this.updateCanvas();
+			this.updateFullScore();
+		}
 	}
 
 	previousPage(): void {
+		if (this.curPage === 2) {
+			this.firstPageEnabled = "disabled";
+			this.prePageEnabled = "disabled";			
+		} else if (this.curPage <= 1) {
+			return;
+		}
+		
 		this.curPage--;
-		if (this.curPage < this.mark.groups[0].groupNo) {
-			this.reqContent.startSeq = (this.curPage - 10 < 0 ? 0 : this.curPage - 10);
+
+		if (this.curPage < this.mark.groups[0].paperSeq) {
+			this.reqContent.startSeq = (this.curPage - 20 < 0 ? 0 : this.curPage - 20);
 			this.reqContent.endSeq = this.curPage;
 			this.reload();
 		} else {
@@ -320,7 +353,9 @@ export class MarkComponent implements OnInit {
 
 	nextPage(): void {
 		this.curPage++;
-		if (this.curPage > this.mark.groups[this.pageCount - 1].groupNo) {
+		this.firstPageEnabled = "";
+		this.prePageEnabled = "";					
+		if (this.curPage > this.mark.groups[this.pageCount - 1].paperSeq) {
 			this.reload();
 		} else {
 			this.updateCanvas();
@@ -334,29 +369,29 @@ export class MarkComponent implements OnInit {
 
 	submit(): void {
 		for (let group of this.mark.groups) {
-			if (group.groupNo === this.curPage) {
+			if (group.paperSeq === this.curPage) {
 				if (group.papers[0].score !== "") {
-					this.score += group.papers[0].score + "/" + group.papers[0].fullScore;
+					this.score += group.papers[0].score + "/" + group.papers[0].fullscore;
 				} else {
 					for (let step of group.papers[0].steps) {
-						this.score += step.score + "/" + step.fullScore + " ";
+						this.score += step.score + "/" + step.fullscore + " ";
 					}
 				}
 				if (this.markQuestions.length >= 2) {
 					if (group.papers[1].score !== "") {
-						this.score2 += group.papers[1].score + "/" + group.papers[1].fullScore;
+						this.score2 += group.papers[1].score + "/" + group.papers[1].fullscore;
 					} else {
 						for (let step of group.papers[1].steps) {
-							this.score2 += step.score + "/" + step.fullScore + " ";
+							this.score2 += step.score + "/" + step.fullscore + " ";
 						}
 					}
 				}
 				if (this.markQuestions.length == 3) {
 					if (group.papers[2].score !== "") {
-						this.score3 += group.papers[2].score + "/" + group.papers[2].fullScore;
+						this.score3 += group.papers[2].score + "/" + group.papers[2].fullscore;
 					} else {
 						for (let step of group.papers[2].steps) {
-							this.score3 += step.score + "/" + step.fullScore + " ";
+							this.score3 += step.score + "/" + step.fullscore + " ";
 						}
 					}
 				}
@@ -366,26 +401,45 @@ export class MarkComponent implements OnInit {
 	}
 
 	updatePaper() {
-		if (this.answer.markImgData === "" ||
-		(this.markQuestions.length >= 2 && this.answer2.markImgData === "") ||
-		(this.markQuestions.length === 3 && this.answer3.markImgData === "")) {
+		// console.log("update paper: " + this.markQuestions.length);
+		if (this.answer.regions[0].markImgData === null ||
+			(this.markQuestions.length >= 2 && this.answer2.regions[0].markImgData === null) ||
+			(this.markQuestions.length === 3 && this.answer3.regions[0].markImgData === null)) {		
 			return;
 		}
+
 		for (let group of this.mark.groups) {
-			if (group.groupNo === this.curPage) {
+			if (group.paperSeq === this.curPage) {
+				if(group.papers[0].isMarked === true) {
+					alert("试卷已阅，不能重复提交。");
+					return;
+				}
 				if (group.papers.length >= 1) {
-					group.papers[0].answerImgData = this.answer.answerImgData;
-					group.papers[0].markImgData = this.answer.markImgData;
+					group.papers[0].answerType = this.answer.answerType;
 				}
 				if (group.papers.length >= 2) {
-					group.papers[1].answerImgData = this.answer2.answerImgData;
-					group.papers[1].markImgData = this.answer2.markImgData;
+					group.papers[1].answerType = this.answer2.answerType;				
 				}
 				if (group.papers.length === 3) {
-					group.papers[2].answerImgData = this.answer3.answerImgData;
-					group.papers[2].markImgData = this.answer3.markImgData;
+					group.papers[2].answerType = this.answer3.answerType;				
+				}
+				for (let paper of group.papers) {
+					for (let region of paper.regions) {
+						delete region.scale;
+						delete region.canvasH;
+						delete region.canvasY;
+						region.ansMarkImg = region.ansImg.slice(0, -4) + "_AM_" + this.mark.teacherId + region.ansImg.slice(-4);
+						region.markImg = region.ansImg.slice(0, -4) + "_M_" + this.mark.teacherId + region.ansImg.slice(-4);
+					}
 				}
 				this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(group)).then((data: any) => {
+					for (let group of this.mark.groups) {
+						if (group.paperSeq === this.curPage) {
+							for (let paper of group.papers) {
+								paper.isMarked = true;
+							}
+						}
+					}
 					alert("修改成功");
 					this.nextPage();
 				}).catch((error: any) => {
@@ -418,7 +472,6 @@ export class MarkComponent implements OnInit {
 	}
 
 	addBestAnswer(): void {
-		//To DO: bese; faq; bad should not be specified at the same time
 		this.editMode = "BestAnswer";
 	}
 

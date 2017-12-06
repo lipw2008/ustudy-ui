@@ -66,6 +66,10 @@ export class TaskAssignComponent implements OnInit {
       } else {
         this.questions = data
       }
+      this._taskService.getMarkTasks(this.examId, this.gradeId, this .subjectId).then( (tasks: any) => {
+        const ids = _.map(tasks, 'questionId');
+        _.remove(this.questions, (q) => _.includes(ids, String(_.get(q, 'id'))));
+      })
     }).then(() => {
       if (this.questionId) {
         this._taskService.getTask(this.examId, this.gradeId, this.subjectId, this.questionId).then((data: any) => {

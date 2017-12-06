@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./answer-paper-list.component.css']
 })
 export class AnswerPaperListComponent implements OnInit {
-  sbujects = [];
+  subjects = [];
 
   constructor() { }
 
