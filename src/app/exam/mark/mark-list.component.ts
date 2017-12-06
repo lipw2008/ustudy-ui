@@ -1,5 +1,6 @@
 import { Component, OnInit}  from '@angular/core';
 
+import { MarkService } from './mark.service';
 import { SharedService } from '../../shared.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class MarkListComponent implements OnInit {
 	marks: any;
 	questionList = [];
 
-    constructor(private _sharedService: SharedService) {
+    constructor(private _sharedService: SharedService, private _markService: MarkService) {
 
     }
 
@@ -41,5 +42,9 @@ export class MarkListComponent implements OnInit {
 			console.log(error.status);
 			console.log(error.statusText);
 		});
+	}
+
+	getProgress(rawData): string {
+		return this._markService.getProgress(rawData);
 	}
 }

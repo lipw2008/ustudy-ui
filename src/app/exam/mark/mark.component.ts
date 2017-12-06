@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Renderer2 }  from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MarkService } from './mark.service';
 import { SharedService } from '../../shared.service';
 
 declare var $: any;
@@ -114,7 +115,7 @@ export class MarkComponent implements OnInit {
 	markCanvas2Display: string = 'none';
 	markCanvas3Display: string = 'none';
 
-    constructor(private _sharedService: SharedService, private renderer: Renderer2, private route: ActivatedRoute) {
+    constructor(private _sharedService: SharedService, private _markService: MarkService, private renderer: Renderer2, private route: ActivatedRoute) {
 
     }
 
@@ -490,4 +491,13 @@ export class MarkComponent implements OnInit {
 	clear(): void {
 		this.editMode = "Clear";
 	}
+
+	getProgress(rawData): string {
+		return this._markService.getProgress(rawData);
+	}
+
+	getNum(rawData): string {
+		return this._markService.getNum(rawData);
+	}
+
 }

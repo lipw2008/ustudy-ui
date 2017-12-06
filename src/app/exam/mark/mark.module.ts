@@ -6,6 +6,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import {MarkService} from 'app/exam/mark/mark.service';
+
 import { MarkComponent } from './mark.component';
 import { MarkListComponent } from './mark-list.component';
 import { CanvasComponent } from './canvas.component';
@@ -27,6 +29,6 @@ import { CanvasComponent } from './canvas.component';
     MarkListComponent,
     CanvasComponent
   ],
-  providers: []
+  providers: [MarkService]
 })
 export class MarkModule { }

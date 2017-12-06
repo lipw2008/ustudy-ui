@@ -23,8 +23,8 @@
                     </div>
                     <div class="progress-box">
                         <div class="progress clear-margin-bottom">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: mark.progress}">
-                                {{mark.progress}}
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: getProgress(mark.progress)}">
+                                {{getProgress(mark.progress)}}
                             </div>
                         </div>
                     </div>
@@ -170,7 +170,7 @@
                     <!-- 翻页 end -->
                 </div>
                 <ng-container *ngFor="let question of mark.summary">
-                    <div class="padding text-center bg-muted">{{question.questionName}}题： 平均给分：<span>{{question.avgScore}}</span>/已阅题：<span>{{question.markedNum}}</span></div>
+                    <div class="padding text-center bg-muted">{{question.questionName}}题： 平均给分：<span>{{question.avgScore}}</span>/已阅题：<span>{{getNum(question.progress)}}</span></div>
                 </ng-container>
 			</form>
 		</div>
