@@ -38,5 +38,26 @@
 </div>
 <hr/>
 <div class="container-fluid">
-  <img src="" alt="..." class="img-thumbnail">
+  <div *ngFor="let answer of answers; let i = index" class="col-sm-1">
+    <img src="/assets/images/img.png"  alt="点击查看" class="img-thumbnail" (click)="viewAnswer(viewAnswerTemplate, answer)">
+    <div>
+      <span></span>
+      <span>({{answer.stuExamNo}})</span>
+      <span></span>
+    </div>
+  </div>
 </div>
+
+<ng-template #viewAnswerTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">答案</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let url of selectedImgUrls">
+      <img [src]="url"  class="img-thumbnail">
+    </div>
+  </div>
+</ng-template>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Md5 } from 'ts-md5/dist/md5';
+import * as _ from 'lodash';
 /*
 This shared service provides common utilitis and constants to the whole project.
 */
@@ -57,6 +58,7 @@ export class SharedService {
   content:
       - string: request data. the default req&res contentType is JSON
       - JSON: {"data": "", "reqContentType": "", "resContentType": ""}
+      or object
   */
   makeRequest(method: string, endpoint: string, content: any) {
     return new Promise((resolve, reject) => {
@@ -71,7 +73,11 @@ export class SharedService {
           url = ''
         }
         const xhr = new XMLHttpRequest();
-        xhr.open(method, `${url}${endpoint}`);
+        let params = '';
+        if (method.toLowerCase() === 'get' && _.isObject(content)) {
+          params = '?' + _.map(content, (v, k) => `${k}=${v}`).join('&')
+        }
+        xhr.open(method, `${url}${endpoint}${params}`);
         xhr.onload = () => {
           if (xhr.status >= 200 && xhr.status < 300) {
             try {

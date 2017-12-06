@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnswerService } from '../answer.service';
 import * as _ from 'lodash';
 import { TaskService } from '../../task/task.service';
+import { SharedService } from '../../../shared.service';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-answer',
@@ -21,8 +24,13 @@ export class AnswerComponent implements OnInit {
   text = '';
   viewAnswerPaper = false;
   selectedClass: any;
+  answers: Array<any>;
+  areas: Array<any>;
+  modalRef: BsModalRef;
+  selectedImgUrls: Array<string>;
 
-  constructor(private route: ActivatedRoute, private _answerService: AnswerService, private _taskService: TaskService) { }
+  constructor(private route: ActivatedRoute, private _answerService: AnswerService, private _taskService: TaskService,
+              private _sharedService: SharedService, private modalService: BsModalService) { }
 
   ngOnInit() {
     this.examId = Number(this.route.snapshot.params.examId);
@@ -51,23 +59,47 @@ export class AnswerComponent implements OnInit {
     this.selectedQuestion = this.subject.questions[index + step]
   }
 
+  getUrl(answer) {
+    if (this.viewAnswerPaper) {
+      return answer.paperImg.split(',').map((url) => this._sharedService.getImgUrl(url, ''))
+    } else {
+      return this.areas.map((area) => {
+        return this._sharedService.getImgUrl(answer.paperImg.split(',')[area.pageno], {x: area.posx, y: area.posy, w: area.width, h: area.height})
+      })
+    }
+  }
+
+  viewAnswer(template: TemplateRef<any>, answer: any) {
+    this.selectedImgUrls = this.getUrl(answer);
+    this.modalRef = this.modalService.show(template,  { class: 'gray modal-lg'});
+  }
+
   returnResult() {
     const params  = Object.create({});
+    params.egsId = this.subject.id;
     if (this.type !== 'class') {
       params.type = this.type
     }
-    if (this.viewAnswerPaper) {
-      params.viewAnswerPaper = true
-    }
+    // if (this.viewAnswerPaper) {
+    //   params.viewAnswerPaper = true
+    // }
     if (this.selectedClass) {
-      params.class_id = this.selectedClass.id
+      params.classId = this.selectedClass.id
     }
     if (this.text) {
       params.text = this.text
     }
-    if (!this.viewAnswerPaper) {
-      params.question_id = this.selectedQuestion.id
+    if (true || !this.viewAnswerPaper) {
+      const question_id = _.get(this, 'selectedQuestion.id');
+      if (!this.questionId) {
+        alert('请选择题目');
+        return
+      }
+      params.questionId = question_id
     }
-    this._answerService.getAnswerPapers(params)
+    this._answerService.getAnswerPapers(params).then((data: any) => {
+      this.answers = data.papers;
+      this.areas = data.quesareas;
+    })
   }
 }
