@@ -209,6 +209,7 @@ export class MarkComponent implements OnInit {
 
 	updateCanvas(): void {
 		// console.log("update canvas for page: " + this.curPage);
+		this.clearAnswers();
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				this.answer.regions = group.papers[0].regions;
@@ -227,6 +228,55 @@ export class MarkComponent implements OnInit {
 				this.editMode = "" + this.curPage + Math.round(new Date().getTime()/1000);
 				break;
 			}
+		}
+	}
+
+	clearAnswers(): void {
+		this.score  = "";
+		this.score2 = "";
+		this.score3 = "";
+		
+		this.answer.answerType = "";
+		for(let region of this.answer.regions) {
+				region.quesImg = null;
+				region.ansImg = null;
+				region.markImg = null;
+				region.markImgData = null;
+				region.scale = 1;
+				region.canvasH = 0;
+				region.canvasY = 0;
+				region.x = 0;
+				region.y = 0;
+				region.w = 0;
+				region.h = 0;
+		}
+		this.answer2.answerType = "";
+		for(let region of this.answer2.regions) {
+				region.quesImg = null;
+				region.ansImg = null;
+				region.markImg = null;
+				region.markImgData = null;
+				region.scale = 1;
+				region.canvasH = 0;
+				region.canvasY = 0;
+				region.x = 0;
+				region.y = 0;
+				region.w = 0;
+				region.h = 0;
+		}
+		this.answer3.answerType = "";
+		for(let region of this.answer3.regions) {
+				region.quesImg = null;
+				region.ansImg = null;
+				region.markImg = null;
+				region.markImgData = null;
+				region.scale = 1;
+				region.canvasH = 0;
+				region.canvasY = 0;
+				region.x = 0;
+				region.y = 0;
+				region.w = 0;
+				region.h = 0;
 		}
 	}
 
@@ -403,6 +453,9 @@ export class MarkComponent implements OnInit {
 
 	updatePaper() {
 		// console.log("update paper: " + this.markQuestions.length);
+		// console.log("0: " + this.answer.regions[0].markImgData);
+		// console.log("1: " + this.answer2.regions[0].markImgData);
+		// console.log("2: " + this.answer3.regions[0].markImgData);
 		if (this.answer.regions[0].markImgData === null ||
 			(this.markQuestions.length >= 2 && this.answer2.regions[0].markImgData === null) ||
 			(this.markQuestions.length === 3 && this.answer3.regions[0].markImgData === null)) {		

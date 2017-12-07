@@ -439,6 +439,10 @@ export class CanvasComponent implements OnInit {
 	}
 
 	addScore(): void {
+		if(this.score === "") {
+			return;
+		}
+		
 		this.ctx.font = '28px serif';
 		this.ctx.fillStyle = "red";
 		this.ctx.fillText(this.score, 250, 28);
