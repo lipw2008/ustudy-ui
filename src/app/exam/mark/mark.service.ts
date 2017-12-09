@@ -19,4 +19,9 @@ export class MarkService {
     return rawData.substring(0, index);
   }
 
+  getTotal(rawData): string {
+    let index = rawData.indexOf('/');
+    return rawData.substring(index + 1);
+  }
+
 }

@@ -39,6 +39,7 @@ export class MarkComponent implements OnInit {
 	// question selector
 	questionList: any;
 	markQuestions: any = [];
+	progress: string;
 	
 	// score board
 	displayScoreBoard: boolean = true;
@@ -52,6 +53,9 @@ export class MarkComponent implements OnInit {
 	pageCount: number = 0; 
 	firstPageEnabled: string = "";
 	prePageEnabled: string = "";
+
+	// statistic
+	statistics = [];
 
 	// canvas
 	editMode: string = "None";
@@ -198,6 +202,8 @@ export class MarkComponent implements OnInit {
 			if (this.markQuestions.length == 3) {
 				this.markCanvas3Display = 'block';
 			}
+			this.setStatistics(data.summary);
+
 			this.updateCanvas();
 			this.updateFullScore();
 		}).catch((error: any) => {
@@ -235,7 +241,7 @@ export class MarkComponent implements OnInit {
 		this.score  = "";
 		this.score2 = "";
 		this.score3 = "";
-		
+
 		this.answer.answerType = "";
 		for(let region of this.answer.regions) {
 				region.quesImg = null;
@@ -418,6 +424,17 @@ export class MarkComponent implements OnInit {
 
 	}
 
+	setStatistics(data: any): void {
+		this.statistics = data;
+		let num = 0;
+		let total = 0;
+		for(let question of data) {
+			num += Number(this._markService.getNum(question.progress));
+			total += Number(this._markService.getTotal(question.progress));
+		}
+		this.progress = Math.round(Number(num)/Number(total)*100) + '%';
+	}
+
 	submit(): void {
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
@@ -494,6 +511,7 @@ export class MarkComponent implements OnInit {
 							}
 						}
 					}
+					this.setStatistics(data);
 					alert("修改成功");
 					this.nextPage();
 				}).catch((error: any) => {
@@ -545,12 +563,12 @@ export class MarkComponent implements OnInit {
 		this.editMode = "Clear";
 	}
 
-	getProgress(rawData): string {
-		return this._markService.getProgress(rawData);
-	}
-
 	getNum(rawData): string {
 		return this._markService.getNum(rawData);
+	}
+
+	getTotal(rawData): string {
+		return this._markService.getTotal(rawData);
 	}
 
 }
