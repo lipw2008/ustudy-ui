@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Md5 } from 'ts-md5/dist/md5';
-import * as _ from 'lodash';
 /*
 This shared service provides common utilitis and constants to the whole project.
 */
@@ -47,8 +46,8 @@ export class SharedService {
 	}
 
   MD5(pw: string): any {
-	  return Md5.hashStr(pw);
-	}
+    return Md5.hashStr(pw);
+  }
 
   /* Do a http request
   method: http method

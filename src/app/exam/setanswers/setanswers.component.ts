@@ -208,7 +208,7 @@ export class SetAnswersComponent implements OnInit {
 
         this.objectiveAnswers = data.refAnswers;
         this.checkBoxScores = data.checkBoxScores;
-        
+
         this.resetDatas();
         this.resetOptions();
       }
@@ -221,14 +221,14 @@ export class SetAnswersComponent implements OnInit {
   addOneRow() {
     if (this.objectives.length > 0) {
       const obj = this.objectives[this.objectives.length - 1];
-      const obj_ = { id: 0-new Date().getTime(), quesno: 0, startno: 1, endno: 10, type: '单选题', choiceNum: 4, score: 1, branch: '不分科' };
+      const obj_ = { id: 0 - new Date().getTime(), quesno: 0, startno: 1, endno: 10, type: '单选题', choiceNum: 4, score: 1, branch: '不分科' };
       obj_['startno'] = obj['endno'] + 1;
       obj_['endno'] = obj_['startno'];
       this.objectives.push(obj_);
 
       this.addAnswers(obj_);
     } else {
-      const obj = { id: 0-new Date().getTime(), quesno: 0, startno: 1, endno: 10, type: '单选题', choiceNum: 4, score: 1, branch: '不分科' };
+      const obj = { id: 0 - new Date().getTime(), quesno: 0, startno: 1, endno: 10, type: '单选题', choiceNum: 4, score: 1, branch: '不分科' };
       this.objectives.push(obj);
 
       this.addAnswers(obj);
@@ -282,13 +282,13 @@ export class SetAnswersComponent implements OnInit {
 
       for (var j = start; j <= end; j++) {
         var answersSeted = false;
-        this.objectiveAnswers.forEach(objectiveAnswer =>{
-          if(objectiveAnswer.quesno === j){
+        this.objectiveAnswers.forEach(objectiveAnswer => {
+          if (objectiveAnswer.quesno === j) {
             answersSeted = true;
           }
         });
-  
-        if(!answersSeted){
+
+        if (!answersSeted) {
           const answer = { quesno: j, type: objective.type, choiceNum: objective.choiceNum, options: _option, answer: 'A', branch: '不分科' };
           if (type === '判断题') {
             answer.answer = 'Y';
@@ -343,7 +343,7 @@ export class SetAnswersComponent implements OnInit {
     this.objectiveScore = this.objectiveScore - total;
   }
 
-  startValueChange(oldStart,newStart,type,score){
+  startValueChange(oldStart, newStart, type, score) {
     let total = (oldStart - newStart) * score;
     if (type === '单选题') {
       this.radioScore = this.radioScore + total;
@@ -353,7 +353,7 @@ export class SetAnswersComponent implements OnInit {
       this.judgmentScore = this.judgmentScore + total;
     }
     this.objectiveScore = this.objectiveScore + total;
-    if(oldStart > newStart){
+    if (oldStart > newStart) {
       let choiceNum = 4;
       let _option = [];
 
@@ -370,13 +370,13 @@ export class SetAnswersComponent implements OnInit {
 
       for (var j = newStart; j < oldStart; j++) {
         var answersSeted = false;
-        this.objectiveAnswers.forEach(objectiveAnswer =>{
-          if(objectiveAnswer.quesno === j){
+        this.objectiveAnswers.forEach(objectiveAnswer => {
+          if (objectiveAnswer.quesno === j) {
             answersSeted = true;
           }
         });
-  
-        if(!answersSeted){
+
+        if (!answersSeted) {
           const answer = { quesno: j, type: type, choiceNum: choiceNum, options: _option, answer: 'A', branch: '不分科' };
           if (type === '判断题') {
             answer.answer = 'Y';
@@ -384,21 +384,21 @@ export class SetAnswersComponent implements OnInit {
           this.objectiveAnswers.push(answer);
         }
       }
-    }else if(oldStart < newStart){
+    } else if (oldStart < newStart) {
       const answers = [];
-      
+
       this.objectiveAnswers.forEach(answer => {
         const quesno = answer['quesno'];
         if (!(quesno >= oldStart && quesno < newStart && answer['type'] === type)) {
           answers.push(answer);
         }
-        
+
       });
       this.objectiveAnswers = answers;
     }
   }
 
-  endValueChange(oldEnd,newEnd,type,score){
+  endValueChange(oldEnd, newEnd, type, score) {
     let total = (newEnd - oldEnd) * score;
     if (type === '单选题') {
       this.radioScore = this.radioScore + total;
@@ -408,7 +408,7 @@ export class SetAnswersComponent implements OnInit {
       this.judgmentScore = this.judgmentScore + total;
     }
     this.objectiveScore = this.objectiveScore + total;
-    if(oldEnd < newEnd){
+    if (oldEnd < newEnd) {
       let choiceNum = 4;
       let _option = [];
 
@@ -425,13 +425,13 @@ export class SetAnswersComponent implements OnInit {
 
       for (var j = oldEnd + 1; j <= newEnd; j++) {
         var answersSeted = false;
-        this.objectiveAnswers.forEach(objectiveAnswer =>{
-          if(objectiveAnswer.quesno === j){
+        this.objectiveAnswers.forEach(objectiveAnswer => {
+          if (objectiveAnswer.quesno === j) {
             answersSeted = true;
           }
         });
-  
-        if(!answersSeted){
+
+        if (!answersSeted) {
           const answer = { quesno: j, type: type, choiceNum: choiceNum, options: _option, answer: 'A', branch: '不分科' };
           if (type === '判断题') {
             answer.answer = 'Y';
@@ -439,21 +439,21 @@ export class SetAnswersComponent implements OnInit {
           this.objectiveAnswers.push(answer);
         }
       }
-    }else if(oldEnd > newEnd){
+    } else if (oldEnd > newEnd) {
       const answers = [];
-      
+
       this.objectiveAnswers.forEach(answer => {
         const quesno = answer['quesno'];
         if (!(quesno > newEnd && quesno <= oldEnd && answer['type'] === type)) {
           answers.push(answer);
         }
-        
+
       });
       this.objectiveAnswers = answers;
     }
   }
 
-  typeValueChange(start,end,type){
+  typeValueChange(start, end, type) {
     let choiceNum = 4;
     let _option = [];
 
@@ -470,16 +470,16 @@ export class SetAnswersComponent implements OnInit {
     }
 
     const answers = [];
-    this.objectiveAnswers.forEach(objectiveAnswer =>{
+    this.objectiveAnswers.forEach(objectiveAnswer => {
       // var answer = objectiveAnswer;
       for (var j = start; j <= end; j++) {
-        if(objectiveAnswer.quesno === j){
+        if (objectiveAnswer.quesno === j) {
           objectiveAnswer['options'] = _option;
           objectiveAnswer['type'] = type;
           objectiveAnswer['choiceNum'] = choiceNum;
           if (type === '判断题') {
             objectiveAnswer['answer'] = 'Y';
-          }else{            
+          } else {
             objectiveAnswer['answer'] = 'A';
           }
         }
@@ -488,11 +488,11 @@ export class SetAnswersComponent implements OnInit {
     });
 
     this.objectiveAnswers = answers;
-  }  
+  }
 
-  choiceNumValueChange(start,end,type,choiceNum){
+  choiceNumValueChange(start, end, type, choiceNum) {
 
-    if (type !== '判断题') {      
+    if (type !== '判断题') {
       let _option = [];
       for (var i = 0; i < choiceNum; i++) {
         let checked = false;
@@ -500,22 +500,22 @@ export class SetAnswersComponent implements OnInit {
         _option.push({ name: this.selectOptions[i], checked: checked });
       }
       const answers = [];
-      this.objectiveAnswers.forEach(objectiveAnswer =>{
+      this.objectiveAnswers.forEach(objectiveAnswer => {
         // var answer = objectiveAnswer;
         for (var j = start; j <= end; j++) {
-          if(objectiveAnswer.quesno === j){
+          if (objectiveAnswer.quesno === j) {
             objectiveAnswer['options'] = _option;
             objectiveAnswer['answer'] = 'A';
           }
         }
         answers.push(objectiveAnswer);
       });
-  
+
       this.objectiveAnswers = answers;
     }
   }
 
-  scoreValueChange(start,end,type,oldScore,newScore){
+  scoreValueChange(start, end, type, oldScore, newScore) {
     let total = (end - start + 1) * (newScore - oldScore);
     if (type === '单选题') {
       this.radioScore = this.radioScore + total;
@@ -546,7 +546,7 @@ export class SetAnswersComponent implements OnInit {
             obj['startno'] = start;
           }
           this.elementRef.nativeElement.querySelector('#start_' + id).value = start;
-          this.startValueChange(start_,start,type_,score_);
+          this.startValueChange(start_, start, type_, score_);
         } else if (valueType === 2) {
           var end = Number(this.elementRef.nativeElement.querySelector('#end_' + id).value);
           if (!end || end < 1 || end < obj['startno']) {
@@ -555,7 +555,7 @@ export class SetAnswersComponent implements OnInit {
             obj['endno'] = end;
           }
           this.elementRef.nativeElement.querySelector('#end_' + id).value = end;
-          this.endValueChange(end_,end,type_,score_);
+          this.endValueChange(end_, end, type_, score_);
         } else if (valueType === 3) {
           var type = this.elementRef.nativeElement.querySelector('#type_' + id).value;
           obj['type'] = type;
@@ -564,11 +564,11 @@ export class SetAnswersComponent implements OnInit {
           } else if (type === '判断题') {
             obj['choiceNum'] = 2;
           }
-          this.typeValueChange(start_,end_,type);
+          this.typeValueChange(start_, end_, type);
         } else if (valueType === 4) {
           const choiceNum = Number(this.elementRef.nativeElement.querySelector('#option_' + id).value);
           obj['choiceNum'] = choiceNum;
-          this.choiceNumValueChange(start_,end_,type_,choiceNum);
+          this.choiceNumValueChange(start_, end_, type_, choiceNum);
           this.setDefaultCheckBoxScore(obj);
         } else if (valueType === 5) {
           var score = Number(this.elementRef.nativeElement.querySelector('#score_' + id).value);
@@ -578,7 +578,7 @@ export class SetAnswersComponent implements OnInit {
             obj['score'] = score;
           }
           this.elementRef.nativeElement.querySelector('#score_' + id).value = score;
-          this.scoreValueChange(start_,end_,type_,score_,score);
+          this.scoreValueChange(start_, end_, type_, score_, score);
         }
       }
       _objectives.push(obj);
@@ -620,7 +620,7 @@ export class SetAnswersComponent implements OnInit {
   //-------------------------------Subjectives--------------------------------------
 
   subjectives = [
-    { id: 0-new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 }
+    { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 }
   ];
 
   subjectiveCount = 0;
@@ -657,7 +657,7 @@ export class SetAnswersComponent implements OnInit {
         });
       } else {
         const obj = this.subjectives[this.subjectives.length - 1];
-        const obj_ = { id: 0-new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 };
+        const obj_ = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 };
         if (obj['type'] === '填空题') obj_['startno'] = obj['endno'] + 1;
         else obj_['startno'] = obj['startno'] + 1;
         obj_['endno'] = obj_['startno'];
@@ -669,7 +669,7 @@ export class SetAnswersComponent implements OnInit {
       }
 
     } else {
-      const obj = { id: 0-new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 1, branch: '不分科', score: 1 };
+      const obj = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 1, branch: '不分科', score: 1 };
       if (this.objectives.length > 0) {
         let objective = this.objectives[this.objectives.length - 1];
         obj.startno = objective.endno + 1;

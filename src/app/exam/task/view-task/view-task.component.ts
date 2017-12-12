@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TaskService} from '../task.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TaskService } from '../task.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -56,17 +56,17 @@ export class ViewTaskComponent implements OnInit {
   setFiltetedTasks() {
     this._taskService.getQuestions(this.examId, null, this.selectedSubject.gradeId, this.selectedSubject.subId).then((data) => {
       this.questions = data;
-      this.tasks = _.filter(this.markTasks, {gradeId: String(this.selectedSubject.gradeId), subjectId: String(this.selectedSubject.subId)});
+      this.tasks = _.filter(this.markTasks, { gradeId: String(this.selectedSubject.gradeId), subjectId: String(this.selectedSubject.subId) });
       this.tasks.forEach((task) => {
-        task.question = _.find(this.questions, {id: Number(task.questionId)});
+        task.question = _.find(this.questions, { id: Number(task.questionId) });
         task.group = _.find(this.grade.groups, (group) => _.includes(group.name, this.selectedSubject.subName))
       })
     })
   }
 
   getTeachers(task: any) {
-    return task.teachersIds.map( teacherId => _.find(this.grade.teachers, {id: teacherId}).name)
-      .concat( task.finalMarkTeachersIds.map( teacherId => _.get(_.find(this.grade.teachers, {id: teacherId}), 'name')))
+    return task.teachersIds.map(teacherId => _.find(this.grade.teachers, { id: teacherId }).name)
+      .concat(task.finalMarkTeachersIds.map(teacherId => _.get(_.find(this.grade.teachers, { id: teacherId }), 'name')))
       .filter((teacher) => !_.isEmpty(teacher))
   }
 
@@ -78,14 +78,14 @@ export class ViewTaskComponent implements OnInit {
     if ($event.target.value === 0) {
       return
     }
-    this._taskService.updateMarkTask({ownerId: $event.target.value}).then((res: any) => {
-        if (res.success) {
-          alert('任务：负责人更新成功');
-          task.ownerId = Number($event.target.value)
-        } else {
-          alert('任务：负责人更新失败')
-        }
+    this._taskService.updateMarkTask({ ownerId: $event.target.value }).then((res: any) => {
+      if (res.success) {
+        alert('任务：负责人更新成功');
+        task.ownerId = Number($event.target.value)
+      } else {
+        alert('任务：负责人更新失败')
       }
+    }
     )
   }
 
@@ -103,8 +103,10 @@ export class ViewTaskComponent implements OnInit {
   }
 
   editTask(task: any) {
-    this.router.navigate(['/taskassign', { examId: this.examId, gradeId: this.gradeId,
-      subjectId: this.selectedSubject.subId, questionId: task.questionId, subject: this.selectedSubject.subName}]);
+    this.router.navigate(['/taskassign', {
+      examId: this.examId, gradeId: this.gradeId,
+      subjectId: this.selectedSubject.subId, questionId: task.questionId, subject: this.selectedSubject.subName
+    }]);
   }
 
 

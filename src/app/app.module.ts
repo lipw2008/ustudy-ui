@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppComponent } from './app.component';
@@ -23,7 +24,11 @@ import { ExamModule } from './info/exams/exam.module';
 import { MarkModule } from './exam/mark/mark.module';
 
 import { SharedService } from './shared.service';
-import {AnswerPaperModule} from './exam/answer-paper/answer-paper.module';
+// dependency of ngx-treeview
+// import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+import { TreeviewModule } from 'ngx-treeview';
+import { DataModule } from './data/data.module';
+import { AnswerPaperModule } from './exam/answer-paper/answer-paper.module';
 
 @NgModule({
   imports: [
@@ -31,13 +36,15 @@ import {AnswerPaperModule} from './exam/answer-paper/answer-paper.module';
     // Angular2FontawesomeModule,
     NgxDatatableModule,
     HttpModule,
+    TreeviewModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
       { path: 'login', component: LoginComponent },
-      { path: '', redirectTo: 'welcome', pathMatch: 'full' }
-    ]),
+      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+    ], { enableTracing: true }),
+    FormsModule,
     StudentModule,
     TeacherModule,
     SchoolModule,
@@ -46,6 +53,7 @@ import {AnswerPaperModule} from './exam/answer-paper/answer-paper.module';
     SetAnswersModule,
     AnswerPaperModule,
     ExamModule,
+    DataModule,
     MarkModule
   ],
   declarations: [
@@ -55,6 +63,6 @@ import {AnswerPaperModule} from './exam/answer-paper/answer-paper.module';
     SharedService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
