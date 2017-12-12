@@ -10,6 +10,7 @@ import { MarkSelectComponent } from './mark-select/mark-select.component';
 import { SubjectFilterPipe } from '../data/review-statistic/subject-filter.pipe';
 import { ReviewFilterComponent } from './review-filter/review-filter.component';
 import { AnswerFilterComponent } from './answer-filter/answer-filter.component';
+import { IntToDatePipe } from './int-to-date.pipe';
 // dependency of ngx-treeview
 // import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 
@@ -28,15 +29,17 @@ import { AnswerFilterComponent } from './answer-filter/answer-filter.component';
     SubjectFilterPipe,
     ReviewFilterComponent,
     AnswerFilterComponent,
+    IntToDatePipe,
   ],
   providers: [ExamService],
   exports: [
     TeacherSelectorComponent,
     ExamsFilterComponent,
     MarkSelectComponent,
-    SubjectFilterPipe,
     ReviewFilterComponent,
     AnswerFilterComponent,
+    SubjectFilterPipe,
+    IntToDatePipe,
   ]
 })
 export class UtilsModule { }

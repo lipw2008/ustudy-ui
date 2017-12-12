@@ -18,6 +18,18 @@ export class ExamService {
     })
   }
 
+  filterExams(params) {
+    return new Promise((resolve, reject) => {
+      // XXX: should use /exams/{examStatus}
+      this._sharedService.makeRequest('GET', '/api/exams', params).then((data: any) => {
+        if (!data.data) {
+          reject('no data');
+        }
+        resolve(data.data)
+      })
+    })
+  }
+
   getExamOptions() {
     return this.examOptions
   }

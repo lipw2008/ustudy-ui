@@ -6,18 +6,6 @@ export class TaskService {
 
   constructor(private _sharedService: SharedService) { }
 
-  getExams() {
-    return new Promise((resolve, reject) => {
-      // XXX: should use /exams/{examStatus}
-      this._sharedService.makeRequest('GET', 'api/allexams', '').then((data: any) => {
-        if (!data.data) {
-          reject('no data');
-        }
-        resolve(data.data)
-      })
-    })
-  }
-
   getExam(examId) {
     return new Promise((resolve, reject) => {
       // XXX: should use /exams/{examStatus}
