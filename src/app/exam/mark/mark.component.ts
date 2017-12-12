@@ -78,6 +78,7 @@ export class MarkComponent implements OnInit {
 				h: 0
 			}
 		],
+		questionName: "",
 		answerType: ""
 	};
 	answer2 = {
@@ -96,6 +97,7 @@ export class MarkComponent implements OnInit {
 				h: 0
 			}
 		],
+		questionName: "",
 		answerType: ""
 	};
 	answer3 = {
@@ -114,10 +116,15 @@ export class MarkComponent implements OnInit {
 				h: 0
 			}
 		],
+		questionName: "",
 		answerType: ""
 	};
+	questionName = '';
 	markCanvas2Display: string = 'none';
 	markCanvas3Display: string = 'none';
+	isHidden: boolean = false;
+	isHidden2: boolean = true;
+	isHidden3: boolean = true;
 
     constructor(private _sharedService: SharedService, private _markService: MarkService, private renderer: Renderer2, private route: ActivatedRoute) {
 
@@ -131,6 +138,7 @@ export class MarkComponent implements OnInit {
 		let question = {"id": "", "n": ""};
 		question.id = this.route.snapshot.params.questionId;
 		question.n = this.route.snapshot.params.questionName;
+		this.questionName = this.route.snapshot.params.questionName;
 		this.markQuestions.push(question);
 		console.log("init mark questions:" + JSON.stringify(this.markQuestions));
 		$(this.questionSelector.nativeElement).selectpicker('val', question.n);
@@ -145,6 +153,9 @@ export class MarkComponent implements OnInit {
 		if (questionNames == null || questionNames.length === 0) {
 			alert("请选择题号加载试卷！");
 		}
+		
+		this.questionName = questionNames[0];
+
 		for(let questionName of questionNames) {
 			for(let question of t.questionList) {
 				if (question.n === questionName) {
@@ -195,12 +206,16 @@ export class MarkComponent implements OnInit {
 			if (this.markQuestions.length == 1) {
 				this.markCanvas2Display = 'none';
 				this.markCanvas3Display = 'none';
+				this.isHidden2 = true;
+				this.isHidden3 = true;
 			}
 			if (this.markQuestions.length >= 2) {
 				this.markCanvas2Display = 'block';
+				this.isHidden2 = false;
 			}
 			if (this.markQuestions.length == 3) {
 				this.markCanvas3Display = 'block';
+				this.isHidden3 = false;
 			}
 			this.setStatistics(data.summary);
 
@@ -220,15 +235,18 @@ export class MarkComponent implements OnInit {
 			if (group.paperSeq === this.curPage) {
 				this.answer.regions = group.papers[0].regions;
 				this.answer.answerType = group.papers[0].answerType;
+				this.answer.questionName = group.papers[0].questionName;
 				this.score = "阅卷老师：" + this.mark.teacherId + " 得分：";
 				if (this.markQuestions.length >= 2) {
 					this.answer2.regions = group.papers[1].regions;
 					this.answer2.answerType = group.papers[1].answerType;
+					this.answer2.questionName = group.papers[1].questionName;
 					this.score2 = this.score;
 				}
 				if (this.markQuestions.length == 3) {
 					this.answer3.regions = group.papers[2].regions;
 					this.answer3.answerType = group.papers[2].answerType;
+					this.answer3.questionName = group.papers[2].questionName;
 					this.score3 = this.score;
 				}
 				this.editMode = "" + this.curPage + Math.round(new Date().getTime()/1000);
@@ -318,6 +336,11 @@ export class MarkComponent implements OnInit {
 		console.log("after update full score");
 	}
 
+	onFocus(questionName: string): void {
+		console.log("get focus!!! " + questionName);
+		this.questionName = questionName;
+	}
+
 	setScoreUnit(unit): void {
 		this.scoreUnit = unit;
 		this.updateScoreBoard();
@@ -351,6 +374,7 @@ export class MarkComponent implements OnInit {
 					if (paper.steps.length === 0 && paper.score === "") {
 						if (score !== 'PROBLEM') {
 							paper.score = score;
+							this.questionName = paper.questionName;
 						} else {
 							paper.isProblemPaper = true;
 						}
@@ -361,6 +385,7 @@ export class MarkComponent implements OnInit {
 							if (step.score === "") {
 								if (score !== 'PROBLEM') {
 									step.score = score;
+									this.questionName = paper.questionName;
 								} else {
 									paper.isProblemPaper = true;
 								}

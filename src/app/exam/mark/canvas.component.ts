@@ -12,8 +12,11 @@ export class CanvasComponent implements OnInit {
 	@Input() answer: any;
 	@Input() editMode: string;
 	@Input() score: string;
+	@Input() questionName: string;
+	@Input() isHidden: boolean;
 
 	curPaperImg: string = null;
+	isCanvasEnabled: boolean = true;
 
 	/***** View *****/
 	@ViewChild('markCanvas') markCanvas;
@@ -22,6 +25,7 @@ export class CanvasComponent implements OnInit {
 	container: any;
 	canvas: any;
 	ctx: any;
+	imgData: any;
 
 	// mark canvas
 	hCanvas: any;
@@ -52,17 +56,35 @@ export class CanvasComponent implements OnInit {
 		// console.log("this.answer.regions[0].ansImg:" + this.answer.regions[0].ansImg);
 		// console.log("this.answer.regions[0].scale:" + this.answer.regions[0].scale);
 		// console.log("this.answer.regions[0]" + this.answer.regions[0]);
+
+		
 		// the view is not inited yet OR it's a canvas not used
-		if (this.canvas === undefined || this.answer.regions[0].ansImg === null) {
+		if (this.canvas === undefined || this.answer.regions[0].ansImg === null || this.isHidden === true) {
 			return;
 		}
-
+		console.log("onchange -- this.answer.questionName" + this.answer.questionName);
+		console.log("onchange -- this.questionName" + this.questionName);
 		if (this.answer.regions[0].scale == undefined || this.curPaperImg !== this.answer.regions[0].ansImg 
 		|| this.editMode === 'Clear') {
 			this.curPaperImg = this.answer.regions[0].ansImg;
-			this.loadPaper();
+			let promiseArray = this.loadPaper();
+			Promise.all(promiseArray).then(() => {
+				this.isCanvasEnabled = true;
+				this.updateCanvasStatus();
+			});
 		} else if (this.editMode === "Score") {
+			this.updateCanvasStatus();
 			this.addScore();
+		} else {
+			this.updateCanvasStatus();
+		}
+
+		if (this.editMode === "BestAnswer") {
+			this.addBestAnswer();
+		} else if (this.editMode === "QueerAnswer") {
+			this.addQueerAnswer();
+		} else if (this.editMode === "FAQ") {
+			this.addFAQ();
 		}
 	}
 
@@ -99,11 +121,16 @@ export class CanvasComponent implements OnInit {
 
 		// it's a canvas not used
 		if (this.answer.regions[0].ansImg !== null) {
-			this.loadPaper();
+			let promiseArray = this.loadPaper();
+			Promise.all(promiseArray).then(() => {
+				this.isCanvasEnabled = true;
+				this.updateCanvasStatus();
+			});
 		}
 	}
 
-	loadPaper(): void {
+	loadPaper() {
+		var promiseArray = [];
 		console.log("loadPaper()");
 		// total canvas width
 		let canvasW = this.container.clientWidth - 20; //leave 20px for the scroll bar
@@ -127,34 +154,47 @@ export class CanvasComponent implements OnInit {
 
 		// load images
 		for (let region of this.answer.regions) {
-			let paperImg = new Image();
 
-			paperImg.crossOrigin = "anonymous";
-			let t = this;
-			paperImg.onload = function() {
-				t.ctx.drawImage(paperImg, 0, 0, paperImg.width, paperImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
-				//load marking record image
-				if (region.markImg !== null) {
-					let markImg = new Image();
-					markImg.crossOrigin = "anonymous";
-					markImg.onload = function() {
-						t.ctx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+			let promise = new Promise((resolve, reject) =>  {
+				let paperImg = new Image();
 
-						// hidden canvas
-						t.hCtx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.hCtx.canvas.width, region.canvasH);
+				paperImg.crossOrigin = "anonymous";
+				let t = this;
+				paperImg.onload = function() {
+					t.ctx.drawImage(paperImg, 0, 0, paperImg.width, paperImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+					//load marking record image
+					if (region.markImg !== null) {
+						let markImg = new Image();
+						markImg.crossOrigin = "anonymous";
+						markImg.onload = function() {
+							t.ctx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+
+							// hidden canvas
+							t.hCtx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.hCtx.canvas.width, region.canvasH);
+							resolve();
+						}
+						markImg.onerror = function() {
+							reject();
+						}
+						markImg.src = t._sharedService.getImgUrl(region.markImg, "");
+					} else {
+						resolve();
 					}
-					markImg.src = t._sharedService.getImgUrl(region.markImg, "");
 				}
-			}
-			paperImg.src = this._sharedService.getImgUrl(region.ansImg, region);
+				paperImg.onerror = function() {
+					reject();
+				}
+				paperImg.src = this._sharedService.getImgUrl(region.ansImg, region);
+			});
+			promiseArray.push(promise);
 		}
-	}
-
-	clear(): void {
-		this.loadPaper();
+		return promiseArray;
 	}
 
 	mouseDown(evt): void {
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		var t = this;
 		var x = (evt.offsetX == undefined || evt.offsetX == 0 ? evt.layerX: evt.offsetX);
 		var y = (evt.offsetY == undefined || evt.offsetY == 0 ? evt.layerY: evt.offsetY);
@@ -231,49 +271,6 @@ export class CanvasComponent implements OnInit {
 				}
 				this.img.src = 'assets/images/icon-like.png';
 				break;
-			case 'BestAnswer':
-				this.img = new Image();
-				this.img.onload = function() {
-					console.log("img height:" + t.img.height);
-					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
-					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-					//hidden canvas
-					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
-					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-					t.answer.answerType = "BEST";
-				}
-				this.img.src = 'assets/images/icon-bestanswer.png';
-				break;
-			case 'FAQ':
-				this.img = new Image();
-				this.img.onload = function() {
-					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
-					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-					//hidden canvas
-					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
-					t.hCtx.drawImage(t.img, 0, 0, t. img.width, t.img.height);
-
-					t.answer.answerType = "FAQ";
-				}
-				this.img.src = 'assets/images/icon-faq.png';
-				break;
-			case 'QueerAnswer':
-				this.img = new Image();
-				this.img.onload = function() {
-					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
-					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-					//hidden canvas
-					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
-					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-					t.answer.answerType = "BAD";
-				}
-				this.img.src = 'assets/images/icon-queerflower.png';
-				break;
 			default:
 				console.log("x: " + evt.clientX + " y: " + evt.clientY);
 				//Do Nothing
@@ -281,6 +278,9 @@ export class CanvasComponent implements OnInit {
 	}
 
 	mouseUp(evt): void {
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		switch(this.editMode) {
 			case 'Line':
 				if (this.isDrawingLine === true) {
@@ -356,6 +356,9 @@ export class CanvasComponent implements OnInit {
 	}
 
 	mouseMove(evt): void {
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		switch(this.editMode) {
 			case 'Line':
 				break;
@@ -365,6 +368,9 @@ export class CanvasComponent implements OnInit {
 	}
 
 	mouseOut(evt): void {
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		switch(this.editMode) {
 			case 'Line':
 				if (this.isDrawingLine === true) {
@@ -373,6 +379,26 @@ export class CanvasComponent implements OnInit {
 				break;
 			default:
 				//Do Nothing
+		}
+	}
+
+	updateCanvasStatus() {
+		console.log("isCanvasEnabled:" + this.isCanvasEnabled);
+		if (this.answer.questionName === this.questionName && this.isCanvasEnabled === false) {
+			this.ctx.putImageData(this.imgData, 0, 0);
+			console.log("set canvas to true");
+			this.isCanvasEnabled = true;
+		} else if (this.answer.questionName !== this.questionName && this.isCanvasEnabled === true) {
+			this.imgData = this.ctx.getImageData(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+			this.ctx.fillStyle = "#808080";
+			this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+			console.log("set canvas to false" + this.ctx.canvas.width + " " + this.ctx.canvas.height);
+			this.isCanvasEnabled = false;
+		} else if (this.answer.questionName !== this.questionName && this.isCanvasEnabled === false &&
+			this.editMode === "Score") {
+			this.ctx.putImageData(this.imgData, 0, 0);
+			console.log("set canvas to true");
+			this.isCanvasEnabled = true;			
 		}
 	}
 
@@ -403,42 +429,65 @@ export class CanvasComponent implements OnInit {
 	}
 
 	addBestAnswer(): void {
-		this.img = new Image();
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		let t = this;
+		this.img = new Image();
 		this.img.onload = function() {
+			console.log("img height:" + t.img.height);
+			t.ctx.clearRect(0, 0, t.img.width, t.img.height);
 			t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 			//hidden canvas
+			t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
 			t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
+
+			t.answer.answerType = "BEST";
 		}
 		this.img.src = 'assets/images/icon-bestanswer.png';
 	}
 
 	addFAQ(): void {
-		this.img = new Image();
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		let t = this;
+		this.img = new Image();
 		this.img.onload = function() {
-			t.ctx.drawImage(t.img, 80, 0, t.img.width, t.img.height);
+			t.ctx.clearRect(0, 0, t.img.width, t.img.height);
+			t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 			//hidden canvas
-			t.hCtx.drawImage(t.img, 80, 0, t.img.width, t.img.height);
+			t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
+			t.hCtx.drawImage(t.img, 0, 0, t. img.width, t.img.height);
+
+			t.answer.answerType = "FAQ";
 		}
 		this.img.src = 'assets/images/icon-faq.png';
 	}
 
 	addQueerAnswer(): void {
-		this.img = new Image();
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		let t = this;
+		this.img = new Image();
 		this.img.onload = function() {
-			t.ctx.drawImage(t.img, 160, 0, t.img.width, t.img.height);
+			t.ctx.clearRect(0, 0, t.img.width, t.img.height);
+			t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 			//hidden canvas
-			t.hCtx.drawImage(t.img, 160, 0, t.img.width, t.img.height);
+			t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
+			t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
+
+			t.answer.answerType = "BAD";
 		}
 		this.img.src = 'assets/images/icon-queerflower.png';
 	}
 
 	addScore(): void {
+
 		if(this.score === "") {
 			return;
 		}
