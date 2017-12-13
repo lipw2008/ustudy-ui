@@ -171,7 +171,7 @@ export class CanvasComponent implements OnInit {
 
 		// load images
 		for (let region of this.answer.regions) {
-
+			
 			let promise = new Promise((resolve, reject) =>  {
 				let paperImg = new Image();
 

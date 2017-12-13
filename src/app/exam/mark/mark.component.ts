@@ -259,45 +259,21 @@ export class MarkComponent implements OnInit {
 
 		this.answer.answerType = "";
 		for(let region of this.answer.regions) {
-				region.quesImg = null;
-				region.ansImg = null;
-				region.markImg = null;
-				region.markImgData = null;
 				region.scale = 1;
 				region.canvasH = 0;
 				region.canvasY = 0;
-				region.x = 0;
-				region.y = 0;
-				region.w = 0;
-				region.h = 0;
 		}
 		this.answer2.answerType = "";
 		for(let region of this.answer2.regions) {
-				region.quesImg = null;
-				region.ansImg = null;
-				region.markImg = null;
-				region.markImgData = null;
 				region.scale = 1;
 				region.canvasH = 0;
 				region.canvasY = 0;
-				region.x = 0;
-				region.y = 0;
-				region.w = 0;
-				region.h = 0;
 		}
 		this.answer3.answerType = "";
 		for(let region of this.answer3.regions) {
-				region.quesImg = null;
-				region.ansImg = null;
-				region.markImg = null;
-				region.markImgData = null;
 				region.scale = 1;
 				region.canvasH = 0;
 				region.canvasY = 0;
-				region.x = 0;
-				region.y = 0;
-				region.w = 0;
-				region.h = 0;
 		}
 	}
 
