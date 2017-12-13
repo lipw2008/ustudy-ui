@@ -165,7 +165,6 @@ export class MarkComponent implements OnInit {
 			}
 		}
 		
-		// console.log("On question change: " + JSON.stringify(t.markQuestions));
 		// load marks data based on the mark questions.
 		t.reload();
 	}
@@ -209,12 +208,16 @@ export class MarkComponent implements OnInit {
 				this.isHidden2 = true;
 				this.isHidden3 = true;
 			}
-			if (this.markQuestions.length >= 2) {
+			if (this.markQuestions.length == 2) {
 				this.markCanvas2Display = 'block';
+				this.markCanvas3Display = 'none';
 				this.isHidden2 = false;
+				this.isHidden3 = true;
 			}
 			if (this.markQuestions.length == 3) {
+				this.markCanvas2Display = 'block';
 				this.markCanvas3Display = 'block';
+				this.isHidden2 = false;
 				this.isHidden3 = false;
 			}
 			this.setStatistics(data.summary);
