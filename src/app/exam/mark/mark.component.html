@@ -45,9 +45,9 @@
 				<div class="panel-body">
 					<div>
                         <div #markContainer style="overflow-x: auto; overflow-y: auto">
-                            <mark-canvas [score]="score"  [(answer)]="answer" [questionName]="questionName" [isHidden]="isHidden" [editMode]="editMode"></mark-canvas>
-                            <mark-canvas [score]="score2" [(answer)]="answer2" [questionName]="questionName" [isHidden]="isHidden2" [editMode]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
-                            <mark-canvas [score]="score3" [(answer)]="answer3" [questionName]="questionName" [isHidden]="isHidden3" [editMode]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
+                            <mark-canvas [score]="score"  [(answer)]="answer" [questionName]="questionName" [isHidden]="isHidden" [(editMode)]="editMode"></mark-canvas>
+                            <mark-canvas [score]="score2" [(answer)]="answer2" [questionName]="questionName" [isHidden]="isHidden2" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
+                            <mark-canvas [score]="score3" [(answer)]="answer3" [questionName]="questionName" [isHidden]="isHidden3" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
                         </div>
 					</div>
 				</div>
@@ -56,9 +56,9 @@
 						<!--控制条 strat-->
                     	<div class="control extra clearfix" data-toggle="buttons" style="bottom: 15px;left: 15px;">
                             <span class="control-drag"><i class="iconfont-optionvertical"></i></span>
-                        	<a (click)='addBestAnswer()' title="点击答题卡，标注优秀"><i class="iconfont-bestanswer"></i></a>
-                        	<a (click)='addFAQ()' title="点击答题卡，标注FAQ"><i class="iconfont-faq"></i></a>
-                        	<a (click)='addQueerAnswer()' title="点击答题卡，标注奇葩"><i class="iconfont-queerflower"></i></a>
+                        	<a (click)='addBestAnswer()' title="标注优秀"><i class="iconfont-bestanswer"></i></a>
+                        	<a (click)='addFAQ()' title="标注FAQ"><i class="iconfont-faq"></i></a>
+                        	<a (click)='addQueerAnswer()' title="标注奇葩"><i class="iconfont-queerflower"></i></a>
                         	<a (click)='drawLine()' title="双横线"><i class="iconfont-markdoubleline"></i></a>
                         	<a (click)='drawCircle()' title="圈注"><i class="iconfont-markcircle"></i></a>
                         	<a (click)='addHelp()' title="疑问"><i class="iconfont-help"></i></a>

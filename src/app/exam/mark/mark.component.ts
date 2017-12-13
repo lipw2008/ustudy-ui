@@ -236,18 +236,15 @@ export class MarkComponent implements OnInit {
 				this.answer.regions = group.papers[0].regions;
 				this.answer.answerType = group.papers[0].answerType;
 				this.answer.questionName = group.papers[0].questionName;
-				this.score = "阅卷老师：" + this.mark.teacherId + " 得分：";
 				if (this.markQuestions.length >= 2) {
 					this.answer2.regions = group.papers[1].regions;
 					this.answer2.answerType = group.papers[1].answerType;
 					this.answer2.questionName = group.papers[1].questionName;
-					this.score2 = this.score;
 				}
 				if (this.markQuestions.length == 3) {
 					this.answer3.regions = group.papers[2].regions;
 					this.answer3.answerType = group.papers[2].answerType;
 					this.answer3.questionName = group.papers[2].questionName;
-					this.score3 = this.score;
 				}
 				this.editMode = "" + this.curPage + Math.round(new Date().getTime()/1000);
 				break;
@@ -309,11 +306,12 @@ export class MarkComponent implements OnInit {
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
-					if (paper.isProblemPaper === true) {
+					if (paper.problemPaper === true) {
 						continue;
 					}
 					if (paper.steps.length === 0 && paper.score === "") {
 						this.fullScore = paper.fullscore;
+						this.questionName = paper.questionName;
 						// console.log("after update full score: " + this.fullScore);
 						this.updateScoreBoard();
 						return;
@@ -321,6 +319,7 @@ export class MarkComponent implements OnInit {
 						for(let step of paper.steps) {
 							if (step.score === "") {
 								this.fullScore = step.fullscore;
+								this.questionName = paper.questionName;
 								// console.log("after update full score: " + this.fullScore);
 								this.updateScoreBoard();
 								return;
@@ -368,15 +367,14 @@ export class MarkComponent implements OnInit {
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
-					if (paper.isProblemPaper === true) {
+					if (paper.problemPaper === true) {
 						continue;
 					}
 					if (paper.steps.length === 0 && paper.score === "") {
 						if (score !== 'PROBLEM') {
 							paper.score = score;
-							this.questionName = paper.questionName;
 						} else {
-							paper.isProblemPaper = true;
+							paper.problemPaper = true;
 						}
 						this.updateFullScore();
 						return;
@@ -385,9 +383,8 @@ export class MarkComponent implements OnInit {
 							if (step.score === "") {
 								if (score !== 'PROBLEM') {
 									step.score = score;
-									this.questionName = paper.questionName;
 								} else {
-									paper.isProblemPaper = true;
+									paper.problemPaper = true;
 								}
 								this.updateFullScore();
 								return;
@@ -464,28 +461,40 @@ export class MarkComponent implements OnInit {
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				if (group.papers[0].score !== "") {
-					this.score += group.papers[0].score + "/" + group.papers[0].fullscore;
-				} else {
+					this.score = group.papers[0].score;
+				} else if (group.papers[0].steps.length > 0) {
+					let scoreSum = 0;
 					for (let step of group.papers[0].steps) {
-						this.score += step.score + "/" + step.fullscore + " ";
+						scoreSum += parseFloat(step.score);
 					}
+					this.score = String(scoreSum);
+				} else if (group.papers[0].problemPaper === false){
+					alert("请完成打分再提交，谢谢！");
 				}
 				if (this.markQuestions.length >= 2) {
 					if (group.papers[1].score !== "") {
-						this.score2 += group.papers[1].score + "/" + group.papers[1].fullscore;
-					} else {
+						this.score2 = group.papers[1].score;
+					} else if (group.papers[1].steps.length > 0) {
+						let scoreSum = 0;
 						for (let step of group.papers[1].steps) {
-							this.score2 += step.score + "/" + step.fullscore + " ";
+							scoreSum += parseFloat(step.score);
 						}
+						this.score2 = String(scoreSum);
+					} else if (group.papers[1].problemPaper === false){
+						alert("请完成打分再提交，谢谢！");
 					}
 				}
 				if (this.markQuestions.length == 3) {
 					if (group.papers[2].score !== "") {
-						this.score3 += group.papers[2].score + "/" + group.papers[2].fullscore;
-					} else {
+						this.score3 = group.papers[2].score;
+					} else if (group.papers[2].steps.length > 0) {
+						let scoreSum = 0;
 						for (let step of group.papers[2].steps) {
-							this.score3 += step.score + "/" + step.fullscore + " ";
+							scoreSum += parseFloat(step.score);
 						}
+						this.score3 = String(scoreSum);
+					} else if (group.papers[2].problemPaper === false){
+						alert("请完成打分再提交，谢谢！");
 					}
 				}
 			}

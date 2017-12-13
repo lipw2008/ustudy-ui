@@ -41,6 +41,9 @@ export class CanvasComponent implements OnInit {
 	circleBeginX = 0;
 	circleBeginY = 0;
 
+	// Input Text
+	textbox: any;
+
     constructor(private _sharedService: SharedService, private renderer: Renderer2, private route: ActivatedRoute,
 	@Inject(forwardRef(()=>MarkComponent)) public parent: MarkComponent) {
 
@@ -59,18 +62,23 @@ export class CanvasComponent implements OnInit {
 
 		
 		// the view is not inited yet OR it's a canvas not used
-		if (this.canvas === undefined || this.answer.regions[0].ansImg === null || this.isHidden === true) {
+		if (this.canvas === undefined || this.isHidden === true) {
 			return;
 		}
 		console.log("onchange -- this.answer.questionName" + this.answer.questionName);
 		console.log("onchange -- this.questionName" + this.questionName);
-		if (this.answer.regions[0].scale == undefined || this.curPaperImg !== this.answer.regions[0].ansImg 
-		|| this.editMode === 'Clear') {
+
+		// change page OR clear enabled page
+		if (this.curPaperImg !== this.answer.regions[0].ansImg || (this.editMode === 'Clear' && this.isCanvasEnabled === true)) {
+			console.log("clear!!!");
 			this.curPaperImg = this.answer.regions[0].ansImg;
 			let promiseArray = this.loadPaper();
 			Promise.all(promiseArray).then(() => {
 				this.isCanvasEnabled = true;
 				this.updateCanvasStatus();
+			}).catch(() => {
+				alert("无法加载试卷！");
+				return;
 			});
 		} else if (this.editMode === "Score") {
 			this.updateCanvasStatus();
@@ -79,12 +87,21 @@ export class CanvasComponent implements OnInit {
 			this.updateCanvasStatus();
 		}
 
+		console.log("is hidden:" + this.isHidden);
+		console.log("is enabled:" + this.isCanvasEnabled);
+		console.log("edit mode:" + this.editMode);
 		if (this.editMode === "BestAnswer") {
 			this.addBestAnswer();
 		} else if (this.editMode === "QueerAnswer") {
 			this.addQueerAnswer();
 		} else if (this.editMode === "FAQ") {
 			this.addFAQ();
+		}
+
+		if (this.editMode === "BestAnswer" || this.editMode === "FAQ" || this.editMode === "QueerAnswer" ||
+			this.editMode === "Clear" || this.editMode === "Score") {
+			// restore editmode
+			this.editMode = "None";
 		}
 	}
 
@@ -220,34 +237,39 @@ export class CanvasComponent implements OnInit {
 				this.circleBeginY = y;
 				break;
 			case 'Text':
-				let textbox = document.createElement("input");
-				textbox.type = "text";
-				textbox.style.position = "absolute";
-				textbox.style.left = evt.clientX + "px";
-				textbox.style.top = evt.clientY + "px";
-				textbox.style.display = "inline";
-				textbox.setAttribute("autofocus", "");
+				console.log("this.textbox:" + this.textbox);
+				if (this.textbox !== undefined && this.textbox !== null) {
+					this.textbox.parentNode.removeChild(this.textbox);
+				}
+				this.textbox = document.createElement("input");
+				this.textbox.type = "text";
+				this.textbox.style.position = "absolute";
+				this.textbox.style.left = evt.clientX + "px";
+				this.textbox.style.top = evt.clientY + "px";
+				this.textbox.style.display = "inline";
+				this.textbox.setAttribute("autofocus", "");
 				let tEvt = evt;
-				this.renderer.listen(textbox, 'keyup', (evt) => {
+				this.renderer.listen(this.textbox, 'keyup', (evt) => {
     				if(evt.keyCode == 13) {
-    					console.log(textbox.value);
+    					console.log(this.textbox.value);
     					this.ctx.font = '36px serif';
     					this.ctx.fillStyle = "red";
-    					this.ctx.fillText(textbox.value, x, y + 36);
+    					this.ctx.fillText(this.textbox.value, x, y + 36);
 
 						//hidden canvas
     					this.hCtx.font = '36px serif';
     					this.hCtx.fillStyle = "red";
-    					this.hCtx.fillText(textbox.value, x, y + 36);
+    					this.hCtx.fillText(this.textbox.value, x, y + 36);
 
 						console.log(tEvt.layerX);
 						console.log(tEvt.offsetX);
-						textbox.parentNode.removeChild(textbox);
+						this.textbox.parentNode.removeChild(this.textbox);
+						this.textbox = null;
 					}
     			});
-				this.rootContainerElement.appendChild(textbox);
-				textbox.focus();
-				console.log(textbox);
+				this.rootContainerElement.appendChild(this.textbox);
+				this.textbox.focus();
+				console.log(this.textbox);
 				console.log("x: " + evt.clientX + " y: " + evt.clientY);
 				// console.log(this.canvas.offsetLeft);
 				break;
@@ -390,12 +412,15 @@ export class CanvasComponent implements OnInit {
 			this.isCanvasEnabled = true;
 		} else if (this.answer.questionName !== this.questionName && this.isCanvasEnabled === true) {
 			this.imgData = this.ctx.getImageData(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+			this.ctx.globalAlpha = 0.9;
 			this.ctx.fillStyle = "#808080";
 			this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+			this.ctx.globalAlpha = 1;
 			console.log("set canvas to false" + this.ctx.canvas.width + " " + this.ctx.canvas.height);
 			this.isCanvasEnabled = false;
-		} else if (this.answer.questionName !== this.questionName && this.isCanvasEnabled === false &&
-			this.editMode === "Score") {
+		}
+		// enable canvas before adding score
+		if (this.isCanvasEnabled === false && this.editMode === "Score") {
 			this.ctx.putImageData(this.imgData, 0, 0);
 			console.log("set canvas to true");
 			this.isCanvasEnabled = true;			
@@ -432,6 +457,7 @@ export class CanvasComponent implements OnInit {
 		if (this.isHidden === true || this.isCanvasEnabled === false) {
 			return;
 		}
+		console.log("add best answer...");
 		let t = this;
 		this.img = new Image();
 		this.img.onload = function() {
@@ -492,14 +518,14 @@ export class CanvasComponent implements OnInit {
 			return;
 		}
 		
-		this.ctx.font = '28px serif';
+		this.ctx.font = '64px Arial';
 		this.ctx.fillStyle = "red";
-		this.ctx.fillText(this.score, 250, 28);
+		this.ctx.fillText(this.score, 400, 64);
 
 		//hidden canvas
-		this.hCtx.font = '28px serif';
+		this.hCtx.font = '64px Arial';
 		this.hCtx.fillStyle = "red";
-		this.hCtx.fillText(this.score, 250, 28);
+		this.hCtx.fillText(this.score, 400, 64);
 
 		for (let region of this.answer.regions) {
 			this.setDataUrl(region);
