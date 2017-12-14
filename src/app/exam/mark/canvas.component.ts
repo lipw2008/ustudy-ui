@@ -68,8 +68,9 @@ export class CanvasComponent implements OnInit {
 		console.log("onchange -- this.answer.questionName" + this.answer.questionName);
 		console.log("onchange -- this.questionName" + this.questionName);
 
-		// change page OR clear enabled page
-		if (this.curPaperImg !== this.answer.regions[0].ansImg || (this.editMode === 'Clear' && this.isCanvasEnabled === true)) {
+		// change page OR clear enabled page or reload original page due to question selection change.
+		if (this.curPaperImg !== this.answer.regions[0].ansImg || (this.editMode === 'Clear' && this.isCanvasEnabled === true)
+			|| this.answer.regions[0].scale === undefined) {
 			console.log("clear!!!");
 			this.curPaperImg = this.answer.regions[0].ansImg;
 			let promiseArray = this.loadPaper();
@@ -77,6 +78,8 @@ export class CanvasComponent implements OnInit {
 				this.isCanvasEnabled = true;
 				this.updateCanvasStatus();
 			}).catch(() => {
+				this.isCanvasEnabled = true;
+				this.updateCanvasStatus();
 				alert("无法加载试卷！");
 				return;
 			});
@@ -98,8 +101,7 @@ export class CanvasComponent implements OnInit {
 			this.addFAQ();
 		}
 
-		if (this.editMode === "BestAnswer" || this.editMode === "FAQ" || this.editMode === "QueerAnswer" ||
-			this.editMode === "Clear" || this.editMode === "Score") {
+		if (this.editMode === "BestAnswer" || this.editMode === "FAQ" || this.editMode === "QueerAnswer") {
 			// restore editmode
 			this.editMode = "None";
 		}
@@ -171,7 +173,7 @@ export class CanvasComponent implements OnInit {
 
 		// load images
 		for (let region of this.answer.regions) {
-			
+
 			let promise = new Promise((resolve, reject) =>  {
 				let paperImg = new Image();
 
