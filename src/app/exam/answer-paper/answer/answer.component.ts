@@ -43,7 +43,7 @@ export class AnswerComponent implements OnInit {
     });
     this._answerService.getEGS(this.examId, this.gradeId, this.subjectId).then((data: any) => {
       this.subject = _.first(data);
-      this.selectedQuestion = _.find(this.subject.questions, {id: this.questionId})
+      this.selectedQuestion = _.find(this.subject.questions, { id: this.questionId })
     })
   }
   getQuestionName(question: any) {
@@ -75,7 +75,7 @@ export class AnswerComponent implements OnInit {
   }
 
   returnResult() {
-    const params  = Object.create({});
+    const params = Object.create({});
     params.egsId = this.subject.id;
     if (this.type !== 'class') {
       params.type = this.type

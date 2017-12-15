@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import * as _ from 'lodash';
-import {TreeviewConfig, TreeviewItem} from 'ngx-treeview';
+import { TreeviewConfig, TreeviewItem } from 'ngx-treeview';
 
 @Component({
   selector: 'teacher-selector',

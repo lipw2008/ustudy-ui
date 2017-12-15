@@ -1,0 +1,51 @@
+import { Component, OnInit } from '@angular/core';
+import { DataService } from 'app/data/data.service';
+import * as _ from 'lodash';
+import { sprintf } from 'sprintf-js';
+
+@Component({
+  selector: 'app-review-statistic',
+  templateUrl: './review-statistic.component.html',
+  styleUrls: ['./review-statistic.component.css']
+})
+export class ReviewStatisticComponent implements OnInit {
+  marks: any;
+  selectedResult: any;
+  filteredMarks = [];
+
+  get selected() {
+    return this.selectedResult
+  }
+
+  constructor(private _dataService: DataService) { }
+
+  ngOnInit(): void {
+    this._dataService.getMarks().then((data: any) => {
+      this.marks = data;
+    })
+  }
+
+  selectResult(result) {
+    this.filteredMarks = result.marks;
+    this.selectedResult = result;
+  }
+
+  getHours(subject) {
+    const questions = _.reduce(_.map(subject.marks, 'summary'), (r, i) => r.concat(i), []);
+    return _.sum(_.map(questions, 'costHours'));
+  }
+  getProgress(subject) {
+    const questions = _.reduce(_.map(subject.marks, 'summary'), (r, i) => r.concat(i), []);
+    const names = _.uniq(_.map(questions, 'questionName')).sort();
+    const progresses = _.map(names, (name) => {
+      let total = 0, markedNum = 0;
+      for (const question of _.filter(questions, { questionName: name })) {
+        total = total + question.mark.total;
+        markedNum = markedNum + question.details.length
+      }
+      return markedNum / total;
+    });
+    const finalProgress = progresses.length === 0 ? 0 : _.sum(progresses) / progresses.length;
+    return sprintf('%.2f%%', finalProgress * 100)
+  }
+}

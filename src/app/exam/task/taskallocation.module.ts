@@ -9,8 +9,8 @@ import { HttpModule } from '@angular/http';
 import { SetObjectivesNoComponent } from './setobjectivesno.component';
 import { TaskAllocationComponent } from './taskallocation.component';
 import { TaskAssignComponent } from './task-assign/task-assign.component';
-import {TaskService} from 'app/exam/task/task.service';
-import {UtilsModule} from '../../utils/utils.module';
+import { TaskService } from 'app/exam/task/task.service';
+import { UtilsModule } from '../../utils/utils.module';
 import { ViewTaskComponent } from './view-task/view-task.component';
 
 @NgModule({

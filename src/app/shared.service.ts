@@ -47,8 +47,8 @@ export class SharedService {
 	}
 
   MD5(pw: string): any {
-	  return Md5.hashStr(pw);
-	}
+    return Md5.hashStr(pw);
+  }
 
   /* Do a http request
   method: http method

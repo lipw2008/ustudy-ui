@@ -17,7 +17,7 @@ declare var jQuery: any;
         backgroundColor: 'white',
         transform: 'scale(1)'
       })),
-      state('switching',   style({
+      state('switching', style({
         backgroundColor: '#cfd8dc',
         transform: 'scale(0.9)'
       })),
@@ -61,7 +61,7 @@ export class TaskAssignComponent implements OnInit {
     });
     this._taskService.getQuestions(this.examId, null, this.gradeId, this.subjectId).then((data) => {
       if (this.questionId) {
-        this.questions = _.filter(data, {id: Number(this.questionId)});
+        this.questions = _.filter(data, { id: Number(this.questionId) });
         this.selectedQuestion = this.questions[0]
       } else {
         this.questions = data
@@ -97,17 +97,19 @@ export class TaskAssignComponent implements OnInit {
 
   submit() {
     const method = this.questionId ? this._taskService.updateMarkTask : this._taskService.createMarkTask;
-    method.call(this._taskService, {examId: this.examId, questionId: this.selectedQuestion.id, teachersIds: this.selectedTeacherIds, type: this.assignType,
+    method.call(this._taskService, {
+      examId: this.examId, questionId: this.selectedQuestion.id, teachersIds: this.selectedTeacherIds, type: this.assignType,
       gradeId: this.gradeId, subjectId: this.subjectId, ownerId: _.get(_.find(this.grade.groups, (group) => _.includes(group.name, this.subject)), 'owner'),
       finalMarkTeachersIds: _.without(this.selectedFinalTeacherIds, this.selectedTeacherIds),
-      timeLimit: this.timeLimit}).then((data) => {
+      timeLimit: this.timeLimit
+    }).then((data) => {
       console.log(data);
       if (_.get(data, 'success')) {
         this.selectedQuestion.created = true;
         const index = _.findIndex(this.questions, this.selectedQuestion);
         if (index + 1 < this.questions.length) {
           this.selectedQuestion = this.questions[index + 1];
-          jQuery('html,body').animate({scrollTop: jQuery('#selectQuestion').offset().top}, 300);
+          jQuery('html,body').animate({ scrollTop: jQuery('#selectQuestion').offset().top }, 300);
           setTimeout(() => {
             this.animationState = 'switching';
             setTimeout(() => {
@@ -126,7 +128,7 @@ export class TaskAssignComponent implements OnInit {
   }
 
   finish() {
-    if (_.every(this.questions, {created: true})) {
+    if (_.every(this.questions, { created: true })) {
       alert('科目任务分配完成');
       this._location.back()
     } else {
