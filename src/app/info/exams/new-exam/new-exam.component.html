@@ -1,0 +1,44 @@
+<div class="container">
+	<ol class="breadcrumb">
+		<li><a href="#">首页</a></li>
+		<li>信息中心</li>
+		<li class="active">新建考试</li>
+	</ol>
+</div>
+<div class="container container-sm">
+  <div class="panel-body">
+    <div class="form-inline">
+      <div class="form-group" style="width: 100%;">
+        <label class="control-label col-sm-3"><strong>考试名称：</strong></label>
+        <input [(ngModel)]="name" class="form-control col-sm-9">
+      </div>
+    </div>
+    <br>
+    <div class="form-inline">
+      <div class="form-group" style="width: 100%;">
+        <label class="control-label col-sm-3"><strong>考试时间：</strong></label>
+        <input class="form-control col-sm-9" #drp="bsDatepicker" bsDatepicker [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="panel-body">
+    <ng-container *ngFor="let grade of examOptions?.grades">
+      <div class="form-group">
+        <label class="col-sm-3 control-label"><strong>{{grade.grade_name}}：</strong></label>
+        <div class="col-sm-9 btn-toolbar">
+          <div class="extra btn-group" data-toggle="buttons">
+            <ng-container *ngFor="let subject of examOptions?.subjects">
+              <button class="btn" [ngClass]="getClass(grade, subject)" (click)="trigger(grade, subject)" style="margin: 5px;">{{subject.name}}</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <hr>
+  <div class="pull-right">
+    <button class="btn btn-primary" (click)="submit()">保存</button>
+    <button class="btn btn-primary" (click)="back()">取消</button>
+  </div>
+</div>

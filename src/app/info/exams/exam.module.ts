@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 
 import { ExamListComponent } from './exam-list.component';
 import { UtilsModule } from '../../utils/utils.module';
+import { NewExamComponent } from './new-exam/new-exam.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { UtilsModule } from '../../utils/utils.module';
     BsDatepickerModule.forRoot(),
     UtilsModule,
     RouterModule.forChild([
-      { path: 'examList', component: ExamListComponent }
+      { path: 'examList', component: ExamListComponent },
+      { path: 'addExam', component: NewExamComponent }
     ]),
     ReactiveFormsModule,
     FormsModule,
@@ -25,6 +27,7 @@ import { UtilsModule } from '../../utils/utils.module';
   ],
   declarations: [
     ExamListComponent,
+    NewExamComponent,
   ],
   providers: []
 })

@@ -63,7 +63,7 @@ export class SharedService {
   makeRequest(method: string, endpoint: string, content: any) {
     return new Promise((resolve, reject) => {
       // parse the content
-      let data = (content.data === undefined ? content : content.data);
+      let data = (content.data === undefined ? (typeof(content) === 'string' ? content : JSON.stringify(content)) : content.data);
       let reqContentType = (content.reqContentType === undefined ? "application/json" : content.reqContentType);
       let resContentType = (content.resContentType === undefined ? "application/json" : content.resContentType);
 

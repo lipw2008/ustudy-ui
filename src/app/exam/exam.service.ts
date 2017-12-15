@@ -34,6 +34,20 @@ export class ExamService {
     return this.examOptions
   }
 
+  createExam(params) {
+    console.log('createExam: ', params);
+    return new Promise((resolve, reject) => {
+      // resolve()
+      this._sharedService.makeRequest('POST', `/api/info/exam/create/`, params).then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
   filterExamSubjects(conditions): any {
     const urlParams = _.map(conditions, (v, k) => `${k}=${v}`).join('&');
     return new Promise((resolve, reject) => {

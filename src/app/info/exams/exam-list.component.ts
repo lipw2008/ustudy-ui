@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { SharedService } from '../../shared.service';
 import { ExamService } from '../../exam/exam.service';
-import { IntToDatePipe } from '../../utils/int-to-date.pipe';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -38,7 +37,6 @@ export class ExamListComponent implements OnInit {
     { prop: 'examineeNum', name: '考生人数' }
   ];
 
-  IntToDate = new IntToDatePipe();
   examOptions: any;
 
   // filter keys:
