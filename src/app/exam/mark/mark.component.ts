@@ -36,6 +36,9 @@ export class MarkComponent implements OnInit {
 		]
 	};
 
+	// mark type
+	markType: string;
+
 	// question selector
 	questionList: any;
 	markQuestions: any = [];
@@ -69,6 +72,7 @@ export class MarkComponent implements OnInit {
 				ansImg: null,
 				markImg: null,
 				markImgData: null,
+				markImgRecords: [],
 				scale: 1,
 				canvasH: 0,
 				canvasY: 0,
@@ -88,6 +92,7 @@ export class MarkComponent implements OnInit {
 				ansImg: null,
 				markImg: null,
 				markImgData: null,
+				markImgRecords: [],
 				scale: 1,
 				canvasH: 0,
 				canvasY: 0,
@@ -107,6 +112,7 @@ export class MarkComponent implements OnInit {
 				ansImg: null,
 				markImg: null,
 				markImgData: null,
+				markImgRecords: [],
 				scale: 1,
 				canvasH: 0,
 				canvasY: 0,
@@ -131,17 +137,23 @@ export class MarkComponent implements OnInit {
     }
 
 	ngOnInit(): void {
-		this.questionList = JSON.parse(this.route.snapshot.params.questionList);
-	}
-
-    ngAfterViewInit(): void {
+		this.markType = this.route.snapshot.params.markType;
 		let question = {"id": "", "n": ""};
 		question.id = this.route.snapshot.params.questionId;
 		question.n = this.route.snapshot.params.questionName;
 		this.questionName = this.route.snapshot.params.questionName;
 		this.markQuestions.push(question);
+		if (this.markType === "标准") {
+			this.questionList = JSON.parse(this.route.snapshot.params.questionList);
+		} else {
+			this.questionList = this.markQuestions;
+		}
+
+	}
+
+    ngAfterViewInit(): void {
 		console.log("init mark questions:" + JSON.stringify(this.markQuestions));
-		$(this.questionSelector.nativeElement).selectpicker('val', question.n);
+		$(this.questionSelector.nativeElement).selectpicker('val', this.route.snapshot.params.questionName);
 		$(this.questionSelector.nativeElement).on('changed.bs.select', {t: this}, this.onQuestionChange);
 		this.reload();
 	}
@@ -279,6 +291,12 @@ export class MarkComponent implements OnInit {
 				region.canvasY = 0;
 		}
 	}
+
+	// getGap(paper:any): string {
+	// 	let score1 = parseFloat(paper.markRecord[0].score);
+	// 	let score2 = parseFloat(paper.markRecord[1].score);
+	// 	return String(Math.abs(score1 - score2));
+	// }
 
 	updateFullScore(): void {
 		// console.log("before update full score: " + this.fullScore);

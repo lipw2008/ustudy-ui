@@ -107,30 +107,66 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="displayScoreBoard === true" class="panel-body border clear-border-top">
+                    <div *ngIf="displayScoreBoard === true" class="panel-body border clear-border-top ">
                         <div class="extra margin-top margin-left clearfix" data-toggle="buttons">
                             <a *ngFor="let score of scoreList" (click)="setScore(score)" class="btn btn-default pull-left">{{score}}</a>
-                            <a (click)="setScore('PROBLEM')" class="btn btn-danger pull-right">问题卷</a>
+                            <a (click)="setScore('PROBLEM')" class="b<thead>
+                            </thead>tn btn-danger pull-right">问题卷</a>
                         </div>
+                    </div>
+                    <div *ngIf="markType === '终评'" class="panel-body clear-padding clearfix">
+                        <ng-container *ngFor="let group of mark.groups">
+                            <ng-container *ngIf="group.paperSeq === curPage">
+                                <ng-container *ngFor="let paper of group.papers">
+                                    <table class="table text-center table-bordered table-condensed" style="margin-top: 20px">
+                                        <thead>
+                                            <tr>
+                                                <th>阅卷人</th>
+                                                <th>给分</th>
+                                                <th>分差</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{paper.markRecords[0].teacherName}}</td>
+                                                <td>{{paper.markRecords[0].score}}</td>
+                                                <td rowspan="2"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{paper.markRecords[1].teacherName}}</td>
+                                                <td>{{paper.markRecords[1].score}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
                     </div>
                 </div>
                 <div class="form-group form-inline">
                     <ng-container *ngFor="let group of mark.groups">
                         <ng-container *ngIf="group.paperSeq === curPage">
                             <ng-container *ngFor="let paper of group.papers">
-                                <ng-container *ngIf="paper.steps.length === 0">
-                                    <label for="">{{paper.questionName}}题: </label>
-                                    <input (focus)="onFocus(paper.questionName)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
-                                    <br/>
-                                </ng-container>
-                                <ng-container *ngIf="paper.steps.length > 0">
-                                    <label for="">{{paper.questionName}}题: </label>
-                                    <br/>
-                                    <ng-container *ngFor="let step of paper.steps">
-                                        <label for="">{{step.name}}: </label>
-                                        <input (focus)="onFocus(paper.questionName)" (change)="updateFullScore()" name="{{step.name}}" type="text" class="form-control" id="" size="3" [(ngModel)]="step.score">
+                                <ng-container *ngIf="markType === '标准'">
+                                    <ng-container *ngIf="paper.steps.length === 0">
+                                        <label for="">{{paper.questionName}}题: </label>
+                                        <input (focus)="onFocus(paper.questionName)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
                                         <br/>
                                     </ng-container>
+                                    <ng-container *ngIf="paper.steps.length > 0">
+                                        <label for="">{{paper.questionName}}题: </label>
+                                        <br/>
+                                        <ng-container *ngFor="let step of paper.steps">
+                                            <label for="">{{step.name}}: </label>
+                                            <input (focus)="onFocus(paper.questionName)" (change)="updateFullScore()" name="{{step.name}}" type="text" class="form-control" id="" size="3" [(ngModel)]="step.score">
+                                            <br/>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="markType === '终评'">
+                                    <label for="">终评分: </label>
+                                    <input (focus)="onFocus(paper.questionName)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
+                                    <br/>
                                 </ng-container>
                                 <br/>
                             </ng-container>

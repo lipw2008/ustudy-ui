@@ -54,8 +54,8 @@ export class CanvasComponent implements OnInit {
 	}
 
 	ngOnChanges(): void {
-		// console.log("ngOnChanges(): editmode:" + this.editMode);
-		// console.log("this.curPaperImg:" + this.curPaperImg);
+		console.log("ngOnChanges(): editmode:" + this.editMode);
+		console.log("this.curPaperImg:" + this.curPaperImg);
 		// console.log("this.answer.regions[0].ansImg:" + this.answer.regions[0].ansImg);
 		// console.log("this.answer.regions[0].scale:" + this.answer.regions[0].scale);
 		// console.log("this.answer.regions[0]" + this.answer.regions[0]);
@@ -196,6 +196,39 @@ export class CanvasComponent implements OnInit {
 							reject();
 						}
 						markImg.src = t._sharedService.getImgUrl(region.markImg, "");
+					} else if (region.markImgRecords[0] !== null && region.markImgRecords[1] !== null){
+						console.log("mark image record: " +  region.markImgRecords[0] + " " + region.markImgRecords[1]);
+						let markImg1 = new Image();
+						markImg1.crossOrigin = "anonymous";
+						markImg1.onload = function() {
+							let tmpCanvas = document.createElement("canvas");
+							t.changeImgData(tmpCanvas, markImg1, true);
+							t.ctx.drawImage(tmpCanvas, 0, 0, markImg1.width, markImg1.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+
+							// hidden canvas
+							t.hCtx.drawImage(tmpCanvas, 0, 0, markImg1.width, markImg1.height, 0, region.canvasY, t.hCtx.canvas.width, region.canvasH);
+
+							let markImg2 = new Image();
+							markImg2.crossOrigin = "anonymous";
+							markImg2.onload = function() {
+								let tmpCanvas = document.createElement("canvas");
+								t.changeImgData(tmpCanvas, markImg2, false);
+								t.ctx.drawImage(tmpCanvas, 0, 0, markImg2.width, markImg2.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+
+								// hidden canvas
+								t.hCtx.drawImage(tmpCanvas, 0, 0, markImg2.width, markImg2.height, 0, region.canvasY, t.hCtx.canvas.width, region.canvasH);
+								resolve();
+							}
+							markImg2.onerror = function() {
+								reject();
+							}
+							markImg2.src = t._sharedService.getImgUrl(region.markImgRecords[1].markImg, "");
+
+						}
+						markImg1.onerror = function() {
+							reject();
+						}
+						markImg1.src = t._sharedService.getImgUrl(region.markImgRecords[0].markImg, "");
 					} else {
 						resolve();
 					}
@@ -210,6 +243,34 @@ export class CanvasComponent implements OnInit {
 		return promiseArray;
 	}
 
+	changeImgData(tmpCanvas, markImg, flag): void {
+		let tmpCtx = tmpCanvas.getContext("2d");
+		tmpCtx.canvas.width = markImg.width;
+		tmpCtx.canvas.height = markImg.height;
+		tmpCtx.drawImage(markImg, 0, 0);
+		var imgData = tmpCtx.getImageData(0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		for(var i=0; i<imgData.data.length; i+=4) {
+			if (imgData.data[i+3] !== 0) {
+				if(imgData.data[i+0] === 255 && imgData.data[i+1] === 0 && imgData.data[i+2] === 65) {
+					imgData.data[i+0] = 0;
+					imgData.data[i+1] = 0;
+					imgData.data[i+2] = 0;
+					imgData.data[i+3] = 0;
+				} else if (flag === true) {
+					imgData.data[i+0] = 255;
+					imgData.data[i+1] = 191;
+					imgData.data[i+2] = 24;
+					imgData.data[i+3] = 200;
+				} else {
+					imgData.data[i+0] = 255;
+					imgData.data[i+1] = 192;
+					imgData.data[i+2] = 182;
+					imgData.data[i+3] = 200;
+				}
+			}
+		}
+		tmpCtx.putImageData(imgData,0,0);
+	}
 	mouseDown(evt): void {
 		if (this.isHidden === true || this.isCanvasEnabled === false) {
 			return;
@@ -526,7 +587,7 @@ export class CanvasComponent implements OnInit {
 
 		//hidden canvas
 		this.hCtx.font = '64px Arial';
-		this.hCtx.fillStyle = "red";
+		this.hCtx.fillStyle = 'rgba(255, 0, 65, 1)';
 		this.hCtx.fillText(this.score, 400, 64);
 
 		for (let region of this.answer.regions) {
