@@ -767,7 +767,11 @@ html.full-screen .container.container-fluid-online-marking {
   width: 100% !important;
 }
 .container.container-fluid-online-marking {
-  height: 800px;
+  height: 500px;
+}
+.online-marking-sidebar {
+  height: 500px;
+  overflow-y: auto;
 }
 .container.container-fluid-online-marking .row,
 .container.container-fluid-online-marking .row > [class^="col-"],

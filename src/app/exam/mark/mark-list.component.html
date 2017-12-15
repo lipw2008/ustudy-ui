@@ -40,8 +40,8 @@
                                 </dl>
                             </a>
                             <div class="progress">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: mark.progress}">
-                                    {{mark.progress}}
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: getProgress(mark.progress)}">
+                                    {{getProgress(mark.progress)}}
                                 </div>
                             </div>
                         </div>
