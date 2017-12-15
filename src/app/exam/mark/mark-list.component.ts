@@ -47,4 +47,13 @@ export class MarkListComponent implements OnInit {
 	getProgress(rawData): string {
 		return this._markService.getProgress(rawData);
 	}
+
+	getQuestion(questionId, questionName): string {
+		let questionList = [];
+		let question = {"id": "", "n": ""};
+		question.id = questionId;
+		question.n = questionName;
+		questionList.push(question);
+		return JSON.stringify(questionList);
+	}
 }

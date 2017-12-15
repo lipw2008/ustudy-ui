@@ -138,22 +138,19 @@ export class MarkComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.markType = this.route.snapshot.params.markType;
-		let question = {"id": "", "n": ""};
-		question.id = this.route.snapshot.params.questionId;
-		question.n = this.route.snapshot.params.questionName;
-		this.questionName = this.route.snapshot.params.questionName;
-		this.markQuestions.push(question);
+		this.questionName = JSON.parse(this.route.snapshot.params.question)[0].n;
+		this.markQuestions = JSON.parse(this.route.snapshot.params.question);
 		if (this.markType === "标准") {
 			this.questionList = JSON.parse(this.route.snapshot.params.questionList);
 		} else {
-			this.questionList = this.markQuestions;
+			this.questionList = JSON.parse(this.route.snapshot.params.question);
 		}
 
 	}
 
     ngAfterViewInit(): void {
 		console.log("init mark questions:" + JSON.stringify(this.markQuestions));
-		$(this.questionSelector.nativeElement).selectpicker('val', this.route.snapshot.params.questionName);
+		$(this.questionSelector.nativeElement).selectpicker('val', JSON.parse(this.route.snapshot.params.question)[0].n);
 		$(this.questionSelector.nativeElement).on('changed.bs.select', {t: this}, this.onQuestionChange);
 		this.reload();
 	}
