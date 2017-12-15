@@ -23,8 +23,8 @@
                     </div>
                     <div class="progress-box">
                         <div class="progress clear-margin-bottom">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: mark.progress}">
-                                {{mark.progress}}
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: progress}">
+                                {{progress}}
                             </div>
                         </div>
                     </div>
@@ -45,9 +45,9 @@
 				<div class="panel-body">
 					<div>
                         <div #markContainer style="overflow-x: auto; overflow-y: auto">
-                            <mark-canvas [score]="score"  [(answer)]="answer"  [editMode]="editMode"></mark-canvas>
-                            <mark-canvas [score]="score2" [(answer)]="answer2" [editMode]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
-                            <mark-canvas [score]="score3" [(answer)]="answer3" [editMode]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
+                            <mark-canvas [score]="score"  [(answer)]="answer" [questionName]="questionName" [isHidden]="isHidden" [(editMode)]="editMode"></mark-canvas>
+                            <mark-canvas [score]="score2" [(answer)]="answer2" [questionName]="questionName" [isHidden]="isHidden2" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
+                            <mark-canvas [score]="score3" [(answer)]="answer3" [questionName]="questionName" [isHidden]="isHidden3" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
                         </div>
 					</div>
 				</div>
@@ -56,9 +56,9 @@
 						<!--控制条 strat-->
                     	<div class="control extra clearfix" data-toggle="buttons" style="bottom: 15px;left: 15px;">
                             <span class="control-drag"><i class="iconfont-optionvertical"></i></span>
-                        	<a (click)='addBestAnswer()' title="点击答题卡，标注优秀"><i class="iconfont-bestanswer"></i></a>
-                        	<a (click)='addFAQ()' title="点击答题卡，标注FAQ"><i class="iconfont-faq"></i></a>
-                        	<a (click)='addQueerAnswer()' title="点击答题卡，标注奇葩"><i class="iconfont-queerflower"></i></a>
+                        	<a (click)='addBestAnswer()' title="标注优秀"><i class="iconfont-bestanswer"></i></a>
+                        	<a (click)='addFAQ()' title="标注FAQ"><i class="iconfont-faq"></i></a>
+                        	<a (click)='addQueerAnswer()' title="标注奇葩"><i class="iconfont-queerflower"></i></a>
                         	<a (click)='drawLine()' title="双横线"><i class="iconfont-markdoubleline"></i></a>
                         	<a (click)='drawCircle()' title="圈注"><i class="iconfont-markcircle"></i></a>
                         	<a (click)='addHelp()' title="疑问"><i class="iconfont-help"></i></a>
@@ -73,7 +73,7 @@
 			</div>
 		</div>
 		<div class="col-sm-3">
-			<form class="">
+			<form class="online-marking-sidebar">
                 <div class="panel panel-default">
                     <div class="panel-heading clear-padding clearfix">
                         <div class="pull-left">
@@ -120,7 +120,7 @@
                             <ng-container *ngFor="let paper of group.papers">
                                 <ng-container *ngIf="paper.steps.length === 0">
                                     <label for="">{{paper.questionName}}题: </label>
-                                    <input (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
+                                    <input (focus)="onFocus(paper.questionName)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
                                     <br/>
                                 </ng-container>
                                 <ng-container *ngIf="paper.steps.length > 0">
@@ -128,7 +128,7 @@
                                     <br/>
                                     <ng-container *ngFor="let step of paper.steps">
                                         <label for="">{{step.name}}: </label>
-                                        <input (change)="updateFullScore()" name="{{step.name}}" type="text" class="form-control" id="" size="3" [(ngModel)]="step.score">
+                                        <input (focus)="onFocus(paper.questionName)" (change)="updateFullScore()" name="{{step.name}}" type="text" class="form-control" id="" size="3" [(ngModel)]="step.score">
                                         <br/>
                                     </ng-container>
                                 </ng-container>
@@ -169,8 +169,8 @@
                     </ul>
                     <!-- 翻页 end -->
                 </div>
-                <ng-container *ngFor="let question of mark.summary">
-                    <div class="padding text-center bg-muted">{{question.questionName}}题： 平均给分：<span>{{question.avgScore}}</span>/已阅题：<span>{{question.markedNum}}</span></div>
+                <ng-container *ngFor="let question of statistics">
+                    <div class="padding text-center bg-muted">{{question.questionName}}题： 平均给分：<span>{{question.avgScore}}</span>/已阅题：<span>{{getNum(question.progress)}}</span></div>
                 </ng-container>
 			</form>
 		</div>

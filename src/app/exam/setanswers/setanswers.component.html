@@ -25,7 +25,7 @@
 							<tr>
 								<th class="clearfix">
 									题号 
-									<div class="input-group pull-right">
+									<div class="input-group pull-right" style="display: none;">
 										<a class="btn btn-link clear-padding-vertical" (click)="addOneRow()">
 											<i class="glyphicon glyphicon-plus"></i>
 										</a>
@@ -44,7 +44,7 @@
 										<span class="input-group-addon clear-border clear-bg">至</span>
 										<input type="text" class="form-control" id="end_{{objective.id}}" name="end" size="5" placeholder="" value="{{objective.endno}}" (change)="onValueChange(2,objective.id)">
 									</div>
-									<div class="input-group pull-right">
+									<div class="input-group pull-right" style="display: none;">
 										<a class="btn btn-link" (click)="removeOneRow(objective.id)">
 											<i class="glyphicon glyphicon-trash"></i>
 										</a>
@@ -136,7 +136,7 @@
 							<tr>
 								<th class="clearfix">
 									题号 
-									<div class="input-group pull-right">
+									<div class="input-group pull-right" style="display: none;">
 										<a class="btn btn-link clear-padding-vertical" (click)="addOneSubjectiveRow(0)">
 											<i class="glyphicon glyphicon-plus"></i>
 										</a>
@@ -156,7 +156,7 @@
 											<span class="input-group-addon clear-border clear-bg" *ngIf="subjective.type === '填空题'">至</span>
 											<input type="text" class="form-control" size="5" id="subjective_end_{{subjective.id}}" value="{{subjective.endno}}" *ngIf="subjective.type === '填空题'" (change)="onSubjectiveValueChange('end',subjective.id,0)">
 										</div>
-										<div class="input-group pull-right">
+										<div class="input-group pull-right" style="display: none;">
 											<a class="btn btn-link" (click)="removeOneSubjectiveRow(subjective.id,0)">
 												<i class="glyphicon glyphicon-trash"></i>
 											</a>

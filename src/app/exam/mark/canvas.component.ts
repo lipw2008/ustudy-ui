@@ -12,8 +12,11 @@ export class CanvasComponent implements OnInit {
 	@Input() answer: any;
 	@Input() editMode: string;
 	@Input() score: string;
+	@Input() questionName: string;
+	@Input() isHidden: boolean;
 
 	curPaperImg: string = null;
+	isCanvasEnabled: boolean = true;
 
 	/***** View *****/
 	@ViewChild('markCanvas') markCanvas;
@@ -22,6 +25,7 @@ export class CanvasComponent implements OnInit {
 	container: any;
 	canvas: any;
 	ctx: any;
+	imgData: any;
 
 	// mark canvas
 	hCanvas: any;
@@ -36,6 +40,9 @@ export class CanvasComponent implements OnInit {
 	// Draw Circle
 	circleBeginX = 0;
 	circleBeginY = 0;
+
+	// Input Text
+	textbox: any;
 
     constructor(private _sharedService: SharedService, private renderer: Renderer2, private route: ActivatedRoute,
 	@Inject(forwardRef(()=>MarkComponent)) public parent: MarkComponent) {
@@ -52,17 +59,51 @@ export class CanvasComponent implements OnInit {
 		// console.log("this.answer.regions[0].ansImg:" + this.answer.regions[0].ansImg);
 		// console.log("this.answer.regions[0].scale:" + this.answer.regions[0].scale);
 		// console.log("this.answer.regions[0]" + this.answer.regions[0]);
+
+		
 		// the view is not inited yet OR it's a canvas not used
-		if (this.canvas === undefined || this.answer.regions[0].ansImg === null) {
+		if (this.canvas === undefined || this.isHidden === true) {
 			return;
 		}
+		console.log("onchange -- this.answer.questionName" + this.answer.questionName);
+		console.log("onchange -- this.questionName" + this.questionName);
 
-		if (this.answer.regions[0].scale == undefined || this.curPaperImg !== this.answer.regions[0].ansImg 
-		|| this.editMode === 'Clear') {
+		// change page OR clear enabled page or reload original page due to question selection change.
+		if (this.curPaperImg !== this.answer.regions[0].ansImg || (this.editMode === 'Clear' && this.isCanvasEnabled === true)
+			|| this.answer.regions[0].scale === undefined) {
+			console.log("clear!!!");
 			this.curPaperImg = this.answer.regions[0].ansImg;
-			this.loadPaper();
+			let promiseArray = this.loadPaper();
+			Promise.all(promiseArray).then(() => {
+				this.isCanvasEnabled = true;
+				this.updateCanvasStatus();
+			}).catch(() => {
+				this.isCanvasEnabled = true;
+				this.updateCanvasStatus();
+				alert("无法加载试卷！");
+				return;
+			});
 		} else if (this.editMode === "Score") {
+			this.updateCanvasStatus();
 			this.addScore();
+		} else {
+			this.updateCanvasStatus();
+		}
+
+		console.log("is hidden:" + this.isHidden);
+		console.log("is enabled:" + this.isCanvasEnabled);
+		console.log("edit mode:" + this.editMode);
+		if (this.editMode === "BestAnswer") {
+			this.addBestAnswer();
+		} else if (this.editMode === "QueerAnswer") {
+			this.addQueerAnswer();
+		} else if (this.editMode === "FAQ") {
+			this.addFAQ();
+		}
+
+		if (this.editMode === "BestAnswer" || this.editMode === "FAQ" || this.editMode === "QueerAnswer") {
+			// restore editmode
+			this.editMode = "None";
 		}
 	}
 
@@ -99,11 +140,16 @@ export class CanvasComponent implements OnInit {
 
 		// it's a canvas not used
 		if (this.answer.regions[0].ansImg !== null) {
-			this.loadPaper();
+			let promiseArray = this.loadPaper();
+			Promise.all(promiseArray).then(() => {
+				this.isCanvasEnabled = true;
+				this.updateCanvasStatus();
+			});
 		}
 	}
 
-	loadPaper(): void {
+	loadPaper() {
+		var promiseArray = [];
 		console.log("loadPaper()");
 		// total canvas width
 		let canvasW = this.container.clientWidth - 20; //leave 20px for the scroll bar
@@ -127,34 +173,47 @@ export class CanvasComponent implements OnInit {
 
 		// load images
 		for (let region of this.answer.regions) {
-			let paperImg = new Image();
 
-			paperImg.crossOrigin = "anonymous";
-			let t = this;
-			paperImg.onload = function() {
-				t.ctx.drawImage(paperImg, 0, 0, paperImg.width, paperImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
-				//load marking record image
-				if (region.markImg !== null) {
-					let markImg = new Image();
-					markImg.crossOrigin = "anonymous";
-					markImg.onload = function() {
-						t.ctx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+			let promise = new Promise((resolve, reject) =>  {
+				let paperImg = new Image();
 
-						// hidden canvas
-						t.hCtx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.hCtx.canvas.width, region.canvasH);
+				paperImg.crossOrigin = "anonymous";
+				let t = this;
+				paperImg.onload = function() {
+					t.ctx.drawImage(paperImg, 0, 0, paperImg.width, paperImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+					//load marking record image
+					if (region.markImg !== null) {
+						let markImg = new Image();
+						markImg.crossOrigin = "anonymous";
+						markImg.onload = function() {
+							t.ctx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.ctx.canvas.width, region.canvasH);
+
+							// hidden canvas
+							t.hCtx.drawImage(markImg, 0, 0, markImg.width, markImg.height, 0, region.canvasY, t.hCtx.canvas.width, region.canvasH);
+							resolve();
+						}
+						markImg.onerror = function() {
+							reject();
+						}
+						markImg.src = t._sharedService.getImgUrl(region.markImg, "");
+					} else {
+						resolve();
 					}
-					markImg.src = t._sharedService.getImgUrl(region.markImg, "");
 				}
-			}
-			paperImg.src = this._sharedService.getImgUrl(region.ansImg, region);
+				paperImg.onerror = function() {
+					reject();
+				}
+				paperImg.src = this._sharedService.getImgUrl(region.ansImg, region);
+			});
+			promiseArray.push(promise);
 		}
-	}
-
-	clear(): void {
-		this.loadPaper();
+		return promiseArray;
 	}
 
 	mouseDown(evt): void {
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		var t = this;
 		var x = (evt.offsetX == undefined || evt.offsetX == 0 ? evt.layerX: evt.offsetX);
 		var y = (evt.offsetY == undefined || evt.offsetY == 0 ? evt.layerY: evt.offsetY);
@@ -180,34 +239,39 @@ export class CanvasComponent implements OnInit {
 				this.circleBeginY = y;
 				break;
 			case 'Text':
-				let textbox = document.createElement("input");
-				textbox.type = "text";
-				textbox.style.position = "absolute";
-				textbox.style.left = evt.clientX + "px";
-				textbox.style.top = evt.clientY + "px";
-				textbox.style.display = "inline";
-				textbox.setAttribute("autofocus", "");
+				console.log("this.textbox:" + this.textbox);
+				if (this.textbox !== undefined && this.textbox !== null) {
+					this.textbox.parentNode.removeChild(this.textbox);
+				}
+				this.textbox = document.createElement("input");
+				this.textbox.type = "text";
+				this.textbox.style.position = "absolute";
+				this.textbox.style.left = evt.clientX + "px";
+				this.textbox.style.top = evt.clientY + "px";
+				this.textbox.style.display = "inline";
+				this.textbox.setAttribute("autofocus", "");
 				let tEvt = evt;
-				this.renderer.listen(textbox, 'keyup', (evt) => {
+				this.renderer.listen(this.textbox, 'keyup', (evt) => {
     				if(evt.keyCode == 13) {
-    					console.log(textbox.value);
+    					console.log(this.textbox.value);
     					this.ctx.font = '36px serif';
     					this.ctx.fillStyle = "red";
-    					this.ctx.fillText(textbox.value, x, y + 36);
+    					this.ctx.fillText(this.textbox.value, x, y + 36);
 
 						//hidden canvas
     					this.hCtx.font = '36px serif';
     					this.hCtx.fillStyle = "red";
-    					this.hCtx.fillText(textbox.value, x, y + 36);
+    					this.hCtx.fillText(this.textbox.value, x, y + 36);
 
 						console.log(tEvt.layerX);
 						console.log(tEvt.offsetX);
-						textbox.parentNode.removeChild(textbox);
+						this.textbox.parentNode.removeChild(this.textbox);
+						this.textbox = null;
 					}
     			});
-				this.rootContainerElement.appendChild(textbox);
-				textbox.focus();
-				console.log(textbox);
+				this.rootContainerElement.appendChild(this.textbox);
+				this.textbox.focus();
+				console.log(this.textbox);
 				console.log("x: " + evt.clientX + " y: " + evt.clientY);
 				// console.log(this.canvas.offsetLeft);
 				break;
@@ -231,49 +295,6 @@ export class CanvasComponent implements OnInit {
 				}
 				this.img.src = 'assets/images/icon-like.png';
 				break;
-			case 'BestAnswer':
-				this.img = new Image();
-				this.img.onload = function() {
-					console.log("img height:" + t.img.height);
-					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
-					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-					//hidden canvas
-					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
-					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-					t.answer.answerType = "BEST";
-				}
-				this.img.src = 'assets/images/icon-bestanswer.png';
-				break;
-			case 'FAQ':
-				this.img = new Image();
-				this.img.onload = function() {
-					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
-					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-					//hidden canvas
-					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
-					t.hCtx.drawImage(t.img, 0, 0, t. img.width, t.img.height);
-
-					t.answer.answerType = "FAQ";
-				}
-				this.img.src = 'assets/images/icon-faq.png';
-				break;
-			case 'QueerAnswer':
-				this.img = new Image();
-				this.img.onload = function() {
-					t.ctx.clearRect(0, 0, t.img.width, t.img.height);
-					t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-					//hidden canvas
-					t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
-					t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
-
-					t.answer.answerType = "BAD";
-				}
-				this.img.src = 'assets/images/icon-queerflower.png';
-				break;
 			default:
 				console.log("x: " + evt.clientX + " y: " + evt.clientY);
 				//Do Nothing
@@ -281,6 +302,9 @@ export class CanvasComponent implements OnInit {
 	}
 
 	mouseUp(evt): void {
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		switch(this.editMode) {
 			case 'Line':
 				if (this.isDrawingLine === true) {
@@ -356,6 +380,9 @@ export class CanvasComponent implements OnInit {
 	}
 
 	mouseMove(evt): void {
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		switch(this.editMode) {
 			case 'Line':
 				break;
@@ -365,6 +392,9 @@ export class CanvasComponent implements OnInit {
 	}
 
 	mouseOut(evt): void {
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		switch(this.editMode) {
 			case 'Line':
 				if (this.isDrawingLine === true) {
@@ -373,6 +403,29 @@ export class CanvasComponent implements OnInit {
 				break;
 			default:
 				//Do Nothing
+		}
+	}
+
+	updateCanvasStatus() {
+		console.log("isCanvasEnabled:" + this.isCanvasEnabled);
+		if (this.answer.questionName === this.questionName && this.isCanvasEnabled === false) {
+			this.ctx.putImageData(this.imgData, 0, 0);
+			console.log("set canvas to true");
+			this.isCanvasEnabled = true;
+		} else if (this.answer.questionName !== this.questionName && this.isCanvasEnabled === true) {
+			this.imgData = this.ctx.getImageData(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+			this.ctx.globalAlpha = 0.9;
+			this.ctx.fillStyle = "#808080";
+			this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+			this.ctx.globalAlpha = 1;
+			console.log("set canvas to false" + this.ctx.canvas.width + " " + this.ctx.canvas.height);
+			this.isCanvasEnabled = false;
+		}
+		// enable canvas before adding score
+		if (this.isCanvasEnabled === false && this.editMode === "Score") {
+			this.ctx.putImageData(this.imgData, 0, 0);
+			console.log("set canvas to true");
+			this.isCanvasEnabled = true;			
 		}
 	}
 
@@ -403,50 +456,78 @@ export class CanvasComponent implements OnInit {
 	}
 
 	addBestAnswer(): void {
-		this.img = new Image();
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
+		console.log("add best answer...");
 		let t = this;
+		this.img = new Image();
 		this.img.onload = function() {
+			console.log("img height:" + t.img.height);
+			t.ctx.clearRect(0, 0, t.img.width, t.img.height);
 			t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 			//hidden canvas
+			t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
 			t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
+
+			t.answer.answerType = "BEST";
 		}
 		this.img.src = 'assets/images/icon-bestanswer.png';
 	}
 
 	addFAQ(): void {
-		this.img = new Image();
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		let t = this;
+		this.img = new Image();
 		this.img.onload = function() {
-			t.ctx.drawImage(t.img, 80, 0, t.img.width, t.img.height);
+			t.ctx.clearRect(0, 0, t.img.width, t.img.height);
+			t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 			//hidden canvas
-			t.hCtx.drawImage(t.img, 80, 0, t.img.width, t.img.height);
+			t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
+			t.hCtx.drawImage(t.img, 0, 0, t. img.width, t.img.height);
+
+			t.answer.answerType = "FAQ";
 		}
 		this.img.src = 'assets/images/icon-faq.png';
 	}
 
 	addQueerAnswer(): void {
-		this.img = new Image();
+		if (this.isHidden === true || this.isCanvasEnabled === false) {
+			return;
+		}
 		let t = this;
+		this.img = new Image();
 		this.img.onload = function() {
-			t.ctx.drawImage(t.img, 160, 0, t.img.width, t.img.height);
+			t.ctx.clearRect(0, 0, t.img.width, t.img.height);
+			t.ctx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
 
 			//hidden canvas
-			t.hCtx.drawImage(t.img, 160, 0, t.img.width, t.img.height);
+			t.hCtx.clearRect(0, 0, t.img.width, t.img.height);
+			t.hCtx.drawImage(t.img, 0, 0, t.img.width, t.img.height);
+
+			t.answer.answerType = "BAD";
 		}
 		this.img.src = 'assets/images/icon-queerflower.png';
 	}
 
 	addScore(): void {
-		this.ctx.font = '28px serif';
+
+		if(this.score === "") {
+			return;
+		}
+		
+		this.ctx.font = '64px Arial';
 		this.ctx.fillStyle = "red";
-		this.ctx.fillText(this.score, 250, 28);
+		this.ctx.fillText(this.score, 400, 64);
 
 		//hidden canvas
-		this.hCtx.font = '28px serif';
+		this.hCtx.font = '64px Arial';
 		this.hCtx.fillStyle = "red";
-		this.hCtx.fillText(this.score, 250, 28);
+		this.hCtx.fillText(this.score, 400, 64);
 
 		for (let region of this.answer.regions) {
 			this.setDataUrl(region);
