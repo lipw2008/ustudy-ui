@@ -579,6 +579,8 @@ export class CanvasComponent implements OnInit {
 
 		if(this.score === "") {
 			return;
+		} else {
+			this.score = "+" + this.score;
 		}
 		
 		this.ctx.font = '64px Arial';

@@ -50,6 +50,10 @@ export class MarkComponent implements OnInit {
 	scoreList = [];
 	scoreUnit = "1";
 	autoSubmit = false;
+	focusQuestion = {
+		questionName: "",
+		stepName: ""
+	}
 
 	// page controller
 	curPage: number = 1;
@@ -297,6 +301,7 @@ export class MarkComponent implements OnInit {
 
 	updateFullScore(): void {
 		// console.log("before update full score: " + this.fullScore);
+
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
@@ -329,9 +334,18 @@ export class MarkComponent implements OnInit {
 		console.log("after update full score");
 	}
 
-	onFocus(questionName: string): void {
-		console.log("get focus!!! " + questionName);
+	onFocus(questionName: string, stepName: string, fullScore: string): void {
+		console.log("get focus!!! " + questionName + " " + stepName);
 		this.questionName = questionName;
+		if (stepName !== '') {
+			this.focusQuestion.questionName = "";
+			this.focusQuestion.stepName = stepName;
+		} else {
+			this.focusQuestion.questionName = questionName;
+			this.focusQuestion.stepName = "";			
+		}
+		this.fullScore = fullScore;
+		this.updateScoreBoard();
 	}
 
 	setScoreUnit(unit): void {
@@ -358,36 +372,69 @@ export class MarkComponent implements OnInit {
 	}
 
 	setScore(score: string): void {
+		console.log("get focus!!! " + this.focusQuestion.questionName + " " + this.focusQuestion.stepName);
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
-				for(let paper of group.papers) {
-					if (paper.problemPaper === true) {
-						continue;
-					}
-					if (paper.steps.length === 0 && paper.score === "") {
-						if (score !== 'PROBLEM') {
-							paper.score = score;
-						} else {
-							paper.problemPaper = true;
+				if (this.focusQuestion.questionName !== "" || this.focusQuestion.stepName !== "") {
+					for(let paper of group.papers) {
+						if (paper.problemPaper === true) {
+							continue;
 						}
-						this.updateFullScore();
-						return;
-					} else if (paper.steps.length > 0) {
-						for(let step of paper.steps) {
-							if (step.score === "") {
-								if (score !== 'PROBLEM') {
-									step.score = score;
-								} else {
-									paper.problemPaper = true;
+						if (paper.steps.length === 0 && paper.questionName === this.focusQuestion.questionName) {
+							if (score !== 'PROBLEM') {
+								paper.score = score;
+							} else {
+								paper.problemPaper = true;
+							}
+							this.updateFullScore();
+							break;
+						} else if (paper.steps.length > 0) {
+							for(let step of paper.steps) {
+								if (step.name === this.focusQuestion.stepName) {
+									if (score !== 'PROBLEM') {
+										step.score = score;
+									} else {
+										paper.problemPaper = true;
+									}
+									this.updateFullScore();
+									break;
+								} 
+							}
+						}
+					}
+				} else {
+					for(let paper of group.papers) {
+						if (paper.problemPaper === true) {
+							continue;
+						}
+						if (paper.steps.length === 0 && paper.score === "") {
+							if (score !== 'PROBLEM') {
+								paper.score = score;
+							} else {
+								paper.problemPaper = true;
+							}
+							this.updateFullScore();
+							break;
+						} else if (paper.steps.length > 0) {
+							for(let step of paper.steps) {
+								if (step.score === "") {
+									if (score !== 'PROBLEM') {
+										step.score = score;
+									} else {
+										paper.problemPaper = true;
+									}
+									this.updateFullScore();
+									break;
 								}
-								this.updateFullScore();
-								return;
-							} 
+							}
 						}
 					}
 				}
+				break;
 			}
 		}
+		this.focusQuestion.questionName = "";
+		this.focusQuestion.stepName = "";
 	}
 
 	firstPage(): void {
@@ -548,6 +595,8 @@ export class MarkComponent implements OnInit {
 							}
 						}
 					}
+					this.focusQuestion.questionName = "";
+					this.focusQuestion.stepName = "";
 					this.setStatistics(data);
 					//alert("修改成功");
 					this.nextPage();

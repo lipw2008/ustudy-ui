@@ -150,7 +150,7 @@
                                 <ng-container *ngIf="markType === '标准'">
                                     <ng-container *ngIf="paper.steps.length === 0">
                                         <label for="">{{paper.questionName}}题: </label>
-                                        <input (focus)="onFocus(paper.questionName)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
+                                        <input (focus)="onFocus(paper.questionName, '', paper.fullscore)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
                                         <br/>
                                     </ng-container>
                                     <ng-container *ngIf="paper.steps.length > 0">
@@ -158,7 +158,7 @@
                                         <br/>
                                         <ng-container *ngFor="let step of paper.steps">
                                             <label for="">{{step.name}}: </label>
-                                            <input (focus)="onFocus(paper.questionName)" (change)="updateFullScore()" name="{{step.name}}" type="text" class="form-control" id="" size="3" [(ngModel)]="step.score">
+                                            <input (focus)="onFocus(paper.questionName, step.name, step.fullscore)" (change)="updateFullScore()" name="{{step.name}}" type="text" class="form-control" id="" size="3" [(ngModel)]="step.score">
                                             <br/>
                                         </ng-container>
                                     </ng-container>
