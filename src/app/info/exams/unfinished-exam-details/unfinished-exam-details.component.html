@@ -34,8 +34,7 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="答案" [flexGrow]="1" [cellClass]="text-center">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="glyphicon" [ngClass]="{'glyphicon-ok': row.answerSet==='1', 'glyphicon-open-file': row.answerSet==='0'}"
-                [routerLink]="['/setanswers', { egsId: row.egsId, examId: examId, gradeId: row.gradeId, subjectId: row.subjectId, seted: seted }]"></span>
+          <span class="glyphicon" [ngClass]="{'glyphicon-ok': row.answerSet==='1', 'glyphicon-open-file': row.answerSet==='0'}" ></span>
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="答题卡" [flexGrow]="1" [cellClass]="text-center">
@@ -55,19 +54,23 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="客观题" [flexGrow]="1" [cellClass]="text-center">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="glyphicon glyphicon-ok" *ngIf="row.objectCount" title="{{ row.objectScore }}分{{ row.objectCount }}题"></span>
-          <span *ngIf="!row.objectCount"><a href="javascript:;">未设置</a></span>
+          <span *ngIf="row.objectCount" title="{{ row.objectScore }}分{{ row.objectCount }}题">
+            <a class="glyphicon glyphicon-ok" [routerLink]="['/setanswers', { egsId: row.egsId, examId: examId, gradeId: row.gradeId, subjectId: row.subjectId, seted: seted }]"></a>
+          </span>
+          <span *ngIf="!row.objectCount"><a [routerLink]="['/setanswers', { egsId: row.egsId, examId: examId, gradeId: row.gradeId, subjectId: row.subjectId, seted: seted }]">未设置</a></span>
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="主观题" [flexGrow]="1" [cellClass]="text-center">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="glyphicon glyphicon-ok" *ngIf="row.subjectCount" title="{{ row.subjectScore }}分{{ row.subjectCount }}题"></span>
-          <span *ngIf="!row.objectCount"><a href="javascript:;">未设置</a></span>
+          <span *ngIf="row.subjectCount" title="{{ row.subjectScore }}分{{ row.subjectCount }}题">
+            <a class="glyphicon glyphicon-ok" [routerLink]="['/setanswers', { egsId: row.egsId, examId: examId, gradeId: row.gradeId, subjectId: row.subjectId, seted: seted }]"></a>
+          </span>
+          <span *ngIf="!row.objectCount"><a  [routerLink]="['/setanswers', { egsId: row.egsId, examId: examId, gradeId: row.gradeId, subjectId: row.subjectId, seted: seted }]">未设置</a></span>
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="任务分配" [flexGrow]="1" [cellClass]="text-center">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="glyphicon glyphicon-ok" *ngIf="row.taskDispatch"><a [routerLink]="['/viewTasks',{gradeId:row.gradeId,subjectId:row.subjectId,examId:examId}]"></a></span>
+          <span *ngIf="row.taskDispatch"><a class="glyphicon glyphicon-ok" [routerLink]="['/viewTasks',{gradeId:row.gradeId,subjectId:row.subjectId,examId:examId}]"></a></span>
           <span *ngIf="!row.taskDispatch"><a [routerLink]="['/taskassign', { examId: examId, gradeId: row.gradeId, subjectId: row.subjectId, subject: row.subjectName }]">未设置</a></span>
         </ng-template>
       </ngx-datatable-column>
