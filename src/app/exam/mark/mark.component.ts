@@ -452,6 +452,7 @@ export class MarkComponent implements OnInit {
 	}
 
 	submit(): void {
+		let message = "";
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				if (group.papers[0].score !== "") {
@@ -464,7 +465,9 @@ export class MarkComponent implements OnInit {
 					this.score = String(scoreSum);
 				} else if (group.papers[0].problemPaper === false){
 					alert("请完成打分再提交，谢谢！");
+					return;
 				}
+				message += group.papers[0].questionName + "题: " + this.score + ";";
 				if (this.markQuestions.length >= 2) {
 					if (group.papers[1].score !== "") {
 						this.score2 = group.papers[1].score;
@@ -476,7 +479,9 @@ export class MarkComponent implements OnInit {
 						this.score2 = String(scoreSum);
 					} else if (group.papers[1].problemPaper === false){
 						alert("请完成打分再提交，谢谢！");
+						return;
 					}
+					message += group.papers[1].questionName + "题: " + this.score2 + ";";
 				}
 				if (this.markQuestions.length == 3) {
 					if (group.papers[2].score !== "") {
@@ -489,8 +494,11 @@ export class MarkComponent implements OnInit {
 						this.score3 = String(scoreSum);
 					} else if (group.papers[2].problemPaper === false){
 						alert("请完成打分再提交，谢谢！");
+						return;
 					}
+					message += group.papers[2].questionName + "题: " + this.score3 + ";";
 				}
+				this.showAlert(message, 3000);
 			}
 		}
 		this.addScore();
@@ -532,6 +540,7 @@ export class MarkComponent implements OnInit {
 					}
 				}
 				this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(group)).then((data: any) => {
+					let message = "";
 					for (let group of this.mark.groups) {
 						if (group.paperSeq === this.curPage) {
 							for (let paper of group.papers) {
@@ -540,7 +549,7 @@ export class MarkComponent implements OnInit {
 						}
 					}
 					this.setStatistics(data);
-					alert("修改成功");
+					//alert("修改成功");
 					this.nextPage();
 				}).catch((error: any) => {
 					console.log(error.status);
@@ -550,6 +559,51 @@ export class MarkComponent implements OnInit {
 			}
 		}
 	}
+
+    showAlert(text, time): void {
+        var $body = $(document.body);
+        //var tipTag = "<div class='tip'><span class='tipcontent' style='font-size:50px; position: fixed; top: " + top + "; left: " + left + ";'>" +text + "</span><div>";
+        var tipTag = "<div class='tip'><span style='font-size:80px;'>" +text + "</span><div>";
+        var $tipTag= $(tipTag);
+
+        var i=0;
+        $body.find(".tip").remove();
+        $body.append(tipTag);
+        $tipTag = $body.find(".tip");
+        //tips时间序列标识
+        var timeStr = new Date().getTime();
+
+        console.log("tag height:" + $tipTag.height());
+        console.log("tag width:" + $tipTag.width());
+        var top = (document.body.clientHeight - $tipTag.height())/2 + "px";
+        var left= (document.body.clientWidth - $tipTag.width())/2 + "px";
+
+        // var top = document.body.clientHeight/2 + "px";
+        // var left= document.body.clientWidth/2 + "px";
+
+        $tipTag.attr("timeStr",timeStr);
+        $tipTag.find('span').show().css({
+            'color': 'red',
+            'position': 'fixed',
+            'top': top,
+            'left': 0,
+            'text-align': 'center',
+            'width': document.body.clientWidth + 'px'
+        });
+        if(time){
+            $tipTag.fadeOut(time,function(){
+                if($tipTag.attr("timeStr")==timeStr){
+                    $tipTag.remove();
+                }
+            });
+        }else{
+            $tipTag.fadeOut(3000,function(){
+                if($tipTag.attr("timeStr")==timeStr){
+                    $tipTag.remove();
+                }
+            });
+        }
+    };
 
 	drawLine(): void {
 		this.editMode = 'Line';
