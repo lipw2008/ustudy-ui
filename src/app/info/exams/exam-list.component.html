@@ -117,7 +117,7 @@
 						</thead>
 						<tbody>
 							<tr *ngFor="let exam of unfinishedExams">
-								<td><a>{{ exam.examName }}</a></td>
+								<td><a [routerLink]="['/examDetails', {examId:exam.id}]" >{{ exam.examName }}</a></td>
 								<td>{{ exam.examDate | intToDate }}</td>
 								<td>
 									<a href="javascript:;" class="btn btn-xs btn-primary">编辑</a>

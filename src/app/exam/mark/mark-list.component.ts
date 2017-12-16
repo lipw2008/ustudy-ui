@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { SharedService } from '../../shared.service';
+import { MarkService } from './mark.service';
 
 @Component({
   templateUrl: 'mark-list.component.html'

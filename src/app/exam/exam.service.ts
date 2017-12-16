@@ -70,4 +70,16 @@ export class ExamService {
       })
     })
   }
+
+  getExamDetails(examId) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/exam/summary/${examId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 }
