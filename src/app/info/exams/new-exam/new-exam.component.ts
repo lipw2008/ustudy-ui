@@ -3,6 +3,8 @@ import { ExamService   } from '../../../exam/exam.service';
 import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import {TaskService} from "../../../exam/task/task.service";
 
 @Component({
   selector: 'app-new-exam',
@@ -15,12 +17,28 @@ export class NewExamComponent implements OnInit {
   private name = '';
   private date: any;
   datePipe = new DatePipe('en-US');
+  private examId: any;
 
-  constructor(private _examService: ExamService, private _location: Location) { }
+  constructor(private _examService: ExamService, private _location: Location, private route: ActivatedRoute, private _taskService: TaskService) { }
 
   ngOnInit() {
+    this.examId = this.route.snapshot.params.examId;
     this._examService.getExamOptions().then((data) => {
-      this.examOptions = data
+      this.examOptions = data;
+      if (this.examId) {
+        this._examService.getExam(this.examId).then((exam: any) => {
+          this.name = exam.examName;
+          this.date = exam.examDate
+        });
+        this._taskService.getExamSubjects(this.examId).then((egss: any) => {
+          for (const grade of egss) {
+            for (const subject of grade.subjects) {
+              subject.id = subject.subId;
+              this.trigger(grade, subject)
+            }
+          }
+        })
+      }
     });
   }
 
@@ -48,7 +66,7 @@ export class NewExamComponent implements OnInit {
   }
 
   getClass(grade, subject) {
-    const selected =  _.includes(_.get(_.find(this.grades, grade), 'subjectIds'), subject.id);
+    const selected =  _.includes(_.get(_.find(this.grades, {id: grade.id}), 'subjectIds'), subject.subId || subject.id);
     if (selected) {
       return 'btn-primary'
     } else {
