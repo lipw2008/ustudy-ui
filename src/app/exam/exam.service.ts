@@ -34,11 +34,14 @@ export class ExamService {
     return this.examOptions
   }
 
-  createExam(params) {
+  createOrUpdateExam(params, examId) {
     console.log('createExam: ', params);
+    if (examId) {
+      params.id = examId
+    }
     return new Promise((resolve, reject) => {
       // resolve()
-      this._sharedService.makeRequest('POST', `/api/info/exam/create/`, params).then((data: any) => {
+      this._sharedService.makeRequest('POST', `/api/info/exam/${examId ? 'update' : 'create'}/`, params).then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {
@@ -51,7 +54,7 @@ export class ExamService {
   deleteExam(examId) {
     return new Promise((resolve, reject) => {
       // resolve()
-      this._sharedService.makeRequest('POST', `/api/info/exam/delete/${examId}`, '').then((data: any) => {
+      this._sharedService.makeRequest('POST', `/api/info/exam/delete/${examId}/`, '').then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {
