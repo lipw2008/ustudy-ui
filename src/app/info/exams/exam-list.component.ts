@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import * as _ from 'lodash';
 
 import { SharedService } from '../../shared.service';
 import { ExamService } from '../../exam/exam.service';

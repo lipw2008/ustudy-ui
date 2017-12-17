@@ -16,14 +16,14 @@
       [limit]="10">
       <ngx-datatable-group-header [rowHeight]="50" #myGroupHeader (toggle)="onDetailToggle($event)">
         <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
-          <div style="padding-left:5px;">
+          <div style="padding-left:5px; height: 25px;">
             <a
-              href="javascript:;"
+              [routerLink]="['/examinee',{examId: examId, gradeId: group.value[0].gradeId}]"
               [class.datatable-icon-right]="!expanded"
               [class.datatable-icon-down]="expanded"
               title="Expand/Collapse Group"
               (click)="toggleExpandGroup(group)">
-              <b>{{group.value[0].gradeName}} 考生：{{ group.value[0].studentCount }}</b>
+              <b>{{group.value[0].gradeName}} 考生：<u> {{ group.value[0].studentCount }} </u></b>
             </a>
           </div>
         </ng-template>
@@ -34,7 +34,7 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="答案" [flexGrow]="1" [cellClass]="text-center">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="glyphicon" [ngClass]="{'glyphicon-ok': row.answerSet==='1', 'glyphicon-open-file': row.answerSet==='0'}" ></span>
+          <span class="glyphicon" [ngClass]="{'glyphicon-ok': row.answerSet, 'glyphicon-open-file': !row.answerSet}" ></span>
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="答题卡" [flexGrow]="1" [cellClass]="text-center">
@@ -65,7 +65,7 @@
           <span *ngIf="row.subjectCount" title="{{ row.subjectScore }}分{{ row.subjectCount }}题">
             <a class="glyphicon glyphicon-ok" [routerLink]="['/setanswers', { egsId: row.egsId, examId: examId, gradeId: row.gradeId, subjectId: row.subjectId, seted: seted }]"></a>
           </span>
-          <span *ngIf="!row.objectCount"><a  [routerLink]="['/setanswers', { egsId: row.egsId, examId: examId, gradeId: row.gradeId, subjectId: row.subjectId, seted: seted }]">未设置</a></span>
+          <span *ngIf="!row.subjectCount"><a  [routerLink]="['/setanswers', { egsId: row.egsId, examId: examId, gradeId: row.gradeId, subjectId: row.subjectId, seted: seted }]">未设置</a></span>
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="任务分配" [flexGrow]="1" [cellClass]="text-center">
@@ -78,8 +78,8 @@
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div class="progress clear-margin-bottom">
             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                 [ngStyle]="{'width': getExamProgress(row)}">
-              {{getExamProgress(row)}}
+                 [ngStyle]="{'width': row.progressRate + '%'}">
+              {{row.progressRate + '%'}}
             </div>
           </div>
         </ng-template>

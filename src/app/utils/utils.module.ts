@@ -20,7 +20,6 @@ import { IntToDatePipe } from './int-to-date.pipe';
     FormsModule,
     BsDatepickerModule.forRoot(),
     TreeviewModule.forRoot(),
-    FormsModule
   ],
   declarations: [
     TeacherSelectorComponent,

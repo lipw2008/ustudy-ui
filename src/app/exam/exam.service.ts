@@ -107,4 +107,16 @@ export class ExamService {
       })
     })
   }
+
+  getExaminees(examId: any, gradeId: any, params: any) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/students/${examId}/${gradeId}`, params).then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 }
