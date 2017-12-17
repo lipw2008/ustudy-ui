@@ -42,10 +42,10 @@
                         </div>
                     </div>
 				</div>
-				<div class="panel-body">
+				<div #markPanel class="panel-body">
 					<div>
                         <div #markContainer style="overflow-x: auto; overflow-y: auto">
-                            <mark-canvas [score]="score"  [(answer)]="answer" [questionName]="questionName" [isHidden]="isHidden" [(editMode)]="editMode"></mark-canvas>
+                            <mark-canvas [score]="score" [(answer)]="answer" [questionName]="questionName" [isHidden]="isHidden" [(editMode)]="editMode"></mark-canvas>
                             <mark-canvas [score]="score2" [(answer)]="answer2" [questionName]="questionName" [isHidden]="isHidden2" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
                             <mark-canvas [score]="score3" [(answer)]="answer3" [questionName]="questionName" [isHidden]="isHidden3" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
                         </div>

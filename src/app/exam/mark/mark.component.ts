@@ -14,6 +14,7 @@ export class MarkComponent implements OnInit {
 	@ViewChild('questionSelector') questionSelector;
 	@ViewChild('markContainer') markContainer;
 	@ViewChild('rootContainer') rootContainer;
+	@ViewChild('markPanel') markPanel;
 
 	//request content
 	reqContent: any = {
@@ -346,6 +347,33 @@ export class MarkComponent implements OnInit {
 		}
 		this.fullScore = fullScore;
 		this.updateScoreBoard();
+	}
+
+	scroll(questionName): void {
+		let top = 0;
+		if (this.markQuestions.length === 1) {
+			return;
+		} else if (this.markQuestions.length == 2) {
+			if (this.answer2.questionName === questionName) {
+				for (let region of this.answer.regions) {
+					top += region.canvasH;
+				}
+			}
+		} else if (this.markQuestions.length == 3) {
+			if (this.answer2.questionName === questionName) {
+				for (let region of this.answer.regions) {
+					top += region.canvasH;
+				}
+			} else if (this.answer3.questionName === questionName) {
+				for (let region of this.answer.regions) {
+					top += region.canvasH;
+				}
+				for (let region of this.answer2.regions) {
+					top += region.canvasH;
+				}
+			}
+		}
+		$(this.markPanel.nativeElement).scrollTop(top);
 	}
 
 	setScoreUnit(unit): void {
