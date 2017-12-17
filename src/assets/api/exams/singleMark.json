@@ -7,13 +7,15 @@
     "subject": "英语",
     "grade": "高一",
     "markType": "标准",
-    "progress": null,
+    "progress": "3/80",
     "summary": [
         {
             "quesid": "18",
             "questionName": "41",
+            "highScore" : true,
             "avgScore": 0,
-            "markedNum": 0
+            "markedNum": 0,
+            "progress": "3/80"
         }
     ],
     "groups": [
@@ -29,7 +31,7 @@
                     "paperId": null,
                     "answerType": null,
                     "isProblemPaper": false,
-                    "fullscore": "5",
+                    "fullscore": "15",
                     "score": "", 
                     "steps": [],
                     "regions": [

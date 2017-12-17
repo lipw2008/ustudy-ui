@@ -41,6 +41,7 @@ export class MarkComponent implements OnInit {
 
 	// mark type
 	markType: string;
+	highScore: boolean = false;
 
 	// question selector
 	questionList: any;
@@ -48,6 +49,7 @@ export class MarkComponent implements OnInit {
 	progress: string;
 	
 	// score board
+	digitList = [1,2,3,4,5,6,7,8,9,0];
 	displayScoreBoard: boolean = true;
 	fullScore: string = "0";
 	scoreList = [];
@@ -405,6 +407,10 @@ export class MarkComponent implements OnInit {
 		this.setScore(this.fullScore);
 	}
 
+	toNum(data) {
+		return this._markService.toNum(data);
+	}
+
 	setZeroScore(): void {
 		this.setScore("0");
 	}
@@ -473,6 +479,10 @@ export class MarkComponent implements OnInit {
 		}
 		this.focusQuestion.questionName = "";
 		this.focusQuestion.stepName = "";
+	}
+
+	setDigitScore(score: string) {
+
 	}
 
 	firstPage(): void {
