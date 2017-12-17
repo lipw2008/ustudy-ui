@@ -48,6 +48,19 @@ export class ExamService {
     })
   }
 
+  deleteExam(examId) {
+    return new Promise((resolve, reject) => {
+      // resolve()
+      this._sharedService.makeRequest('POST', `/api/info/exam/delete/${examId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
   filterExamSubjects(conditions): any {
     const urlParams = _.map(conditions, (v, k) => `${k}=${v}`).join('&');
     return new Promise((resolve, reject) => {
@@ -74,6 +87,18 @@ export class ExamService {
   getExamDetails(examId) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET', `/api/exam/summary/${examId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
+  getExam(examId) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/exam/${examId}`, '').then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {

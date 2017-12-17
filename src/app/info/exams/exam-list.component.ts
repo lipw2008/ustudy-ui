@@ -120,4 +120,11 @@ export class ExamListComponent implements OnInit {
     }
     return params
   }
+
+  delete(exam) {
+    this._examService.deleteExam(exam.id).then((data) => {
+      alert('删除考试成功');
+      _.remove(this.unfinishedExams, exam)
+    })
+  }
 }

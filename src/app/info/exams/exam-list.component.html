@@ -117,11 +117,11 @@
 						</thead>
 						<tbody>
 							<tr *ngFor="let exam of unfinishedExams">
-								<td><a [routerLink]="['/examDetails', {examId:exam.id}]" >{{ exam.examName }}</a></td>
+								<td><a [routerLink]="['/examDetails', {examId: exam.id}]" >{{ exam.examName }}</a></td>
 								<td>{{ exam.examDate | intToDate }}</td>
 								<td>
-									<a href="javascript:;" class="btn btn-xs btn-primary">编辑</a>
-									<a href="javascript:;" class="btn btn-xs btn-primary disabled">删除</a>
+									<a [routerLink]="['/addExam', {examId:exam.id}]" class="btn btn-xs btn-primary">编辑</a>
+									<a class="btn btn-xs btn-primary disabled" (click)="delete(exam)">删除</a>
 								</td>
 							</tr>
 						</tbody>
