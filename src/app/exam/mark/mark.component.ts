@@ -15,6 +15,8 @@ export class MarkComponent implements OnInit {
 	@ViewChild('markContainer') markContainer;
 	@ViewChild('rootContainer') rootContainer;
 	@ViewChild('markPanel') markPanel;
+	@ViewChild('markBarHeader') markBarHeader;
+	@ViewChild('markBarBody') markBarBody;
 
 	//request content
 	reqContent: any = {
@@ -388,7 +390,15 @@ export class MarkComponent implements OnInit {
 		for (var i=0; i<=score; i+=unit) {
 			this.scoreList.push(i);
 		}
-		console.log(this.scoreList);
+
+		setTimeout(() => {
+			let $header = $(this.markBarHeader.nativeElement);
+			let $body = $(this.markBarBody.nativeElement);
+			let $root = $(this.rootContainer.nativeElement);
+			// 20px margin bottom for the header
+        	$body.height($root.height() - $header.height() - 20);
+			console.log("update score board - root:" + $root.height() + " header: " + $header.height() + " body: " + $body.height());
+      	}, 100);
 	}
 
 	setFullScore(): void {

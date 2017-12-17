@@ -9,3 +9,32 @@
 .panel-footer .online-marking-wrap {
   padding: 22px 0;
 }
+
+.online-marking-sidebar .padding {
+  padding: 5px 8px;
+}
+
+.online-marking-sidebar .panel-heading {
+  margin-bottom: 10px;
+}
+
+.online-marking-sidebar .panel-body {
+	padding: 5px;
+}
+
+.online-marking-sidebar .form-group {
+	margin-bottom: 1px;
+}
+
+.online-marking-sidebar .panel-footer {
+	padding: 1px 0;
+}
+
+.online-marking-sidebar .form-control {
+	height: 24px;
+}
+
+.online-marking-sidebar .table {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}

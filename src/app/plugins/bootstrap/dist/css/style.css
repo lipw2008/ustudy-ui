@@ -769,15 +769,13 @@ html.full-screen .container.container-fluid-online-marking {
 .container.container-fluid-online-marking {
   height: 500px;
 }
-.online-marking-sidebar {
-  height: 500px;
-  overflow-y: auto;
-}
+
 .container.container-fluid-online-marking .row,
 .container.container-fluid-online-marking .row > [class^="col-"],
 .container.container-fluid-online-marking .online-marking,
 .container.container-fluid-online-marking .online-marking .panel-body,
-.container.container-fluid-online-marking .online-marking .panel-body .online-marking-wrap,
+.container.container-fluid-online-marking .online-marking .panel-footer .online-marking-wrap,
+.container.container-fluid-online-marking .online-marking-sidebar,
 html.full-screen .container.container-fluid-online-marking {
   height: 100%;
 }
