@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import * as _ from 'lodash';
 
 import { SharedService } from '../../shared.service';
+import { ExamService } from '../../exam/exam.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  templateUrl: 'exam-list.component.html'
+  templateUrl: 'exam-list.component.html',
 })
 
 export class ExamListComponent implements OnInit {
 
   public searchForm = this.fb.group({
-    examName: [""],
-    grade: [""],
-    subject: [""],
-    startDate: [""],
-    endDate: [""]
+    examName: [''],
+    grade: [''],
+    subject: [''],
+    startDate: [''],
+    endDate: ['']
   });
 
   isFinished: boolean;
@@ -22,10 +25,6 @@ export class ExamListComponent implements OnInit {
   selected: any;
 
   errorMessage: string;
-
-  grades = [];
-
-  subjects = [];
 
   rows = [];
 
@@ -39,48 +38,54 @@ export class ExamListComponent implements OnInit {
     { prop: 'examineeNum', name: '考生人数' }
   ];
 
+  examOptions: any;
+
   // filter keys:
-  grade = "";
-  subject = "";
-  startDate = "";
-  endDate = "";
-  examName = "";
+  grade: any;
+  subject: any;
+  name = '';
+  startDate: Date;
+  endDate: Date;
+  unfinishedExams: any;
 
-  constructor(private _sharedService: SharedService, public fb: FormBuilder) {
-
-  }
+  constructor(private _sharedService: SharedService, public fb: FormBuilder, private _examService: ExamService) { }
 
   ngOnInit(): void {
     this.reload();
-    this.grades = ["高一", "高二", "高三"];
-    this.subjects = ["数学", "物理", "化学"];
+    this._examService.filterExams(this.getFilterParams(false)).then((data: any) => {
+      this.unfinishedExams = data
+    });
+    this._examService.getExamOptions().then((data) => {
+      this.examOptions = data
+    });
   }
 
   reload() {
-    //req.open('GET', 'assets/api/teachers/teachers.json');
-    this._sharedService.makeRequest('GET', 'assets/api/exams/exams.json', '').then((data: any) => {
-      //cache the list
-      console.log("data: " + JSON.stringify(data));
-      for (var t of data) {
-        //科目
+    // req.open('GET', 'assets/api/teachers/teachers.json');
+
+    this._examService.filterExams(this.getFilterParams(true)).then((data: any) => {
+      // cache the list
+      console.log('data: ' + JSON.stringify(data));
+      for (const t of data) {
+        // 科目
         if (t.subjects && t.subjects.length > 0) {
-          var str = "";
-          for (var s of t.subjects) {
-            str += s.n + " ";
+          let str = '';
+          for (const s of t.subjects) {
+            str += s.n + ' ';
           }
           t.subjects = str;
         } else {
-          t.subjects = "";
+          t.subjects = '';
         }
-        //年级
+        // 年级
         if (t.grades && t.grades.length > 0) {
-          var str = "";
-          for (var g of t.grades) {
-            str += g.n + " ";
+          let str = '';
+          for (const g of t.grades) {
+            str += g.n + ' ';
           }
           t.grades = str;
         } else {
-          t.grades = "";
+          t.grades = '';
         }
       }
       this.temp = [...data];
@@ -91,17 +96,36 @@ export class ExamListComponent implements OnInit {
     });
   }
 
-  filter(event) {
-    // filter our data
-    var t = this;
-    const temp = this.temp.filter(function(d) {
-      return d.grades.indexOf(t.grade) !== -1
-        && d.subjects.indexOf(t.subject) !== -1
-        && d.examName.indexOf(t.examName) !== -1;
-    });
-    // update the rows
-    this.rows = temp;
-    // Whenever the filter changes, always go back to the first page
-    //this.table.offset = 0;
+  test1() {
+    console.log(1)
+  }
+
+  private getFilterParams(finished): Object {
+    const params = Object.create({});
+    params.finished = finished;
+    const datePipe = new DatePipe('en-US');
+    if (this.grade) {
+      params.gradeId = this.grade.id
+    }
+    if (this.subject) {
+      params.subjectId = this.subject.id
+    }
+    if (this.startDate) {
+      params.startDate = datePipe.transform(this.startDate, 'yyyy-MM-dd');
+    }
+    if (this.endDate) {
+      params.endDate = datePipe.transform(this.endDate, 'yyyy-MM-dd');
+    }
+    if (this.name) {
+      params.name = this.name
+    }
+    return params
+  }
+
+  delete(exam) {
+    this._examService.deleteExam(exam.id).then((data) => {
+      alert('删除考试成功');
+      _.remove(this.unfinishedExams, exam)
+    })
   }
 }

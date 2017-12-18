@@ -18,8 +18,50 @@ export class ExamService {
     })
   }
 
+  filterExams(params) {
+    return new Promise((resolve, reject) => {
+      // XXX: should use /exams/{examStatus}
+      this._sharedService.makeRequest('GET', '/api/exams', params).then((data: any) => {
+        if (!data.data) {
+          reject('no data');
+        }
+        resolve(data.data)
+      })
+    })
+  }
+
   getExamOptions() {
     return this.examOptions
+  }
+
+  createOrUpdateExam(params, examId) {
+    console.log('createExam: ', params);
+    if (examId) {
+      params.id = examId
+    }
+    return new Promise((resolve, reject) => {
+      // resolve()
+      this._sharedService.makeRequest('POST', `/api/info/exam/${examId ? 'update' : 'create'}/`, params).then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
+  deleteExam(examId) {
+    return new Promise((resolve, reject) => {
+      // resolve()
+      this._sharedService.makeRequest('DELETE', `/api/info/exam/delete/${examId}/`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
   }
 
   filterExamSubjects(conditions): any {
@@ -36,6 +78,54 @@ export class ExamService {
   getLastExamSubjects() {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET', `/api/last/examsubjects`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
+  getExamDetails(examId) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/exam/summary/${examId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
+  getExam(examId) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/exam/${examId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
+  getExaminees(examId: any, gradeId: any, params: any) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/students/${examId}/${gradeId}`, params).then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
+  addExaminee(params: [{ stuName: string; stuId: string; stuExamId: string; classId: (any | string) }]) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('POST', `/api/info/examinee/create/`, params).then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {
