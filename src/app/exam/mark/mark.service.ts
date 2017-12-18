@@ -24,4 +24,8 @@ export class MarkService {
     return rawData.substring(index + 1);
   }
 
+  toNum(data){
+    return parseFloat(data);
+  }
+
 }
