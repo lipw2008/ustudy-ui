@@ -54,7 +54,7 @@ export class ExamService {
   deleteExam(examId) {
     return new Promise((resolve, reject) => {
       // resolve()
-      this._sharedService.makeRequest('POST', `/api/info/exam/delete/${examId}/`, '').then((data: any) => {
+      this._sharedService.makeRequest('DELETE', `/api/info/exam/delete/${examId}/`, '').then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {
