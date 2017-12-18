@@ -11,9 +11,9 @@ import * as _ from 'lodash';
 })
 export class UnfinishedExamDetailsComponent implements OnInit {
   @ViewChild('examTable') table: any;
-  private examId: any;
-  private subjects = [];
-  private temp = [];
+  examId: any;
+  subjects = [];
+  temp = [];
 
   columns = [
     { prop: 'subjectName', name: '科目' },
