@@ -122,4 +122,16 @@ export class ExamService {
       })
     })
   }
+
+  addExaminee(params: [{ stuName: string; stuId: string; stuExamId: string; classId: (any | string) }]) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('POST', `/api/info/examinee/create/`, params).then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 }

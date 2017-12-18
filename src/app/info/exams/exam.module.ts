@@ -6,6 +6,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { ModalModule } from 'ngx-bootstrap';
 
 import { ExamListComponent } from './exam-list.component';
 import { UtilsModule } from '../../utils/utils.module';
@@ -18,6 +19,7 @@ import { ExamineeComponent } from './examinee/examinee.component';
     CommonModule,
     NgxDatatableModule,
     BsDatepickerModule.forRoot(),
+    ModalModule.forRoot(),
     UtilsModule,
     RouterModule.forChild([
       { path: 'examList', component: ExamListComponent },

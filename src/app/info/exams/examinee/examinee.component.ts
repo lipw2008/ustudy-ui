@@ -25,6 +25,12 @@ export class ExamineeComponent implements OnInit {
     { name: '操作' },
   ];
 
+  // for new examinee
+  private name: string;
+  private stuId: string;
+  private stuExamId: string;
+  private examineeClass: any;
+
 
   constructor(private route: ActivatedRoute, private _examService: ExamService, public fb: FormBuilder) {
   }
@@ -50,5 +56,16 @@ export class ExamineeComponent implements OnInit {
       this.examinees = examinees;
       this.classes = data.classes;
     })
+  }
+
+  addExaminee(modal) {
+    if (!this.name || !this.stuExamId || !this.examineeClass) {
+      alert('请输入必填内容');
+      return
+    }
+    this._examService.addExaminee([{stuName: this.name, stuId: this.stuId, stuExamId: this.stuExamId, classId: this.examineeClass.classId}]).then((data) => {
+      alert('新建考生成功');
+    });
+    modal.hide()
   }
 }
