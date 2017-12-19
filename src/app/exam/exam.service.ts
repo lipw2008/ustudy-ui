@@ -146,4 +146,16 @@ export class ExamService {
       })
     })
   }
+
+  release(egsId, release) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('POST', `/api/examsubject/status/${egsId}/${release}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 }

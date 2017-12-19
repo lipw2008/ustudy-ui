@@ -1,3 +1,14 @@
+<!-- 路径导航 start -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="#">首页</a></li>
+    <li>信息中心</li>
+    <li><a [routerLink]="['/examList']">考试信息</a></li>
+    <li><a [routerLink]="['/examDetails', {examId: examId}]">未完成考试详细信息</a></li>
+    <li class="active">考生列表</li>
+  </ol>
+</div>
+<!-- 路径导航 end -->
 <div class="container">
   <!-- 检索 start -->
   <div class="row search-wrap">
