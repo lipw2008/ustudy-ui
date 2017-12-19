@@ -12,7 +12,7 @@
         {
             "quesid": "18",
             "questionName": "41",
-            "highScore" : true,
+            "composable" : false,
             "avgScore": 0,
             "markedNum": 0,
             "progress": "3/80"
@@ -31,9 +31,30 @@
                     "paperId": null,
                     "answerType": null,
                     "isProblemPaper": false,
-                    "fullscore": "15",
+                    "fullscore": "60",
                     "score": "", 
-                    "steps": [],
+                    "steps": [
+                        {   
+                            "name" : "11",
+                            "fullscore": "20",
+                            "score": ""
+                        },
+                        {   
+                            "name" : "12",
+                            "fullscore": "3",
+                            "score": ""
+                        },
+                        {   
+                            "name" : "13",
+                            "fullscore": "30",
+                            "score": ""
+                        },
+                        {   
+                            "name" : "14",
+                            "fullscore": "4",
+                            "score": ""
+                        }
+                    ],
                     "regions": [
                         {
                             "quesImg": "tpl1.1png",

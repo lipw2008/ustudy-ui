@@ -41,7 +41,7 @@ export class MarkComponent implements OnInit {
 
 	// mark type
 	markType: string;
-	highScore: boolean = false;
+	composable: boolean = true;
 
 	// question selector
 	questionList: any;
@@ -49,7 +49,8 @@ export class MarkComponent implements OnInit {
 	progress: string;
 	
 	// score board
-	digitList = [1,2,3,4,5,6,7,8,9,0];
+	curScore: number = 0;
+	digits = [1,2,3,4,5,6,7,8,9,0];
 	displayScoreBoard: boolean = true;
 	fullScore: string = "0";
 	scoreList = [];
@@ -147,9 +148,15 @@ export class MarkComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.markType = this.route.snapshot.params.markType;
+		if(this.route.snapshot.params.composable === 'true') {
+			this.composable = true;
+		} else {
+			this.composable = false;
+		}
+		console.log("composable:" + this.composable);
 		this.questionName = JSON.parse(this.route.snapshot.params.question)[0].n;
 		this.markQuestions = JSON.parse(this.route.snapshot.params.question);
-		if (this.markType === "标准") {
+		if (this.markType === "标准" && this.composable === true) {
 			this.questionList = JSON.parse(this.route.snapshot.params.questionList);
 		} else {
 			this.questionList = JSON.parse(this.route.snapshot.params.question);
@@ -298,12 +305,6 @@ export class MarkComponent implements OnInit {
 		}
 	}
 
-	// getGap(paper:any): string {
-	// 	let score1 = parseFloat(paper.markRecord[0].score);
-	// 	let score2 = parseFloat(paper.markRecord[1].score);
-	// 	return String(Math.abs(score1 - score2));
-	// }
-
 	updateFullScore(): void {
 		// console.log("before update full score: " + this.fullScore);
 
@@ -341,6 +342,7 @@ export class MarkComponent implements OnInit {
 
 	onFocus(questionName: string, stepName: string, fullScore: string): void {
 		console.log("get focus!!! " + questionName + " " + stepName);
+		this.curScore = 0;
 		this.questionName = questionName;
 		if (stepName !== '') {
 			this.focusQuestion.questionName = "";
@@ -351,6 +353,54 @@ export class MarkComponent implements OnInit {
 		}
 		this.fullScore = fullScore;
 		this.updateScoreBoard();
+	}
+
+	setDigit(digit) {
+		let score = this.curScore = this.curScore*10 + Number(digit);
+		for (let group of this.mark.groups) {
+			if (group.paperSeq === this.curPage) {
+				if (this.focusQuestion.questionName !== "" || this.focusQuestion.stepName !== "") {
+					for(let paper of group.papers) {
+						if (paper.problemPaper === true) {
+							continue;
+						}
+						if (paper.steps.length === 0 && paper.questionName === this.focusQuestion.questionName) {
+							paper.score = score;
+							break;
+						} else if (paper.steps.length > 0) {
+							for(let step of paper.steps) {
+								if (step.name === this.focusQuestion.stepName) {
+									step.score = score;
+									break;
+								} 
+							}
+						}
+					}
+				} else {
+					for(let paper of group.papers) {
+						if (paper.problemPaper === true) {
+							continue;
+						}
+						if (paper.steps.length === 0 && paper.score === "") {
+							paper.score = score;
+							this.focusQuestion.questionName = paper.questionName;
+							this.focusQuestion.stepName = "";	
+							break;
+						} else if (paper.steps.length > 0) {
+							for(let step of paper.steps) {
+								if (step.score === "") {
+									step.score = score;
+									this.focusQuestion.questionName = "";
+									this.focusQuestion.stepName = step.name;	
+									break;
+								}
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
 	}
 
 	scroll(questionName): void {
@@ -386,6 +436,9 @@ export class MarkComponent implements OnInit {
 	}
 
 	updateScoreBoard(): void {
+		if (this.composable === false) {
+			return;
+		}
 		this.scoreList = [];
 		var score = Number(this.fullScore);
 		var unit = parseFloat(this.scoreUnit);
@@ -404,7 +457,12 @@ export class MarkComponent implements OnInit {
 	}
 
 	setFullScore(): void {
-		this.setScore(this.fullScore);
+		if (this.composable === true) {
+			this.setScore(this.fullScore);
+		} else {
+			this.curScore = 0;
+			this.setDigit(this.fullScore);
+		}
 	}
 
 	toNum(data) {
@@ -412,10 +470,19 @@ export class MarkComponent implements OnInit {
 	}
 
 	setZeroScore(): void {
-		this.setScore("0");
+		if (this.composable === true) {
+			this.setScore("0");
+		} else {
+			this.curScore = 0;
+			this.setDigit(0);
+		}
 	}
 
 	setScore(score: string): void {
+		// TODO: support problem paper in the future
+		if (score === 'PROBLEM') {
+			return;
+		}
 		console.log("get focus!!! " + this.focusQuestion.questionName + " " + this.focusQuestion.stepName);
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
@@ -479,10 +546,6 @@ export class MarkComponent implements OnInit {
 		}
 		this.focusQuestion.questionName = "";
 		this.focusQuestion.stepName = "";
-	}
-
-	setDigitScore(score: string) {
-
 	}
 
 	firstPage(): void {
@@ -562,7 +625,8 @@ export class MarkComponent implements OnInit {
 					alert("请完成打分再提交，谢谢！");
 					return;
 				}
-				message += group.papers[0].questionName + "题: " + this.score + ";";
+				//message += group.papers[0].questionName + "题: " + this.score + ";";
+				message += this.score;
 				if (this.markQuestions.length >= 2) {
 					if (group.papers[1].score !== "") {
 						this.score2 = group.papers[1].score;
@@ -576,7 +640,8 @@ export class MarkComponent implements OnInit {
 						alert("请完成打分再提交，谢谢！");
 						return;
 					}
-					message += group.papers[1].questionName + "题: " + this.score2 + ";";
+					//message += group.papers[1].questionName + "题: " + this.score2 + ";";
+					message += ", " + this.score2;
 				}
 				if (this.markQuestions.length == 3) {
 					if (group.papers[2].score !== "") {
@@ -591,7 +656,8 @@ export class MarkComponent implements OnInit {
 						alert("请完成打分再提交，谢谢！");
 						return;
 					}
-					message += group.papers[2].questionName + "题: " + this.score3 + ";";
+					//message += group.papers[2].questionName + "题: " + this.score3 + ";";
+					message += ", " + this.score3;
 				}
 				this.showAlert(message, 3000);
 			}

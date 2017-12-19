@@ -31,7 +31,7 @@ export class MarkListComponent implements OnInit {
       console.log('data: ' + JSON.stringify(data));
       this.marks = data;
       for (const mark of this.marks) {
-        if (mark.markType === '标准') {
+        if (mark.markType === '标准' && mark.summary[0].composable === true) {
           const question = { 'id': '', 'n': '' };
           question.id = mark.summary[0].quesid;
           question.n = mark.summary[0].questionName;
