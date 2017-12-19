@@ -123,9 +123,33 @@ export class ExamService {
     })
   }
 
-  addExaminee(params: [{ stuName: string; stuId: string; stuExamId: string; classId: (any | string) }]) {
+  addOrUpdateExaminee(params: any) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('POST', `/api/info/examinee/create/`, params).then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
+  deleteExaminee(examineeId: any) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('DELETE', `/api/info/examinee/delete/${examineeId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
+  release(egsId, release) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('POST', `/api/examsubject/status/${egsId}/${release}`, '').then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {

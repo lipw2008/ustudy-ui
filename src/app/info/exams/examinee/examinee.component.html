@@ -1,3 +1,14 @@
+<!-- 路径导航 start -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="#">首页</a></li>
+    <li>信息中心</li>
+    <li><a [routerLink]="['/examList']">考试信息</a></li>
+    <li><a [routerLink]="['/examDetails', {examId: examId}]">未完成考试详细信息</a></li>
+    <li class="active">考生列表</li>
+  </ol>
+</div>
+<!-- 路径导航 end -->
 <div class="container">
   <!-- 检索 start -->
   <div class="row search-wrap">
@@ -18,7 +29,7 @@
     </div>
     <div class="col-sm-3 col-lg-3 pull-right">
       <div class="input-group">
-        <a class="btn btn-default" (click)="staticModal.show()">添加考生</a>
+        <a class="btn btn-default" (click)="examineeId=null;staticModal.show()">添加考生</a>
         <a class="btn btn-default">批量添加</a>
       </div>
     </div>
@@ -40,8 +51,8 @@
     <ngx-datatable-column prop="className" name="班级" [flexGrow]="1"></ngx-datatable-column>
     <ngx-datatable-column name="成绩" [flexGrow]="1">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <button class="btn btn-primary">编辑</button>
-        <button class="btn btn-primary">删除</button>
+        <button class="btn btn-primary" (click)="editExaminee(staticModal, row)">编辑</button>
+        <button class="btn btn-primary" (click)="deleteExaminee(row)">删除</button>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>
@@ -78,13 +89,13 @@
               <label class="col-sm-4 control-label"><strong>班级：</strong></label>
               <select [(ngModel)]="examineeClass">
                 <option value="0" selected>请选择一个班级</option>
-                <option *ngFor="let class of classes" [ngValue]="class">{{class.className}}</option>
+                <option *ngFor="let class of classes" [ngValue]="class" [selected]="class.classId===selectedClass?.classId">{{class.className}}</option>
               </select>
               <span> *</span>
             </div>
             <div class="form-group text-center">
               <button type="button" class="btn btn-primary" (click)="staticModal.hide()">取消</button>
-              <button type="button" class="btn btn-primary" (click)="addExaminee(staticModal);">确定</button>
+              <button type="button" class="btn btn-primary" (click)="addOrUpdateExaminee(staticModal);">确定</button>
             </div>
           </div>
         </div>

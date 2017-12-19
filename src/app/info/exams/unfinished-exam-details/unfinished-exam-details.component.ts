@@ -58,7 +58,9 @@ export class UnfinishedExamDetailsComponent implements OnInit {
     console.log('Detail Toggled', event);
   }
 
-  test(row) {
-    console.log(row)
+  release(row, release) {
+    this._examService.release(row.egsId, release).then((data) => {
+
+    })
   }
 }

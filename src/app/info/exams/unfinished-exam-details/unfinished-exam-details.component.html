@@ -1,3 +1,13 @@
+<!-- 路径导航 start -->
+<div class="container">
+	<ol class="breadcrumb">
+		<li><a href="#">首页</a></li>
+		<li>信息中心</li>
+		<li><a [routerLink]="['/examList']">考试信息</a></li>
+    <li class="active">未完成考试详细信息</li>
+	</ol>
+</div>
+<!-- 路径导航 end -->
 <div class="container">
   <div>
     <ngx-datatable
@@ -86,9 +96,8 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="成绩" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <!--TODO: 发布成绩检测-->
-          <button class="btn btn-primary" *ngIf="0">取消发布</button>
-          <button class="btn btn-default" *ngIf="1">发布成绩</button>
+          <button class="btn btn-primary" *ngIf="row.status==='2'" (click)="release(row, false)">取消发布</button>
+          <button class="btn btn-default" *ngIf="row.status==='1'" (click)="release(row, true)">发布成绩</button>
         </ng-template>
       </ngx-datatable-column>
     </ngx-datatable>
