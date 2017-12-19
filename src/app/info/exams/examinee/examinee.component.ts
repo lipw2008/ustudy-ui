@@ -10,14 +10,14 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 })
 export class ExamineeComponent implements OnInit {
   @ViewChild('examineeTable') table: any;
-  private examId: any;
-  private gradeId: any;
+  examId: any;
+  gradeId: any;
   text: string;
   selectedClass: any;
 
-  private temp = [];
-  private examinees = [];
-  private classes: any[];
+  temp = [];
+  examinees = [];
+  classes: any[];
   columns = [
     { prop: 'studentName', name: '考生' },
     { prop: 'examCode', name: '考号' },
@@ -26,10 +26,10 @@ export class ExamineeComponent implements OnInit {
   ];
 
   // for new examinee
-  private name: string;
-  private stuId: string;
-  private stuExamId: string;
-  private examineeClass: any;
+  name: string;
+  stuId: string;
+  stuExamId: string;
+  examineeClass: any;
 
 
   constructor(private route: ActivatedRoute, private _examService: ExamService, public fb: FormBuilder) {
@@ -41,7 +41,7 @@ export class ExamineeComponent implements OnInit {
     this.reload();
   }
 
-  private reload() {
+  reload() {
     const params = Object.create({});
     if (this.text) {
       params.text = this.text

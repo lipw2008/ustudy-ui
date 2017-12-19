@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import {TaskService} from "../../../exam/task/task.service";
+import { TaskService } from '../../../exam/task/task.service';
 
 @Component({
   selector: 'app-new-exam',
@@ -12,12 +12,12 @@ import {TaskService} from "../../../exam/task/task.service";
   styleUrls: ['./new-exam.component.css']
 })
 export class NewExamComponent implements OnInit {
-  private examOptions: any;
-  private grades = [];
-  private name = '';
-  private date: any;
+  examOptions: any;
+  grades = [];
+  name = '';
+  date: any;
   datePipe = new DatePipe('en-US');
-  private examId: any;
+  examId: any;
 
   constructor(private _examService: ExamService, private _location: Location, private route: ActivatedRoute, private _taskService: TaskService) { }
 

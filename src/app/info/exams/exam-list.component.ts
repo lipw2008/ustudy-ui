@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { SharedService } from '../../shared.service';
 import { ExamService } from '../../exam/exam.service';
 import { DatePipe } from '@angular/common';
+import { IntToDatePipe} from '../../utils/int-to-date.pipe';
 
 @Component({
   templateUrl: 'exam-list.component.html',
@@ -47,6 +48,7 @@ export class ExamListComponent implements OnInit {
   startDate: Date;
   endDate: Date;
   unfinishedExams: any;
+  IntToDate = new IntToDatePipe();
 
   constructor(private _sharedService: SharedService, public fb: FormBuilder, private _examService: ExamService) { }
 
