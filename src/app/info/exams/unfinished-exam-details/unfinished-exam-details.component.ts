@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ExamService } from '../../../exam/exam.service';
 import { sprintf } from 'sprintf-js';
 import * as _ from 'lodash';
+import {SharedService} from '../../../shared.service';
 
 @Component({
   selector: 'app-unfinished-exam-details',
@@ -27,9 +28,12 @@ export class UnfinishedExamDetailsComponent implements OnInit {
     { name: '阅卷' },
   ];
 
-  constructor(private route: ActivatedRoute, private _examService: ExamService) { }
+  constructor(private route: ActivatedRoute, private _examService: ExamService, private _sharedService: SharedService) { }
 
   ngOnInit() {
+    if (!this._sharedService.checkPermAndRedirect('考试信息')) {
+      return
+    }
     this.examId = this.route.snapshot.params.examId;
     this._examService.getExamDetails(this.examId).then((data: any) => {
       for (const grade of data) {
