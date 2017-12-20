@@ -2,19 +2,47 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Md5 } from 'ts-md5/dist/md5';
 import * as _ from 'lodash';
+import {Router} from '@angular/router';
 /*
 This shared service provides common utilitis and constants to the whole project.
 */
 @Injectable()
 export class SharedService {
 
-  public userName: string = '';
-  public userRole: string = '';
+  public userName = '';
+  public userRole = '';
 
-  private baseUrl: string = "http://ustudypaper.oss-cn-hangzhou.aliyuncs.com/";
+  private baseUrl = 'http://ustudypaper.oss-cn-hangzhou.aliyuncs.com/';
   private getUrl: Promise<string>;
+  roles = ['校长', '年级主任', '学科组长', '备课组长', '班主任', '任课老师', '考务老师', '扫描账号	', '主任', '教研员', '考务账号', '扫描账号'];
+  pages = [ '学校信息', '教师信息', '学生信息', '考试信息', '模板制作', '答卷扫描', '答案设置', '任务分配', '线上阅卷', '答题卷中心', '阅卷统计', '试题分析', '成绩统计', '报表下载',
+    '修改密码', '阅-Message', '成绩导入', '报表参数设置', '答题卡制作', '编辑考号', '蘑菇云云盘', '在线客服'];
+  perms = [
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0],
+    [1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0],
+    [1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0],
+    [1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+  ];
 
-  constructor(private _http: Http) {
+  constructor(private _http: Http, private router: Router) {
     this.getUrl = new Promise(function(resolve, reject) {
       const configXhr = new XMLHttpRequest();
       configXhr.open('GET', 'assets/config.json');
@@ -32,19 +60,36 @@ export class SharedService {
     })
   };
 
-	getImgUrl(paperImg: string, region: any) : string {
-    let url = "";
-    if (region === "") {
+  checkPerm(page: string): boolean {
+    const roleIndex = this.roles.indexOf(this.userRole);
+    const pageIndex = this.pages.indexOf(page);
+    if (roleIndex < 0 || pageIndex < 0) {
+      return false
+    }
+    return this.perms[pageIndex][roleIndex] === 1
+  }
+
+  checkPermAndRedirect(page: string) {
+    const res = this.checkPerm(page);
+    if (!res) {
+      this.router.navigate(['/welcome']);
+    }
+    return res
+  }
+
+  getImgUrl(paperImg: string, region: any): string {
+    let url = '';
+    if (region === '') {
       url = this.baseUrl + paperImg;
     } else {
-      url = this.baseUrl + paperImg + "?x-oss-process=image/crop,";
-  		url += "x_" + region.x + ",";
-  		url += "y_" + region.y + ",";
-  		url += "w_" + region.w + ",";
-  		url += "h_" + region.h;
+      url = this.baseUrl + paperImg + '?x-oss-process=image/crop,';
+      url += 'x_' + region.x + ',';
+      url += 'y_' + region.y + ',';
+      url += 'w_' + region.w + ',';
+      url += 'h_' + region.h;
     }
-		return url;
-	}
+    return url;
+  }
 
   MD5(pw: string): any {
     return Md5.hashStr(pw);
@@ -63,9 +108,9 @@ export class SharedService {
   makeRequest(method: string, endpoint: string, content: any) {
     return new Promise((resolve, reject) => {
       // parse the content
-      let data = (content.data === undefined ? (typeof(content) === 'string' ? content : JSON.stringify(content)) : content.data);
-      let reqContentType = (content.reqContentType === undefined ? "application/json" : content.reqContentType);
-      let resContentType = (content.resContentType === undefined ? "application/json" : content.resContentType);
+      const data = (content.data === undefined ? (typeof(content) === 'string' ? content : JSON.stringify(content)) : content.data);
+      const reqContentType = (content.reqContentType === undefined ? 'application/json' : content.reqContentType);
+      const resContentType = (content.resContentType === undefined ? 'application/json' : content.resContentType);
 
       // get the configured URL
       this.getUrl.then((url) => {
