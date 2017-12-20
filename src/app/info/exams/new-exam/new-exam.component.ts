@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TaskService } from '../../../exam/task/task.service';
+import {SharedService} from '../../../shared.service';
 
 @Component({
   selector: 'app-new-exam',
@@ -19,9 +20,13 @@ export class NewExamComponent implements OnInit {
   datePipe = new DatePipe('en-US');
   examId: any;
 
-  constructor(private _examService: ExamService, private _location: Location, private route: ActivatedRoute, private _taskService: TaskService) { }
+  constructor(private _examService: ExamService, private _location: Location, private route: ActivatedRoute, private _taskService: TaskService,
+              private _sharedService: SharedService) { }
 
   ngOnInit() {
+    if (!this._sharedService.checkPermAndRedirect('考试信息')) {
+      return
+    }
     this.examId = this.route.snapshot.params.examId;
     this._examService.getExamOptions().then((data) => {
       this.examOptions = data;

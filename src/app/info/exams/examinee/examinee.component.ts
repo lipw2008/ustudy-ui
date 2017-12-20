@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ExamService} from '../../../exam/exam.service';
 import * as _ from 'lodash';
+import {SharedService} from '../../../shared.service';
 
 @Component({
   selector: 'app-examinee',
@@ -34,10 +35,13 @@ export class ExamineeComponent implements OnInit {
   examineeId: any;
 
 
-  constructor(private route: ActivatedRoute, private _examService: ExamService, public fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private _examService: ExamService, public fb: FormBuilder, private _sharedService: SharedService) {
   }
 
   ngOnInit() {
+    if (!this._sharedService.checkPermAndRedirect('考试信息')) {
+      return
+    }
     this.examId = this.route.snapshot.params.examId;
     this.gradeId = this.route.snapshot.params.gradeId;
     this.reload();

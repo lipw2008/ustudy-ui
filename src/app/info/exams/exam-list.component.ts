@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
+import {Router} from '@angular/router';
 
 import { SharedService } from '../../shared.service';
 import { ExamService } from '../../exam/exam.service';
@@ -53,6 +54,9 @@ export class ExamListComponent implements OnInit {
   constructor(private _sharedService: SharedService, public fb: FormBuilder, private _examService: ExamService) { }
 
   ngOnInit(): void {
+    if (!this._sharedService.checkPermAndRedirect('考试信息')) {
+      return
+    }
     this.reload();
     this._examService.filterExams(this.getFilterParams(false)).then((data: any) => {
       this.unfinishedExams = data
