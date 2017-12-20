@@ -27,6 +27,10 @@ export class CanvasComponent implements OnInit {
 	ctx: any;
 	imgData: any;
 
+	// color
+	penStyle = 'rgba(225, 0, 0, 1)';
+	scoreStyle = 'rgba(255, 0, 65, 1)';
+
 	// mark canvas
 	hCanvas: any;
 	hCtx: any;
@@ -249,12 +253,14 @@ export class CanvasComponent implements OnInit {
 		tmpCtx.canvas.height = markImg.height;
 		tmpCtx.drawImage(markImg, 0, 0);
 		var imgData = tmpCtx.getImageData(0, 0, tmpCtx.canvas.width, tmpCtx.canvas.height);
+		//console.log("markImg, RGBA: " + imgData.data[0] + " " + imgData.data[1] + " " + imgData.data[2] + " " + imgData.data[3]);
 		for(var i=0; i<imgData.data.length; i+=4) {
 			if (imgData.data[i+3] !== 0) {
-				if(imgData.data[i+0] === 255 && imgData.data[i+1] === 0 && imgData.data[i+2] === 65) {
-					imgData.data[i+0] = 255;
-					imgData.data[i+1] = 255;
-					imgData.data[i+2] = 255;
+				//console.log("others, RGBA: " + imgData.data[i+0] + " " + imgData.data[i+1] + " " + imgData.data[i+2] + " " + imgData.data[i+3]);
+				if(imgData.data[i+0] === 255 && imgData.data[i+1] === 0) {
+					imgData.data[i+0] = 0;
+					imgData.data[i+1] = 0;
+					imgData.data[i+2] = 0;
 					imgData.data[i+3] = 0;
 				} else if (flag === true) {
 					imgData.data[i+0] = 255;
@@ -316,12 +322,12 @@ export class CanvasComponent implements OnInit {
     				if(evt.keyCode == 13) {
     					console.log(this.textbox.value);
     					this.ctx.font = '36px serif';
-    					this.ctx.fillStyle = "red";
+    					this.ctx.fillStyle = this.penStyle;
     					this.ctx.fillText(this.textbox.value, x, y + 36);
 
 						//hidden canvas
     					this.hCtx.font = '36px serif';
-    					this.hCtx.fillStyle = "red";
+    					this.hCtx.fillStyle = this.penStyle;
     					this.hCtx.fillText(this.textbox.value, x, y + 36);
 
 						console.log(tEvt.layerX);
@@ -372,14 +378,14 @@ export class CanvasComponent implements OnInit {
 					this.isDrawingLine = false;
 					this.ctx.lineTo(evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY);
 					this.ctx.lineWidth = 3;
-					this.ctx.strokeStyle = "red";
+					this.ctx.strokeStyle = this.penStyle;
 					this.ctx.stroke();
 					this.ctx.closePath();
 
 					//hidden canvas
 					this.hCtx.lineTo(evt.offsetX == undefined? evt.layerX: evt.offsetX, evt.offsetY == undefined? evt.layerY: evt.offsetY);
 					this.hCtx.lineWidth = 3;
-					this.hCtx.strokeStyle = "red";
+					this.hCtx.strokeStyle = this.penStyle;
 					this.hCtx.stroke();
 					this.hCtx.closePath();
 					
@@ -415,7 +421,7 @@ export class CanvasComponent implements OnInit {
 				this.ctx.scale(radioX, radioY);
 				this.ctx.beginPath();
 				this.ctx.lineWidth = 3;
-				this.ctx.strokeStyle = "red";
+				this.ctx.strokeStyle = this.penStyle;
 				this.ctx.moveTo((centerX+a)/radioX, centerY/radioY);
 				this.ctx.arc(centerX/radioX, centerY/radioY, r, 0, 2*Math.PI);
 				this.ctx.closePath();
@@ -427,7 +433,7 @@ export class CanvasComponent implements OnInit {
 				this.hCtx.scale(radioX, radioY);
 				this.hCtx.beginPath();
 				this.hCtx.lineWidth = 3;
-				this.hCtx.strokeStyle = "red";
+				this.hCtx.strokeStyle = this.penStyle;
 				this.hCtx.moveTo((centerX+a)/radioX, centerY/radioY);
 				this.hCtx.arc(centerX/radioX, centerY/radioY, r, 0, 2*Math.PI);
 				this.hCtx.closePath();
@@ -585,12 +591,12 @@ export class CanvasComponent implements OnInit {
 		}
 		
 		this.ctx.font = '64px Arial';
-		this.ctx.fillStyle = "red";
+		this.ctx.fillStyle = this.scoreStyle;
 		this.ctx.fillText(this.score, 400, 64);
 
 		//hidden canvas
 		this.hCtx.font = '64px Arial';
-		this.hCtx.fillStyle = 'rgba(255, 0, 65, 1)';
+		this.hCtx.fillStyle = this.scoreStyle;
 		this.hCtx.fillText(this.score, 400, 64);
 
 		for (let region of this.answer.regions) {
