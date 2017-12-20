@@ -158,4 +158,16 @@ export class ExamService {
       })
     })
   }
+
+  cancelPublish(examId: any) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('POST', `/api/score/publish/${examId}/${false}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 }
