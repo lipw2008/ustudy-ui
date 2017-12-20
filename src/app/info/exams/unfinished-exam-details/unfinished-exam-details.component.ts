@@ -62,9 +62,10 @@ export class UnfinishedExamDetailsComponent implements OnInit {
     console.log('Detail Toggled', event);
   }
 
-  release(row, release) {
-    this._examService.release(row.egsId, release).then((data) => {
-
+  publish(row, publish) {
+    this._examService.release(row.egsId, publish).then((data) => {
+      alert(`${publish ? '发布成绩' : '取消发布'}成功`);
+      row.status = publish ? '2' : '1'
     })
   }
 }
