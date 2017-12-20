@@ -82,7 +82,7 @@
             <ngx-datatable-column name="操作" [flexGrow]="4">
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <a [routerLink]="['/result', row]" id="resultBtn" href="#" class="btn btn-default" title="查看成绩">查看成绩</a>
-                <a [routerLink]="['/cancelPublish', row]" id="cancelPublishBtn" href="#" class="btn btn-default" title="取消发布">取消发布</a>
+                <button id="cancelPublishBtn" class="btn btn-default" title="取消发布" (click)="cancelPublish(row)">取消发布</button>
               </ng-template>
             </ngx-datatable-column>
           </ngx-datatable>

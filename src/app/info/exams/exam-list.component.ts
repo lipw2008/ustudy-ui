@@ -58,11 +58,15 @@ export class ExamListComponent implements OnInit {
       return
     }
     this.reload();
-    this._examService.filterExams(this.getFilterParams(false)).then((data: any) => {
-      this.unfinishedExams = data
-    });
+    this.reloadUnfinished();
     this._examService.getExamOptions().then((data) => {
       this.examOptions = data
+    });
+  }
+
+  reloadUnfinished() {
+    this._examService.filterExams(this.getFilterParams(false)).then((data: any) => {
+      this.unfinishedExams = data
     });
   }
 
@@ -132,6 +136,14 @@ export class ExamListComponent implements OnInit {
     this._examService.deleteExam(exam.id).then((data) => {
       alert('删除考试成功');
       _.remove(this.unfinishedExams, exam)
+    })
+  }
+
+  cancelPublish(exam) {
+    this._examService.cancelPublish(exam.id).then((data) => {
+      alert('考试取消发布成功');
+      this.reload();
+      this.reloadUnfinished();
     })
   }
 }
