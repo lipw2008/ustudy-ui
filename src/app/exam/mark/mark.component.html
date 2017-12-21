@@ -173,7 +173,7 @@
                                     </ng-container>
                                     <ng-container *ngIf="markType === '终评'">
                                         <label for="">终评分: </label>
-                                        <input (focus)="onFocus(paper.questionName)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
+                                        <input (focus)="onFocus(paper.questionName, '', paper.fullscore)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" [(ngModel)]="paper.score">
                                         <br/>
                                     </ng-container>
                                     <br/>

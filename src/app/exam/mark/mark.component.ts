@@ -341,7 +341,8 @@ export class MarkComponent implements OnInit {
 	}
 
 	onFocus(questionName: string, stepName: string, fullScore: string): void {
-		console.log("get focus!!! " + questionName + " " + stepName);
+		console.log("get focus!!! " + questionName + " " + stepName + " " + fullScore);
+		this.editMode = "None";
 		this.curScore = 0;
 		this.questionName = questionName;
 		if (stepName !== '') {
@@ -552,6 +553,7 @@ export class MarkComponent implements OnInit {
 		this.curPage = 1;
 		this.firstPageEnabled = "disabled";
 		this.prePageEnabled = "disabled";
+		this.editMode = "None";
 		if (this.curPage < this.mark.groups[0].paperSeq) {
 			this.reqContent.startSeq = 1;
 			this.reqContent.endSeq = 20;
@@ -563,6 +565,7 @@ export class MarkComponent implements OnInit {
 	}
 
 	previousPage(): void {
+		this.editMode = "None";
 		if (this.curPage === 2) {
 			this.firstPageEnabled = "disabled";
 			this.prePageEnabled = "disabled";			
@@ -583,6 +586,7 @@ export class MarkComponent implements OnInit {
 	}
 
 	nextPage(): void {
+		this.editMode = "None";
 		this.curPage++;
 		this.firstPageEnabled = "";
 		this.prePageEnabled = "";					
@@ -726,7 +730,7 @@ export class MarkComponent implements OnInit {
     showAlert(text, time): void {
         var $body = $(document.body);
         //var tipTag = "<div class='tip'><span class='tipcontent' style='font-size:50px; position: fixed; top: " + top + "; left: " + left + ";'>" +text + "</span><div>";
-        var tipTag = "<div class='tip'><span style='font-size:80px;'>" +text + "</span><div>";
+        var tipTag = "<div class='tip'><span style='font-size:100px;'>" +text + "</span><div>";
         var $tipTag= $(tipTag);
 
         var i=0;
@@ -738,7 +742,7 @@ export class MarkComponent implements OnInit {
 
         console.log("tag height:" + $tipTag.height());
         console.log("tag width:" + $tipTag.width());
-        var top = (document.body.clientHeight - $tipTag.height())/2 + "px";
+        var top = (document.body.clientHeight - $tipTag.height())/3 + "px";
         var left= (document.body.clientWidth - $tipTag.width())/2 + "px";
 
         // var top = document.body.clientHeight/2 + "px";
@@ -805,6 +809,7 @@ export class MarkComponent implements OnInit {
 	}
 
 	clear(): void {
+		console.log("edit mode before clear:" + this.editMode);
 		this.editMode = "Clear";
 	}
 

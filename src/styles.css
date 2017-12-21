@@ -31,7 +31,8 @@
 }
 
 .online-marking-sidebar .form-control {
-	height: 24px;
+	margin-bottom: 2px;
+	height: 28px;
 }
 
 .online-marking-sidebar .table {
