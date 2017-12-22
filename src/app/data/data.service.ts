@@ -62,7 +62,7 @@ export class DataService {
           },
           nodes: [{
             text: '考生成绩',
-            href: '#data/result/examinee',
+            href: '#data/result/examinees',
             tags: ['0']
           }]
         }]

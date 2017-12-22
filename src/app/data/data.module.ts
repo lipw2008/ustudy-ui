@@ -38,7 +38,7 @@ import {ExamineeResultComponent} from './result-statistics/examinee-result/exami
           { path: 'questionsAnalysis', component: QuestionsAnalysisComponent },
           {
             path: 'result', component: ResultStatisticsComponent, children: [
-              { path: 'examinee', component: ExamineeResultComponent },
+              { path: 'examinees', component: ExamineeResultComponent },
             ]
           },
         ]
