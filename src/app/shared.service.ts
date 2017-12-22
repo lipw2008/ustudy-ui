@@ -11,6 +11,7 @@ export class SharedService {
 
   public userName = '';
   public userRole = '';
+  public orgId = '';
 
   private baseUrl = 'http://ustudypaper.oss-cn-hangzhou.aliyuncs.com/';
   private getUrl: Promise<string>;

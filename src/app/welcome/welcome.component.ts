@@ -24,6 +24,7 @@ export class WelcomeComponent {
       console.log("data: " + data);
       this._sharedService.userName = data.userName === undefined ? '' : data.userName;
       this._sharedService.userRole = data.role === undefined ? '' : data.role;
+      this._sharedService.orgId = data.orgId === undefined ? '' : data.orgId;
       console.log("loginId success: user:" + this._sharedService.userName + " role:" + this._sharedService.userRole);
       setTimeout(() => {
         this.masonry();
