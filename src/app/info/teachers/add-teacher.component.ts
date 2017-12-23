@@ -18,8 +18,8 @@ export class AddTeacherComponent implements OnInit {
   teacher = {
     "teacherId": "",
     "teacherName": "",
-    "grades": [{ "id": "", subjects: [{"id": ""}]}],
-    "roles": [{ "id": "" }]
+    "grades": [{ "id": "", "name": null, subjects: [{"id": "", "name": null}]}],
+    "roles": [{ "id": "", "name": null }]
   };
 
   inputGrade: string;
