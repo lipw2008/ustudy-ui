@@ -3,6 +3,7 @@ import {DataService} from '../../data.service';
 import {ExamService} from '../../../exam/exam.service';
 import { sprintf } from 'sprintf-js';
 import * as _ from 'lodash';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-examinee-result',
@@ -30,16 +31,26 @@ export class ExamineeResultComponent implements OnInit {
   examOptions: any;
   selectedBranch = '全部';
   selectedExamineeDetails: any;
+  examId: number;
 
-  constructor(private _dataService: DataService, private _examService: ExamService) { }
+  constructor(private _dataService: DataService, private _examService: ExamService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.examId = Number(this.route.snapshot.params.examId);
     this.exams = this._examService.filterExams({});
     this._examService.getExamOptions().then((data) => {
       this.examOptions = data;
     });
     this.exams.then((data) => {
-      this.selectedExam = _.first(data);
+      if (this.examId) {
+        this.selectedExam = _.find(data, {id: this.examId});
+      }
+      if (!this.selectedExam) {
+        this.selectedExam = _.first(data);
+        if (this.examId) {
+          alert('考试未找到')
+        }
+      }
       this.reload()
     })
   }
