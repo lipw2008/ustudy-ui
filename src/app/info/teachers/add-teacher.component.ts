@@ -97,7 +97,7 @@ export class AddTeacherComponent implements OnInit {
     this._sharedService.makeRequest('GET', '/info/school/gsr/', '').then((data: any) => {
       //cache the list
       console.log("data: " + JSON.stringify(data));
-      this.properties = data;
+      this.properties = data.data;
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);
