@@ -1,0 +1,180 @@
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="#">首页</a></li>
+    <li>数据中心</li>
+    <li>成绩统计</li>
+    <li class="active">考生成绩</li>
+  </ol>
+</div>
+
+<div class="container">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a aria-controls="examineeResult" role="tab" data-toggle="tab"
+                                              (click)="tab='examinee'">考生成绩</a></li>
+    <li role="presentation" class="disabled"><a aria-controls="lateralComparison" onclick="return false;">横向对比</a>
+    </li>
+    <li role="presentation" class="disabled"><a aria-controls="verticalComparison" onclick="return false;">纵向对比</a>
+    </li>
+  </ul>
+
+
+  <div class="tab-content">
+    <!--已完成考试 start-->
+    <div role="tabpanel" class="tab-pane active" id="finishedExam" *ngIf="tab==='examinee'">
+      <div class="col-sm-4">
+        <select class="form-control" [(ngModel)]="selectedExam">
+          <option *ngFor="let exam of exams | async, let i = index" [selected]="i==0" [ngValue]="exam">
+            {{exam.examName}}
+          </option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-lg-12">
+          <form id="editExamForm" method="post" class="form-inline" action="#">
+            <div class="input-group" *ngIf="selectedExam?.type=='联考'">
+              <span class="input-group-addon">学校</span>
+              <select class="form-control" [(ngModel)]="selectedSchool" name="selectedSchool">
+                <option *ngFor="let school of schools, let i = index" [selected]="i==0">{{school}}</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">年级</span>
+              <select class="form-control" [(ngModel)]="selectedGrade" name="selectedGrade">
+                <option selected>全部</option>
+                <option *ngFor="let grade of selectedExam?.grades, let i = index" [ngValue]="grade">{{grade.grade_name}}</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">方向</span>
+              <select class="form-control" [(ngModel)]="selectedBranch" name="selectedBranch">
+                <option selected>全部</option>
+                <option>理科</option>
+                <option>文科</option>
+                <option>艺术</option>
+                <option>体育</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">学科</span>
+              <select class="form-control" [(ngModel)]="selectedSubject" name="selectedSubject">
+                <option selected>全部</option>
+                <option *ngFor="let subject of selectedExam?.subjects" [ngValue]="subject">{{subject.name}}</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">班级</span>
+              <select class="form-control" [(ngModel)]="selectedClass" name="selectedSubject">
+                <option selected>全部</option>
+                <option *ngFor="let class of selectedExam?.classes" [ngValue]="class">{{class.name}}</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <input type="text" class="form-control" name="text" [(ngModel)]="text" placeholder="请输入姓名或者考号">
+            </div>
+            <div class="input-group">
+              <a class="btn btn-default" title="查询" (click)="reload()">查询</a>
+            </div>
+          </form>
+        </div>
+      </div>
+      <ngx-datatable
+        #examineeTable
+        style="width: 100%"
+        class="material striped"
+        [rows]="results"
+        [columnMode]="'flex'"
+        [headerHeight]="60"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [selectionType]="false"
+        [limit]="20"
+        (activate)="onClick($event, examineeResultDetails)"
+      >
+        <ngx-datatable-column name="序号" [flexGrow]="1">
+          <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <strong>{{rowIndex}}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column prop="stuExamId" name="考号" [flexGrow]="1"
+                              headerClass="header-bordered"></ngx-datatable-column>
+        <ngx-datatable-column prop="name" name="姓名" [flexGrow]="1" headerClass="header-bordered"></ngx-datatable-column>
+        <ngx-datatable-column prop="schname" name="单位" [flexGrow]="1"
+                              headerClass="header-bordered"></ngx-datatable-column>
+        <ngx-datatable-column name="成绩" [flexGrow]="6" headerClass="nopadding" cellClass="nopadding">
+          <ng-template let-column="column" ngx-datatable-header-template>
+            <div class="table-responsive" style="display: flex">
+              <span *ngFor="let subject of resultHdr?.scores, let i = index" [ngStyle]="{width: subjectWidth}">
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th>{{subject.name}}</th></tr> </tbody> </table>
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th>成绩</th><th>排名</th></tr> </tbody> </table>
+              </span>
+              <span [ngStyle]="{width: subjectWidth}">
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th>总分</th></tr> </tbody> </table>
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th>成绩</th><th>排名</th></tr> </tbody> </table>
+              </span>
+            </div>
+          </ng-template>
+          <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <div class="table-responsive" style="display: flex">
+              <table class="table table-bordered table-condensed" style="margin: 0px;">
+                <tbody>
+                <tr style="height:45px;">
+                  <ng-container *ngFor="let subject of row.scores">
+                    <td [ngStyle]="{width: subjectWidth2}">{{ subject.score}}</td>
+                    <td [ngStyle]="{width: subjectWidth2}">{{ subject.rank}}</td>
+                  </ng-container>
+                  <td [ngStyle]="{width: subjectWidth2}">{{ row.score}}</td>
+                  <td [ngStyle]="{width: subjectWidth2}">{{ row.rank}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #examineeResultDetails="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">{{selectedExamineeDetails?.name}} ({{selectedExamineeDetails?.stuno}})</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="examineeResultDetails.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-bordered table-condensed">
+          <tbody>
+          <tr *ngFor="let subject of selectedExamineeDetails?.subjects">
+            <td class="col-lg-1">{{subject.subName}}</td>
+            <td class="col-lg-1">{{subject.score}}</td>
+            <td class="col-lg-8 nopadding">
+              <table class="table table-striped table-bordered table-condensed" style="margin: 0px;">
+                <tbody>
+                <tr>
+                  <td class="col-lg-2">客观题: {{subject.objScore}}</td>
+                  <td class="col-lg-8">{{parseObjectives(subject)}}</td>
+                </tr>
+                <tr>
+                  <td class="col-lg-2">主观题: {{subject.subScore}}</td>
+                  <td class="col-lg-8">{{parseSubjectives(subject)}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </td>
+            <td><a [routerLink]="['/answers', {gradeId: selectedExamineeDetails?.gradeId, subjectId: subject.subId, examId: selectedExam?.id, type: 'class', viewAnswerPaper: true ,search: selectedExamineeDetails?.stuno}]">查看答题卡</a></td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="form-group text-center">
+          <button type="button" class="btn btn-primary" (click)="selectedExamineeDetails={};examineeResultDetails.hide()">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

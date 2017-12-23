@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-declare var jQuery: any;
+import {DataService} from '../data.service';
 
 @Component({
   selector: 'app-review',
@@ -7,37 +7,9 @@ declare var jQuery: any;
   styleUrls: ['./review.component.css']
 })
 export class ReviewComponent implements OnInit {
-  constructor() { }
+  constructor(private _dataService: DataService) { }
 
   ngOnInit() {
-    const defaultData = [{
-      text: '阅卷进度统计',
-      href: '#data/review/reviewStatistic',
-      tags: ['1'],
-      nodes: [{
-        text: '进度明细',
-        href: '#data/review/scheduleDetails',
-        tags: ['0']
-      }]
-    }, {
-      text: '阅卷质量',
-      href: '#data/review/reviewQuality',
-      tags: ['0']
-    }, {
-      text: '阅卷检索',
-      href: '#data/review/reviewSearch',
-      tags: ['0']
-    }];
-
-    jQuery('#sidebar').treeview({
-      levels: 2,
-      enableLinks: true,
-      showBorder: false,
-      expandIcon: 'glyphicon glyphicon-menu-right',
-      collapseIcon: 'glyphicon glyphicon-menu-down',
-      color: '#333',
-      backColor: 'transparent',
-      data: defaultData
-    });
+    this._dataService.initSideBar()
   }
 }

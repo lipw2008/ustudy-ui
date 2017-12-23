@@ -8,16 +8,24 @@ import { ReviewQualityComponent } from './review-quality/review-quality.componen
 import { ReviewSearchComponent } from './review-search/review-search.component';
 import { ScheduleDetailsComponent } from './schedule-details/schedule-details.component';
 import { QuestionsAnalysisComponent } from './questions-analysis/questions-analysis.component';
+import {FormsModule} from '@angular/forms';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import { UtilsModule } from '../utils/utils.module';
 import { TreeviewModule } from 'ngx-treeview';
 import { ChartsModule } from 'ng2-charts';
 import { DataService } from './data.service';
+import {ResultStatisticsComponent} from './result-statistics/result-statistics.component';
+import {ExamineeResultComponent} from './result-statistics/examinee-result/examinee-result.component';
+import {ModalModule} from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
+    NgxDatatableModule,
     UtilsModule,
     TreeviewModule.forRoot(),
+    ModalModule.forRoot(),
+    FormsModule,
     RouterModule.forChild([
       {
         path: 'data', component: DataComponent, children: [
@@ -30,6 +38,11 @@ import { DataService } from './data.service';
             ]
           },
           { path: 'questionsAnalysis', component: QuestionsAnalysisComponent },
+          {
+            path: 'result', component: ResultStatisticsComponent, children: [
+              { path: 'examinees', component: ExamineeResultComponent },
+            ]
+          },
         ]
       }
     ]),
@@ -42,7 +55,9 @@ import { DataService } from './data.service';
     ReviewQualityComponent,
     ReviewSearchComponent,
     ScheduleDetailsComponent,
-    QuestionsAnalysisComponent
+    QuestionsAnalysisComponent,
+    ResultStatisticsComponent,
+    ExamineeResultComponent
   ],
   providers: [
     DataService,

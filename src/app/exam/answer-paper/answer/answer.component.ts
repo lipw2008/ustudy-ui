@@ -38,13 +38,19 @@ export class AnswerComponent implements OnInit {
     this.subjectId = Number(this.route.snapshot.params.subjectId);
     this.questionId = Number(this.route.snapshot.params.questionId);
     this.type = this.route.snapshot.params.type;
-    this._taskService.getGrade(this.gradeId).then((data) => {
-      this.grade = data
-    });
-    this._answerService.getEGS(this.examId, this.gradeId, this.subjectId).then((data: any) => {
-      this.subject = _.first(data);
-      this.selectedQuestion = _.find(this.subject.questions, { id: this.questionId })
-    })
+    this.text = this.route.snapshot.params.search;
+    if (this.type === 'class') {
+      this.viewAnswerPaper = Boolean(this.route.snapshot.params.viewAnswerPaper);
+    }
+    Promise.all([
+      this._taskService.getGrade(this.gradeId).then((data) => {
+        this.grade = data
+      }),
+      this._answerService.getEGS(this.examId, this.gradeId, this.subjectId).then((data: any) => {
+        this.subject = _.first(data);
+        this.selectedQuestion = this.questionId ? _.find(this.subject.questions, { id: this.questionId }) : _.first(this.subject.questions)
+      })
+    ]).then(() => this.returnResult())
   }
   getQuestionName(question: any) {
     if (question.quesno) {
@@ -91,7 +97,7 @@ export class AnswerComponent implements OnInit {
     }
     if (true || !this.viewAnswerPaper) {
       const question_id = _.get(this, 'selectedQuestion.id');
-      if (!this.questionId) {
+      if (!question_id) {
         alert('请选择题目');
         return
       }

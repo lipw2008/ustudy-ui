@@ -1,0 +1,7 @@
+/deep/ .nopadding {
+  padding: 0px !important;
+}
+
+/deep/ .header-bordered {
+  border: 1px solid #ddd;;
+}
