@@ -10,6 +10,11 @@
   padding: 22px 0;
 }
 
+.online-marking-statistics {
+  position: relative;
+  top: 22px;
+}
+
 .online-marking-sidebar .padding {
   padding: 5px 8px;
 }

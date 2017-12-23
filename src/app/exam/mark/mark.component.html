@@ -71,6 +71,9 @@
 					</div>
 				</div>
 			</div>
+            <ng-container *ngFor="let question of statistics">
+                <div class="online-marking-statistics text-center bg-muted">{{question.questionName}}题： 平均给分：<span>{{question.avgScore}}</span>/已阅题：<span>{{getNum(question.progress)}}</span></div>
+            </ng-container>
 		</div>
 		<div class="col-sm-3">
 			<form class="online-marking-sidebar">
@@ -213,9 +216,6 @@
                         </ul>
                         <!-- 翻页 end -->
                     </div>
-                    <ng-container *ngFor="let question of statistics">
-                        <div class="padding text-center bg-muted">{{question.questionName}}题： 平均给分：<span>{{question.avgScore}}</span>/已阅题：<span>{{getNum(question.progress)}}</span></div>
-                    </ng-container>
                 </div>
 			</form>
 		</div>

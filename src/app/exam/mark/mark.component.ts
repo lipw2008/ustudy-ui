@@ -18,6 +18,7 @@ export class MarkComponent implements OnInit {
 	@ViewChild('markBarHeader') markBarHeader;
 	@ViewChild('markBarBody') markBarBody;
 
+
 	//request content
 	reqContent: any = {
 		questions: [
@@ -311,6 +312,9 @@ export class MarkComponent implements OnInit {
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
+					if (paper.isMarked === true) {
+						return;
+					}
 					if (paper.problemPaper === true) {
 						continue;
 					}
@@ -629,8 +633,8 @@ export class MarkComponent implements OnInit {
 					alert("请完成打分再提交，谢谢！");
 					return;
 				}
-				//message += group.papers[0].questionName + "题: " + this.score + ";";
-				message += this.score;
+				message += group.papers[0].questionName + "题: " + this.score + ";";
+				//message += this.score;
 				if (this.markQuestions.length >= 2) {
 					if (group.papers[1].score !== "") {
 						this.score2 = group.papers[1].score;
@@ -644,8 +648,8 @@ export class MarkComponent implements OnInit {
 						alert("请完成打分再提交，谢谢！");
 						return;
 					}
-					//message += group.papers[1].questionName + "题: " + this.score2 + ";";
-					message += ", " + this.score2;
+					message += group.papers[1].questionName + "题: " + this.score2 + ";";
+					//message += ", " + this.score2;
 				}
 				if (this.markQuestions.length == 3) {
 					if (group.papers[2].score !== "") {
@@ -660,10 +664,10 @@ export class MarkComponent implements OnInit {
 						alert("请完成打分再提交，谢谢！");
 						return;
 					}
-					//message += group.papers[2].questionName + "题: " + this.score3 + ";";
-					message += ", " + this.score3;
+					message += group.papers[2].questionName + "题: " + this.score3 + ";";
+					//message += ", " + this.score3;
 				}
-				this.showAlert(message, 3000);
+				this.showAlert(message, 2000);
 			}
 		}
 		this.addScore();
@@ -730,23 +734,63 @@ export class MarkComponent implements OnInit {
     showAlert(text, time): void {
         var $body = $(document.body);
         //var tipTag = "<div class='tip'><span class='tipcontent' style='font-size:50px; position: fixed; top: " + top + "; left: " + left + ";'>" +text + "</span><div>";
-        var tipTag = "<div class='tip'><span style='font-size:100px;'>" +text + "</span><div>";
-        var $tipTag= $(tipTag);
+        var $markPanel = $(this.markPanel.nativeElement);
 
-        var i=0;
-        $body.find(".tip").remove();
-        $body.append(tipTag);
-        $tipTag = $body.find(".tip");
+        var top = $markPanel.offset().top + "px";
+        var left= $markPanel.offset().left + "px";
+        var width = $markPanel.width() + "px";
+        var height = $markPanel.height() + "px";
+        // console.log("bg top :" + top);
+        // console.log("bg left :" + left);
+        // console.log("bg width :" + width);
+        // console.log("bg height :" + height);
+
+		var bgTag = "<div class='background'></div>";
+
+		var $bgTag = $(bgTag);
+
+        $body.find(".background").remove();
+        $body.append(bgTag);
+        $bgTag = $body.find(".background");
+        
         //tips时间序列标识
         var timeStr = new Date().getTime();
 
+        $bgTag.attr("timeStr",timeStr);
+        $bgTag.show().css({
+            'background': 'gray',
+            'position': 'fixed',
+            'top': top,
+            'left': left,
+            'width': width,
+            'height': height
+        });
+        if(time){
+            $bgTag.fadeOut(time - 500,function(){
+                if($bgTag.attr("timeStr")==timeStr){
+                	console.log("remove: timestr-" + timeStr);
+                    $bgTag.remove();
+                }
+            });
+        }else{
+            $bgTag.fadeOut(2000,function(){
+                if($bgTag.attr("timeStr")==timeStr){
+                    $bgTag.remove();
+                }
+            });
+        }
+
+        var tipTag = "<div class='tip'><span style='font-size:100px;'>" +text + "</span></div>";
+        var $tipTag= $(tipTag);
+
+        $body.find(".tip").remove();
+        $body.append(tipTag);
+        $tipTag = $body.find(".tip");
+
         console.log("tag height:" + $tipTag.height());
         console.log("tag width:" + $tipTag.width());
-        var top = (document.body.clientHeight - $tipTag.height())/3 + "px";
-        var left= (document.body.clientWidth - $tipTag.width())/2 + "px";
-
-        // var top = document.body.clientHeight/2 + "px";
-        // var left= document.body.clientWidth/2 + "px";
+        top = (document.body.clientHeight - $tipTag.height())/3 + "px";
+        left= (document.body.clientWidth - $tipTag.width())/2 + "px";
 
         $tipTag.attr("timeStr",timeStr);
         $tipTag.find('span').show().css({

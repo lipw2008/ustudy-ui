@@ -750,7 +750,7 @@ body {
   }
   .container.container-fluid-online-marking > .row > .col-sm-9 {
     float: none;
-    padding-right: 300px;
+    padding-right: 250px;
     width: 100%;
   }
   .container.container-fluid-online-marking > .row > .col-sm-3 {
@@ -759,7 +759,7 @@ body {
     top: 0;
     right: 0;
     z-index: 2;
-    width: 300px;
+    width: 250px;
   }
 }
 html.full-screen .container.container-fluid-online-marking {
@@ -767,7 +767,7 @@ html.full-screen .container.container-fluid-online-marking {
   width: 100% !important;
 }
 .container.container-fluid-online-marking {
-  height: 500px;
+  height: 620px;
 }
 
 .container.container-fluid-online-marking .row,
