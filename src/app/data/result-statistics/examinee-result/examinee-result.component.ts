@@ -84,7 +84,7 @@ export class ExamineeResultComponent implements OnInit {
 
   onClick(event, modal) {
     if (event.type === 'click') {
-      this._dataService.getExamineeDetails(event.row.exam_id, event.row.examee_id).then((data) => {
+      this._dataService.getExamineeDetails(event.row.examId, event.row.stuExamId).then((data) => {
         this.selectedExamineeDetails = data;
         modal.show()
       });
