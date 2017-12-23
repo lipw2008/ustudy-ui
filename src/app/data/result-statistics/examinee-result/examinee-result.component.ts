@@ -29,6 +29,7 @@ export class ExamineeResultComponent implements OnInit {
   subjectWidth2: any;
   examOptions: any;
   selectedBranch = '全部';
+  selectedExamineeDetails: any;
 
   constructor(private _dataService: DataService, private _examService: ExamService) { }
 
@@ -70,11 +71,20 @@ export class ExamineeResultComponent implements OnInit {
     })
   }
 
-  test(column) {
-    console.log(1)
+  onClick(event, modal) {
+    if (event.type === 'click') {
+      this._dataService.getExamineeDetails(event.row.exam_id, event.row.examee_id).then((data) => {
+        this.selectedExamineeDetails = data;
+        modal.show()
+      });
+    }
   }
 
-  onResize(column, newValue) {
-    console.log(1)
+  parseObjectives(subject) {
+    return _.map(_.filter(subject.objectives, (obj) => obj.score > 0), 'quesno').join('、 ')
+  }
+
+  parseSubjectives(subject) {
+    return _.map(subject.subjectives, (question: any) => `${question.quesno}题：${question.score}分`).join('; ')
   }
 }

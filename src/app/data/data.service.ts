@@ -92,4 +92,16 @@ export class DataService {
       })
     })
   }
+
+  getExamineeDetails(examId: any, examineeId: any) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/score/student/scores/${examineeId}/${examId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 }

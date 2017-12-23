@@ -16,6 +16,7 @@ import { ChartsModule } from 'ng2-charts';
 import { DataService } from './data.service';
 import {ResultStatisticsComponent} from './result-statistics/result-statistics.component';
 import {ExamineeResultComponent} from './result-statistics/examinee-result/examinee-result.component';
+import {ModalModule} from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import {ExamineeResultComponent} from './result-statistics/examinee-result/exami
     NgxDatatableModule,
     UtilsModule,
     TreeviewModule.forRoot(),
+    ModalModule.forRoot(),
     FormsModule,
     RouterModule.forChild([
       {

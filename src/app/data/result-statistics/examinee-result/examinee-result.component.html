@@ -89,7 +89,7 @@
         [rowHeight]="'auto'"
         [selectionType]="false"
         [limit]="20"
-        (resize)="onResize(column, newValue)"
+        (activate)="onClick($event, examineeResultDetails)"
       >
         <ngx-datatable-column name="序号" [flexGrow]="1">
           <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
@@ -133,6 +133,48 @@
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #examineeResultDetails="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">{{selectedExamineeDetails?.name}} ({{selectedExamineeDetails?.stuno}})</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="examineeResultDetails.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-bordered table-condensed">
+          <tbody>
+          <tr *ngFor="let subject of selectedExamineeDetails?.subjects">
+            <td class="col-lg-1">{{subject.subName}}</td>
+            <td class="col-lg-1">{{subject.score}}</td>
+            <td class="col-lg-8 nopadding">
+              <table class="table table-striped table-bordered table-condensed" style="margin: 0px;">
+                <tbody>
+                <tr>
+                  <td class="col-lg-2">客观题: {{subject.objScore}}</td>
+                  <td class="col-lg-8">{{parseObjectives(subject)}}</td>
+                </tr>
+                <tr>
+                  <td class="col-lg-2">主观题: {{subject.subScore}}</td>
+                  <td class="col-lg-8">{{parseSubjectives(subject)}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </td>
+            <td><a [routerLink]="['/answers', {gradeId: selectedExamineeDetails?.gradeId, subjectId: subject.subId, examId: selectedExam?.id, type: 'class', viewAnswerPaper: true ,search: selectedExamineeDetails?.stuno}]">查看答题卡</a></td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="form-group text-center">
+          <button type="button" class="btn btn-primary" (click)="selectedExamineeDetails={};examineeResultDetails.hide()">确定</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
