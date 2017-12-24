@@ -18,7 +18,8 @@ export class AddTeacherComponent implements OnInit {
   teacher = {
     "teacherId": "",
     "teacherName": "",
-    "grades": [{ "id": "", "name": null, subjects: [{"id": "", "name": null}]}],
+    "grades": [{ "id": "", "name": null}],
+    "subjects": [{"id": "", "name": null}],
     "roles": [{ "id": "", "name": null }]
   };
 
@@ -51,7 +52,7 @@ export class AddTeacherComponent implements OnInit {
         this.teacher.grades[0].id = grade.id;
         for (let subject of grade.subjects) {
           if (subject.name === this.inputSubject) {
-            this.teacher.grades[0].subjects[0].id = subject.id;
+            this.teacher.subjects[0].id = subject.id;
             break;
           }
         }

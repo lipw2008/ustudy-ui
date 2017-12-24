@@ -67,7 +67,7 @@ export class TeacherListComponent implements OnInit {
         if (t.roles && t.roles.length > 0) {
           var str = "";
           for (var r of t.roles) {
-            str += r.n + " ";
+            str += r.name + " ";
           }
           t.roles = str;
         } else {
@@ -77,9 +77,10 @@ export class TeacherListComponent implements OnInit {
         if (t.subjects && t.subjects.length > 0) {
           var str = "";
           for (var s of t.subjects) {
-            str += s.n + " ";
+            str += s.name + " ";
           }
           t.subjects = str;
+          console.log("subjects: " + t.subjects);
         } else {
           t.subjects = "";
         }
@@ -87,7 +88,7 @@ export class TeacherListComponent implements OnInit {
         if (t.grades && t.grades.length > 0) {
           var str = "";
           for (var g of t.grades) {
-            str += g.n + " ";
+            str += g.name + " ";
           }
           t.grades = str;
         } else {
@@ -97,7 +98,7 @@ export class TeacherListComponent implements OnInit {
         if (t.classes && t.classes.length > 0) {
           var str = "";
           for (var c of t.classes) {
-            str += c.n + " ";
+            str += c.name + " ";
           }
           t.classes = str;
         } else {
