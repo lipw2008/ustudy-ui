@@ -4,17 +4,17 @@
       <div class="col-sm-12 col-lg-12">
         <div id="selectExamForm" class="form-inline">
           <div class="input-group">
-            <span class="input-group-addon">学科</span>
-            <select class="form-control" [(ngModel)]="selectedSubject">
-              <option value="" >选择学科</option>
-              <option *ngFor="let subject of examOptions?.subjects" [ngValue]="subject">{{subject.name}}</option>
-            </select>
-          </div>
-          <div class="input-group">
             <span class="input-group-addon">年级</span>
             <select class="form-control" [(ngModel)]="selectedGrade">
               <option value="" >选择年级</option>
-              <option *ngFor="let grade of examOptions?.grades" [ngValue]="grade">{{grade.grade_name}}</option>
+              <option *ngFor="let grade of examOptions?.grades" [ngValue]="grade">{{grade.name}}</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">学科</span>
+            <select class="form-control" [(ngModel)]="selectedSubject">
+              <option value="" >选择学科</option>
+              <option *ngFor="let subject of selectedGrade?.subjects" [ngValue]="subject">{{subject.name}}</option>
             </select>
           </div>
           <div class="input-group">
