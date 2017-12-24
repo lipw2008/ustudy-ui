@@ -8,7 +8,7 @@ export class ExamService {
 
   constructor(private _sharedService: SharedService) {
     this.examOptions = new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', `/api/exam/options`, '').then((data: any) => {
+      this._sharedService.makeRequest('GET', `/info/school/gsr/`, '').then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {
@@ -162,6 +162,18 @@ export class ExamService {
   cancelPublish(examId: any) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('POST', `/api/score/publish/${examId}/${false}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
+  getMissingExaminees(egsId, gradeId) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/students/miss/${egsId}/${gradeId}`, '').then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {

@@ -25,10 +25,10 @@
   <div class="panel-body">
     <ng-container *ngFor="let grade of examOptions?.grades">
       <div class="form-group">
-        <label class="col-sm-3 control-label"><strong>{{grade.grade_name}}：</strong></label>
+        <label class="col-sm-3 control-label"><strong>{{grade.name}}：</strong></label>
         <div class="col-sm-9 btn-toolbar">
           <div class="extra btn-group" data-toggle="buttons">
-            <ng-container *ngFor="let subject of examOptions?.subjects">
+            <ng-container *ngFor="let subject of grade.subjects">
               <button class="btn" [ngClass]="getClass(grade, subject)" (click)="trigger(grade, subject)" style="margin: 5px;">{{subject.name}}</button>
             </ng-container>
           </div>
