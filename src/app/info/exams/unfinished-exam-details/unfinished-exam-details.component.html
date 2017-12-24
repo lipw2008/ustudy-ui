@@ -53,7 +53,8 @@
             <a [routerLink]="['/viewTasks',{gradeId:row.gradeId,subjectId:row.subjectId,examId:examId}]"></a>
           </span>
           <!--TODO: 缺考名单，正在扫描状态-->
-          <span style="color: red;" *ngIf="row.paperCount!==row.studentCount&&row.status==='1'" (mouseover)="getMissingExaminees(row)" [title]="row.missingExaminees"> {{row.paperCount }}</span>
+          <span style="color: red;" *ngIf="row.paperCount!==row.studentCount&&row.status==='1'" (mouseover)="getMissingExaminees(row)"
+                (click)="selectedRow=row;staticModal.show()"> {{row.paperCount }}</span>
           <div class="progress clear-margin-bottom" *ngIf="row.status==='0'">
             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
                  [ngStyle]="{'width': getAnswerPaperPercentage(row)}">
@@ -109,4 +110,39 @@
     </ngx-datatable>
   </div>
   <!-- 表格 end -->
+</div>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">缺考名单</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" id="editGradeDetailsForm">
+          <div class="panel panel-default" *ngIf="selectedRow">
+            <ngx-datatable
+              #missingExaminees
+              style="width: 100%"
+              class="material striped"
+              [rows]="selectedRow?.missingExaminees?.students"
+              [columns]="columns"
+              [columnMode]="'flex'"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [selectionType]="false"
+              [limit]="10">
+              <ngx-datatable-column prop="studentName" name="姓名" [flexGrow]="2"></ngx-datatable-column>
+              <ngx-datatable-column prop="examCode" name="考号" [flexGrow]="2" [cellClass]="'text-center'"></ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

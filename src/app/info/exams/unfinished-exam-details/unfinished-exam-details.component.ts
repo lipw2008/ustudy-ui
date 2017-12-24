@@ -12,6 +12,7 @@ import {SharedService} from '../../../shared.service';
 })
 export class UnfinishedExamDetailsComponent implements OnInit {
   @ViewChild('examTable') table: any;
+  @ViewChild('missingExaminees') table1: any;
   examId: any;
   subjects = [];
   temp = [];
@@ -27,6 +28,7 @@ export class UnfinishedExamDetailsComponent implements OnInit {
     {name: '任务分配'},
     {name: '阅卷'},
   ];
+  selectedRow: any;
 
   constructor(private route: ActivatedRoute, private _examService: ExamService, private _sharedService: SharedService) {
   }
@@ -79,9 +81,8 @@ export class UnfinishedExamDetailsComponent implements OnInit {
       return
     }
     this._examService.getMissingExaminees(row.egsId, row.gradeId).then((data: any) => {
-      row.missingExaminees = _.map(data.students, (student: any) => {
-        return `${student.studentName} (${student.examCode})`
-      }).join('\n');
+      this.temp = [...data.students];
+      row.missingExaminees = data
     })
   }
 }
