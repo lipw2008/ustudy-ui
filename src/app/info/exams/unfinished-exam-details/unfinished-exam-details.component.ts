@@ -17,18 +17,19 @@ export class UnfinishedExamDetailsComponent implements OnInit {
   temp = [];
 
   columns = [
-    { prop: 'subjectName', name: '科目' },
-    { name: '试卷' },
-    { name: '答案' },
-    { name: '答题卡' },
-    { name: '模板制作' },
-    { name: '客观题' },
-    { name: '主观题' },
-    { name: '任务分配' },
-    { name: '阅卷' },
+    {prop: 'subjectName', name: '科目'},
+    {name: '试卷'},
+    {name: '答案'},
+    {name: '答题卡'},
+    {name: '模板制作'},
+    {name: '客观题'},
+    {name: '主观题'},
+    {name: '任务分配'},
+    {name: '阅卷'},
   ];
 
-  constructor(private route: ActivatedRoute, private _examService: ExamService, private _sharedService: SharedService) { }
+  constructor(private route: ActivatedRoute, private _examService: ExamService, private _sharedService: SharedService) {
+  }
 
   ngOnInit() {
     if (!this._sharedService.checkPermAndRedirect('考试信息')) {
@@ -66,6 +67,21 @@ export class UnfinishedExamDetailsComponent implements OnInit {
     this._examService.release(row.egsId, publish).then((data) => {
       alert(`${publish ? '发布成绩' : '取消发布'}成功`);
       row.status = publish ? '2' : '1'
+    })
+  }
+
+  getAnswerPaperPercentage(row) {
+    return Math.round(row.paperCount / row.studentCount * 10000) / 100 + '%'
+  }
+
+  getMissingExaminees(row) {
+    if (row.missingExaminees) {
+      return
+    }
+    this._examService.getMissingExaminees(row.egsId, row.gradeId).then((data: any) => {
+      row.missingExaminees = _.map(data.students, (student: any) => {
+        return `${student.studentName} (${student.examCode})`
+      }).join('\n');
     })
   }
 }

@@ -170,4 +170,16 @@ export class ExamService {
       })
     })
   }
+
+  getMissingExaminees(egsId, gradeId) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/students/miss/${egsId}/${gradeId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 }
