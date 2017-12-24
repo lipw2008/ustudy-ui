@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import { SharedService } from '../../shared.service';
 
 @Component({
@@ -71,8 +71,13 @@ export class SelectSubjectComponent implements OnInit {
   ];
   public examSelected: boolean;
 
-  constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
-
+  constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef,
+              private route: ActivatedRoute, private router: Router) {
+    router.events.subscribe((val) => {
+      if ( val instanceof NavigationEnd) {
+        this.type = this.route.snapshot.params.type;
+      }
+    });
   }
 
   ngOnInit(): void {
