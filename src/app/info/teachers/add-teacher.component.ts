@@ -90,18 +90,10 @@ export class AddTeacherComponent implements OnInit {
       role: ["", Validators.required]
     });
 
-    this.reload();
-  }
-
-  reload() {
-    //this._sharedService.makeRequest('GET', 'assets/api/teachers/properties.json', '').then((data: any) => {
-    this._sharedService.makeRequest('GET', '/info/school/gsr/', '').then((data: any) => {
-      //cache the list
-      console.log("data: " + JSON.stringify(data));
-      this.properties = data.data;
-    }).catch((error: any) => {
-      console.log(error.status);
-      console.log(error.statusText);
+    this._teacherService.getGsr().then((data: any)=> {
+      this.properties = data;
+    }).catch((error: any)=>{
+      alert("无法加载年级，学科及角色列表！");
     });
-  }  
+  }
 }

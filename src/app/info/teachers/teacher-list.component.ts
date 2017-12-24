@@ -20,11 +20,10 @@ export class TeacherListComponent implements OnInit {
 
   errorMessage: string;
 
-  grades = [];
-
-  subjects = [];
-
-  roles = [];
+  properties = {
+    grades: [],
+    roles: []
+  }
 
   rows = [];
 
@@ -52,9 +51,11 @@ export class TeacherListComponent implements OnInit {
 
   ngOnInit(): void {
     this.reload();
-    this.grades = this._teacherService.getGrades();
-    this.subjects = this._teacherService.getSubjects();
-    this.roles = this._teacherService.getRoles();
+    this._teacherService.getGsr().then((data: any)=> {
+      this.properties = data;
+    }).catch((error: any)=>{
+      alert("无法加载年级，学科及角色列表！");
+    });
   }
 
   reload() {

@@ -7,29 +7,28 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
 import { ITeacher } from './teacher';
+import { SharedService } from '../../shared.service';
 
 @Injectable()
 export class TeacherService {
   private _teacherUrl = 'api/teachers/teachers.json';
 
-  private grades = ["高一", "高二", "高三"];
+  constructor(private _http: Http, private _sharedService: SharedService) { }
 
-  private roles = ["任课老师", "班主任", "备课组长", "学科组长", "年级主任", "校长", "考务老师"];
-
-  private subjects = ["语文", "数学", "英语", "物理", "化学", "生物", "政治", "历史", "地理"];
-
-  constructor(private _http: Http) { }
-
-  getGrades(): string[] {
-    return this.grades;
-  }
-
-  getSubjects(): string[] {
-    return this.subjects;
-  }
-
-  getRoles(): string[] {
-    return this.roles;
+  getGsr(): any {
+    var promise = new Promise((resolve, reject) => {
+        //this._sharedService.makeRequest('GET', 'assets/api/teachers/properties.json', '').then((data: any) => {
+        this._sharedService.makeRequest('GET', '/info/school/gsr/', '').then((data: any) => {
+          //cache the list
+          console.log("data: " + JSON.stringify(data));
+          resolve(data.data);
+        }).catch((error: any) => {
+          console.log(error.status);
+          console.log(error.statusText);
+          reject();
+        });
+    });
+    return promise;
   }
 
   getDefaultTeacher(): ITeacher {

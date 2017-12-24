@@ -16,21 +16,25 @@
 					<span class="input-group-addon">年级</span>
 					<select class="form-control" formControlName="grade" id="gradeFilterValue" [(ngModel)]="grade">
 						<option value=""></option>
-						<option *ngFor="let grade of grades">{{grade}}</option>
+						<option *ngFor="let grade of properties.grades" >{{grade.name}}</option>
 					</select>
 				</div>
 				<div class="input-group">
 					<span class="input-group-addon">学科</span>
 					<select class="form-control" formControlName="subject" id="subjectFilterValue" [(ngModel)]="subject">
 						<option value=""></option>
-						<option *ngFor="let subject of subjects">{{subject}}</option>
+                        <ng-container *ngFor="let g of properties.grades">
+                            <ng-container *ngIf="g.name === grade">
+                                <option *ngFor="let subject of g.subjects" >{{subject.name}}</option>	
+                            </ng-container>
+                        </ng-container>
 					</select>
 				</div>
 				<div class="input-group">
 					<span class="input-group-addon">账号</span>
 					<select class="form-control" formControlName="role" id="typeFilterValue" [(ngModel)]="role">
 						<option value=""></option>
-						<option *ngFor="let role of roles">{{role}}</option>
+						<option *ngFor="let role of properties.roles">{{role.name}}</option>
 					</select>
 				</div>
 				<div class="input-group">
