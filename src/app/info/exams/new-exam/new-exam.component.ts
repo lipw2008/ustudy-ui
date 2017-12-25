@@ -93,7 +93,7 @@ export class NewExamComponent implements OnInit {
     params.examDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
     params.type = '校考';
     params.status = '0';
-    const grades = _.clone(this.grades);
+    const grades = _.cloneDeep(this.grades);
     for (const grade of grades) {
       _.forEach(grade, (v, k) => {
         if (k !== 'id' && k !== 'subjectIds') {
