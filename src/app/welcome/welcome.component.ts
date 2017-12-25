@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { SharedService } from '../shared.service';
+import {ExamService} from '../exam/exam.service';
 
 declare var $: any;
 
@@ -9,7 +10,7 @@ declare var $: any;
 
 export class WelcomeComponent {
 
-  constructor(public _sharedService: SharedService) {
+  constructor(public _sharedService: SharedService, public _examService: ExamService) {
   }
 
   ngOnInit() {
@@ -31,6 +32,8 @@ export class WelcomeComponent {
       }, 1);
       //this.masonry();
       //alert("已登录！");
+      // reload
+      this._examService.initexamOptions()
     }).catch((error: any) => {
       this._sharedService.userName = '';
       this._sharedService.userRole = '';

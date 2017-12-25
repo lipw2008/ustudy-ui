@@ -7,6 +7,9 @@ export class ExamService {
   private examOptions: Promise<any>;
 
   constructor(private _sharedService: SharedService) {
+  }
+
+  initexamOptions() {
     this.examOptions = new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET', `/info/school/gsr/`, '').then((data: any) => {
         if (data.success) {
