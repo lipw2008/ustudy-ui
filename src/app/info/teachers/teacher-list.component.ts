@@ -145,6 +145,7 @@ export class TeacherListComponent implements OnInit {
 
   remove(ids) {
     this._sharedService.makeRequest('POST', '/info/teacher/delete', ids).then((data: any) => {
+      this.selected = [];
       this.reload();
       alert("删除成功！");
     }).catch((error: any) => {
