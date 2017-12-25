@@ -44,3 +44,25 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+
+.question-box .bootstrap-select.btn-group .dropdown-menu {
+	margin-top: -5px;
+}
+.question-box .dropdown-menu li {
+	display: inline-block !important;
+	margin-top: 5px;
+	margin-left: 5px;
+	width: auto;
+}
+.question-box .bootstrap-select .dropdown-menu > li.selected > a,
+.question-box .bootstrap-select .dropdown-menu > li > a:hover,
+.question-box .bootstrap-select .dropdown-menu > li > a:focus {
+	color: #fff;
+	background-color: #04be02;
+}
+.question-box .bootstrap-select .dropdown-menu li a span.text {
+  margin-right: 0;
+}
+.question-box .bootstrap-select .check-mark {
+	display: none !important;
+}

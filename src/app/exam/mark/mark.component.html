@@ -16,8 +16,10 @@
 		<div class="col-sm-9">
 			<div class="panel panel-default online-marking">
 				<div class="panel-heading clearfix">
+                    
                     <div class="question-box">
-                        <select #questionSelector class="selectpicker show-tick" data-style="btn-link" multiple data-width="fit" data-max-options="3" data-size="5">
+                        <!--<select #questionSelector class="selectpicker show-tick" data-style="btn-link" multiple data-width="fit" data-max-options="3" data-size="5">-->
+                        <select #questionSelector class="selectpicker" multiple>
                             <option *ngFor="let question of questionList" [value]="question.n">{{question.n}}</option>
                         </select>
                     </div>

@@ -166,8 +166,19 @@ export class MarkComponent implements OnInit {
 	}
 
     ngAfterViewInit(): void {
-		console.log("init mark questions:" + JSON.stringify(this.markQuestions));
+    	var panelWidth = $('.online-marking').width() - 40; //获取面板宽度
+		//下拉选择
+		$(this.questionSelector.nativeElement).selectpicker({
+			style: 'btn-link',
+			width: 'fit',
+			maxOptions: 3
+		});
 		$(this.questionSelector.nativeElement).selectpicker('val', JSON.parse(this.route.snapshot.params.question)[0].n);
+		$(this.questionSelector.nativeElement).on('shown.bs.select', function (e) {
+			//设置弹出层宽度
+			$('.question-box .dropdown-menu.open').css({'width': panelWidth});
+		});
+		console.log("init mark questions:" + JSON.stringify(this.markQuestions));
 		$(this.questionSelector.nativeElement).on('changed.bs.select', {t: this}, this.onQuestionChange);
 		this.reload();
 	}

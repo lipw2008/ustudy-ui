@@ -37,9 +37,9 @@
 		                    	<a href="#" (click)="checkUserStatus()" data-toggle="dropdown" class="dropdown-toggle">信息中心 <span class="caret"></span></a>
                                 <ng-container *ngIf="_sharedService.userRole!= ''">
                                     <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                        <li><a [routerLink]="['/schoolDetails']">学校信息</a></li>
+                                        <!--<li><a [routerLink]="['/schoolDetails']">学校信息</a></li>-->
                                         <li *ngIf="_sharedService.userRole!=='班主任'&&_sharedService.userRole!=='任课老师'&&_sharedService.userRole!==''"><a [routerLink]="['/teacherList']">教师信息</a></li>
-                                        <li><a [routerLink]="['/studentList']">学生信息</a></li>
+                                        <!--<li><a [routerLink]="['/studentList']">学生信息</a></li>-->
                                         <li><a [routerLink]="['/examList']">考试信息</a></li>
                                     </ul>
                                 </ng-container>
