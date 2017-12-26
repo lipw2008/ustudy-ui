@@ -54,6 +54,10 @@ export class TeacherSelectorComponent implements OnInit, OnChanges {
       });
       let item;
       item = new TreeviewItem(group);
+      if (!item.children) {
+        item.checked = false;
+        item.disabled = true;
+      }
       // item.setCheckedRecursive(false);
       items.push(item)
     }
