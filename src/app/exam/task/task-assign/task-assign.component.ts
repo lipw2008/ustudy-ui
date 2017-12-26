@@ -57,7 +57,12 @@ export class TaskAssignComponent implements OnInit {
     this.subject = this.route.snapshot.params.subject;
     this.questionId = this.route.snapshot.params.questionId;
     this._taskService.getGrade(this.gradeId).then((data) => {
-      this.grade = data
+      this.grade = data;
+      this._taskService.getNoWorkingTeachers(this.gradeId).then((data: any) => {
+        this.workingTeachersIds = _.reject(this.grade.teachers, (teacher) => _.includes(data, {teacid: teacher.id}));
+        this.updateWithoutTeachersIds();
+        this.updateFinalWithoutTeachersIds()
+      });
     });
     this._taskService.getQuestions(this.examId, null, this.gradeId, this.subjectId).then((data) => {
       if (this.questionId) {
@@ -83,11 +88,6 @@ export class TaskAssignComponent implements OnInit {
           this.timeLimit = Number(data.timeLimit)
         })
       }
-    });
-    this._taskService.getWorkingTeachers().then((data: any) => {
-      this.workingTeachersIds = _.map(data, 'id');
-      this.updateWithoutTeachersIds();
-      this.updateFinalWithoutTeachersIds()
     });
   }
 

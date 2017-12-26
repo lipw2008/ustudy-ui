@@ -109,13 +109,16 @@ export class TaskService {
     })
   }
 
-  getWorkingTeachers() {
+  getNoWorkingTeachers(gradeId) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET',
-        `assets/api/exams/markTask/workingTeachers.json`, '').then((data: any) => {
-          // resolve(data.data)
-          resolve(data)
-        })
+        `/api/task/allocation/grade/notask/teachers/${gradeId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject(data.success)
+        }
+      })
     })
   }
 }

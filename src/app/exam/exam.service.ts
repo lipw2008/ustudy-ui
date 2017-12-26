@@ -126,6 +126,18 @@ export class ExamService {
     })
   }
 
+  getClasses(gradeId) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/info/school/grade/${gradeId}/clslist/`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
   addOrUpdateExaminee(params: any) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('POST', `/api/info/examinee/create/`, params).then((data: any) => {
@@ -182,6 +194,14 @@ export class ExamService {
         } else {
           reject()
         }
+      })
+    })
+  }
+
+  getGrade(gradeId) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', '/info/school/grade/' + gradeId, '').then((data: any) => {
+        resolve(data)
       })
     })
   }
