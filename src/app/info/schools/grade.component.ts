@@ -34,6 +34,9 @@ export class GradeComponent implements OnInit {
       //cache the list
       console.log("data: " + JSON.stringify(data));
       this.grade = data;
+      if(this.grade.gradeOwner === null) {
+        this.grade.gradeOwner =  { "id": "", "n": "" };
+      }
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);

@@ -25,12 +25,12 @@
                         <tr>
                             <th rowspan="2">年级</th>
                             <th rowspan="2">班级数</th>
-                            <th colspan="2">班级信息</th>
+                            <th colspan="2" style="text-align: center;">班级信息</th>
                             <th rowspan="2">操作</th>
                         </tr>
                         <tr>
-                            <td>文科班</td>
-                            <td>理科班</td>
+                            <td style="text-align: center;">文科班</td>
+                            <td style="text-align: center;">理科班</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,23 +41,27 @@
                                 <ng-container *ngIf="grade.gradeType===true">
                                     <td>
                                         <ng-container *ngFor="let class of grade.classes">
-                                            <a *ngIf="class.classType==='art'" [routerLink]="['/updateClass', {departmentName: department.departmentName, gradeId: grade.id, classId: class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
+                                            <!--<a *ngIf="class.classType==='art'" [routerLink]="['/updateClass', {departmentName: department.departmentName, gradeId: grade.id, classId: class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>-->
+                                            <a *ngIf="class.classType==='art'" class="btn btn-xs" title="设置班级相关信息">{{class.className}}</a>
                                         </ng-container>
                                     </td>
                                     <td>
                                         <ng-container *ngFor="let class of grade.classes">
-                                            <a *ngIf="class.classType==='sci'" [routerLink]="['/updateClass', {departmentName: department.departmentName, gradeId: grade.id, classId: class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
+                                            <!--<a *ngIf="class.classType==='sci'" [routerLink]="['/updateClass', {departmentName: department.departmentName, gradeId: grade.id, classId: class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>-->
+                                            <a *ngIf="class.classType==='sci'" class="btn btn-xs" title="设置班级相关信息">{{class.className}}</a>
                                         </ng-container>
                                     </td>
                                 </ng-container>
                                 <ng-container *ngIf="grade.gradeType===false">
                                     <td colspan="2">
                                         <ng-container *ngFor="let class of grade.classes">
-                                            <a [routerLink]="['/updateClass', {departmentName: department.departmentName, gradeId: grade.id, classId: class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>
+                                            <!--<a [routerLink]="['/updateClass', {departmentName: department.departmentName, gradeId: grade.id, classId: class.id}]" class="btn btn-xs btn-link" title="设置班级相关信息">{{class.className}}</a>-->
+                                            <a class="btn btn-xs" title="设置班级相关信息">{{class.className}}</a>
                                         </ng-container>
                                     </td>
                                 </ng-container>
-                                <td><a [routerLink]="['/class', {departmentName: department.departmentName, gradeId: grade.id}]" class="btn btn-xs btn-primary">编辑</a></td>
+                                <!--<td><a [routerLink]="['/class', {departmentName: department.departmentName, gradeId: grade.id}]" class="btn btn-xs btn-primary">编辑</a></td>-->
+                                <td><a class="btn btn-xs btn-primary" disabled=true>编辑</a></td>
                             </tr>
                         </ng-container>
                     </tbody>

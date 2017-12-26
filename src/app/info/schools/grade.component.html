@@ -27,7 +27,8 @@
                             <td>{{grade.gradeOwner.n}}</td>
                             <td *ngFor="let subject of grade.subjects">
                                 <label>{{subject.teacher.n}}</label>
-                            <td><a [routerLink]="['/updateGrade', {gradeId: grade.id}]" class="btn btn-xs btn-primary">编辑</a></td>
+                            <!--<td><a [routerLink]="['/updateGrade', {gradeId: grade.id}]" class="btn btn-xs btn-primary">编辑</a></td>-->
+                            <td><a class="btn btn-xs btn-primary" disabled=true>编辑</a></td>
                         </tr>
                     </tbody>
                 </table>
