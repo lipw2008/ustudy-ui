@@ -13,6 +13,7 @@ import { UtilsModule } from '../../utils/utils.module';
 import { NewExamComponent } from './new-exam/new-exam.component';
 import { UnfinishedExamDetailsComponent } from './unfinished-exam-details/unfinished-exam-details.component';
 import { ExamineeComponent } from './examinee/examinee.component';
+import {AddExamineeBatchComponent} from '../../utils/modals/add-examinee-batch/add-examinee-batch.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,9 @@ import { ExamineeComponent } from './examinee/examinee.component';
     ReactiveFormsModule,
     FormsModule,
     HttpModule
+  ],
+  entryComponents: [
+    AddExamineeBatchComponent,
   ],
   declarations: [
     ExamListComponent,

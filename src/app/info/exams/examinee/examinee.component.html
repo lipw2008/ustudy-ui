@@ -30,7 +30,7 @@
     <div class="col-sm-3 col-lg-3 pull-right">
       <div class="input-group">
         <a class="btn btn-default" (click)="examineeId=null;staticModal.show()">添加考生</a>
-        <a class="btn btn-default">批量添加</a>
+        <a class="btn btn-default" (click)="addExamineeBatch()">批量添加</a>
       </div>
     </div>
   </div>
@@ -89,7 +89,7 @@
               <label class="col-sm-4 control-label"><strong>班级：</strong></label>
               <select [(ngModel)]="examineeClass">
                 <option value="0" selected>请选择一个班级</option>
-                <option *ngFor="let class of classes" [ngValue]="class" [selected]="class.classId===selectedClass?.classId">{{class.className}}</option>
+                <option *ngFor="let class of classes" [ngValue]="class" [selected]="class.id===selectedClass?.classId">{{class.name}}</option>
               </select>
               <span> *</span>
             </div>

@@ -4,6 +4,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TeacherSelectorComponent } from './teacher-selector/teacher-selector.component';
 import { FormsModule } from '@angular/forms';
 import { TreeviewModule } from 'ngx-treeview';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+
 import { ExamsFilterComponent } from './exams-filter/exams-filter.component';
 import { ExamService } from '../exam/exam.service';
 import { MarkSelectComponent } from './mark-select/mark-select.component';
@@ -11,6 +13,7 @@ import { SubjectFilterPipe } from '../data/review-statistic/subject-filter.pipe'
 import { ReviewFilterComponent } from './review-filter/review-filter.component';
 import { AnswerFilterComponent } from './answer-filter/answer-filter.component';
 import { IntToDatePipe } from './int-to-date.pipe';
+import { AddExamineeBatchComponent } from './modals/add-examinee-batch/add-examinee-batch.component';
 // dependency of ngx-treeview
 // import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 
@@ -18,6 +21,7 @@ import { IntToDatePipe } from './int-to-date.pipe';
   imports: [
     CommonModule,
     FormsModule,
+    NgxDatatableModule,
     BsDatepickerModule.forRoot(),
     TreeviewModule.forRoot(),
   ],
@@ -29,6 +33,7 @@ import { IntToDatePipe } from './int-to-date.pipe';
     ReviewFilterComponent,
     AnswerFilterComponent,
     IntToDatePipe,
+    AddExamineeBatchComponent,
   ],
   providers: [ExamService],
   exports: [
@@ -39,6 +44,7 @@ import { IntToDatePipe } from './int-to-date.pipe';
     AnswerFilterComponent,
     SubjectFilterPipe,
     IntToDatePipe,
+    AddExamineeBatchComponent,
   ]
 })
 export class UtilsModule { }
