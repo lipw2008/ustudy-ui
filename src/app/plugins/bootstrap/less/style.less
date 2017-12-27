@@ -1,6 +1,6 @@
 @import "variables.less";
 // 清除激活状态的虚线
-* {
+:focus {
     outline: none !important;
 }
 // 容器
@@ -824,7 +824,7 @@ html.full-screen .container.container-fluid-online-marking {
     margin: 0;
     padding: 0 10px;
     width: 100%;
-    background-color: @gray-darker;
+    background-color: @gray-lighter;
 }
 @media (min-width: @screen-sm) {
     .panel.online-marking {
@@ -842,7 +842,7 @@ html.full-screen .container.container-fluid-online-marking {
     padding: 5px 10px;
 }
 .panel.online-marking .panel-heading .question-box .btn-link {
-    color: @gray-light;
+    color: @gray-dark;
 }
 .panel.online-marking .panel-heading .progress-box {
     float: left;
@@ -856,12 +856,12 @@ html.full-screen .container.container-fluid-online-marking {
 .panel.online-marking .panel-heading .control-box a {
     display: inline-block;
     padding: 0 5px;
-    color: @gray-light;
+    color: @gray-dark;
     font-size: 24px;
 }
 .panel.online-marking .panel-heading .control-box a:hover,
 .panel.online-marking .panel-heading .control-box a.active {
-    color: #fff;
+    color: @gray-base;
 }
 .panel.online-marking .panel-body {
     padding: 0;

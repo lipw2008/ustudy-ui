@@ -1,4 +1,4 @@
-* {
+:focus {
   outline: none !important;
 }
 @media (min-width: 768px) {
@@ -786,8 +786,7 @@ html.full-screen .container.container-fluid-online-marking {
   margin: 0;
   padding: 0 10px;
   width: 100%;
-  background-color: #333;
-  background-image: none;
+  background-color: #f2f2f2;
 }
 @media (min-width: 768px) {
   .panel.online-marking {
@@ -805,7 +804,7 @@ html.full-screen .container.container-fluid-online-marking {
   padding: 5px 10px;
 }
 .panel.online-marking .panel-heading .question-box .btn-link {
-  color: #ddd;
+  color: #666;
 }
 .panel.online-marking .panel-heading .progress-box {
   float: left;
@@ -819,12 +818,12 @@ html.full-screen .container.container-fluid-online-marking {
 .panel.online-marking .panel-heading .control-box a {
   display: inline-block;
   padding: 0 5px;
-  color: #ddd;
+  color: #666;
   font-size: 24px;
 }
 .panel.online-marking .panel-heading .control-box a:hover,
 .panel.online-marking .panel-heading .control-box a.active {
-  color: #fff;
+  color: #000;
 }
 .panel.online-marking .panel-body {
   padding: 0;

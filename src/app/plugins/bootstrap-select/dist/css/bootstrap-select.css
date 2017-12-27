@@ -46,9 +46,9 @@ select.selectpicker {
   width: 220px;
 }
 .bootstrap-select .dropdown-toggle:focus {
-  outline: thin dotted #333333 !important;
+  /*outline: thin dotted #333333 !important;
   outline: 5px auto -webkit-focus-ring-color !important;
-  outline-offset: -2px;
+  outline-offset: -2px;*/
 }
 .bootstrap-select.form-control {
   margin-bottom: 0;
@@ -276,4 +276,34 @@ select.selectpicker {
   margin-bottom: 0;
   width: 100%;
   float: none;
+}
+/*²¹¶¡*/
+.question-box .bootstrap-select.btn-group .dropdown-menu {
+	margin-top: -5px;
+	width: 217px;
+}
+.question-box .dropdown-menu > li {
+	display: inline-block !important;
+	margin-top: 5px;
+	margin-left: 5px;
+	width: auto;
+}
+.question-box .dropdown-menu > li > a {
+	padding: 3px 10px;
+	min-width: 65px;
+	text-align: center;
+	border: 1px solid #ddd;
+}
+.question-box .bootstrap-select .dropdown-menu > li.selected > a,
+.question-box .bootstrap-select .dropdown-menu > li > a:hover,
+.question-box .bootstrap-select .dropdown-menu > li > a:focus {
+	color: #fff;
+	background-color: #189fd9;
+	border: 1px solid #158ec2;
+}
+.question-box .bootstrap-select .dropdown-menu > li > a span.text {
+  margin-right: 0 !important;
+}
+.question-box .bootstrap-select .check-mark {
+	display: none !important;
 }

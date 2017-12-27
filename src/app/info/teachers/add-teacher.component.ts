@@ -66,7 +66,9 @@ export class AddTeacherComponent implements OnInit {
       }
     }
 
-    this._sharedService.makeRequest('POST', '/info/teacher/add', JSON.stringify(this.teacher)).then((data: any) => {
+    let teachers = [];
+    teachers.push(this.teacher);
+    this._sharedService.makeRequest('POST', '/info/teacher/add', JSON.stringify(teachers)).then((data: any) => {
       alert("添加成功");
       //go back to the teacher list page
       this.router.navigate(['teacherList']);
