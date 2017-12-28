@@ -24,6 +24,10 @@ export class AppComponent {
     }
   }
 
+  checkPerm(page: string): boolean {
+    return this._sharedService.checkPerm(page);
+  }
+
   logout(): void {
     this._sharedService.makeRequest('GET', '/api/logout', '').then((data: any) => {
       alert("您已退出");
