@@ -35,16 +35,16 @@
         <td>{{task.question.questionName}}</td>
         <td>{{task.question.type}}</td>
         <td>{{task.type}}</td>
-        <td>{{task.finalMarkTeachersIds.length>0 ? '双评' : '单评'}}</td>
+        <td>{{task.finalMarkTeachersIds?.length>0 ? '双评' : '单评'}}</td>
         <td>
           <div *ngIf="false">
-            {{task.group.ownerName}}
+            {{task.group?.ownerName}}
           </div>
           <div>
             <div class="input-group">
               <select class="form-control" (change)="setOwner(task, $event)">
                 <option value="0"></option>
-                <option *ngFor="let owner of getGroupMember(task.group)" [value]="owner.id" [selected]="owner.id===task.ownerId">{{owner.name}}</option>
+                <option *ngFor="let teacher of getGroupMember(task.group)" [value]="teacher.teacId" [selected]="teacher.teacId===task.ownerId">{{teacher.teacName}}</option>
               </select>
             </div>
           </div>

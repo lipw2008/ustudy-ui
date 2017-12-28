@@ -47,6 +47,8 @@ export class TaskAssignComponent implements OnInit {
   finalTeachersWithoutIds = [];
   teachersWithoutIds = [];
   animationState = 'done';
+  gradeTeachers = [];
+  subjectTeachers = [];
 
   constructor(private _taskService: TaskService, private route: ActivatedRoute, private router: Router, private _location: Location) { }
 
@@ -56,8 +58,14 @@ export class TaskAssignComponent implements OnInit {
     this.subjectId = this.route.snapshot.params.subjectId;
     this.subject = this.route.snapshot.params.subject;
     this.questionId = this.route.snapshot.params.questionId;
-    this._taskService.getGrade(this.gradeId).then((data) => {
-      this.grade = data
+    this._taskService.getTeachers().then((data: any) => {
+      this.gradeTeachers = data;
+      this.toggleGrade(null)
+      // this._taskService.getNoWorkingTeachers(this.gradeId).then((data: any) => {
+        // this.workingTeachersIds = _.reject(this.grade.teachers, (teacher) => _.includes(data, {teacid: teacher.id}));
+        // this.updateWithoutTeachersIds();
+        // this.updateFinalWithoutTeachersIds()
+      // });
     });
     this._taskService.getQuestions(this.examId, null, this.gradeId, this.subjectId).then((data) => {
       if (this.questionId) {
@@ -68,7 +76,7 @@ export class TaskAssignComponent implements OnInit {
       }
       this._taskService.getMarkTasks(this.examId, this.gradeId, this .subjectId).then( (tasks: any) => {
         const ids = _.map(tasks, 'questionId');
-        _.remove(this.questions, (q) => _.includes(ids, String(_.get(q, 'id'))));
+        _.remove(this.questions, (q: any) => _.includes(ids, String(_.get(q, 'id'))) && q.id !== Number(this.questionId));
       })
     }).then(() => {
       if (this.questionId) {
@@ -84,11 +92,6 @@ export class TaskAssignComponent implements OnInit {
         })
       }
     });
-    this._taskService.getWorkingTeachers().then((data: any) => {
-      this.workingTeachersIds = _.map(data, 'id');
-      this.updateWithoutTeachersIds();
-      this.updateFinalWithoutTeachersIds()
-    });
   }
 
   onSelectedQuestion($event: Event) {
@@ -99,7 +102,9 @@ export class TaskAssignComponent implements OnInit {
     const method = this.questionId ? this._taskService.updateMarkTask : this._taskService.createMarkTask;
     method.call(this._taskService, {
       examId: this.examId, questionId: this.selectedQuestion.id, teachersIds: this.selectedTeacherIds, type: this.assignType,
-      gradeId: this.gradeId, subjectId: this.subjectId, ownerId: _.get(_.find(this.grade.groups, (group) => _.includes(group.name, this.subject)), 'owner'),
+      gradeId: this.gradeId, subjectId: this.subjectId,
+      // XXX: owner
+      // ownerId: _.get(_.find(this.grade.groups, (group) => _.includes(group.name, this.subject)), 'owner'),
       finalMarkTeachersIds: _.without(this.selectedFinalTeacherIds, this.selectedTeacherIds),
       timeLimit: this.timeLimit
     }).then((data) => {
@@ -147,6 +152,10 @@ export class TaskAssignComponent implements OnInit {
     this.updateFinalWithoutTeachersIds()
   }
 
+  toggleGrade(event) {
+    this.subjectTeachers = this._taskService.toggleGrade(this.gradeTeachers, event)
+  }
+
   updateWithoutTeachersIds() {
     if (!this.teacherType) {
       return
@@ -167,5 +176,9 @@ export class TaskAssignComponent implements OnInit {
       return
     }
     this.finalTeachersWithoutIds = this.selectedTeacherIds.concat(this.workingTeachersIds)
+  }
+
+  test() {
+    console.log(1)
   }
 }

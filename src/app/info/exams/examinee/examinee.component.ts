@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {ExamService} from '../../../exam/exam.service';
 import * as _ from 'lodash';
 import {SharedService} from '../../../shared.service';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {AddExamineeBatchComponent} from '../../../utils/modals/add-examinee-batch/add-examinee-batch.component';
 
 @Component({
   selector: 'app-examinee',
@@ -12,6 +14,7 @@ import {SharedService} from '../../../shared.service';
 })
 export class ExamineeComponent implements OnInit {
   @ViewChild('examineeTable') table: any;
+  bsModalRef: BsModalRef;
   examId: any;
   gradeId: any;
   text: string;
@@ -35,7 +38,8 @@ export class ExamineeComponent implements OnInit {
   examineeId: any;
 
 
-  constructor(private route: ActivatedRoute, private _examService: ExamService, public fb: FormBuilder, private _sharedService: SharedService) {
+  constructor(private route: ActivatedRoute, private _examService: ExamService, public fb: FormBuilder, private _sharedService: SharedService,
+              private modalService: BsModalService) {
   }
 
   ngOnInit() {
@@ -60,7 +64,9 @@ export class ExamineeComponent implements OnInit {
       const examinees = data.students;
       this.temp = [...examinees];
       this.examinees = examinees;
-      this.classes = data.classes;
+    });
+    this._examService.getClasses(this.gradeId).then((data: any) => {
+      this.classes = data;
     })
   }
 
@@ -97,5 +103,11 @@ export class ExamineeComponent implements OnInit {
     this.examineeClass = _.find(this.classes, {classId: examinee.classId});
     this.examineeId = examinee.studentId;
     modal.show()
+  }
+
+  addExamineeBatch() {
+    this.bsModalRef = this.modalService.show(AddExamineeBatchComponent);
+    this.bsModalRef.content.gradeId = this.gradeId;
+    this.bsModalRef.content.examId = this.examId;
   }
 }

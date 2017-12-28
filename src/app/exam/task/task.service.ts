@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SharedService } from '../../shared.service';
+import * as _ from 'lodash';
 
 @Injectable()
 export class TaskService {
@@ -44,6 +45,61 @@ export class TaskService {
         resolve(data.data)
       })
     })
+  }
+
+  getTeachers() {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/api/task/allocation/school/teachers`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject(data.success)
+        }
+      })
+    })
+  }
+
+  toggleGrade(gradeTeachers, event) {
+    let selectedAll = false;
+    if (event === null || _.every(gradeTeachers, {gradeChecked: false})) {
+      selectedAll = true
+    }
+    let subjectTeachers;
+    subjectTeachers = [];
+    gradeTeachers.forEach((grade) => {
+      if (selectedAll || grade.gradeChecked) {
+        grade.subjects.forEach((subject) => {
+          const s = _.find(subjectTeachers, {subName: subject.subName});
+          if (!s) {
+            subjectTeachers.push(subject);
+            return
+          }
+          subject.teachers.forEach((teacher) => {
+            if (!_.some(s.teachers, {teacId: teacher.teacId})) {
+              s.teachers.push(teacher)
+            }
+          })
+        })
+      }
+    });
+    subjectTeachers.forEach((subject) => {
+      subject.teachers.forEach( (teacher) => {
+        if (!_.has(teacher, 'groups')) {
+          teacher.groups = []
+        }
+        if (!_.includes(teacher.groups, subject.subName)) {
+          teacher.groups.push(subject.subName)
+        }
+      })
+    });
+    console.log('subjectTeachers: ', subjectTeachers);
+    return subjectTeachers;
+  }
+
+  subjectTeachersToTeachers(subjectTeachers) {
+    return _.reduce(subjectTeachers, (res, subject) => {
+      return res.concat(subject.teachers)
+    }, [])
   }
 
   deleteMarkTask(task) {
@@ -109,13 +165,16 @@ export class TaskService {
     })
   }
 
-  getWorkingTeachers() {
+  getNoWorkingTeachers(gradeId) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET',
-        `assets/api/exams/markTask/workingTeachers.json`, '').then((data: any) => {
-          // resolve(data.data)
-          resolve(data)
-        })
+        `/api/task/allocation/grade/notask/teachers/${gradeId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject(data.success)
+        }
+      })
     })
   }
 }

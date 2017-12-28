@@ -8,7 +8,7 @@ import { TreeviewConfig, TreeviewItem } from 'ngx-treeview';
   styleUrls: ['./teacher-selector.component.css']
 })
 export class TeacherSelectorComponent implements OnInit, OnChanges {
-  @Input() grade: any;
+  @Input() subjectTeachers: any;
   @Input() subject: string;
   @Input() without = [];
   @Input() with = [];
@@ -32,7 +32,7 @@ export class TeacherSelectorComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change) {
-    if (change.grade && change.grade.currentValue || change.without && change.without.currentValue
+    if (change.subjectTeachers && change.subjectTeachers.currentValue || change.without && change.without.currentValue
       || change.with && change.with.currentValue) {
       this.buildTreeViewData()
     }
@@ -40,20 +40,24 @@ export class TeacherSelectorComponent implements OnInit, OnChanges {
 
   private buildTreeViewData() {
     const items = [];
-    if (!this.grade) return;
-    for (const group of this.grade.groups) {
-      group.text = group.name;
-      group.value = group.id;
-      group.collapsed = !_.includes(group.name, this.subject);
-      group.children = _.filter(this.grade.teachers, (teacher) => _.includes(teacher.groups, group.name)).map((teacher) => {
-        teacher.text = teacher.name;
-        teacher.value = teacher.id;
-        teacher.disabled = _.includes(this.without, teacher.id);
-        teacher.checked = _.includes(this.with, teacher.id) && !_.includes(this.without, teacher.id);
+    if (!this.subjectTeachers) return;
+    for (const subject of this.subjectTeachers) {
+      subject.text = subject.subName;
+      subject.value = subject.subId;
+      subject.collapsed = !_.includes(subject.subName, this.subject);
+      subject.children = _.filter(subject.teachers, (teacher) => _.includes(teacher.groups, subject.subName)).map((teacher) => {
+        teacher.text = teacher.teacName;
+        teacher.value = teacher.teacId;
+        teacher.disabled = _.includes(this.without, teacher.teacId);
+        teacher.checked = _.includes(this.with, teacher.teacId) && !_.includes(this.without, teacher.teacId);
         return teacher
       });
       let item;
-      item = new TreeviewItem(group);
+      item = new TreeviewItem(subject);
+      if (!item.children) {
+        item.checked = false;
+        item.disabled = true;
+      }
       // item.setCheckedRecursive(false);
       items.push(item)
     }
