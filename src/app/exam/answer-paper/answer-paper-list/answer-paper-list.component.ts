@@ -20,8 +20,4 @@ export class AnswerPaperListComponent implements OnInit {
       return `${question.startno}-${question.endno}`
     }
   }
-
-  test() {
-    console.log(1)
-  }
 }
