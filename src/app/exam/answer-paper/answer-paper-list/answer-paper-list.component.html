@@ -3,7 +3,7 @@
 <table class="table table-striped text-center">
   <thead>
    <tr>
-     <th>考试</th>
+     <th (click)="test()">考试</th>
      <th>试卷</th>
      <th>标准答案</th>
      <th>优标答案</th>
@@ -25,7 +25,7 @@
       </td>
       <td>
         <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers',{gradeId:subject.gradeId,subjectId:subject.subId,examId:subject.examid,questionId:question.id,type:'class'}]">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
-        <span><a>答题卡</a></span>
+        <span><a [routerLink]="['/answers', {gradeId: subject.gradeId, examId: subject.examid, subjectId: subject.subId, viewAnswerPaper: true, type: 'class'}]">答题卡</a></span>
       </td>
     </tr>
   </tbody>
