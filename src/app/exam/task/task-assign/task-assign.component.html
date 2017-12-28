@@ -42,7 +42,7 @@
         </td>
         <td>
           <label class="radio-inline">
-            <input type="radio" ng-controll="options" [value]="'平均'" (click)="assignType='平均'" [checked]="assignType=='平均'"> 平均
+            <input type="radio" ng-controll="options" [value]="'平均'" (click)="assignType='平均';test()" [checked]="assignType=='平均'"> 平均
           </label>
           <label class="radio-inline">
             <input type="radio" ng-controll="options" [value]="'动态'" (click)="assignType='动态'" [checked]="assignType=='动态'" disabled> 动态
@@ -74,19 +74,26 @@
           </div>
         </td>
         <td>
-          <label class="radio-inline">
-            <input type="radio" ng-controll="options" [value]="'全体'" (click)="onSelectTeacherType('全体')" [checked]="teacherType=='全体'"> 全体
-          </label>
-          <label class="radio-inline">
-            <input type="radio" ng-controll="options" [value]="'未安排任务的教师'" (click)="onSelectTeacherType('未安排任务的教师')" [checked]="teacherType=='未安排任务的教师'"> 未安排任务的教师
-          </label>
+          <ng-container *ngFor="let grade of gradeTeachers">
+            <label>
+              <input type="checkbox" name="options" value="{{grade.gradeId}}" [(ngModel)]="grade.gradeChecked" (change)="toggleGrade($event)"/>
+              {{grade.gradeName}}
+            </label>
+          </ng-container>
+          <!--<label class="radio-inline">-->
+            <!--<input type="radio" ng-controll="options" [value]="'全体'" (click)="onSelectTeacherType('全体')" [checked]="teacherType=='全体'"> 全体-->
+          <!--</label>-->
+          <!--<label class="radio-inline">-->
+            <!--<input type="radio" ng-controll="options" [value]="'未安排任务的教师'" (click)="onSelectTeacherType('未安排任务的教师')" [checked]="teacherType=='未安排任务的教师'"> 未安排任务的教师-->
+          <!--</label>-->
         </td>
-      </tr>      <tr>
+      </tr>
+      <tr>
         <td>
           阅卷老师选择:
         </td>
         <td>
-          <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="onTeachersSelect($event)"
+          <teacher-selector [subjectTeachers]="subjectTeachers" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="onTeachersSelect($event)"
                             [without]="teachersWithoutIds" [with]="withTeachersIds"></teacher-selector>
         </td>
       </tr>
@@ -95,7 +102,7 @@
           终评老师选择:
         </td>
         <td>
-          <teacher-selector [grade]="grade" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedFinalTeacherIds = $event"
+          <teacher-selector [subjectTeachers]="subjectTeachers" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedFinalTeacherIds = $event"
                             [without]="finalTeachersWithoutIds" [with]="withFinalTeachersIds"></teacher-selector>
         </td>
       </tr>

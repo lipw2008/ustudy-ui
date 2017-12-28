@@ -7,6 +7,7 @@ export class ExamService {
   private examOptions: Promise<any>;
 
   constructor(private _sharedService: SharedService) {
+    this.initexamOptions()
   }
 
   initexamOptions() {
