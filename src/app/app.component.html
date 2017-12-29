@@ -54,6 +54,7 @@
                                         <li *ngIf="checkPerm('任务分配')"><a [routerLink]="['/selectsubject',{type:'task'}]">任务分配</a></li>
                                         <li *ngIf="checkPerm('线上阅卷')"><a [routerLink]="['/markList']">线上阅卷</a></li>
                                         <li *ngIf="checkPerm('答题卷中心')"><a [routerLink]="['/answerPapers']">答题卷中心</a></li>
+                                        <li *ngIf="checkPerm('异常卷处理')"><a [routerLink]="['/problemList']">异常卷处理</a></li>
                                     </ul>
                                 </ng-container>
 							</li>

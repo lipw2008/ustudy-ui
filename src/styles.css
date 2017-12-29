@@ -44,3 +44,8 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+
+.problemList .ngx-datatable a{
+  color: red;
+  text-decoration: underline;
+}

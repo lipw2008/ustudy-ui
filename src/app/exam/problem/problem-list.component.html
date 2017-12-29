@@ -1,0 +1,38 @@
+<!-- 路径导航 start -->
+<div class="container-fluid container-breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="welcome">首页</a></li>
+            <li class="active">考试中心</li>
+        </ol>
+    </div>
+</div>
+<!-- 路径导航 end -->
+
+<!-- 内容 start -->
+<div class="container problemList">
+    <!-- 表格 start -->
+    <div>
+            <ngx-datatable
+            style="width: 100%"
+            class="material striped"
+            [groupRowsBy]="'examName'"
+            [rows]="rows"
+            [columnMode]="'flex'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [limit]="10">
+            <ngx-datatable-column prop="examName" name="考试名称" [flexGrow]="8"></ngx-datatable-column>
+            <ngx-datatable-column prop="gradeSub" name="学科" [flexGrow]="4"></ngx-datatable-column>
+            <ngx-datatable-column prop="scanTime" name="扫描结束时间" [flexGrow]="2"></ngx-datatable-column>
+            <ngx-datatable-column prop="paperNum" name="待处理题目" [flexGrow]="2">
+                <ng-template ngx-datatable-cell-template let-egsId="egsId" let-value="value">           
+                    <a [routerLink]="['/problem', {egsId: value.egsId}]">{{value.num}}</a>
+                </ng-template>
+            </ngx-datatable-column>
+            </ngx-datatable>
+    </div>
+    <!-- 表格 end -->
+</div>
+<!-- 内容 end -->         

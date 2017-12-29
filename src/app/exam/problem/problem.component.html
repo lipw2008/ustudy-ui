@@ -1,0 +1,92 @@
+<!-- 路径导航 start -->
+<div class="container-fluid container-breadcrumb">
+	<div class="container">
+		<ol class="breadcrumb">
+			<li><a href="welcome">首页</a></li>
+			<li class="active">考试中心</li>
+			<li class="active">异常卷处理</li>
+		</ol>
+	</div>
+</div>
+<!-- 路径导航 end -->
+
+ <!-- 内容 start -->
+<div #rootContainer class="container container-fluid-online-marking">
+	<div class="row">
+		<div class="col-sm-9">
+			<div class="panel panel-default online-marking">
+				<div class="panel-heading clearfix">
+                    <div class="text-center">
+                        <!-- 翻页 start -->
+                        <ul class="pagination">
+                            <li [ngClass]="firstPageEnabled">
+                                <a (click)="firstPage()" aria-label="First" title="首页">
+                                    <i aria-hidden="true" class="glyphicon glyphicon-fast-backward"></i>
+                                </a>
+                            </li>
+                            <li [ngClass]="prePageEnabled">
+                                <a (click)="previousPage()" aria-label="Previous" title="上一页">
+                                    <i aria-hidden="true" class="glyphicon glyphicon-backward"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <span>{{curPage}}</span>
+                            </li>
+                            <li [ngClass]="nextPageEnabled">
+                                <a (click)="nextPage()" aria-label="Next" title="下一页">
+                                    <i aria-hidden="true" class="glyphicon glyphicon-forward"></i>
+                                </a>
+                            </li>
+                            <li [ngClass]="lastPageEnabled">
+                                <a (click)="lastPage()" aria-label="Last" title="尾页">
+                                    <i aria-hidden="true" class="glyphicon glyphicon-fast-forward"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- 翻页 end -->
+                    </div>
+				</div>
+				<div class="panel-body">
+					<div>
+                        <div #paperContainer style="overflow-x: auto; overflow-y: auto">
+                            <ng-container *ngFor="let paperImg of curPaper.paperImgs">
+                                <paper-canvas [paperImg]=paperImg></paper-canvas>
+                            </ng-container>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<form class="online-marking-sidebar">
+                <div class="panel panel-default">
+                    <div class="panel-body clear-padding clearfix">
+                        <table class="table text-center table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>题号</th>
+                                    <th>填涂</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let question of curPaper.questions">
+                                    <tr>
+                                        <td>{{question.quesno}}</td>
+                                        <td><input id="question{{question.quesno}}" name="question{{question.quesno}}" [(ngModel)]="question.answer"></td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <div class="extra" data-toggle="buttons">
+                            <a (click)="clear()" title="清除" class="btn btn-warning">清除</a>
+                            <a (click)="submit()" title="保存" class="btn btn-success">保存</a>
+                        </div>
+                    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- 内容 end -->

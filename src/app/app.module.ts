@@ -23,6 +23,8 @@ import { ExamModule } from './info/exams/exam.module';
 
 import { MarkModule } from './exam/mark/mark.module';
 
+import { ProblemModule } from './exam/problem/problem.module';
+
 import { SharedService } from './shared.service';
 // dependency of ngx-treeview
 // import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
@@ -54,7 +56,8 @@ import { AnswerPaperModule } from './exam/answer-paper/answer-paper.module';
     AnswerPaperModule,
     ExamModule,
     DataModule,
-    MarkModule
+    MarkModule,
+    ProblemModule
   ],
   declarations: [
     AppComponent

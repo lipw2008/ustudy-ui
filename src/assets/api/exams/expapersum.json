@@ -1,0 +1,30 @@
+{"data":[
+    {
+        "examName":"曲江一中高一2017年11月月考",
+        "gradeName":"高一",
+        "subName":"英语",
+        "egsId":1,
+        "num": 9
+    },
+    {
+        "examName":"曲江一中高一2017年12月月考",
+        "gradeName":"高一",
+        "subName":"历史",
+        "egsId":2,
+        "num":13
+    },
+    {
+        "examName":"曲江一中高一2017年11月月考",
+        "gradeName":"高二",
+        "subName":"语文",
+        "egsId":3,
+        "num":30
+    },
+    {
+        "examName":"曲江一中高一2017年12月月考",
+        "gradeName":"高三",
+        "subName":"数学",
+        "egsId":4,
+        "num":34
+    }
+],"message":null,"success":true}
