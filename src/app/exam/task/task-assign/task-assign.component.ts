@@ -77,6 +77,11 @@ export class TaskAssignComponent implements OnInit {
       this._taskService.getMarkTasks(this.examId, this.gradeId, this .subjectId).then( (tasks: any) => {
         const ids = _.map(tasks, 'questionId');
         _.remove(this.questions, (q: any) => _.includes(ids, String(_.get(q, 'id'))) && q.id !== Number(this.questionId));
+        if (_.isEmpty(this.questions)) {
+          alert('没有设置问题或者所有问题已经设置阅卷任务，请设置问题，或者删除阅卷任务');
+          this._location.back();
+          return
+        }
       })
     }).then(() => {
       if (this.questionId) {
