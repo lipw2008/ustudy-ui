@@ -93,10 +93,10 @@ export class ViewTaskComponent implements OnInit {
     if ($event.target.value === 0) {
       return
     }
+    task.ownerId = $event.target.value;
     this._taskService.updateMarkTask(task).then((res: any) => {
       if (res.success) {
         alert('任务：负责人更新成功');
-        task.ownerId = $event.target.value
       } else {
         alert('任务：负责人更新失败')
       }
