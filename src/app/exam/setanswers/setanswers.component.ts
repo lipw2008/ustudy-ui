@@ -803,11 +803,19 @@ export class SetAnswersComponent implements OnInit {
   }
 
   initCheckBoxScores(choiceNum, score) {
+
+    var size = 0;
+    if(choiceNum > 1){
+      for (var i = 1; i < choiceNum; i++) {
+        size = size + 1;
+      }
+    }
+
     this.objectiveChoiceNum = choiceNum;
     this.objectiveScore_ = score;
-    // this.checkBoxScores = [];
     this.currentCheckBox = 2;
-    if (this.checkBoxScores.length === 0) {
+    if (this.checkBoxScores.length !== size) {
+      this.checkBoxScores = [];
       for (var i = 2; i <= choiceNum; i++) {
         let scores_ = [];
         for (var j = 1; j < i; j++) {
