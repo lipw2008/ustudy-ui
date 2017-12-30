@@ -35,7 +35,7 @@ export class TaskAssignComponent implements OnInit {
   questions: any;
   assignType = '平均';
   markType = '单评';
-  teacherType = '全体';
+  // teacherType = '全体';
   grade: any;
   selectedQuestion: any;
   selectedTeacherIds: any;
@@ -106,7 +106,7 @@ export class TaskAssignComponent implements OnInit {
   submit() {
     const method = this.questionId ? this._taskService.updateMarkTask : this._taskService.createMarkTask;
     method.call(this._taskService, {
-      examId: this.examId, questionId: this.selectedQuestion.id, teachersIds: this.selectedTeacherIds, type: this.assignType,
+      examId: this.examId, questionId: String(this.selectedQuestion.id), teachersIds: this.selectedTeacherIds, type: this.assignType,
       gradeId: this.gradeId, subjectId: this.subjectId,
       // XXX: owner
       // ownerId: _.get(_.find(this.grade.groups, (group) => _.includes(group.name, this.subject)), 'owner'),
@@ -148,11 +148,12 @@ export class TaskAssignComponent implements OnInit {
 
   onTeachersSelect($event: any) {
     this.selectedTeacherIds = $event;
+    console.log('selectedTeachers: ', this.selectedTeacherIds);
     this.updateFinalWithoutTeachersIds()
   }
 
   onSelectTeacherType(type: string) {
-    this.teacherType = type;
+    // this.teacherType = type;
     this.updateWithoutTeachersIds();
     this.updateFinalWithoutTeachersIds()
   }
@@ -162,28 +163,32 @@ export class TaskAssignComponent implements OnInit {
   }
 
   updateWithoutTeachersIds() {
-    if (!this.teacherType) {
-      return
-    }
-    if (this.teacherType === '全体') {
-      this.teachersWithoutIds = new Array;
-      return
-    }
+    // if (!this.teacherType) {
+    //   return
+    // }
+    // if (this.teacherType === '全体') {
+      // this.teachersWithoutIds = new Array;
+      // return
+    // }
     this.teachersWithoutIds = _.clone(this.workingTeachersIds);
   }
 
   updateFinalWithoutTeachersIds() {
-    if (!this.teacherType) {
-      return
-    }
-    if (this.teacherType === '全体') {
-      this.finalTeachersWithoutIds = [].concat(this.selectedTeacherIds);
-      return
-    }
+    // if (!this.teacherType) {
+    //   return
+    // }
+    // if (this.teacherType === '全体') {
+    //   this.finalTeachersWithoutIds = [].concat(this.selectedTeacherIds);
+    //   return
+    // }
     this.finalTeachersWithoutIds = this.selectedTeacherIds.concat(this.workingTeachersIds)
   }
 
   test() {
     console.log(1)
+  }
+
+  setSelectedFinalTeacherIds($event) {
+    this.selectedFinalTeacherIds = $event
   }
 }

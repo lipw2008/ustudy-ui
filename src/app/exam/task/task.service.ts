@@ -61,7 +61,7 @@ export class TaskService {
 
   toggleGrade(gradeTeachers, event) {
     let selectedAll = false;
-    if (event === null || _.every(gradeTeachers, {gradeChecked: false})) {
+    if (event === null || !_.some(gradeTeachers, {gradeChecked: true})) {
       selectedAll = true
     }
     let subjectTeachers;

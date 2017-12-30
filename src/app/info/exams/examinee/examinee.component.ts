@@ -75,7 +75,7 @@ export class ExamineeComponent implements OnInit {
       alert('请输入必填内容');
       return
     }
-    this._examService.addOrUpdateExaminee([{stuName: this.name, stuId: this.stuId, stuExamId: this.stuExamId, classId: this.examineeClass.classId,
+    this._examService.addOrUpdateExaminee([{stuName: this.name, stuId: this.stuId, stuExamId: this.stuExamId, classId: this.examineeClass.id,
       examId: this.examId, gradeId: this.gradeId}]).then((data) => {
       alert(`${this.examineeId ? '更新' : '新建'}考生成功`);
       if (this.examineeId) {
@@ -83,8 +83,8 @@ export class ExamineeComponent implements OnInit {
         examinee.studentName = this.name;
         examinee.stuId = this.stuId;
         examinee.stuExamId = this.stuExamId;
-        examinee.className = this.examineeClass.className;
-        examinee.classId = this.examineeClass.classId;
+        examinee.className = this.examineeClass.name;
+        examinee.classId = this.examineeClass.id;
       }
       modal.hide()
     });
@@ -100,7 +100,7 @@ export class ExamineeComponent implements OnInit {
   editExaminee(modal, examinee) {
     this.name = examinee.studentName;
     this.stuExamId = examinee.examCode;
-    this.examineeClass = _.find(this.classes, {classId: examinee.classId});
+    this.examineeClass = _.find(this.classes, {id: examinee.classId});
     this.examineeId = examinee.studentId;
     modal.show()
   }

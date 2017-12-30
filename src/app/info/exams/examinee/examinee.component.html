@@ -89,7 +89,7 @@
               <label class="col-sm-4 control-label"><strong>班级：</strong></label>
               <select [(ngModel)]="examineeClass">
                 <option value="0" selected>请选择一个班级</option>
-                <option *ngFor="let class of classes" [ngValue]="class" [selected]="class.id===selectedClass?.classId">{{class.name}}</option>
+                <option *ngFor="let class of classes" [ngValue]="class" [selected]="class.id===selectedClass?.id">{{class.name}}</option>
               </select>
               <span> *</span>
             </div>

@@ -102,7 +102,7 @@
           终评老师选择:
         </td>
         <td>
-          <teacher-selector [subjectTeachers]="subjectTeachers" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="this.selectedFinalTeacherIds = $event"
+          <teacher-selector [subjectTeachers]="subjectTeachers" *ngIf="selectedQuestion" [subject]="subject" (selectResult)="setSelectedFinalTeacherIds($event)"
                             [without]="finalTeachersWithoutIds" [with]="withFinalTeachersIds"></teacher-selector>
         </td>
       </tr>
