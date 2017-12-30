@@ -24,7 +24,7 @@
   <hr>
   <div class="panel-body">
     <ng-container *ngFor="let grade of examOptions?.grades">
-      <div class="form-group">
+      <div class="form-group" *ngIf="grade.subjects?.length > 0">
         <label class="col-sm-3 control-label"><strong>{{grade.name}}：</strong></label>
         <div class="col-sm-9 btn-toolbar">
           <div class="extra btn-group" data-toggle="buttons">
