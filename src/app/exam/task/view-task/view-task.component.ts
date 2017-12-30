@@ -93,11 +93,10 @@ export class ViewTaskComponent implements OnInit {
     if ($event.target.value === 0) {
       return
     }
-    task.ownerId = $event.target.value;
     this._taskService.updateMarkTask(task).then((res: any) => {
       if (res.success) {
         alert('任务：负责人更新成功');
-        task.ownerId = Number($event.target.value)
+        task.ownerId = $event.target.value
       } else {
         alert('任务：负责人更新失败')
       }
@@ -108,12 +107,12 @@ export class ViewTaskComponent implements OnInit {
   deleteTask(task: any, i) {
     this._taskService.deleteMarkTask(task).then((res: any) => {
       if (res.success) {
-        alert('任务：负责人删除成功');
+        alert('任务删除成功');
         // _.remove(this.tasks, task)
         this.tasks.splice(i, 1);
         _.remove(this.markTasks, (t) => t === task)
       } else {
-        alert('任务：负责人删除失败')
+        alert('任务删除失败')
       }
     })
   }
