@@ -49,6 +49,7 @@ export class TaskAssignComponent implements OnInit {
   animationState = 'done';
   gradeTeachers = [];
   subjectTeachers = [];
+  ownerId: any;
 
   constructor(private _taskService: TaskService, private route: ActivatedRoute, private router: Router, private _location: Location) { }
 
@@ -93,7 +94,8 @@ export class TaskAssignComponent implements OnInit {
           this.withTeachersIds = data.teachersIds;
           this.selectedTeacherIds = _.clone(this.withTeachersIds);
           this.withFinalTeachersIds = data.finalMarkTeachersIds;
-          this.timeLimit = Number(data.timeLimit)
+          this.timeLimit = Number(data.timeLimit);
+          this.ownerId = data.ownerId;
         })
       }
     });
@@ -110,6 +112,7 @@ export class TaskAssignComponent implements OnInit {
       gradeId: this.gradeId, subjectId: this.subjectId,
       // XXX: owner
       // ownerId: _.get(_.find(this.grade.groups, (group) => _.includes(group.name, this.subject)), 'owner'),
+      ownerId: this.ownerId,
       finalMarkTeachersIds: _.without(this.selectedFinalTeacherIds, this.selectedTeacherIds),
       timeLimit: this.timeLimit
     }).then((data) => {
