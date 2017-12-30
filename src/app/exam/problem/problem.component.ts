@@ -137,19 +137,19 @@ export class ProblemComponent implements OnInit {
 		let paper = {
 			egsId : 0,
 			examCode : '',
+			paperid: 0,
 			answers: []
 			// paperid, quesno, answer
 		};
 
 		paper.egsId = this.egsId;
 		paper.examCode = this.curPaper.examCode;
+		paper.paperid = this.curPaper.paperid;
 		for (let question of this.curPaper.questions) {
 			let answer = {
-				paperid: 0,
 				quesno: '',
 				answer: ''
 			};
-			answer.paperid = this.curPaper.paperid;
 			answer.quesno = question.quesno;
 			answer.answer = question.answer;
 			paper.answers.push(answer);

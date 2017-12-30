@@ -638,8 +638,8 @@ export class MarkComponent implements OnInit {
 					alert("请完成打分再提交，谢谢！");
 					return;
 				}
-				message += group.papers[0].questionName + "题: " + this.score + ";";
-				//message += this.score;
+				//message += group.papers[0].questionName + "题: " + this.score + ";";
+				message += this.score;
 				if (this.markQuestions.length >= 2) {
 					if (group.papers[1].score !== "") {
 						this.score2 = group.papers[1].score;
@@ -653,8 +653,8 @@ export class MarkComponent implements OnInit {
 						alert("请完成打分再提交，谢谢！");
 						return;
 					}
-					message += group.papers[1].questionName + "题: " + this.score2 + ";";
-					//message += ", " + this.score2;
+					//message += group.papers[1].questionName + "题: " + this.score2 + ";";
+					message += "; " + this.score2;
 				}
 				if (this.markQuestions.length == 3) {
 					if (group.papers[2].score !== "") {
@@ -669,8 +669,8 @@ export class MarkComponent implements OnInit {
 						alert("请完成打分再提交，谢谢！");
 						return;
 					}
-					message += group.papers[2].questionName + "题: " + this.score3 + ";";
-					//message += ", " + this.score3;
+					//message += group.papers[2].questionName + "题: " + this.score3 + ";";
+					message += "; " + this.score3;
 				}
 				this.showAlert(message, 2000);
 			}
