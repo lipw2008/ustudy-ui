@@ -137,6 +137,7 @@ export class MarkComponent implements OnInit {
 		answerType: ""
 	};
 	questionName = '';
+	stepName = '';
 	markCanvas2Display: string = 'none';
 	markCanvas3Display: string = 'none';
 	isHidden: boolean = false;
@@ -334,6 +335,7 @@ export class MarkComponent implements OnInit {
 							if (step.score === "") {
 								this.fullScore = step.fullscore;
 								this.questionName = paper.questionName;
+								this.stepName = step.name;
 								// console.log("after update full score: " + this.fullScore);
 								this.updateScoreBoard();
 								return;
@@ -723,8 +725,13 @@ export class MarkComponent implements OnInit {
 							}
 						}
 					}
-					this.focusQuestion.questionName = "";
-					this.focusQuestion.stepName = "";
+					this.focusQuestion.questionName = '';
+					this.focusQuestion.stepName = '';
+					this.questionName = '';
+					this.stepName = '';
+					if (this.composable === false) {
+						this.curScore = 0;
+					}
 					this.setStatistics(data);
 					//alert("修改成功");
 					this.nextPage();
