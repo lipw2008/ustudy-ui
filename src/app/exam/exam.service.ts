@@ -153,7 +153,7 @@ export class ExamService {
 
   deleteExaminee(examineeId: any) {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('DELETE', `/api/info/examinee/delete/${examineeId}`, '').then((data: any) => {
+      this._sharedService.makeRequest('DELETE', `/api/info/examinee/delete/${examineeId}` + '/', '').then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {
