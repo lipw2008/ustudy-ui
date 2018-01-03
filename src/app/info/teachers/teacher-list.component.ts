@@ -4,12 +4,16 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ITeacher } from './teacher';
 import { TeacherService } from './teacher.service';
 import { SharedService } from '../../shared.service';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {AddTeacherBatchComponent} from '../../utils/modals/add-teacher-batch/add-teacher-batch.component';
 
 @Component({
   templateUrl: 'teacher-list.component.html'
 })
 
 export class TeacherListComponent implements OnInit {
+  
+  bsModalRef: BsModalRef;
 
   public searchForm = this.fb.group({
     teacherNameId: [""],
@@ -45,7 +49,7 @@ export class TeacherListComponent implements OnInit {
   role = "";
   teacherNameId = "";
 
-  constructor(private _teacherService: TeacherService, private _sharedService: SharedService, public fb: FormBuilder) {
+  constructor(private _teacherService: TeacherService, private _sharedService: SharedService, public fb: FormBuilder, private modalService: BsModalService) {
 
   }
 
@@ -153,5 +157,11 @@ export class TeacherListComponent implements OnInit {
       console.log(error.statusText);
       alert("删除失败！");
     });
+  }
+
+  addTeacherBatch() {
+    this.bsModalRef = this.modalService.show(AddTeacherBatchComponent);
+    // this.bsModalRef.content.gradeId = this.gradeId;
+    // this.bsModalRef.content.examId = this.examId;
   }
 }

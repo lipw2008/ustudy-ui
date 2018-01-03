@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left" (click)="test()">批量导入教师</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <input #fileInput type="file" (change)="onFileChange($event)" multiple="false" style="display: none;"/>
+  <button class="btn btn-primary" (click)="fileInput.click()">选择文件</button>
+  <a class="btn btn-default" href="assets/templates/教师列表.xlsx">下载模板</a>
+  <ngx-datatable
+    #teacherTable
+    style="width: 100%"
+    class="material striped"
+    [rows]="teachers"
+    [columnMode]="'flex'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [selectionType]="false"
+    [limit]="20">
+    <ngx-datatable-column prop="teacherName" name="教师姓名" [flexGrow]="1"></ngx-datatable-column>
+    <ngx-datatable-column prop="subjectName" name="授课学科" [flexGrow]="1"></ngx-datatable-column>
+    <ngx-datatable-column prop="gradeName" name="授课年级" [flexGrow]="1"></ngx-datatable-column>
+    <ngx-datatable-column prop="className" name="授课班级" [flexGrow]="1"></ngx-datatable-column>
+    <!--<ngx-datatable-column name="授课班级" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <select (change)="changeClass($event, row)">
+          <option value="0" selected>请选择一个班级</option>
+          <option *ngFor="let cls of grade?.classes" [value]="cls.id" [selected]="cls.id===row.classId" >{{cls.className}}</option>
+        </select>
+      </ng-template>
+    </ngx-datatable-column>-->
+    <ngx-datatable-column prop="teacherId" name="电话" [flexGrow]="1"></ngx-datatable-column>
+  </ngx-datatable>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="submit()">Close</button>
+</div>

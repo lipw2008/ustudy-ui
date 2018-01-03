@@ -8,12 +8,14 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 
 import { ExamsFilterComponent } from './exams-filter/exams-filter.component';
 import { ExamService } from '../exam/exam.service';
+import { TeacherService } from '../info/teachers/teacher.service';
 import { MarkSelectComponent } from './mark-select/mark-select.component';
 import { SubjectFilterPipe } from '../data/review-statistic/subject-filter.pipe';
 import { ReviewFilterComponent } from './review-filter/review-filter.component';
 import { AnswerFilterComponent } from './answer-filter/answer-filter.component';
 import { IntToDatePipe } from './int-to-date.pipe';
 import { AddExamineeBatchComponent } from './modals/add-examinee-batch/add-examinee-batch.component';
+import { AddTeacherBatchComponent } from './modals/add-teacher-batch/add-teacher-batch.component';
 // dependency of ngx-treeview
 // import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 
@@ -34,8 +36,9 @@ import { AddExamineeBatchComponent } from './modals/add-examinee-batch/add-exami
     AnswerFilterComponent,
     IntToDatePipe,
     AddExamineeBatchComponent,
+    AddTeacherBatchComponent
   ],
-  providers: [ExamService],
+  providers: [ExamService, TeacherService],
   exports: [
     TeacherSelectorComponent,
     ExamsFilterComponent,
@@ -45,6 +48,7 @@ import { AddExamineeBatchComponent } from './modals/add-examinee-batch/add-exami
     SubjectFilterPipe,
     IntToDatePipe,
     AddExamineeBatchComponent,
+    AddTeacherBatchComponent
   ]
 })
 export class UtilsModule { }

@@ -47,4 +47,16 @@ export class TeacherService {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');
   }
+
+  addOrUpdateTeacher(params: any) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('POST', '/info/teacher/add', params).then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 }

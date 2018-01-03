@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { TeacherListComponent } from './teacher-list.component';
 import { AddTeacherComponent } from './add-teacher.component';
 import { UpdateTeacherComponent } from './update-teacher.component';
+import {AddTeacherBatchComponent} from '../../utils/modals/add-teacher-batch/add-teacher-batch.component';
 
 import { TeacherService } from './teacher.service';
 
@@ -24,6 +25,9 @@ import { TeacherService } from './teacher.service';
     ReactiveFormsModule,
     FormsModule,
     HttpModule
+  ],
+  entryComponents: [
+    AddTeacherBatchComponent
   ],
   declarations: [
     TeacherListComponent,
