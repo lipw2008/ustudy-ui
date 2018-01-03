@@ -693,10 +693,10 @@ export class MarkComponent implements OnInit {
 
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
-				if(group.papers[0].isMarked === true) {
-					alert("试卷已阅，不能重复提交。");
-					return;
-				}
+				// if(group.papers[0].isMarked === true) {
+				// 	alert("试卷已阅，不能重复提交。");
+				// 	return;
+				// }
 				if (group.papers.length >= 1) {
 					group.papers[0].answerType = this.answer.answerType;
 				}
