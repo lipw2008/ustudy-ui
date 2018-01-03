@@ -10,9 +10,8 @@ import { MarkService } from './mark.service';
 export class MarkListComponent implements OnInit {
 
   marks: any;
-  questionList = [];
 
-    constructor(private _sharedService: SharedService, private _markService: MarkService) {
+  constructor(private _sharedService: SharedService, private _markService: MarkService) {
 
   }
 
@@ -30,14 +29,6 @@ export class MarkListComponent implements OnInit {
       //cache the list
       console.log('data: ' + JSON.stringify(data));
       this.marks = data;
-      for (const mark of this.marks) {
-        if (mark.markType === '标准' && mark.summary[0].composable === true) {
-          const question = { 'id': '', 'n': '' };
-          question.id = mark.summary[0].quesid;
-          question.n = mark.summary[0].questionName;
-          this.questionList.push(question);
-        }
-      }
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);
@@ -49,11 +40,24 @@ export class MarkListComponent implements OnInit {
   }
 
   getQuestion(questionId, questionName): string {
-    const questionList = [];
-    const question = {'id': '', 'n': ''};
+    let questionList = [];
+    let question = {'id': '', 'n': ''};
     question.id = questionId;
     question.n = questionName;
     questionList.push(question);
+    return JSON.stringify(questionList);
+  }
+
+  getQuestionList(subject): string {
+  	let questionList = [];
+	for (let mark of this.marks) {
+		if (mark.markType === '标准' && mark.summary[0].composable === true && mark.subject === subject) {
+		  let question = { 'id': '', 'n': '' };
+		  question.id = mark.summary[0].quesid;
+		  question.n = mark.summary[0].questionName;
+		  questionList.push(question);
+		}
+	}
     return JSON.stringify(questionList);
   }
 }

@@ -20,7 +20,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-3" *ngFor="let mark of marks">
-                            <a [routerLink]="['/mark', {questionList: stringify(questionList), markType: mark.markType, composable: mark.summary[0].composable, question: getQuestion(mark.summary[0].quesid, mark.summary[0].questionName)}]">
+                            <a [routerLink]="['/mark', {questionList: getQuestionList(mark.subject), markType: mark.markType, composable: mark.summary[0].composable, question: getQuestion(mark.summary[0].quesid, mark.summary[0].questionName)}]">
                                 <dl class="widget text-center">
                                 	<ng-container *ngIf="mark.markType !== '标准'">
 	                                    <div class="triangle-bottom-right warning"></div>
