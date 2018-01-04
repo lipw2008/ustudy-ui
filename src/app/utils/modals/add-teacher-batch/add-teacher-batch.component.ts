@@ -3,6 +3,7 @@ import {BsModalRef} from 'ngx-bootstrap';
 import * as XLSX from 'xlsx';
 import * as _ from 'lodash';
 import {TeacherService} from '../../../info/teachers/teacher.service';
+import {ExamService} from '../../../exam/exam.service';
 
 type AOA = Array<Array<any>>;
 @Component({
@@ -11,19 +12,20 @@ type AOA = Array<Array<any>>;
   styleUrls: ['./add-teacher-batch.component.css']
 })
 export class AddTeacherBatchComponent implements OnInit {
+  examOptions: any;
+
   @ViewChild('teacherTable') table: any;
   data: AOA = [[]];
   data1: [any];
   teachers = [];
-  teacherId: string;
-  teacherName: string;
-  gradeName: any;
-  className: any;
-  subjectName: any;
+  teacherRows = [];
 
-  constructor(public bsModalRef: BsModalRef, private _teacherService: TeacherService) { }
+  constructor(public bsModalRef: BsModalRef, private _teacherService: TeacherService, private _examService: ExamService) { }
 
   ngOnInit() {
+    this._examService.getExamOptions().then((data) => {
+      this.examOptions = data;
+    });
   }
 
   onFileChange(evt: any) {
@@ -43,14 +45,47 @@ export class AddTeacherBatchComponent implements OnInit {
       /* save data */
       this.data = <AOA>(XLSX.utils.sheet_to_json(ws, {header: 1}));
         _.forEach(this.data.slice(1), (row) => {
-          const teacher = Object.create({});
-          // [{stuName: this.name, stuId: this.stuId, stuExamId: this.stuExamId, classId: this.examineeClass.classId,
+          let teacherRow = {
+            "teacherId": "",
+            "teacherName": "",
+            "gradeName": "",
+            "subjectName": ""            
+          }
+          let teacher = {
+            "teacherId": "",
+            "teacherName": "",
+            "grades": [{ "id": "", "name": null}],
+            "subjects": [{"id": "", "name": null}],
+            "roles": [{ "id": "", "name": null }]
+          };
           teacher.teacherName = row[0];
-          teacher.subjectName = row[1];
-          teacher.gradeName = row[2];
-          teacher.className = row[3];
+          teacherRow.teacherName = row[0];
+          for (let grade of this.examOptions.grades) {
+            if (row[2] === grade.name) {
+              teacher.grades[0].id = grade.id;
+              teacher.grades[0].name = grade.name;
+              teacherRow.gradeName = grade.name;
+              for(let subject of grade.subjects) {
+                if (row[1] === subject.name) {
+                  teacher.subjects[0].id = subject.id;
+                  teacher.subjects[0].name = subject.name;
+                  teacherRow.subjectName = subject.name;
+                  break;
+                }
+              }
+              break;
+            }
+          }
+          for (let role of this.examOptions.roles) {
+            if ('任课老师' === role.name) {
+              teacher.roles[0].id = role.id;
+              teacher.roles[0].name = role.name;
+            }
+          }
           teacher.teacherId = row[4];
-          this.teachers.push(teacher)
+          teacherRow.teacherId = row[4];
+          this.teachers.push(teacher);
+          this.teacherRows.push(teacherRow);
         });
     };
     reader.readAsBinaryString(target.files[0]);

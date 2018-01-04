@@ -12,7 +12,7 @@
     #teacherTable
     style="width: 100%"
     class="material striped"
-    [rows]="teachers"
+    [rows]="teacherRows"
     [columnMode]="'flex'"
     [headerHeight]="50"
     [footerHeight]="50"
@@ -35,5 +35,5 @@
   </ngx-datatable>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-default" (click)="submit()">Close</button>
+  <button type="button" class="btn btn-default" (click)="submit()">导入</button>
 </div>
