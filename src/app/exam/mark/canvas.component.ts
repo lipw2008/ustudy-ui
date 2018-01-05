@@ -277,6 +277,38 @@ export class CanvasComponent implements OnInit {
 		}
 		tmpCtx.putImageData(imgData,0,0);
 	}
+
+	removeScore(): void {
+
+		let imgData = this.ctx.getImageData(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+		for(var i=0; i<imgData.data.length; i+=4) {
+			if (imgData.data[i+3] !== 0) {
+				//console.log("others, RGBA: " + imgData.data[i+0] + " " + imgData.data[i+1] + " " + imgData.data[i+2] + " " + imgData.data[i+3]);
+				if(imgData.data[i+0] === 255 && imgData.data[i+1] === 0) {
+					imgData.data[i+0] = 0;
+					imgData.data[i+1] = 0;
+					imgData.data[i+2] = 0;
+					imgData.data[i+3] = 0;
+				}
+			}
+		}
+		this.ctx.putImageData(imgData,0,0);
+
+		imgData = this.hCtx.getImageData(0, 0, this.hCtx.canvas.width, this.hCtx.canvas.height);
+		for(var i=0; i<imgData.data.length; i+=4) {
+			if (imgData.data[i+3] !== 0) {
+				//console.log("others, RGBA: " + imgData.data[i+0] + " " + imgData.data[i+1] + " " + imgData.data[i+2] + " " + imgData.data[i+3]);
+				if(imgData.data[i+0] === 255 && imgData.data[i+1] === 0) {
+					imgData.data[i+0] = 0;
+					imgData.data[i+1] = 0;
+					imgData.data[i+2] = 0;
+					imgData.data[i+3] = 0;
+				}
+			}
+		}
+		this.hCtx.putImageData(imgData,0,0);
+	}
+
 	mouseDown(evt): void {
 		if (this.isHidden === true || this.isCanvasEnabled === false) {
 			return;
@@ -588,6 +620,9 @@ export class CanvasComponent implements OnInit {
 			return;
 		} else {
 			this.score = "+" + this.score;
+		}
+		if (this.answer.isMarked === true) {
+			this.removeScore();
 		}
 		
 		this.ctx.font = '64px Arial';

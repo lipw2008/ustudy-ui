@@ -94,7 +94,8 @@ export class MarkComponent implements OnInit {
 			}
 		],
 		questionName: "",
-		answerType: ""
+		answerType: "",
+		isMarked: false
 	};
 	answer2 = {
 		regions: [
@@ -114,7 +115,8 @@ export class MarkComponent implements OnInit {
 			}
 		],
 		questionName: "",
-		answerType: ""
+		answerType: "",
+		isMarked: false
 	};
 	answer3 = {
 		regions: [
@@ -134,7 +136,8 @@ export class MarkComponent implements OnInit {
 			}
 		],
 		questionName: "",
-		answerType: ""
+		answerType: "",
+		isMarked: false
 	};
 	questionName = '';
 	stepName = '';
@@ -271,15 +274,18 @@ export class MarkComponent implements OnInit {
 				this.answer.regions = group.papers[0].regions;
 				this.answer.answerType = group.papers[0].answerType;
 				this.answer.questionName = group.papers[0].questionName;
+				this.answer.isMarked = group.papers[0].isMarked;
 				if (this.markQuestions.length >= 2) {
 					this.answer2.regions = group.papers[1].regions;
 					this.answer2.answerType = group.papers[1].answerType;
 					this.answer2.questionName = group.papers[1].questionName;
+					this.answer2.isMarked = group.papers[1].isMarked;
 				}
 				if (this.markQuestions.length == 3) {
 					this.answer3.regions = group.papers[2].regions;
 					this.answer3.answerType = group.papers[2].answerType;
 					this.answer3.questionName = group.papers[2].questionName;
+					this.answer3.isMarked = group.papers[2].isMarked;
 				}
 				this.editMode = "" + this.curPage + Math.round(new Date().getTime()/1000);
 				break;
@@ -293,18 +299,21 @@ export class MarkComponent implements OnInit {
 		this.score3 = "";
 
 		this.answer.answerType = "";
+		this.answer.isMarked = false;
 		for(let region of this.answer.regions) {
 				region.scale = 1;
 				region.canvasH = 0;
 				region.canvasY = 0;
 		}
 		this.answer2.answerType = "";
+		this.answer2.isMarked = false;
 		for(let region of this.answer2.regions) {
 				region.scale = 1;
 				region.canvasH = 0;
 				region.canvasY = 0;
 		}
 		this.answer3.answerType = "";
+		this.answer3.isMarked = false;
 		for(let region of this.answer3.regions) {
 				region.scale = 1;
 				region.canvasH = 0;
@@ -587,7 +596,7 @@ export class MarkComponent implements OnInit {
 		this.curPage--;
 
 		if (this.curPage < this.mark.groups[0].paperSeq) {
-			this.reqContent.startSeq = (this.curPage - 20 < 0 ? 0 : this.curPage - 20);
+			this.reqContent.startSeq = (this.curPage - 19 < 0 ? 1 : this.curPage - 19);
 			this.reqContent.endSeq = this.curPage;
 			this.reload();
 		} else {
@@ -602,6 +611,8 @@ export class MarkComponent implements OnInit {
 		this.firstPageEnabled = "";
 		this.prePageEnabled = "";					
 		if (this.curPage > this.mark.groups[this.pageCount - 1].paperSeq) {
+			this.reqContent.startSeq = this.curPage;
+			this.reqContent.endSeq = -1;
 			this.reload();
 		} else {
 			this.updateCanvas();

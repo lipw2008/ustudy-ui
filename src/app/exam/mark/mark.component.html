@@ -53,9 +53,8 @@
                         </div>
 					</div>
 				</div>
-				<div class="panel-footer">
+				<!--<div class="panel-footer">
 					<div class="online-marking-wrap" >
-						<!--控制条 strat-->
                     	<div class="control extra clearfix" data-toggle="buttons" style="bottom: 15px;left: 15px;">
                             <span class="control-drag"><i class="iconfont-optionvertical"></i></span>
                         	<a (click)='addBestAnswer()' title="标注优秀"><i class="iconfont-bestanswer"></i></a>
@@ -69,13 +68,15 @@
                         	<a (click)='clear()' title="清除"><i class="iconfont-remove"></i></a>
                         	<a href="javascript:;" title="批注给分"><i class="iconfont-markgrade"></i></a>
                         </div>
-						<!--控制条 end-->
 					</div>
-				</div>
+				</div>-->
+                <div class="panel-footer border">
+                    <ng-container *ngFor="let question of statistics">
+                        <div class="online-marking-statistics text-center">{{question.questionName}}题： 平均给分：<span>{{question.avgScore}}</span>/已阅题：<span>{{getNum(question.progress)}}</span></div>
+                    </ng-container>                
+                </div>
 			</div>
-            <ng-container *ngFor="let question of statistics">
-                <div class="online-marking-statistics text-center bg-muted">{{question.questionName}}题： 平均给分：<span>{{question.avgScore}}</span>/已阅题：<span>{{getNum(question.progress)}}</span></div>
-            </ng-container>
+
 		</div>
 		<div class="col-sm-3">
 			<form class="online-marking-sidebar">
