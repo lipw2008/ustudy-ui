@@ -5,13 +5,13 @@
         <div id="selectExamForm" class="form-inline">
           <div class="input-group">
             <span class="input-group-addon">题目</span>
-            <select class="form-control" [(ngModel)]="selectedQuestion">
-              <option *ngFor="let question of subject?.questions" [ngValue]="question" [selected]="question.id==questionId">{{subject.subName + '-' + getQuestionName(question)}}</option>
+            <select class="form-control" (change)="onQuestionChange()" [(ngModel)]="selectedQuestion">
+              <option *ngFor="let question of questionList" [ngValue]="question" [selected]="question.id==questionId">{{subName + '-' + question.name}}</option>
             </select>
           </div>
           <div class="input-group">
-            <button class="btn" (click)="moveQuestion(-1)" [disabled]="selectedQuestion==subject?.questions[0]">上一题</button>
-            <button class="btn" (click)="moveQuestion(+1)" [disabled]="selectedQuestion==subject?.questions[subject?.questions.length-1]">下一题</button>
+            <button class="btn" (click)="moveQuestion(-1)" [disabled]="selectedQuestion==questionList[0]">上一题</button>
+            <button class="btn" (click)="moveQuestion(+1)" [disabled]="selectedQuestion==questionList[questionList.length-1]">下一题</button>
           </div>
           <div class="input-group" *ngIf="type=='class'">
             <input type="checkbox" [(ngModel)]="viewAnswerPaper">
@@ -26,7 +26,7 @@
             </select>
           </div>
           <div class="input-group">
-            <input class="form-control" type="text" [(ngModel)]="text">
+            <input class="form-control" type="text" [(ngModel)]="examCode">
           </div>
           <div class="input-group">
             <a class="btn btn-default" title="查询" (click)="returnResult()">查询</a>
@@ -38,14 +38,26 @@
 </div>
 <hr/>
 <div class="container-fluid">
-  <div *ngFor="let answer of answers; let i = index" class="col-sm-1">
-    <img src="/assets/images/img.png"  alt="点击查看" class="img-thumbnail" (click)="viewAnswer(viewAnswerTemplate, answer)">
-    <div>
-      <span></span>
-      <span>({{answer.stuExamNo}})</span>
-      <span></span>
+  <ng-container *ngIf="viewAnswerPaper === false">
+    <div *ngFor="let paper of papers; let i = index" class="col-sm-1">
+      <img src="/assets/images/answer_67.png"  alt="点击查看" class="img-thumbnail" (click)="viewPaper(viewAnswerTemplate, paper)">
+      <div>
+        <span></span>
+        <span>({{paper.examCode}})</span>
+        <span></span>
+      </div>
     </div>
-  </div>
+  </ng-container>
+  <ng-container *ngIf="viewAnswerPaper === true">
+    <div *ngFor="let paper of papers; let i = index" class="col-sm-1">
+      <img src="/assets/images/paper_60.png"  alt="点击查看" class="img-thumbnail" (click)="viewPaper(viewAnswerTemplate, paper)">
+      <div>
+        <span></span>
+        <span>({{paper.examCode}})</span>
+        <span></span>
+      </div>
+    </div>
+  </ng-container>
 </div>
 
 <ng-template #viewAnswerTemplate>

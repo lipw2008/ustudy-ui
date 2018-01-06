@@ -1,0 +1,36 @@
+{ 
+    "data":
+        [
+        {
+            "ansMarkImg":"AM_61_13810001361_E9_6868765121002000101.png",
+            "classId":2,
+            "egsId":9,
+            "examCode":"181045",
+            "paperImg":"E9_6868765121002000101.png",
+            "clsName":"高一（2）班",
+            "mflag":"NONE",
+            "quesId":51
+        },
+        {
+            "ansMarkImg":"AM_61_13810001361_E9_6868765121002000201.png",
+            "classId":2,
+            "egsId":9,
+            "examCode":"181046",
+            "paperImg":"E9_6868765121002000101.png",
+            "clsName":"高一（2）班",
+            "mflag":"NONE",
+            "quesId":51
+        },
+        {
+            "ansMarkImg":"M_61_13810001361_E9_6868765121002006601.png",
+            "classId":1,
+            "egsId":9,
+            "examCode":"181047",
+            "paperImg":"E9_6868765121002000101.png",
+            "clsName":"高一（1）班",
+            "mflag":"NONE",
+            "quesId":51
+        }
+        ],
+    "success": true
+}    

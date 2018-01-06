@@ -14,6 +14,7 @@ export class ExamsFilterComponent implements OnInit {
   @Output() result = new EventEmitter();
   selectedGrade: any;
   selectedSubject: any;
+  exams: any;
 
   constructor(private _examService: ExamService) { }
 
@@ -21,7 +22,8 @@ export class ExamsFilterComponent implements OnInit {
     this._examService.getExamOptions().then((data) => {
       this.examOptions = data
     });
-    this._examService.getLastExamSubjects().then((data) => {
+    this._examService.getTeacherExams().then((data) => {
+      this.exams = data;
       this.result.emit(data)
     });
   }
@@ -31,12 +33,20 @@ export class ExamsFilterComponent implements OnInit {
   }
 
   returnResult() {
-    const options = Object.create({});
+    const options = Object.create(
+      {
+        subjectName: '',
+        gradeName: '',
+        examName: '',
+        start: '',
+        end: ''
+    });
+
     if (this.selectedSubject) {
-      options.subjectId = this.selectedSubject.id
+      options.subjectName = this.selectedSubject.name
     }
     if (this.selectedGrade) {
-      options.gradeId = this.selectedGrade.id
+      options.gradeName = this.selectedGrade.name
     }
     if (this.name) {
       options.examName = this.name
@@ -49,8 +59,21 @@ export class ExamsFilterComponent implements OnInit {
     if (end != null) {
       options.end = `${end!.getFullYear()}-${end!.getMonth() + 1}-${end!.getDate()}`
     }
-    this._examService.filterExamSubjects(options).then((data) =>
-      this.result.emit(data)
-    )
+
+    console.log("before filter " + JSON.stringify(this.exams));
+
+    console.log("gradeName " + options.gradeName);
+    console.log("subjectName " + options.subjectName);
+    console.log("examName " + options.examName);
+
+    // filter our data
+    const temp = this.exams.filter(function(d) {
+      return d.gradeName.indexOf(options.gradeName) !== -1
+        && d.subName.indexOf(options.subjectName) !== -1
+        && d.examName.indexOf(options.examName) !== -1;
+    });
+
+    console.log("after filter " + JSON.stringify(temp));
+    this.result.emit(temp)
   }
 }

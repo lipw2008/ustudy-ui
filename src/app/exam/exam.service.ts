@@ -79,9 +79,21 @@ export class ExamService {
     })
   }
 
-  getLastExamSubjects() {
+  // getLastExamSubjects() {
+  //   return new Promise((resolve, reject) => {
+  //     this._sharedService.makeRequest('GET', `/api/last/examsubjects`, '').then((data: any) => {
+  //       if (data.success) {
+  //         resolve(data.data)
+  //       } else {
+  //         reject()
+  //       }
+  //     })
+  //   })
+  // }
+
+  getTeacherExams() {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', `/api/last/examsubjects`, '').then((data: any) => {
+      this._sharedService.makeRequest('GET', `/api/teacher/exams`, '').then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {

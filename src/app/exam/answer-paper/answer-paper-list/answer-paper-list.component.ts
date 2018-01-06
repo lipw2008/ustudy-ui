@@ -11,13 +11,10 @@ export class AnswerPaperListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  
   }
 
-  getQuestionName(question: any) {
-    if (question.quesno) {
-      return question.quesno
-    } else {
-      return `${question.startno}-${question.endno}`
-    }
+  stringify(j) {
+    return JSON.stringify(j);
   }
 }

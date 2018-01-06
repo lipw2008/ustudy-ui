@@ -18,14 +18,14 @@
       <td>
       </td>
       <td>
-        <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers',{gradeId:subject.gradeId,subjectId:subject.subId,examId:subject.examid,questionId:question.id,type:'优标'}]">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
+        <!--<span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers', {egsId:subject.egsId, questionId:question.id, type:'BEST'}]">{{question.name}}</a><span *ngIf="!isLast">,</span></span>-->
       </td>
       <td>
-        <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers',{gradeId:subject.gradeId,subjectId:subject.subId,examId:subject.examid,questionId:question.id,type:'faq'}]">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
+        <!--<span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers', {egsId:subject.egsId, questionId:question.id, type:'FAQ'}]">{{question.name}}</a><span *ngIf="!isLast">,</span></span>-->
       </td>
       <td>
-        <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers',{gradeId:subject.gradeId,subjectId:subject.subId,examId:subject.examid,questionId:question.id,type:'class'}]">{{ getQuestionName(question) }}</a><span *ngIf="!isLast">,</span></span>
-        <span><a [routerLink]="['/answers', {gradeId: subject.gradeId, examId: subject.examid, subjectId: subject.subId, viewAnswerPaper: true, type: 'class'}]">答题卡</a></span>
+        <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers', {egsId:subject.egsId, gradeId: subject.gradeId, subName: subject.subName, questionId:question.id, questionList: stringify(subject.questions), type:'class'}]">{{question.name}}</a><span *ngIf="!isLast">,</span></span>
+        <span><a [routerLink]="['/answers', {egsId: subject.egsId, gradeId: subject.gradeId, subName: subject.subName, questionList: stringify(subject.questions), viewAnswerPaper: true, type: 'class'}]">答题卡</a></span>
       </td>
     </tr>
   </tbody>
