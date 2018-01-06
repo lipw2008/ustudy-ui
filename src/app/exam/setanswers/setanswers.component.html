@@ -25,7 +25,7 @@
 							<tr>
 								<th class="clearfix">
 									题号 
-									<div class="input-group pull-right" style="display: none;">
+									<div class="input-group pull-right">
 										<a class="btn btn-link clear-padding-vertical" (click)="addOneRow()">
 											<i class="glyphicon glyphicon-plus"></i>
 										</a>
@@ -44,7 +44,7 @@
 										<span class="input-group-addon clear-border clear-bg">至</span>
 										<input type="text" class="form-control" id="end_{{objective.id}}" name="end" size="5" placeholder="" value="{{objective.endno}}" (change)="onValueChange(2,objective.id)">
 									</div>
-									<div class="input-group pull-right" style="display: none;">
+									<div class="input-group pull-right" *ngIf="objective.id <= 0">
 										<a class="btn btn-link" (click)="removeOneRow(objective.id)">
 											<i class="glyphicon glyphicon-trash"></i>
 										</a>
