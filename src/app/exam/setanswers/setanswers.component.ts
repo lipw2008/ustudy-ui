@@ -599,7 +599,11 @@ export class SetAnswersComponent implements OnInit {
             }
             answer.answer = ans;
           } else {
-            answer.answer = ans + ',' + value;
+            ans = ans + ',' + value;
+            if (ans.indexOf(',') === 0) {
+              ans = ans.substring(1);
+            }
+            answer.answer = ans;
           }
         } else {
           answer.answer = value;

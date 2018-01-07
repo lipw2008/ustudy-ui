@@ -18,17 +18,18 @@
     </li>
   </ul>
 
-
   <div class="tab-content">
     <!--已完成考试 start-->
     <div role="tabpanel" class="tab-pane active" id="finishedExam" *ngIf="tab==='examinee'">
-      <div class="col-sm-4">
-        <select class="form-control" [(ngModel)]="selectedExam">
-          <option *ngFor="let exam of exams | async, let i = index" [selected]="i==0" [ngValue]="exam">
-            {{exam.examName}}
-          </option>
-        </select>
-      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <select class="form-control" [(ngModel)]="selectedExam">
+            <option *ngFor="let exam of exams | async, let i = index" [selected]="i==0" [ngValue]="exam">
+              {{exam.examName}}
+            </option>
+          </select>
+        </div>
+      </div><br>
       <div class="row">
         <div class="col-sm-12 col-lg-12">
           <form id="editExamForm" method="post" class="form-inline" action="#">
@@ -41,7 +42,7 @@
             <div class="input-group">
               <span class="input-group-addon">年级</span>
               <select class="form-control" [(ngModel)]="selectedGrade" name="selectedGrade">
-                <option selected>全部</option>
+                <option selected value="">全部</option>
                 <option *ngFor="let grade of selectedExam?.grades, let i = index" [ngValue]="grade">{{grade.grade_name}}</option>
               </select>
             </div>
@@ -51,22 +52,22 @@
                 <option selected>全部</option>
                 <option>理科</option>
                 <option>文科</option>
-                <option>艺术</option>
-                <option>体育</option>
               </select>
             </div>
             <div class="input-group">
               <span class="input-group-addon">学科</span>
               <select class="form-control" [(ngModel)]="selectedSubject" name="selectedSubject">
-                <option selected>全部</option>
+                <option selected value="">全部</option>
                 <option *ngFor="let subject of selectedExam?.subjects" [ngValue]="subject">{{subject.name}}</option>
               </select>
             </div>
             <div class="input-group">
               <span class="input-group-addon">班级</span>
-              <select class="form-control" [(ngModel)]="selectedClass" name="selectedSubject">
-                <option selected>全部</option>
-                <option *ngFor="let class of selectedExam?.classes" [ngValue]="class">{{class.name}}</option>
+              <select class="form-control" [(ngModel)]="selectedClass" name="selectedClass">
+                <option selected value="">全部</option>
+                <ng-container *ngFor="let grade of selectedExgr?.grades">
+                  <option *ngFor="let cl of grade?.class" [ngValue]="cl">{{cl.name}}</option>
+                </ng-container>
               </select>
             </div>
             <div class="input-group">
@@ -77,7 +78,7 @@
             </div>
           </form>
         </div>
-      </div>
+      </div><br>
       <ngx-datatable
         #examineeTable
         style="width: 100%"
@@ -93,10 +94,10 @@
       >
         <ngx-datatable-column name="序号" [flexGrow]="1">
           <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-            <strong>{{rowIndex}}</strong>
+            <strong>{{rowIndex + 1}}</strong>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column prop="stuExamId" name="考号" [flexGrow]="1"
+        <ngx-datatable-column prop="stuExamNo" name="考号" [flexGrow]="1"
                               headerClass="header-bordered"></ngx-datatable-column>
         <ngx-datatable-column prop="name" name="姓名" [flexGrow]="1" headerClass="header-bordered"></ngx-datatable-column>
         <ngx-datatable-column prop="schname" name="单位" [flexGrow]="1"
