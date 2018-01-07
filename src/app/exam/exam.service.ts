@@ -218,4 +218,16 @@ export class ExamService {
       })
     })
   }
+
+  getTeacherProps() {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/info/teacher/prop/`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 }

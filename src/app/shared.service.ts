@@ -3,6 +3,19 @@ import { Http, Response } from '@angular/http';
 import { Md5 } from 'ts-md5/dist/md5';
 import * as _ from 'lodash';
 import {Router} from '@angular/router';
+
+enum GradeAccess {
+  NONE,
+  SELF_GRADE,
+  ALL_GRADE
+}
+
+enum SubjectAccess {
+  NONE,
+  SELF_SUBJECT,
+  ALL_SUBJECT
+}
+
 /*
 This shared service provides common utilitis and constants to the whole project.
 */
@@ -44,6 +57,12 @@ export class SharedService {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
   ];
 
+  views = ['paper'];
+
+  viewPerms = [
+    [[2,2], [1,2], [2,1], [1,1], [1,1], [1,1], [2,2], [0,0], [2,2], [1,1], [2,2], [0,0], [2,2]]
+  ];
+
   constructor(private _http: Http, private router: Router) {
     this.getUrl = new Promise(function(resolve, reject) {
       const configXhr = new XMLHttpRequest();
@@ -69,6 +88,24 @@ export class SharedService {
       return false
     }
     return this.perms[pageIndex][roleIndex] === 1
+  }
+
+  checkViewPerm(view: string) {
+    const roleIndex = this.roles.indexOf(this.userRole);
+    const viewIndex = this.views.indexOf(view);
+    let access = {
+      grade: 'NONE',
+      subject: 'NONE'
+    }
+    if (roleIndex < 0 || viewIndex < 0) {
+      return access;
+    }
+
+    let accesses = this.viewPerms[viewIndex][roleIndex];
+    console.log(`true or false: `, GradeAccess[0] == 'NONE');
+    access.grade = GradeAccess[accesses[0]];
+    access.subject = SubjectAccess[accesses[1]];
+    return access;
   }
 
   checkPermAndRedirect(page: string) {
