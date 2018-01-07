@@ -18,17 +18,18 @@
     </li>
   </ul>
 
-
   <div class="tab-content">
     <!--已完成考试 start-->
     <div role="tabpanel" class="tab-pane active" id="finishedExam" *ngIf="tab==='examinee'">
-      <div class="col-sm-4">
-        <select class="form-control" [(ngModel)]="selectedExam">
-          <option *ngFor="let exam of exams | async, let i = index" [selected]="i==0" [ngValue]="exam">
-            {{exam.examName}}
-          </option>
-        </select>
-      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <select class="form-control" [(ngModel)]="selectedExam">
+            <option *ngFor="let exam of exams | async, let i = index" [selected]="i==0" [ngValue]="exam">
+              {{exam.examName}}
+            </option>
+          </select>
+        </div>
+      </div><br>
       <div class="row">
         <div class="col-sm-12 col-lg-12">
           <form id="editExamForm" method="post" class="form-inline" action="#">
@@ -75,7 +76,7 @@
             </div>
           </form>
         </div>
-      </div>
+      </div><br>
       <ngx-datatable
         #examineeTable
         style="width: 100%"
