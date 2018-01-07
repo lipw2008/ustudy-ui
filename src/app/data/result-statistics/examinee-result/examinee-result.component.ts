@@ -59,12 +59,18 @@ export class ExamineeResultComponent implements OnInit {
     const params = Object.create({});
     if (_.isObject(this.selectedGrade)) {
       params.gradeId = this.selectedGrade.id
+    } else {
+      this.selectedGrade = ""
     }
     if (_.isObject(this.selectedSubject)) {
       params.subjectId = this.selectedSubject.id
+    } else {
+      this.selectedSubject = ""
     }
     if (_.isObject(this.selectedClass)) {
       params.classId = this.selectedClass.id
+    } else {
+      this.selectedClass = ""
     }
     if (this.text) {
       params.text = this.text
