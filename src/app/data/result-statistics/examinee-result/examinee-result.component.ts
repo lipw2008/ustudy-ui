@@ -14,7 +14,9 @@ export class ExamineeResultComponent implements OnInit {
   @ViewChild('examineeTable') table: any;
   tab = 'examinee';
   exams: Promise<any>;
+  exgrs: Promise<any>;
   selectedExam: any;
+  selectedExgr: any;
   selectedGrade: any;
   selectedSubject: any;
   selectedClass: any;
@@ -38,6 +40,7 @@ export class ExamineeResultComponent implements OnInit {
   ngOnInit() {
     this.examId = Number(this.route.snapshot.params.examId);
     this.exams = this._examService.filterExams({});
+    this.exgrs = this._examService.filterExgr({});
     this._examService.getExamOptions().then((data) => {
       this.examOptions = data;
     });
@@ -52,6 +55,14 @@ export class ExamineeResultComponent implements OnInit {
         }
       }
       this.reload()
+    })
+    this.exgrs.then((data) => {
+      if (this.examId) {
+        this.selectedExgr = _.find(data, {examId: this.examId});
+      }
+      if (!this.selectedExgr) {
+        this.selectedExgr = _.first(data);
+      }
     })
   }
 
