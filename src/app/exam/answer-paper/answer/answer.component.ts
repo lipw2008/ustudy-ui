@@ -30,7 +30,7 @@ export class AnswerComponent implements OnInit {
   examCode: string;
   selectedQuestion: any;
   viewAnswerPaper = false;
-  selectedClass: any;
+  selectedClassName: string;
 
   modalRef: BsModalRef;
 
@@ -70,6 +70,7 @@ export class AnswerComponent implements OnInit {
   }
 
   onQuestionChange() {
+    this.temp = this.papers = [];
     console.log(`question changed:`, JSON.stringify(this.selectedQuestion));
     Promise.all([
       this._answerService.getPapers(this.egsId, this.selectedQuestion.id).then((data: any) => {
@@ -89,7 +90,20 @@ export class AnswerComponent implements OnInit {
     if (this.viewAnswerPaper) {
       return paper.paperImg.split(',').map((url) => this._sharedService.getImgUrl(url, ''))
     } else {
-      return paper.ansMarkImg.split(',').map((url) => this._sharedService.getImgUrl(url, ''))
+      let result = [];
+      if(paper.markImgs.length === 1) {
+        result.push(this._sharedService.getImgUrl(paper.markImgs[0].ansMarkImg, ''));
+      } else if (paper.markImgs.length === 2) {
+        result.push(this._sharedService.getImgUrl(paper.markImgs[0].ansMarkImg, ''));
+        result.push(this._sharedService.getImgUrl(paper.markImgs[1].ansMarkImg, ''));
+      } else if (paper.markImgs.length === 3) {
+        for (let img of paper.markImgs) {
+          if (img.isfinal === true) {
+            result.push(this._sharedService.getImgUrl(img.ansMarkImg, ''));
+          }
+        }
+      }
+      return result;
     }
   }
 
@@ -103,15 +117,15 @@ export class AnswerComponent implements OnInit {
       clsName: '',
       examCode: ''
     };
-
-    if (this.selectedClass) {
-      options.clsName = this.selectedClass.name
+    console.log(`selected class: ` + JSON.stringify(this.selectedClassName));
+    if (this.selectedClassName) {
+      options.clsName = this.selectedClassName
     }
 
     if(this.examCode) {
       options.examCode = this.examCode
     }
-    console.log(`paper list(before filter): `, JSON.stringify(this.papers));
+    // console.log(`paper list(before filter): `, JSON.stringify(this.papers));
     console.log(`options: `, JSON.stringify(options));
     // filter our data
     if (this.papers) {

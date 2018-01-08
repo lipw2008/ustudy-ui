@@ -13,20 +13,22 @@
   </thead>
   <tbody>
     <tr *ngFor="let subject of subjects">
-      <td>{{ subject.examName }}<br>({{ subject.gradeName }})</td>
-      <td>{{ subject.subName }}</td>
-      <td>
-      </td>
-      <td>
-        <!--<span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers', {egsId:subject.egsId, questionId:question.id, type:'BEST'}]">{{question.name}}</a><span *ngIf="!isLast">,</span></span>-->
-      </td>
-      <td>
-        <!--<span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers', {egsId:subject.egsId, questionId:question.id, type:'FAQ'}]">{{question.name}}</a><span *ngIf="!isLast">,</span></span>-->
-      </td>
-      <td>
-        <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers', {egsId:subject.egsId, gradeId: subject.gradeId, subName: subject.subName, questionId:question.id, questionList: stringify(subject.questions), type:'class'}]">{{question.name}}</a><span *ngIf="!isLast">,</span></span>
-        <span><a [routerLink]="['/answers', {egsId: subject.egsId, gradeId: subject.gradeId, subName: subject.subName, questionList: stringify(subject.questions), viewAnswerPaper: true, type: 'class'}]">答题卡</a></span>
-      </td>
+      <ng-container *ngIf="subject != undefined">
+        <td>{{ subject.examName }}<br>({{ subject.gradeName }})</td>
+        <td>{{ subject.subName }}</td>
+        <td>
+        </td>
+        <td>
+          <!--<span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers', {egsId:subject.egsId, questionId:question.id, type:'BEST'}]">{{question.name}}</a><span *ngIf="!isLast">,</span></span>-->
+        </td>
+        <td>
+          <!--<span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers', {egsId:subject.egsId, questionId:question.id, type:'FAQ'}]">{{question.name}}</a><span *ngIf="!isLast">,</span></span>-->
+        </td>
+        <td>
+          <span *ngFor="let question of subject.questions, last as isLast"><a [routerLink]="['/answers', {egsId:subject.egsId, gradeId: subject.gradeId, subName: subject.subName, questionId:question.id, questionList: stringify(subject.questions), type:'class'}]">{{question.name}}</a><span *ngIf="!isLast">,</span></span>
+          <span><a [routerLink]="['/answers', {egsId: subject.egsId, gradeId: subject.gradeId, subName: subject.subName, questionList: stringify(subject.questions), viewAnswerPaper: true, type: 'class'}]">答题卡</a></span>
+        </td>
+      </ng-container>
     </tr>
   </tbody>
 </table>
