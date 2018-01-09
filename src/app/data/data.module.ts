@@ -16,6 +16,7 @@ import { ChartsModule } from 'ng2-charts';
 import { DataService } from './data.service';
 import {ResultStatisticsComponent} from './result-statistics/result-statistics.component';
 import {ExamineeResultComponent} from './result-statistics/examinee-result/examinee-result.component';
+import {ClassesResultComponent} from './result-statistics/classes-result/classes-result.component';
 import {ModalModule} from 'ngx-bootstrap';
 
 @NgModule({
@@ -41,6 +42,7 @@ import {ModalModule} from 'ngx-bootstrap';
           {
             path: 'result', component: ResultStatisticsComponent, children: [
               { path: 'examinees', component: ExamineeResultComponent },
+              { path: 'classes', component: ClassesResultComponent },
             ]
           },
         ]
@@ -57,7 +59,8 @@ import {ModalModule} from 'ngx-bootstrap';
     MarkDetailsComponent,
     QuestionsAnalysisComponent,
     ResultStatisticsComponent,
-    ExamineeResultComponent
+    ExamineeResultComponent,
+    ClassesResultComponent
   ],
   providers: [
     DataService,

@@ -1,0 +1,133 @@
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="#">首页</a></li>
+    <li>数据中心</li>
+    <li>成绩统计</li>
+    <li class="active">班级成绩</li>
+  </ol>
+</div>
+
+<div class="container">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+      <a aria-controls="examineeResult" role="tab" data-toggle="tab" (click)="tab='classes'">考生成绩</a>
+    </li>
+    <li role="presentation" class="disabled">
+      <a aria-controls="lateralComparison" onclick="return false;">横向对比</a>
+    </li>
+    <li role="presentation" class="disabled">
+      <a aria-controls="verticalComparison" onclick="return false;">纵向对比</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <!--已完成考试 start-->
+    <div role="tabpanel" class="tab-pane active" id="finishedExam" *ngIf="tab==='classes'">
+      <div class="row">
+        <div class="col-sm-12 col-lg-12">
+          <form id="editExamForm" method="post" class="form-inline" action="#">
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="selectedExam" name="selectedExam">
+                <option *ngFor="let exam of exams | async, let i = index" [selected]="i==0" [ngValue]="exam">
+                  {{exam.examName}}
+                </option>
+              </select>
+            </div>
+            <div class="input-group" *ngIf="selectedExam?.type=='联考'">
+              <span class="input-group-addon">学校</span>
+              <select class="form-control" [(ngModel)]="selectedSchool" name="selectedSchool">
+                <option *ngFor="let school of schools, let i = index" [selected]="i==0">{{school}}</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">年级</span>
+              <select class="form-control" [(ngModel)]="selectedGrade" name="selectedGrade">
+                <option selected value="">全部</option>
+                <option *ngFor="let grade of selectedExam?.grades, let i = index" [ngValue]="grade">{{grade.grade_name}}</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <a class="btn btn-default" title="查询" (click)="reload()">查询</a>
+            </div>
+          </form>
+        </div>
+      </div><br/>
+      <ngx-datatable
+        #classesTable
+        style="width: 100%"
+        class="material striped"
+        [rows]="results"
+        [columnMode]="'flex'"
+        [headerHeight]="60"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [selectionType]="false"
+        [limit]="20"
+      >
+        <ngx-datatable-column name="序号" [flexGrow]="1">
+          <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <strong>{{rowIndex + 1}}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column prop="clsName" name="班级" [flexGrow]="1" headerClass="header-bordered"></ngx-datatable-column>
+        <ngx-datatable-column name="成绩" [flexGrow]="6" headerClass="nopadding" cellClass="nopadding">
+          <ng-template let-column="column" ngx-datatable-header-template>
+            <div class="table-responsive" style="display: flex">
+              <span [ngStyle]="{width: subjectWidth}">
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> 
+                  <tbody> 
+                    <tr>
+                      <th style="text-align: center;">总分</th>
+                    </tr> 
+                  </tbody> 
+                </table>
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> 
+                  <tbody> 
+                    <tr>
+                      <th style="text-align: center;">成绩</th>
+                      <th style="text-align: center;">排名</th>
+                    </tr> 
+                  </tbody> 
+                </table>
+              </span>
+              <span *ngFor="let subject of resultHdr?.subScore, let i = index" [ngStyle]="{width: subjectWidth}">
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> 
+                  <tbody> 
+                    <tr>
+                      <th style="text-align: center;">{{subject.subjecName}}</th>
+                    </tr> 
+                  </tbody> 
+                </table>
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> 
+                  <tbody> 
+                    <tr>
+                      <th style="text-align: center;">成绩</th>
+                      <th style="text-align: center;">排名</th>
+                    </tr> 
+                  </tbody> 
+                </table>
+              </span>
+            </div>
+          </ng-template>
+          <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <div class="table-responsive" style="display: flex">
+              <table class="table table-bordered table-condensed" style="margin: 0px;">
+                <tbody>
+                <tr style="height:45px;">
+                  <td [ngStyle]="{width: subjectWidth2}" style="text-align: center;">{{ row.aveScore}}</td>
+                  <td [ngStyle]="{width: subjectWidth2}" style="text-align: center;">{{ row.rank}}</td>
+                  <ng-container *ngFor="let subject of row.subScore">
+                    <td [ngStyle]="{width: subjectWidth2}" style="text-align: center;">{{ subject.aveScore}}</td>
+                    <td [ngStyle]="{width: subjectWidth2}" style="text-align: center;">{{ subject.rank}}</td>
+                  </ng-container>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>

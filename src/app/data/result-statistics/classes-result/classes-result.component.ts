@@ -6,22 +6,17 @@ import * as _ from 'lodash';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-examinee-result',
-  templateUrl: './examinee-result.component.html',
-  styleUrls: ['./examinee-result.component.css']
+  selector: 'app-classes-result',
+  templateUrl: './classes-result.component.html',
+  styleUrls: ['./classes-result.component.css']
 })
-export class ExamineeResultComponent implements OnInit {
-  @ViewChild('examineeTable') table: any;
-  tab = 'examinee';
+export class ClassesResultComponent implements OnInit {
+  @ViewChild('classesTable') table: any;
+  tab = 'classes';
   exams: Promise<any>;
-  exgrs: Promise<any>;
   selectedExam: any;
-  selectedExgr: any;
   selectedGrade: any;
-  selectedSubject: any;
-  selectedClass: any;
   results = [];
-  text = '';
 
   columns = [
     { prop: 'name', name: '姓名' },
@@ -38,9 +33,8 @@ export class ExamineeResultComponent implements OnInit {
   constructor(private _dataService: DataService, private _examService: ExamService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.examId = Number(this.route.snapshot.params.examId);    
+    this.examId = Number(this.route.snapshot.params.examId);
     this.exams = this._examService.filterExams({});
-    this.exgrs = this._examService.filterExgr({});
     this._examService.getExamOptions().then((data) => {
       this.examOptions = data;
     });
@@ -56,14 +50,6 @@ export class ExamineeResultComponent implements OnInit {
       }
       this.reload()
     })
-    this.exgrs.then((data) => {
-      if (this.examId) {
-        this.selectedExgr = _.find(data, {examId: this.examId});
-      }
-      if (!this.selectedExgr) {
-        this.selectedExgr = _.first(data);
-      }
-    })
   }
 
   private reload() {
@@ -72,34 +58,19 @@ export class ExamineeResultComponent implements OnInit {
       params.gradeId = this.selectedGrade.id
     } else {
       this.selectedGrade = ""
-    }
-    if (_.isObject(this.selectedSubject)) {
-      params.subjectId = this.selectedSubject.id
-    } else {
-      this.selectedSubject = ""
-    }
-    if (_.isObject(this.selectedClass)) {
-      params.classId = this.selectedClass.id
-    } else {
-      this.selectedClass = ""
-    }
-    if (this.text) {
-      params.text = this.text
-    }
-    if (this.selectedBranch !== '全部') {
-      params.branch = this.selectedBranch
-    }
-    this._dataService.getStudentResultList(this.selectedExam.id, params).then((data: any) => {
+      params.gradeId = -1;
+    }//this.selectedExam.id
+    this._dataService.getClessResultList(1, params.gradeId).then((data: any) => {
       this.temp = [...data];
       this.results = data;
-      this.resultHdr = data[0];      
+      this.resultHdr = data[0];
       if (!this.resultHdr) {
         this.subjectWidth = sprintf('%.2f%%', 100);
         this.subjectWidth2 = sprintf('%.2f%%', 50);
         return;
       }
-      this.subjectWidth = sprintf('%.2f%%', 1 / (this.resultHdr.scores.length + 1) * 100);
-      this.subjectWidth2 = sprintf('%.2f%%', 0.5 / (this.resultHdr.scores.length + 1) * 100);
+      this.subjectWidth = sprintf('%.2f%%', 1 / (this.resultHdr.subScore.length + 1) * 100);
+      this.subjectWidth2 = sprintf('%.2f%%', 0.5 / (this.resultHdr.subScore.length + 1) * 100);
     })
   }
 

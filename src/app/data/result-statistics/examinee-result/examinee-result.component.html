@@ -106,12 +106,12 @@
           <ng-template let-column="column" ngx-datatable-header-template>
             <div class="table-responsive" style="display: flex">
               <span *ngFor="let subject of resultHdr?.scores, let i = index" [ngStyle]="{width: subjectWidth}">
-                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th>{{subject.name}}</th></tr> </tbody> </table>
-                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th>成绩</th><th>排名</th></tr> </tbody> </table>
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th style="text-align: center;">{{subject.name}}</th></tr> </tbody> </table>
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th style="text-align: center;">成绩</th><th style="text-align: center;">排名</th></tr> </tbody> </table>
               </span>
               <span [ngStyle]="{width: subjectWidth}">
-                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th>总分</th></tr> </tbody> </table>
-                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th>成绩</th><th>排名</th></tr> </tbody> </table>
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th style="text-align: center;">总分</th></tr> </tbody> </table>
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th style="text-align: center;">成绩</th><th style="text-align: center;">排名</th></tr> </tbody> </table>
               </span>
             </div>
           </ng-template>
@@ -121,11 +121,11 @@
                 <tbody>
                 <tr style="height:45px;">
                   <ng-container *ngFor="let subject of row.scores">
-                    <td [ngStyle]="{width: subjectWidth2}">{{ subject.score}}</td>
-                    <td [ngStyle]="{width: subjectWidth2}">{{ subject.rank}}</td>
+                    <td [ngStyle]="{width: subjectWidth2}" style="text-align: center;">{{ subject.score}}</td>
+                    <td [ngStyle]="{width: subjectWidth2}" style="text-align: center;">{{ subject.rank}}</td>
                   </ng-container>
-                  <td [ngStyle]="{width: subjectWidth2}">{{ row.score}}</td>
-                  <td [ngStyle]="{width: subjectWidth2}">{{ row.rank}}</td>
+                  <td [ngStyle]="{width: subjectWidth2}" style="text-align: center;">{{ row.score}}</td>
+                  <td [ngStyle]="{width: subjectWidth2}" style="text-align: center;">{{ row.rank}}</td>
                 </tr>
                 </tbody>
               </table>
