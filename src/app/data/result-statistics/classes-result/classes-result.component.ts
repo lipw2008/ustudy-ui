@@ -59,8 +59,8 @@ export class ClassesResultComponent implements OnInit {
     } else {
       this.selectedGrade = ""
       params.gradeId = -1;
-    }//this.selectedExam.id
-    this._dataService.getClessResultList(1, params.gradeId).then((data: any) => {
+    }
+    this._dataService.getClessResultList(this.selectedExam.id, params.gradeId).then((data: any) => {
       this.temp = [...data];
       this.results = data;
       this.resultHdr = data[0];
