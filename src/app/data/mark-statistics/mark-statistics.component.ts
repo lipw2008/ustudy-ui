@@ -4,11 +4,11 @@ import * as _ from 'lodash';
 import { sprintf } from 'sprintf-js';
 
 @Component({
-  selector: 'app-review-statistic',
-  templateUrl: './review-statistic.component.html',
-  styleUrls: ['./review-statistic.component.css']
+  selector: 'app-mark-statistics',
+  templateUrl: './mark-statistics.component.html',
+  styleUrls: ['./mark-statistics.component.css']
 })
-export class ReviewStatisticComponent implements OnInit {
+export class MarkStatisticsComponent implements OnInit {
   marks: any;
   selectedResult: any;
   filteredMarks = [];

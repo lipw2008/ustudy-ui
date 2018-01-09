@@ -29,26 +29,29 @@ export class DataService {
     })
   }
 
-  initSideBar() {
-    const defaultData = [
+  initSideBar(type: string) {
+    const defaultMarkData = [
       {
         text: '阅卷进度统计',
-        href: '#data/review/reviewStatistic',
-        tags: ['1'],
+        href: '#data/mark/markStatistics',
+        tags: ['0'],
         nodes: [{
           text: '进度明细',
-          href: '#data/review/scheduleDetails',
+          href: '#data/mark/markDetails',
           tags: ['0']
         }]
-      }, {
+      }/*, {
         text: '阅卷质量',
-        href: '#data/review/reviewQuality',
+        href: '#data/mark/markQuality',
         tags: ['0']
       }, {
         text: '阅卷检索',
-        href: '#data/review/reviewSearch',
+        href: '#data/mark/markSearch',
         tags: ['0']
-      },
+      }*/
+    ];
+    
+    const defaultResultData = [
       {
         text: '成绩统计',
         href: 'javascript:;',
@@ -69,16 +72,29 @@ export class DataService {
       }
     ];
 
-    jQuery('#sidebar').treeview({
-      levels: 2,
-      enableLinks: true,
-      showBorder: false,
-      expandIcon: 'glyphicon glyphicon-menu-right',
-      collapseIcon: 'glyphicon glyphicon-menu-down',
-      color: '#333',
-      backColor: 'transparent',
-      data: defaultData
-    });
+    if(type === 'mark') {
+      jQuery('#sidebar').treeview({
+        levels: 2,
+        enableLinks: true,
+        showBorder: false,
+        expandIcon: 'glyphicon glyphicon-menu-right',
+        collapseIcon: 'glyphicon glyphicon-menu-down',
+        color: '#333',
+        backColor: 'transparent',
+        data: defaultMarkData
+      });
+    } else if (type === 'result') {
+      jQuery('#sidebar').treeview({
+        levels: 2,
+        enableLinks: true,
+        showBorder: false,
+        expandIcon: 'glyphicon glyphicon-menu-right',
+        collapseIcon: 'glyphicon glyphicon-menu-down',
+        color: '#333',
+        backColor: 'transparent',
+        data: defaultResultData
+      });
+    }
   }
 
   getStudentResultList(examId, params: {}) {

@@ -3,11 +3,11 @@ import * as _ from 'lodash';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'app-review-quality',
-  templateUrl: './review-quality.component.html',
-  styleUrls: ['./review-quality.component.css']
+  selector: 'app-mark-quality',
+  templateUrl: './mark-quality.component.html',
+  styleUrls: ['./mark-quality.component.css']
 })
-export class ReviewQualityComponent implements OnInit {
+export class MarkQualityComponent implements OnInit {
   marks: any;
   private filtedMarks: any[];
   private questionName: any;

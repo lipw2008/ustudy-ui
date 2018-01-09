@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DataComponent } from './data.component';
-import { ReviewComponent } from './review/review.component';
-import { ReviewStatisticComponent } from './review-statistic/review-statistic.component';
-import { ReviewQualityComponent } from './review-quality/review-quality.component';
-import { ReviewSearchComponent } from './review-search/review-search.component';
-import { ScheduleDetailsComponent } from './schedule-details/schedule-details.component';
+import { MarkDataComponent } from './mark/mark.component';
+import { MarkStatisticsComponent } from './mark-statistics/mark-statistics.component';
+import { MarkQualityComponent } from './mark-quality/mark-quality.component';
+import { MarkSearchComponent } from './mark-search/mark-search.component';
+import { MarkDetailsComponent } from './mark-details/mark-details.component';
 import { QuestionsAnalysisComponent } from './questions-analysis/questions-analysis.component';
 import {FormsModule} from '@angular/forms';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
@@ -30,11 +30,11 @@ import {ModalModule} from 'ngx-bootstrap';
       {
         path: 'data', component: DataComponent, children: [
           {
-            path: 'review', component: ReviewComponent, children: [
-              { path: 'reviewStatistic', component: ReviewStatisticComponent },
-              { path: 'reviewQuality', component: ReviewQualityComponent },
-              { path: 'reviewSearch', component: ReviewSearchComponent },
-              { path: 'scheduleDetails', component: ScheduleDetailsComponent }
+            path: 'mark', component: MarkDataComponent, children: [
+              { path: 'markStatistics', component: MarkStatisticsComponent },
+              { path: 'markQuality', component: MarkQualityComponent },
+              { path: 'markSearch', component: MarkSearchComponent },
+              { path: 'markDetails', component: MarkDetailsComponent }
             ]
           },
           { path: 'questionsAnalysis', component: QuestionsAnalysisComponent },
@@ -50,11 +50,11 @@ import {ModalModule} from 'ngx-bootstrap';
   ],
   declarations: [
     DataComponent,
-    ReviewComponent,
-    ReviewStatisticComponent,
-    ReviewQualityComponent,
-    ReviewSearchComponent,
-    ScheduleDetailsComponent,
+    MarkDataComponent,
+    MarkStatisticsComponent,
+    MarkQualityComponent,
+    MarkSearchComponent,
+    MarkDetailsComponent,
     QuestionsAnalysisComponent,
     ResultStatisticsComponent,
     ExamineeResultComponent

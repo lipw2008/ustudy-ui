@@ -4,11 +4,11 @@ import { sprintf } from 'sprintf-js';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-schedule-details',
-  templateUrl: './schedule-details.component.html',
-  styleUrls: ['./schedule-details.component.css']
+  selector: 'app-mark-details',
+  templateUrl: './mark-details.component.html',
+  styleUrls: ['./mark-details.component.css']
 })
-export class ScheduleDetailsComponent implements OnInit {
+export class MarkDetailsComponent implements OnInit {
   tab: String = 'subjectReview';
   marks: any;
   questionList = [];

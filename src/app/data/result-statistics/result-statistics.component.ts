@@ -11,7 +11,7 @@ export class ResultStatisticsComponent implements OnInit {
   constructor(private _dataService: DataService) { }
 
   ngOnInit() {
-    this._dataService.initSideBar();
+    this._dataService.initSideBar('result');
   }
 
 }

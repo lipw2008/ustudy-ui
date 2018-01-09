@@ -62,7 +62,7 @@
 		                    	<a href="#" (click)="checkUserStatus()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据中心 <span class="caret"></span></a>
 							    <ng-container *ngIf="_sharedService.userRole!= ''">
                                     <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                        <li *ngIf="checkPerm('阅卷统计')"><a [routerLink]="['/data/review/reviewStatistic']">阅卷统计</a></li>
+                                        <li *ngIf="checkPerm('阅卷统计')"><a [routerLink]="['/data/mark/markStatistics']">阅卷统计</a></li>
                                         <li *ngIf="checkPerm('试卷分析')"><a [routerLink]="['/data/questionsAnalysis']">试卷分析</a></li>
                                         <li *ngIf="checkPerm('成绩统计')"><a [routerLink]="['/data/result/examinees']">成绩统计</a></li>
                                         <li *ngIf="checkPerm('报表下载')"><a href="#">报表下载</a></li>

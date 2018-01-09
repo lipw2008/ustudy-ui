@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReviewFilterComponent } from './review-filter.component';
+import { MarkQualityComponent } from './mark-quality.component';
 
-describe('ReviewFilterComponent', () => {
-  let component: ReviewFilterComponent;
-  let fixture: ComponentFixture<ReviewFilterComponent>;
+describe('MarkQualityComponent', () => {
+  let component: MarkQualityComponent;
+  let fixture: ComponentFixture<MarkQualityComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ReviewFilterComponent]
+      declarations: [MarkQualityComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReviewFilterComponent);
+    fixture = TestBed.createComponent(MarkQualityComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

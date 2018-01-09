@@ -10,8 +10,8 @@ import { ExamsFilterComponent } from './exams-filter/exams-filter.component';
 import { ExamService } from '../exam/exam.service';
 import { TeacherService } from '../info/teachers/teacher.service';
 import { MarkSelectComponent } from './mark-select/mark-select.component';
-import { SubjectFilterPipe } from '../data/review-statistic/subject-filter.pipe';
-import { ReviewFilterComponent } from './review-filter/review-filter.component';
+import { SubjectFilterPipe } from '../data/mark-statistics/subject-filter.pipe';
+import { MarkFilterComponent } from './mark-filter/mark-filter.component';
 import { AnswerFilterComponent } from './answer-filter/answer-filter.component';
 import { IntToDatePipe } from './int-to-date.pipe';
 import { AddExamineeBatchComponent } from './modals/add-examinee-batch/add-examinee-batch.component';
@@ -32,7 +32,7 @@ import { AddTeacherBatchComponent } from './modals/add-teacher-batch/add-teacher
     ExamsFilterComponent,
     MarkSelectComponent,
     SubjectFilterPipe,
-    ReviewFilterComponent,
+    MarkFilterComponent,
     AnswerFilterComponent,
     IntToDatePipe,
     AddExamineeBatchComponent,
@@ -43,7 +43,7 @@ import { AddTeacherBatchComponent } from './modals/add-teacher-batch/add-teacher
     TeacherSelectorComponent,
     ExamsFilterComponent,
     MarkSelectComponent,
-    ReviewFilterComponent,
+    MarkFilterComponent,
     AnswerFilterComponent,
     SubjectFilterPipe,
     IntToDatePipe,
