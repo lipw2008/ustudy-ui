@@ -507,11 +507,13 @@ export class CanvasComponent implements OnInit {
 
 	updateCanvasStatus() {
 		console.log("isCanvasEnabled:" + this.isCanvasEnabled);
+		if (this.answer.questionName === this.questionName) {
+			this.parent.scroll(this.questionName);
+		}
 		if (this.answer.questionName === this.questionName && this.isCanvasEnabled === false) {
 			this.ctx.putImageData(this.imgData, 0, 0);
 			console.log("set canvas to true");
 			this.isCanvasEnabled = true;
-			this.parent.scroll(this.questionName);
 		} else if (this.answer.questionName !== this.questionName && this.isCanvasEnabled === true) {
 			this.imgData = this.ctx.getImageData(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 			this.ctx.globalAlpha = 0.9;

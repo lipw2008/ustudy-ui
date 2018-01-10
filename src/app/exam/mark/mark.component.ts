@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Renderer2 }  from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MarkService } from './mark.service';
 import { SharedService } from '../../shared.service';
 
@@ -147,7 +147,7 @@ export class MarkComponent implements OnInit {
 	isHidden2: boolean = true;
 	isHidden3: boolean = true;
 
-    constructor(private _sharedService: SharedService, private _markService: MarkService, private renderer: Renderer2, private route: ActivatedRoute) {
+    constructor(private _sharedService: SharedService, private _markService: MarkService, private renderer: Renderer2, private route: ActivatedRoute, private router: Router) {
 
     }
 
@@ -221,6 +221,7 @@ export class MarkComponent implements OnInit {
 			this.pageCount = this.mark.groups.length;
 			if (this.pageCount <= 0) {
 				alert("没有可阅试卷");
+				this.router.navigate(['markList']);
 				return;
 			}
 			if (this.reqContent.startSeq === -1 && this.reqContent.endSeq === -1) {
@@ -360,6 +361,12 @@ export class MarkComponent implements OnInit {
 		console.log("after update full score");
 	}
 
+	checkScore(value) {
+		console.log(`on key up `, value);
+		if ( Number(value) > Number(this.fullScore) || Number(value) < 0) {
+			alert('给分不能小于零或者大于最大分值' + this.fullScore);
+		} 
+	}
 	onFocus(questionName: string, stepName: string, fullScore: string): void {
 		console.log("get focus!!! " + questionName + " " + stepName + " " + fullScore);
 		this.editMode = "None";

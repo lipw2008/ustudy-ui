@@ -50,3 +50,9 @@
   color: red;
   text-decoration: underline;
 }
+
+.online-marking-sidebar .btn-online-marking-score.btn-block {
+  display: block;
+  width: 22%;
+	text-align: center;
+}

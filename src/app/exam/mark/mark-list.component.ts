@@ -28,11 +28,21 @@ export class MarkListComponent implements OnInit {
     this._sharedService.makeRequest('GET', '/exam/marktask/list/', '').then((data: any) => {
       //cache the list
       console.log('data: ' + JSON.stringify(data));
-      this.marks = data;
+      this.marks = data.sort(this.sortQuesName);
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);
     });
+  }
+
+  sortQuesName(a, b) {
+    let q1 = a.summary[0].questionName;
+    let q2 = b.summary[0].questionName;
+    if (q1 < q2) {
+      return -1;
+    } else { 
+      return 1;
+    }
   }
 
   getProgress(rawData): string {
