@@ -14,21 +14,23 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let subject of filteredMarks | subjectFilter: selected">
-      <td>
-        <a href="javascript:;">{{subject.name}}</a>
-      </td>
-      <td>
-        <div class="progress clear-margin-bottom">
-          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': getProgress(subject)}">
-            {{getProgress(subject)}}
+    <ng-container *ngFor="let mark of filteredMarks">
+      <tr *ngFor="let egs of mark.egs">
+        <td>
+          <a [routerLink]="['/data/mark/markDetails', {metrics: stringify(egs.metrics)}]">{{egs.subName}}</a>
+        </td>
+        <td>
+          <div class="progress clear-margin-bottom">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': egs.progress}">
+              {{egs.progress}}
+            </div>
           </div>
-        </div>
-      </td>
-      <td></td>
-      <td></td>
-      <td> {{getHours(subject)}} </td>
-    </tr>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </ng-container>
     </tbody>
   </table>
 </div>

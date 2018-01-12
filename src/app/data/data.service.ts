@@ -17,14 +17,29 @@ export class DataService {
 
   getMarks() {
     return new Promise((resolve, reject) => {
-      this._sharedService.makeRequest('GET', 'assets/api/exams/marklist.json', '').then((data: any) => {
-        for (const mark of data) {
-          for (const question of mark.summary) {
-            question.teacherName = mark.teacherName;
-            question.mark = mark
+      //this._sharedService.makeRequest('GET', 'assets/api/exams/marklist.json', '').then((data: any) => {
+      this._sharedService.makeRequest('GET', '/exam/mark/progress/', '').then((data: any) => {
+        for (const exam of data.data) {
+          for (const egs of exam.egs) {
+            let marked = 0;
+            let total = 0;
+            for (const metric of egs.metrics) {
+              delete metric.quesid;
+              if(metric.startno === metric.endno){
+                metric.quesName = '' + metric.startno;
+              } else {
+                metric.quesName = metric.startno + '-' + metric.endno;
+              }
+              delete metric.startno;
+              delete metric.endno;
+              marked += metric.marked;
+              total += metric.total;
+              metric.progress = Math.round(metric.marked/metric.total*100) + '%';
+            }
+            egs.progress = Math.round(marked/total*100) + '%';
           }
         }
-        resolve(data)
+        resolve(data.data)
       })
     })
   }

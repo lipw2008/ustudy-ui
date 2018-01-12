@@ -11,28 +11,28 @@
         <form id="editExamForm" method="post" class="form-inline" action="#">
           <div class="input-group">
             <span class="input-group-addon">学校</span>
-            <select class="form-control" [(ngModel)]="selectedSchool" name="selectedSchool" (change)="getQuestions()">
+            <select class="form-control" [(ngModel)]="selectedSchool" name="selectedSchool">
               <option *ngFor="let school of schools, let i = index" [selected]="i==0">{{school}}</option>
             </select>
           </div>
           <div class="input-group">
             <span class="input-group-addon">年级</span>
-            <select class="form-control" [(ngModel)]="selectedGrade" name="selectedGrade" (change)="getQuestions()">
+            <select class="form-control" [(ngModel)]="selectedGrade" name="selectedGrade">
               <option *ngFor="let grade of grades, let i = index" [selected]="i==0">{{grade}}</option>
             </select>
           </div>
           <div class="input-group">
             <span class="input-group-addon">学科</span>
-            <select class="form-control" [(ngModel)]="selectedSubject" name="selectedSubject" (change)="getQuestions()">
+            <select class="form-control" [(ngModel)]="selectedSubject" name="selectedSubject">
               <option *ngFor="let subject of subjects" [selected]="i==0">{{subject}}</option>
             </select>
           </div>
-          <div class="input-group" *ngIf="showQuestions">
+          <!--<div class="input-group" *ngIf="showQuestions">
             <span class="input-group-addon">题目</span>
             <select class="form-control" [(ngModel)]="selectedQuestion" name="selectedQuestion" [disabled]="!selectedSubject">
               <option *ngFor="let subject of questions, let i = index" [selected]="i==0">{{subject}}</option>
             </select>
-          </div>
+          </div>-->
           <div class="input-group">
             <a class="btn btn-default" title="查询" (click)="returnResult()">查询</a>
           </div>
