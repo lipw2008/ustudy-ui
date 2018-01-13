@@ -17,7 +17,7 @@
     <ng-container *ngFor="let mark of filteredMarks">
       <tr *ngFor="let egs of mark.egs">
         <td>
-          <a [routerLink]="['/data/mark/markDetails', {metrics: stringify(egs.metrics)}]">{{egs.subName}}</a>
+          <a [routerLink]="['/data/mark/markDetails', {egsId: egs.egsId, metrics: stringify(egs.metrics)}]">{{egs.subName}}</a>
         </td>
         <td>
           <div class="progress clear-margin-bottom">

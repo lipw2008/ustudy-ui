@@ -1,65 +1,15 @@
 <ul class="nav nav-tabs" role="tablist">
-  <li role="presentation" class="">
-    <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab" aria-expanded="false" (click)="tab='teacherReview'">教师阅卷进度</a>
-  </li>
   <li role="presentation" class="active">
-    <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab" aria-expanded="true" (click)="tab='subjectReview'">题目阅卷进度</a>
+    <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab" aria-expanded="false" (click)="tab=true">题目阅卷进度</a>
+  </li>
+  <li role="presentation" class="">
+    <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab" aria-expanded="true" (click)="tab=false">教师阅卷进度</a>
   </li>
 </ul>
 
 <div class="tab-content">
-  <!--教师阅卷进度 start-->
-  <div role="tabpanel" class="tab-pane" id="tab1" *ngIf="tab=='teacherReview'">
-    <div class="panel panel-default">
-      <!-- 检索 start -->
-      <!--<div class="panel-heading search-wrap">
-        <div class="row">
-          <div class="col-sm-12 col-md-offset-8 col-lg-4 text-right">
-            <div class="btn-group" role="group" aria-label="button group">
-              <a href="#" class="btn btn-default" title="督促阅卷">督促阅卷</a>
-              <a href="#" class="btn btn-default" title="返回">返回</a>
-            </div>
-          </div>
-        </div>
-      </div>-->
-      <!-- 检索 end -->
-      <!--表格 start-->
-      <div class="table-responsive" data-pattern="priority-columns">
-        <!--<table class="table table-hover table-bordered text-center table-checkbox">
-          <thead>
-          <tr>
-            <th width="1%"><label><input type="checkbox" name="checkbox"></label></th>
-            <th>阅卷教师</th>
-            <th>所在单位</th>
-            <th>阅卷题目</th>
-            <th>阅卷方式</th>
-            <th>阅卷进度</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let mark of marks">
-            <td><label><input type="checkbox" name="checkbox"></label></td>
-            <td>{{mark.teacherName}}</td>
-            <td>{{mark.grade}}</td>
-            <td>{{getQuestionNames(mark)}}</td>
-            <td>{{mark.markType}}</td>
-            <td>
-              <div class="progress clear-margin-bottom">
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': getTeacherProgress(mark)}">
-                  {{getTeacherProgress(mark)}}
-                </div>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>-->
-      </div>
-      <!--表格end-->
-    </div>
-  </div>
-  <!--教师阅卷进度 end-->
   <!--题目阅卷进度 start-->
-  <div role="tabpanel" class="tab-pane active" id="tab2" *ngIf="tab=='subjectReview'">
+  <div role="tabpanel" class="tab-pane active" id="tab1" *ngIf="tab">
     <div class="panel panel-default">
       <!-- 检索 start -->
       <!--<div class="panel-heading search-wrap">
@@ -101,4 +51,54 @@
     </div>
   </div>
   <!--题目阅卷进度 end-->
+  <!--教师阅卷进度 start-->
+  <div role="tabpanel" class="tab-pane" id="tab2" *ngIf="!tab">
+    <div class="panel panel-default">
+      <!-- 检索 start -->
+      <!--<div class="panel-heading search-wrap">
+        <div class="row">
+          <div class="col-sm-12 col-md-offset-8 col-lg-4 text-right">
+            <div class="btn-group" role="group" aria-label="button group">
+              <a href="#" class="btn btn-default" title="督促阅卷">督促阅卷</a>
+              <a href="#" class="btn btn-default" title="返回">返回</a>
+            </div>
+          </div>
+        </div>
+      </div>-->
+      <!-- 检索 end -->
+      <!--表格 start-->
+      <div class="table-responsive" data-pattern="priority-columns">
+        <table class="table table-hover table-bordered text-center table-checkbox">
+          <thead>
+          <tr>
+            <!-- <th width="1%"><label><input type="checkbox" name="checkbox"></label></th> -->
+            <th>阅卷教师</th>
+            <th>所在单位</th>
+            <th>阅卷题目</th>
+            <th>阅卷方式</th>
+            <th>阅卷进度</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let teacher of teachers">
+            <!-- <td><label><input type="checkbox" name="checkbox"></label></td> -->
+            <td>{{teacher.teacName}}</td>
+            <td>{{teacher.subName}}备课组</td>
+            <td>{{teacher.quesList}}</td>
+            <td>{{teacher.styleList}}</td>
+            <td>
+              <div class="progress clear-margin-bottom">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': teacher.markProgress}">
+                  {{teacher.markProgress}}
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--表格end-->
+    </div>
+  </div>
+  <!--教师阅卷进度 end-->
 </div>

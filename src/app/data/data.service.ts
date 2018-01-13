@@ -44,17 +44,25 @@ export class DataService {
     })
   }
 
+  getTeachers(egsId) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', `/exam/teacher/mark/progress/${egsId}`, '').then((data: any) => {
+        resolve(data.data)
+      })
+    })
+  }
+
   initSideBar(type: string) {
     const defaultMarkData = [
       {
         text: '阅卷进度统计',
         href: '#data/mark/markStatistics',
-        tags: ['0'],
+        tags: ['0']/*,
         nodes: [{
           text: '进度明细',
           href: '#data/mark/markDetails',
           tags: ['0']
-        }]
+        }]*/
       }/*, {
         text: '阅卷质量',
         href: '#data/mark/markQuality',

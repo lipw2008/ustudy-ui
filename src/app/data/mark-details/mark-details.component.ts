@@ -10,31 +10,40 @@ import * as _ from 'lodash';
 })
 export class MarkDetailsComponent implements OnInit {
   questionList = [];
-  tab = 'subjectReview';
+  tab: boolean = true;
+  teachers = [{
+    teacName: '',
+    quesList: [],
+    subName: '',
+    markProgress: '',
+    styleList: [],
+    questions: []
+  }];
 
   constructor(private _dataService: DataService, public route: ActivatedRoute) { }
 
   ngOnInit() {
     console.log("metrics is "+ this.route.snapshot.params.metrics);
+    console.log("egsId is "+ this.route.snapshot.params.egsId);
     this.questionList = _.orderBy(JSON.parse(this.route.snapshot.params.metrics), 'quesName');
-    // this.reload()
+    this.reload(this.route.snapshot.params.egsId);
   }
-  // reload(): void {
-  //   this._dataService.getMarks().then((data: any) => {
-  //     this.marks = data;
-  //     for (const mark of this.marks) {
-  //       if (mark.markType === '标准') {
-  //         for (const s of mark.summary) {
-  //           s.teacherName = mark.teacherName
-  //         }
-  //         this.questionList = this.questionList.concat(mark.summary);
-  //       }
-  //     }
-  //   }).catch((error: any) => {
-  //     console.log(error.status);
-  //     console.log(error.statusText);
-  //   });
-  // }
+
+  reload(egsId): void {
+    this._dataService.getTeachers(egsId).then((data: any) => {
+      this.teachers = data;
+      for (const teacher of this.teachers) {
+        let res = [];
+        res = _.keys(_.groupBy(_.map(_.orderBy(teacher.questions, 'quesName'), 'quesName')));
+        teacher.quesList = res;
+        res = _.keys(_.groupBy(_.map(_.orderBy(teacher.questions, 'markStyle'), 'markStyle')));
+        teacher.styleList = res;
+      }
+    }).catch((error: any) => {
+      console.log(error.status);
+      console.log(error.statusText);
+    });
+  }
 
   // getQuestionNames(mark: any) {
   //   return mark.summary.map((s) => {
