@@ -70,7 +70,7 @@
 								</td>
 								<td>
 									<div class="input-group">
-										<input type="text" class="form-control" id="score_{{objective.id}}" size="5" value="{{objective.score}}" (change)="onValueChange(5,objective.id)">
+										<input type="number" class="form-control" id="score_{{objective.id}}" size="5" value="{{objective.score}}" (change)="onValueChange(5,objective.id)" style="width:80px;">
 										<span class="input-group-addon clear-border clear-bg">分/题</span>
 										<div class="input-group pull-right" *ngIf="objective.type === '多选题'">
 											<a class="btn btn-link" (click)="showCheckBoxScore(objective.choiceNum,objective.score)"><i class="glyphicon glyphicon-cog"></i></a>
@@ -124,8 +124,18 @@
 					</table>
 				</div>
 				<!--表格end-->
-				<p>单选题合计{{radioScore}}分，多选题合计{{checkboxScore}}分，判断题合计{{judgmentScore}}分，客观题总计分数：{{objectiveScore}}分</p>
+				<p>
+					<ng-container *ngIf="radioScore > 0">单选题合计{{radioScore}}分，</ng-container>
+					<ng-container *ngIf="checkboxScore > 0">多选题合计{{checkboxScore}}分，</ng-container>
+					<ng-container *ngIf="judgmentScore > 0">判断题合计{{judgmentScore}}分，</ng-container>
+					客观题总计分数：{{objectiveScore}}分
+				</p>
 			</form>
+			<div class="padding-vertical text-center">
+				<a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">
+					<button type="button" class="btn btn-primary">主观题设置</button>
+				</a>
+			</div>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="tab2">
 			<!--表格 start-->
@@ -186,13 +196,18 @@
 									</td>
 									<td>
 										<div class="input-group">
-											<input type="text" class="form-control" size="5" id="subjective_score_{{subjective.id}}" value="{{subjective.score}}" (change)="onSubjectiveValueChange('score',subjective.id,0)">
-											<span class="input-group-addon clear-border clear-bg">分/题</span>
+											<input type="number" class="form-control" size="5" id="subjective_score_{{subjective.id}}" value="{{subjective.score}}" (change)="onSubjectiveValueChange('score',subjective.id,0)" style="width:80px;">
+											<ng-container *ngIf="subjective.type !== '填空题'">
+												<span class="input-group-addon clear-border clear-bg">分</span>
+											</ng-container>
+											<ng-container *ngIf="subjective.type === '填空题'">
+												<span class="input-group-addon clear-border clear-bg">分/题</span>
+											</ng-container>
 											<div class="input-group pull-right" *ngIf="subjective.type !== '填空题'">
 												<a class="btn btn-link" (click)="addOneSubjectiveRow(subjective.id)">
 													<i class="glyphicon glyphicon-plus" ></i>
 												</a>
-												<a class="btn btn-link">
+												<a class="btn btn-link" style="display:none;">
 													<i class="glyphicon glyphicon-screenshot"></i>
 												</a>
 											</div>
@@ -219,8 +234,6 @@
 										</td>
 										<td>
 											<select id="subjective_type_{{subjective.id}}_{{child.quesno}}" class="form-control" (change)="onSubjectiveValueChange('type',subjective.id,child.quesno)">
-												<option *ngIf="child.type === '填空题'" selected="selected" value="填空题">填空题</option>
-												<option *ngIf="child.type !== '填空题'" value="填空题">填空题</option>
 												<option *ngIf="child.type === '解答题'" selected="selected" value="解答题">解答题</option>
 												<option *ngIf="child.type !== '解答题'" value="解答题">解答题</option>
 												<option *ngIf="child.type === '证明题'" selected="selected" value="证明题">证明题</option>
@@ -232,7 +245,7 @@
 											</select>
 										</td>
 										<td>
-											<input type="text" class="form-control" size="5" id="subjective_score_{{subjective.id}}_{{child.quesno}}" value="{{child.score}}" (change)="onSubjectiveValueChange('score',subjective.id,child.quesno)">
+											<input type="number" class="form-control" size="5" id="subjective_score_{{subjective.id}}_{{child.quesno}}" value="{{child.score}}" (change)="onSubjectiveValueChange('score',subjective.id,child.quesno)" style="width:80px;">
 										</td>
 									</tr>
 								</ng-container>
@@ -243,11 +256,11 @@
 				<!--表格end-->
 				<p>主观题共{{subjectiveCount}}道题，合计分数：{{subjectiveScore}}分</p>
 			</form>
+			<div class="padding-vertical text-center">
+				<button type="button" class="btn btn-default">取消</button>
+				<button type="button" class="btn btn-primary" (click)="commitDatas()">保存</button>
+			</div>
 		</div>		
-		<div class="padding-vertical text-center">
-			<button type="button" class="btn btn-default">取消</button>
-			<button type="button" class="btn btn-primary" (click)="commitDatas()">保存</button>
-		</div>
 	</div>
 	<!-- 多选题答案得分设置 start -->
 	 <div id="infoModal" tabindex="-1" role="dialog" style="display: none;overflow: hidden;position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1050;">
@@ -306,7 +319,7 @@
 															<td>{{score.count}}</td>
 															<td>
 																<div class="extra" data-toggle="buttons">
-																	<input type="text" class="form-control" id="checkBoxScore_{{checkBoxScore.size}}_{{score.count}}" size="5" value="{{score.score}}" (change)="setCheckBoxScore(checkBoxScore.size,score.count)">
+																	<input type="number" class="form-control" id="checkBoxScore_{{checkBoxScore.size}}_{{score.count}}" size="5" value="{{score.score}}" (change)="setCheckBoxScore(checkBoxScore.size,score.count)" style="width:80px;">
 																</div>
 															</td>
 														</tr>
