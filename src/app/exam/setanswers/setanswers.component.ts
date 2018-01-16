@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../../shared.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   templateUrl: 'setanswers.component.html'
@@ -651,7 +652,7 @@ export class SetAnswersComponent implements OnInit {
             if (!childs) {
               childs = [];
             }
-            let child = { quesno: 1, quesid: subjective.quesno, branch: '不分科', score: 1 };
+            let child = { quesno: 1, quesid: subjective.quesno, branch: '不分科', type: subjective.type, score: 1 };
             child.quesno = childs.length + 1;
             child.branch = subjective.branch;
             childs.push(child);
@@ -893,6 +894,29 @@ export class SetAnswersComponent implements OnInit {
     data['subjectives'] = this.subjectives;
     data['objectiveAnswers'] = this.objectiveAnswers;
 
+    var flag = true;
+
+    this.subjectives.forEach(subjective => {
+      if (subjective.type !== '填空题') {
+        var childs = subjective["child"];
+        if(flag && childs && childs.length > 0){
+          var score = subjective.score;
+          var totalScore = 0;
+          childs.forEach(sc =>{
+            totalScore += sc["score"];
+          })
+          if(score !== totalScore){
+            alert(subjective.type + "第 " + subjective.quesno + " 题分数设置有误，请检查后再次提交！");
+            flag = false;
+          }
+        }
+      }
+    })
+    
+    if(!flag){
+      return;
+    }
+
     if (this.checkBoxScores.length === 0) {
       this.objectives.forEach(objective => {
         if (objective.type === '多选题') {
@@ -907,15 +931,17 @@ export class SetAnswersComponent implements OnInit {
     }
     this.initCheckBoxScores(this.objectiveChoiceNum, this.objectiveScore_);
     data['checkBoxScores'] = this.checkBoxScores;
-    this._sharedService.makeRequest('POST', '/api/setanswers/answers/' + this.egsId, JSON.stringify(data)).then((data: any) => {
-      if (data.success) {
-        alert("保存成功！");
-        this.getQuesAnswers(this.egsId, this.examId, this.gradeId, this.subjectId);
-      }
-    }).catch((error: any) => {
-      console.log(error.status);
-      console.log(error.statusText);
-    });
+    if(confirm("客观题" + this.objectiveScore + "分，主观题" + this.subjectiveScore + "分，共" + (this.objectiveScore+this.subjectiveScore) + "分，确认保存吗？")) {
+      this._sharedService.makeRequest('POST', '/api/setanswers/answers/' + this.egsId, JSON.stringify(data)).then((data: any) => {
+        if (data.success) {
+          alert("保存成功！");
+          this.getQuesAnswers(this.egsId, this.examId, this.gradeId, this.subjectId);
+        }
+      }).catch((error: any) => {
+        console.log(error.status);
+        console.log(error.statusText);
+      });
+    }
   }
 
 }
