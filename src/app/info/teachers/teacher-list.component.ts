@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
 import { ITeacher } from './teacher';
 import { TeacherService } from './teacher.service';
@@ -14,6 +15,7 @@ import {AddTeacherBatchComponent} from '../../utils/modals/add-teacher-batch/add
 export class TeacherListComponent implements OnInit {
   
   bsModalRef: BsModalRef;
+  subscription: Subscription;
 
   public searchForm = this.fb.group({
     teacherNameId: [""],
@@ -160,8 +162,19 @@ export class TeacherListComponent implements OnInit {
   }
 
   addTeacherBatch() {
+    this.subscription = this.modalService.onHide.subscribe((reason:string) => {
+      console.log("modal is hidden!!");
+      this.reload();
+      this.unsubscribe();
+    });
+
     this.bsModalRef = this.modalService.show(AddTeacherBatchComponent);
     // this.bsModalRef.content.gradeId = this.gradeId;
     // this.bsModalRef.content.examId = this.examId;
   }
+
+  unsubscribe() {
+    this.subscription.unsubscribe();
+  }
+
 }
