@@ -38,8 +38,10 @@ export class ExamineeResultComponent implements OnInit {
   constructor(private _dataService: DataService, private _examService: ExamService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.examId = Number(this.route.snapshot.params.examId);    
-    this.exams = this._examService.filterExams({});
+    this.examId = Number(this.route.snapshot.params.examId);
+    const params = Object.create({});
+    params.finished = true;
+    this.exams = this._examService.filterExams(params);
     this.exgrs = this._examService.filterExgr({});
     this._examService.getExamOptions().then((data) => {
       this.examOptions = data;
