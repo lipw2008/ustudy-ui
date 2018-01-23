@@ -178,6 +178,12 @@ export class MarkComponent implements OnInit {
 		$(this.questionSelector.nativeElement).selectpicker('val', JSON.parse(this.route.snapshot.params.question)[0].n);
 		console.log("init mark questions:" + JSON.stringify(this.markQuestions));
 		$(this.questionSelector.nativeElement).on('changed.bs.select', {t: this}, this.onQuestionChange);
+		$("#mark-progress").hover(function(){
+			console.log("mouse on");
+		}, function(){
+			console.log("mouse off");
+		}
+		);
 		this.reload();
 	}
 
