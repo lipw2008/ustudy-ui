@@ -328,7 +328,13 @@ export class MarkComponent implements OnInit {
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
+					// is it possible that one paper is marked and others are not in one group?
 					if (paper.isMarked === true) {
+						// update the score board and questionName to prepare for re-mark
+						this.fullScore = paper.fullscore;
+						this.questionName = paper.questionName;
+						// console.log("after update full score: " + this.fullScore);
+						this.updateScoreBoard();
 						return;
 					}
 					if (paper.problemPaper === true) {

@@ -154,7 +154,7 @@ export class CanvasComponent implements OnInit {
 
 	loadPaper() {
 		var promiseArray = [];
-		console.log("loadPaper()");
+		console.log("loadPaper() " + JSON.stringify(this.answer));
 		// total canvas width
 		let canvasW = this.container.clientWidth - 20; //leave 20px for the scroll bar
 
@@ -199,7 +199,7 @@ export class CanvasComponent implements OnInit {
 						markImg.onerror = function() {
 							reject();
 						}
-						markImg.src = t._sharedService.getImgUrl(region.markImg, "");
+						markImg.src = t._sharedService.getImgUrl(region.markImg + '?' + new Date().getTime(), "");
 					} else if (region.markImgRecords[0] !== null && region.markImgRecords[1] !== null){
 						console.log("mark image record: " +  region.markImgRecords[0] + " " + region.markImgRecords[1]);
 						let markImg1 = new Image();
@@ -226,13 +226,13 @@ export class CanvasComponent implements OnInit {
 							markImg2.onerror = function() {
 								reject();
 							}
-							markImg2.src = t._sharedService.getImgUrl(region.markImgRecords[1].markImg, "");
+							markImg2.src = t._sharedService.getImgUrl(region.markImgRecords[1].markImg + '?' + new Date().getTime(), "");
 
 						}
 						markImg1.onerror = function() {
 							reject();
 						}
-						markImg1.src = t._sharedService.getImgUrl(region.markImgRecords[0].markImg, "");
+						markImg1.src = t._sharedService.getImgUrl(region.markImgRecords[0].markImg + '?' + new Date().getTime(), "");
 					} else {
 						resolve();
 					}
@@ -519,8 +519,8 @@ export class CanvasComponent implements OnInit {
 			this.ctx.globalAlpha = 0.9;
 			this.ctx.fillStyle = "#808080";
 			this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-			this.ctx.globalAlpha = 1;
-			console.log("set canvas to false" + this.ctx.canvas.width + " " + this.ctx.canvas.height);
+			this.ctx.globalAlpha = 1;	
+			console.log("set canvas to false " + this.answer.questionName + " " + this.questionName);
 			this.isCanvasEnabled = false;
 		}
 		// enable canvas before adding score
