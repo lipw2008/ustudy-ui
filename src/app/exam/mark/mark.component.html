@@ -23,13 +23,14 @@
                             <option *ngFor="let question of questionList" [value]="question.n">{{question.n}}</option>
                         </select>
                     </div>
-                    <div class="progress-box">
+                    <div id="mark-progress" class="progress-box">
                         <div class="progress clear-margin-bottom">
-                            <div id="mark-progress" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: progress}">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: progress}">
                                 {{progress}}
                             </div>
                         </div>
                     </div>
+                    <div class="progress-text">{{mark.progress}}</div>
                     <div class="control-box">
                     	<div class="extra" data-toggle="buttons">
                             <a href="javascript:;" title="全屏阅卷"><i class="iconfont-resizefull"></i></a>

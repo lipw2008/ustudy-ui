@@ -180,10 +180,12 @@ export class MarkComponent implements OnInit {
 		$(this.questionSelector.nativeElement).on('changed.bs.select', {t: this}, this.onQuestionChange);
 		$("#mark-progress").hover(function(){
 			console.log("mouse on");
+			$(".progress-text").toggle();
 		}, function(){
-			console.log("mouse off");
+			$(".progress-text").toggle();
 		}
 		);
+		// $("#mark-progress").append("html", "hello");
 		this.reload();
 	}
 
