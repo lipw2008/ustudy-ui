@@ -3,8 +3,8 @@
 	<div class="container">
 		<ol class="breadcrumb">
 			<li><a href="welcome">首页</a></li>
-			<li class="active">考试中心</li>
-			<li class="active">线上阅卷</li>
+			<li>考试中心</li>
+			<li><a [routerLink]="['/markList']">线上阅卷</a></li>
 		</ol>
 	</div>
 </div>
@@ -205,12 +205,12 @@
                             <li>
                                 <span>{{curPage}}</span>
                             </li>
-                            <li>
+                            <li [ngClass]="nextPageEnabled">
                                 <a (click)="nextPage()" aria-label="Next" title="下一页">
                                     <i aria-hidden="true" class="glyphicon glyphicon-forward"></i>
                                 </a>
                             </li>
-                            <li class="disabled">
+                            <li [ngClass]="lastPageEnabled">
                                 <a (click)="lastPage()" aria-label="Last" title="尾页">
                                     <i aria-hidden="true" class="glyphicon glyphicon-fast-forward"></i>
                                 </a>
