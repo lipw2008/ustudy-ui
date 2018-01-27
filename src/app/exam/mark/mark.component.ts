@@ -231,7 +231,7 @@ export class MarkComponent implements OnInit {
 			this.pageCount = this.mark.groups.length;
 			if (this.pageCount <= 0) {
 				alert("没有可阅试卷");
-				// this.router.navigate(['markList']);
+				this.router.navigate(['markList']);
 				return;
 			}
 			if (this.reqContent.startSeq === -1 && this.reqContent.endSeq === -1) {
