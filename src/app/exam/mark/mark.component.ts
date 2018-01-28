@@ -67,6 +67,9 @@ export class MarkComponent implements OnInit {
 	pageCount: number = 0; 
 	firstPageEnabled: string = "";
 	prePageEnabled: string = "";
+	nextPageEnabled: string = "";
+	lastPageEnabled: string = "";
+	totalPages: number = 0;
 
 	// statistic
 	statistics = [];
@@ -178,6 +181,13 @@ export class MarkComponent implements OnInit {
 		$(this.questionSelector.nativeElement).selectpicker('val', JSON.parse(this.route.snapshot.params.question)[0].n);
 		console.log("init mark questions:" + JSON.stringify(this.markQuestions));
 		$(this.questionSelector.nativeElement).on('changed.bs.select', {t: this}, this.onQuestionChange);
+		$("#mark-progress").hover(function(){
+			console.log("mouse on");
+			$(".progress-text").toggle();
+		}, function(){
+			$(".progress-text").toggle();
+		}
+		);
 		this.reload();
 	}
 
@@ -256,6 +266,7 @@ export class MarkComponent implements OnInit {
 				this.isHidden2 = false;
 				this.isHidden3 = false;
 			}
+			this.totalPages = Number(this._markService.getTotal(data.progress));
 			this.setStatistics(data.summary);
 
 			this.updateCanvas();
@@ -328,7 +339,13 @@ export class MarkComponent implements OnInit {
 		for (let group of this.mark.groups) {
 			if (group.paperSeq === this.curPage) {
 				for(let paper of group.papers) {
+					// is it possible that one paper is marked and others are not in one group?
 					if (paper.isMarked === true) {
+						// update the score board and questionName to prepare for re-mark
+						this.fullScore = paper.fullscore;
+						this.questionName = paper.questionName;
+						// console.log("after update full score: " + this.fullScore);
+						this.updateScoreBoard();
 						return;
 					}
 					if (paper.problemPaper === true) {
@@ -580,6 +597,14 @@ export class MarkComponent implements OnInit {
 		this.curPage = 1;
 		this.firstPageEnabled = "disabled";
 		this.prePageEnabled = "disabled";
+		if(this.curPage === this.totalPages) {
+			this.nextPageEnabled = "disabled";
+			this.lastPageEnabled = "disabled";
+		} else {
+			this.nextPageEnabled = "";
+			this.lastPageEnabled = "";
+		}
+
 		this.editMode = "None";
 		if (this.curPage < this.mark.groups[0].paperSeq) {
 			this.reqContent.startSeq = 1;
@@ -593,6 +618,8 @@ export class MarkComponent implements OnInit {
 
 	previousPage(): void {
 		this.editMode = "None";
+		this.nextPageEnabled = "";
+		this.lastPageEnabled = "";
 		if (this.curPage === 2) {
 			this.firstPageEnabled = "disabled";
 			this.prePageEnabled = "disabled";			
@@ -614,9 +641,19 @@ export class MarkComponent implements OnInit {
 
 	nextPage(): void {
 		this.editMode = "None";
+		if (this.curPage === this.totalPages) {
+			return;
+		}
 		this.curPage++;
 		this.firstPageEnabled = "";
-		this.prePageEnabled = "";					
+		this.prePageEnabled = "";
+		if (this.curPage === this.totalPages) {
+			this.nextPageEnabled = "disabled";
+			this.lastPageEnabled = "disabled";								
+		} else {
+			this.nextPageEnabled = "";
+			this.lastPageEnabled = "";					
+		}
 		if (this.curPage > this.mark.groups[this.pageCount - 1].paperSeq) {
 			this.reqContent.startSeq = this.curPage;
 			this.reqContent.endSeq = -1;
@@ -628,7 +665,20 @@ export class MarkComponent implements OnInit {
 	}
 
 	lastPage(): void {
-
+		this.editMode = "None";
+		this.curPage = this.totalPages;
+		this.firstPageEnabled = "";
+		this.prePageEnabled = "";
+		this.nextPageEnabled = "disabled";
+		this.lastPageEnabled = "disabled";					
+		if (this.curPage > this.mark.groups[this.pageCount - 1].paperSeq) {
+			this.reqContent.startSeq = this.curPage;
+			this.reqContent.endSeq = -1;
+			this.reload();
+		} else {
+			this.updateCanvas();
+			this.updateFullScore();
+		}
 	}
 
 	setStatistics(data: any): void {

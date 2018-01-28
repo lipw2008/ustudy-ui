@@ -39,11 +39,16 @@
                                     </dd>
                                 </dl>
                             </a>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: getProgress(mark.progress)}">
-                                    {{getProgress(mark.progress)}}
+                            <ng-container *ngIf="mark.markType !== '标准'">
+                                <div class="progress" style="text-align: center">{{getTotal(mark.progress)}}份</div>
+                            </ng-container>
+                            <ng-container *ngIf="mark.markType === '标准'">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: getProgress(mark.progress)}">
+                                        {{getProgress(mark.progress)}}
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>

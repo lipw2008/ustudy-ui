@@ -10,14 +10,16 @@
 <div class="container">
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a aria-controls="examineeResult" role="tab" data-toggle="tab"
-                                              (click)="tab='examinee'">考生成绩</a></li>
-    <li role="presentation" class="disabled"><a aria-controls="lateralComparison" onclick="return false;">横向对比</a>
+    <li role="presentation" class="active">
+      <a aria-controls="examineeResult" role="tab" data-toggle="tab" (click)="tab='examinee'">考生成绩</a>
     </li>
-    <li role="presentation" class="disabled"><a aria-controls="verticalComparison" onclick="return false;">纵向对比</a>
+    <li role="presentation" class="disabled">
+      <a aria-controls="lateralComparison" onclick="return false;">横向对比</a>
+    </li>
+    <li role="presentation" class="disabled">
+      <a aria-controls="verticalComparison" onclick="return false;">纵向对比</a>
     </li>
   </ul>
-
   <div class="tab-content">
     <!--已完成考试 start-->
     <div role="tabpanel" class="tab-pane active" id="finishedExam" *ngIf="tab==='examinee'">

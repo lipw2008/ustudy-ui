@@ -5,6 +5,7 @@ import {ExamService} from '../../../exam/exam.service';
 import * as _ from 'lodash';
 import {SharedService} from '../../../shared.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import { Subscription } from 'rxjs/Subscription';
 import {AddExamineeBatchComponent} from '../../../utils/modals/add-examinee-batch/add-examinee-batch.component';
 
 @Component({
@@ -15,6 +16,7 @@ import {AddExamineeBatchComponent} from '../../../utils/modals/add-examinee-batc
 export class ExamineeComponent implements OnInit {
   @ViewChild('examineeTable') table: any;
   bsModalRef: BsModalRef;
+  subscription: Subscription;
   examId: any;
   gradeId: any;
   text: string;
@@ -106,8 +108,17 @@ export class ExamineeComponent implements OnInit {
   }
 
   addExamineeBatch() {
+    this.subscription = this.modalService.onHide.subscribe((reason:string) => {
+      console.log("modal is hidden!!");
+      this.reload();
+      this.unsubscribe();
+    });
     this.bsModalRef = this.modalService.show(AddExamineeBatchComponent);
     this.bsModalRef.content.gradeId = this.gradeId;
     this.bsModalRef.content.examId = this.examId;
+  }
+
+  unsubscribe() {
+    this.subscription.unsubscribe();
   }
 }

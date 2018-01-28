@@ -49,6 +49,10 @@ export class MarkListComponent implements OnInit {
     return this._markService.getProgress(rawData);
   }
 
+  getTotal(rawData): string {
+    return this._markService.getTotal(rawData);
+  }
+
   getQuestion(questionId, questionName): string {
     let questionList = [];
     let question = {'id': '', 'n': ''};

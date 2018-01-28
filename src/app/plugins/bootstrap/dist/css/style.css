@@ -811,6 +811,12 @@ html.full-screen .container.container-fluid-online-marking {
   padding: 12px 10px 0;
   width: 100px;
 }
+.panel.online-marking .panel-heading .progress-text {
+  display: none;
+  float: left;
+  padding: 12px 10px 0;
+  width: 100px;
+}
 .panel.online-marking .panel-heading .control-box {
   float: right;
   padding: 5px 10px;

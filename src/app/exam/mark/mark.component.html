@@ -3,8 +3,8 @@
 	<div class="container">
 		<ol class="breadcrumb">
 			<li><a href="welcome">首页</a></li>
-			<li class="active">考试中心</li>
-			<li class="active">线上阅卷</li>
+			<li>考试中心</li>
+			<li><a [routerLink]="['/markList']">线上阅卷</a></li>
 		</ol>
 	</div>
 </div>
@@ -23,13 +23,14 @@
                             <option *ngFor="let question of questionList" [value]="question.n">{{question.n}}</option>
                         </select>
                     </div>
-                    <div class="progress-box">
+                    <div id="mark-progress" class="progress-box">
                         <div class="progress clear-margin-bottom">
                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: progress}">
                                 {{progress}}
                             </div>
                         </div>
                     </div>
+                    <div class="progress-text">{{mark.progress}}</div>
                     <div class="control-box">
                     	<div class="extra" data-toggle="buttons">
                             <a href="javascript:;" title="全屏阅卷"><i class="iconfont-resizefull"></i></a>
@@ -103,7 +104,7 @@
                                     <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0.5" [(ngModel)]="scoreUnit" (click)="setScoreUnit('0.5')"> 0.5
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" [(ngModel)]="scoreUnit" (click)="setScoreUnit('1')"> 1
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1" [(ngModel)]="scoreUnit" (click)="setScoreUnit('1')"> 1
                                 </label>
                             </div>
                             <div class="pull-right">
@@ -162,7 +163,7 @@
                                     <ng-container *ngIf="markType === '标准'">
                                         <ng-container *ngIf="paper.steps.length === 0">
                                             <label for="">{{paper.questionName}}题: </label>
-                                            <input [ngStyle]="{'border-color':paper.questionName===questionName?'lightgreen':'#ddd'}" (focus)="onFocus(paper.questionName, '', paper.fullscore)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" (keyup)="checkScore(paper.score)" [(ngModel)]="paper.score">
+                                            <input [ngStyle]="{'border-color':paper.questionName===questionName?'lightgreen':'#ddd'}" (focus)="onFocus(paper.questionName, '', paper.fullscore)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="id_{{paper.questionName}}" size="3" (keyup)="checkScore(paper.score)" [(ngModel)]="paper.score">
                                             <br/>
                                         </ng-container>
                                         <ng-container *ngIf="paper.steps.length > 0">
@@ -170,14 +171,14 @@
                                             <br/>
                                             <ng-container *ngFor="let step of paper.steps">
                                                 <label style="padding-left: 20px" for="">{{step.name}}: </label>
-                                                <input [ngStyle]="{'border-color': (step.name === stepName || step.name === focusQuestion.stepName) ?'lightgreen':'#ddd'}" (focus)="onFocus(paper.questionName, step.name, step.fullscore)" (change)="updateFullScore()" name="{{step.name}}" type="text" class="form-control" id="" size="3" (keyup)="checkScore(step.score)" [(ngModel)]="step.score">
+                                                <input [ngStyle]="{'border-color': (step.name === stepName || step.name === focusQuestion.stepName) ?'lightgreen':'#ddd'}" (focus)="onFocus(paper.questionName, step.name, step.fullscore)" (change)="updateFullScore()" name="{{step.name}}" type="text" class="form-control" id="id_{{step.name}}" size="3" (keyup)="checkScore(step.score)" [(ngModel)]="step.score">
                                                 <br/>
                                             </ng-container>
                                         </ng-container>
                                     </ng-container>
                                     <ng-container *ngIf="markType === '终评'">
                                         <label for="">终评分: </label>
-                                        <input (focus)="onFocus(paper.questionName, '', paper.fullscore)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="" size="3" (keyup)="checkScore(paper.score)" [(ngModel)]="paper.score">
+                                        <input (focus)="onFocus(paper.questionName, '', paper.fullscore)" (change)="updateFullScore()" name="{{paper.questionName}}" type="text" class="form-control" id="id_{{paper.questionName}}" size="3" (keyup)="checkScore(paper.score)" [(ngModel)]="paper.score">
                                         <br/>
                                     </ng-container>
                                     <br/>
@@ -204,12 +205,12 @@
                             <li>
                                 <span>{{curPage}}</span>
                             </li>
-                            <li>
+                            <li [ngClass]="nextPageEnabled">
                                 <a (click)="nextPage()" aria-label="Next" title="下一页">
                                     <i aria-hidden="true" class="glyphicon glyphicon-forward"></i>
                                 </a>
                             </li>
-                            <li class="disabled">
+                            <li [ngClass]="lastPageEnabled">
                                 <a (click)="lastPage()" aria-label="Last" title="尾页">
                                     <i aria-hidden="true" class="glyphicon glyphicon-fast-forward"></i>
                                 </a>

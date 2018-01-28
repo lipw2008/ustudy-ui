@@ -34,7 +34,9 @@ export class ClassesResultComponent implements OnInit {
 
   ngOnInit() {
     this.examId = Number(this.route.snapshot.params.examId);
-    this.exams = this._examService.filterExams({});
+    const params = Object.create({});
+    params.finished = true;
+    this.exams = this._examService.filterExams(params);
     this._examService.getExamOptions().then((data) => {
       this.examOptions = data;
     });

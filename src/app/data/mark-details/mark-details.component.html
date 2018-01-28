@@ -39,8 +39,10 @@
             <td>{{question.markStyle}}</td>
             <td>{{question.teacherList}}</td>
             <td>
-              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': question.progress}">
-                {{question.progress}}
+              <div class="progress clear-margin-bottom">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': question.progress}">
+                  {{question.progress}}
+                </div>
               </div>
             </td>
           </tr>
