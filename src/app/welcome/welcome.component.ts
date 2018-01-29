@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SharedService } from '../shared.service';
 import {ExamService} from '../exam/exam.service';
 
@@ -10,7 +11,7 @@ declare var $: any;
 
 export class WelcomeComponent {
 
-  constructor(public _sharedService: SharedService, public _examService: ExamService) {
+  constructor(public _sharedService: SharedService, public _examService: ExamService, private router: Router, private _route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -18,6 +19,19 @@ export class WelcomeComponent {
   }
 
   ngAfterViewInit() {
+  }
+
+  route(target): void {
+    console.log("check log in status " + target);
+    if (this._sharedService.userName === '') {
+      this.router.navigate(['login']);
+    } else if (target == undefined) {
+      alert("您没有操作相关功能的权限！");
+    } else {
+      let parm = [];
+      parm.push('/' + target);
+      this.router.navigate(parm);
+    }
   }
 
   updateUserStatus() {
