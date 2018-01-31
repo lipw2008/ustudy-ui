@@ -775,14 +775,14 @@ export class MarkComponent implements OnInit {
 					group.papers[2].answerType = this.answer3.answerType;				
 				}
 				for (let paper of group.papers) {
-					for (let region of paper.regions) {
+					paper.regions.forEach( (region, i) => {
 						delete region.scale;
 						delete region.canvasH;
 						delete region.canvasY;
-						region.ansMarkImg = "AM_" + paper.questionName + "_" + this.mark.teacherId + "_" + region.ansImg;
-						region.markImg = "M_" + paper.questionName + "_" + this.mark.teacherId + "_" + region.ansImg;
+						region.ansMarkImg = "AM_" + paper.questionName + "_" + i + "_" + this.mark.teacherId + "_" + region.ansImg;
+						region.markImg = "M_" + paper.questionName + "_" + i + "_" + this.mark.teacherId + "_" + region.ansImg;
 						//region.markImg = region.ansImg.slice(0, -4) + "_M_" + this.mark.teacherId + region.ansImg.slice(-4);
-					}
+					});
 				}
 				this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(group)).then((data: any) => {
 					let message = "";
