@@ -192,12 +192,14 @@
                     <div class="panel-footer text-center">
                         <!-- 翻页 start -->
                         <ul class="pagination">
-                            <li [ngClass]="firstPageEnabled">
+                            <!--<li [ngClass]="firstPageEnabled">-->
+                            <li class="disabled">
                                 <a (click)="firstPage()" aria-label="First" title="首页">
                                     <i aria-hidden="true" class="glyphicon glyphicon-fast-backward"></i>
                                 </a>
                             </li>
-                            <li [ngClass]="prePageEnabled">
+                            <!-- <li [ngClass]="prePageEnabled"> -->
+                            <li class="disabled">
                                 <a (click)="previousPage()" aria-label="Previous" title="上一页">
                                     <i aria-hidden="true" class="glyphicon glyphicon-backward"></i>
                                 </a>
