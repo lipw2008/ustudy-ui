@@ -277,10 +277,14 @@ select.selectpicker {
   width: 100%;
   float: none;
 }
-/*²¹¶¡*/
+/*?¤B*/
 .question-box .bootstrap-select.btn-group .dropdown-menu {
 	margin-top: -5px;
 	width: 217px;
+	min-height: auto !important;
+}
+.question-box .bootstrap-select.btn-group .dropdown-menu .inner {
+	min-height: auto !important;
 }
 .question-box .dropdown-menu > li {
 	display: inline-block !important;

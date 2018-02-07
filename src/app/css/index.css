@@ -9,43 +9,43 @@
     }
     /*//三列*/
 	.container-index .container .col-sm-4 .col>a>i {
-	    font-size: 32px;
+	    font-size: 48px;
 	}
     .container-index .container .col-sm-4 .col.col-1x1 {
-        width: 160px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
     }
     .container-index .container .col-sm-4 .col.col-1x2 {
-        width: 160px;
-        height: 240px;
+        width: 150px;
+        height: 300px;
     }
     .container-index .container .col-sm-4 .col.col-2x1 {
-        width: 320px;
-        height: 120px;
+        width: 300px;
+        height: 150px;
     }
     .container-index .container .col-sm-4 .col.col-2x2 {
-        width: 320px;
-        height: 240px;
+        width: 300px;
+        height: 300px;
     }
     /*//四列*/
 	.container-index .container .col-sm-3 .col>a>i {
-	    font-size: 32px;
+	    font-size: 48px;
 	}
     .container-index .container .col-sm-3 .col.col-1x1 {
-        width: 160px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
     }
     .container-index .container .col-sm-3 .col.col-1x2 {
-        width: 160px;
-        height: 240px;
+        width: 150px;
+        height: 300px;
     }
     .container-index .container .col-sm-3 .col.col-2x1 {
-        width: 320px;
-        height: 120px;
+        width: 300px;
+        height: 150px;
     }
     .container-index .container .col-sm-3 .col.col-2x2 {
-        width: 320px;
-        height: 240px;
+        width: 300px;
+        height: 300px;
     }
 }
 /*>768px*/
@@ -61,104 +61,159 @@
 	    font-size: 32px;
 	}
     .container-index .container .col-sm-4 .col.col-1x1 {
-        width: 125px;
-        height: 94px;
+        width: 115px;
+        height: 115px;
     }
     .container-index .container .col-sm-4 .col.col-1x2 {
-        width: 125px;
-        height: 188px;
+        width: 115px;
+        height: 230px;
     }
     .container-index .container .col-sm-4 .col.col-2x1 {
-        width: 250px;
-        height: 94px;
+        width: 230px;
+        height: 115px;
     }
     .container-index .container .col-sm-4 .col.col-2x2 {
-        width: 250px;
-        height: 188px;
+        width: 230px;
+        height: 230px;
     }
     /*//四列*/
 	.container-index .container .col-sm-3 .col>a>i {
-	    font-size: 32px;
+	    font-size: 24px;
 	}
     .container-index .container .col-sm-3 .col.col-1x1 {
-        width: 93px;
-        height: 116px;
+        width: 83px;
+        height: 83px;
     }
     .container-index .container .col-sm-3 .col.col-1x2 {
-        width: 93px;
-        height: 232px;
+        width: 83px;
+        height: 166px;
     }
     .container-index .container .col-sm-3 .col.col-2x1 {
-        width: 186px;
-        height: 116px;
+        width: 166px;
+        height: 83px;
     }
     .container-index .container .col-sm-3 .col.col-2x2 {
-        width: 186px;
-        height: 232px;
+        width: 166px;
+        height: 166px;
     }
 }
-/*>992px*/
-@media (min-width: 992px) {
+/*>1366px*/
+@media (min-width: 1366px) {
     .container-index.container-index-3 .container {
-        width: 930px;
+        width: 1050px;
     }
     .container-index.container-index-4 .container {
         width: 1250px;
+    }
+    .container-index {
+        margin-top: 50px;
+    }
+    /*//三列*/
+	.container-index .container .col-sm-4 .col>a>i {
+	    font-size: 56px;
+	}
+    .container-index .container .col-sm-4 .col.col-1x1 {
+        width: 165px;
+        height: 165px;
+    }
+    .container-index .container .col-sm-4 .col.col-1x2 {
+        width: 165px;
+        height: 330px;
+    }
+    .container-index .container .col-sm-4 .col.col-2x1 {
+        width: 330px;
+        height: 165px;
+    }
+    .container-index .container .col-sm-4 .col.col-2x2 {
+        width: 330px;
+        height: 330px;
+    }
+    /*//四列*/
+	.container-index .container .col-sm-3 .col>a>i {
+	    font-size: 52px;
+	}
+    .container-index .container .col-sm-3 .col.col-1x1 {
+        width: 145px;
+        height: 145px;
+    }
+    .container-index .container .col-sm-3 .col.col-1x2 {
+        width: 145px;
+        height: 290px;
+    }
+    .container-index .container .col-sm-3 .col.col-2x1 {
+        width: 290px;
+        height: 145px;
+    }
+    .container-index .container .col-sm-3 .col.col-2x2 {
+        width: 290px;
+        height: 290px;
+    }
+}
+/*>1920px*/
+@media (min-width: 1920px) {
+    .container-index.container-index-3 .container {
+        width: 1260px;
+    }
+    .container-index.container-index-4 .container {
+        width: 1520px;
     }
     .container-index {
         margin-top: 100px;
     }
     /*//三列*/
 	.container-index .container .col-sm-4 .col>a>i {
-	    font-size: 48px;
+	    font-size: 66px;
 	}
     .container-index .container .col-sm-4 .col.col-1x1 {
-        width: 155px;
-        height: 116px;
+        width: 200px;
+        height: 200px;
     }
     .container-index .container .col-sm-4 .col.col-1x2 {
-        width: 155px;
-        height: 232px;
+        width: 200px;
+        height: 400px;
     }
     .container-index .container .col-sm-4 .col.col-2x1 {
-        width: 310px;
-        height: 116px;
+        width: 400px;
+        height: 200px;
     }
     .container-index .container .col-sm-4 .col.col-2x2 {
-        width: 310px;
-        height: 232px;
+        width: 400px;
+        height: 400px;
     }
     /*//四列*/
 	.container-index .container .col-sm-3 .col>a>i {
-	    font-size: 48px;
+	    font-size: 64px;
 	}
     .container-index .container .col-sm-3 .col.col-1x1 {
-        width: 155px;
-        height: 116px;
+        width: 180px;
+        height: 180px;
     }
     .container-index .container .col-sm-3 .col.col-1x2 {
-        width: 155px;
-        height: 232px;
+        width: 180px;
+        height: 360px;
     }
     .container-index .container .col-sm-3 .col.col-2x1 {
-        width: 310px;
-        height: 116px;
+        width: 360px;
+        height: 180px;
     }
     .container-index .container .col-sm-3 .col.col-2x2 {
-        width: 310px;
-        height: 232px;
+        width: 360px;
+        height: 360px;
     }
 }
 /*全局*/
-.container-index .container .row {
-    margin-left: 0;
-    margin-right: 0;
+.container-index .container {
+	padding-left: 10px;
+	padding-right: 10px;
 }
-.container-index .container,
-.container-index .container .row .col-sm-4,
-.container-index .container .row .col-sm-3 {
-    padding-left: 0;
-    padding-right: 0;
+.container-index .container .row {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+.container-index .container .row .col-sm-3,
+.container-index .container .row .col-sm-4 {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .container-index .container .col {
     float: left;
@@ -166,6 +221,15 @@
 .container-index .container .col>a {
     position: relative;
     color: #fff;
+}
+.container-index .container .col a,
+.container-index .container .col>ul,
+.container-index .container .col>div {
+    color: #fff;
+}
+.container-index .container .col>ul,
+.container-index .container .col>div {
+    padding: 30px;
 }
 .container-index .container .col>a:hover,
 .container-index .container .col>a:focus,
@@ -175,19 +239,29 @@
     -moz-transition: all .5s ease;
     transition: all .5s ease;
 }
-.container-index .container .col.col-yellow>a {
+.container-index .container .col.col-yellow>a,
+.container-index .container .col.col-yellow>ul,
+.container-index .container .col.col-yellow>div {
     background-color: #ffdf25;
 }
-.container-index .container .col.col-orange>a {
+.container-index .container .col.col-orange>a,
+.container-index .container .col.col-orange>ul,
+.container-index .container .col.col-orange>div {
     background-color: #f90;
 }
-.container-index .container .col.col-blue>a {
+.container-index .container .col.col-blue>a,
+.container-index .container .col.col-blue>ul,
+.container-index .container .col.col-blue>div {
     background-color: #199ed8;
 }
-.container-index .container .col.col-green>a {
+.container-index .container .col.col-green>a,
+.container-index .container .col.col-green>ul,
+.container-index .container .col.col-green>div {
     background-color: #0c3;
 }
-.container-index .container .col.col-muted>a {
+.container-index .container .col.col-muted>a,
+.container-index .container .col.col-muted>ul,
+.container-index .container .col.col-muted>div {
     color: #999;
     background-color: #f2f2f2;
 }
