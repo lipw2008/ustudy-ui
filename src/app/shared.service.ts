@@ -26,7 +26,7 @@ export class SharedService {
   public userRole = '';
   public orgId = '';
 
-  private baseUrl = 'http://ustudypaper.oss-cn-hangzhou.aliyuncs.com/';
+  private baseUrl = 'http://ustudytest.oss-cn-hangzhou.aliyuncs.com/';
   //private baseUrl = 'http://ustudy.oss-cn-beijing.aliyuncs.com/';
   private getUrl: Promise<string>;
   roles = ['校长', '年级主任', '学科组长', '备课组长', '班主任', '任课老师', '考务老师', '扫描账号	', '主任', '教研员', '考务账号', '教研室扫描账号', '清道夫'];

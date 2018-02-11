@@ -19,6 +19,7 @@ export class WelcomeComponent {
   }
 
   ngAfterViewInit() {
+    this.showTime();
   }
 
   route(target): void {
@@ -67,5 +68,34 @@ export class WelcomeComponent {
       itemSelector: '.grid-item'
     });
     console.log("masonry is called");
+  }
+
+  showTime() {
+    var time = new Date();
+    var month = time.getMonth();
+    var date = time.getDate();
+    var day = time.getDay();
+    var hour = time.getHours();
+    var minutes = time.getMinutes();
+    var second = time.getSeconds();
+    var weekDay = new Array(7);  
+    weekDay[0] = "星期日";  
+    weekDay[1] = "星期一";  
+    weekDay[2] = "星期二";  
+    weekDay[3] = "星期三";  
+    weekDay[4] = "星期四";  
+    weekDay[5] = "星期五";  
+    weekDay[6] = "星期六";  
+    //month < 10 ? month = '0' + month : month;
+    //month = month + 1;
+    //hour < 10 ? hour = '0' + hour : hour;
+    //minutes < 10 ? minutes = '0' + minutes : minutes;
+    //second < 10 ? second = '0' + second : second;
+    //var now_time = year + '年' + month + '月' + date + '日' + ' ' + weekDay[day] + ' ' + hour + ':' + minutes + ':' + second;
+    var nowDate = date;
+    var nowWeek = weekDay[day];
+    $('.show-date').html(nowDate);
+    $('.show-week').html(nowWeek);
+    //setTimeout("showTime();",1000);
   }
 }
