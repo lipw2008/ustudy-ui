@@ -35,6 +35,11 @@ export class SelectSubjectComponent implements OnInit {
     this._sharedService.makeRequest('GET', '/api/exams/0', '').then((data: any) => {
       if (data.success) {
         this.exams = data.data;
+        if(this.exams.length > 0) {
+          this.examId = this.exams[0].id;
+          this.loadExamSubjects(this.examId);
+          this.examSelected = true;
+        }
       }
     }).catch((error: any) => {
       console.error(error.status);
@@ -56,12 +61,8 @@ export class SelectSubjectComponent implements OnInit {
   getExam(evt) {
     const examId = evt.target.value;
     this.examId = examId;
-    if (examId !== "0") {
-      this.loadExamSubjects(examId);
-      this.examSelected = true;
-    } else {
-      this.examSelected = false;
-    }
+    this.loadExamSubjects(examId);
+    this.examSelected = true;
   }
 
   setAnswers(egsId, gradeId, subjectId, seted) {

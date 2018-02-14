@@ -74,7 +74,8 @@ export class ViewTaskComponent implements OnInit {
       this.tasks = _.filter(this.markTasks, { gradeId: String(this.selectedSubject.gradeId), subjectId: String(this.selectedSubject.subId) });
       this.tasks.forEach((task) => {
         task.question = _.find(this.questions, { id: Number(task.questionId) });
-        task.group = _.find(_.get(_.find(this.gradeTeachers, {gradeId: this.gradeId}), 'subjects'), (subject) => _.includes(subject.subName, this.selectedSubject.subName))
+        task.group = _.find(_.get(_.find(this.gradeTeachers, {gradeId: this.gradeId}), 'subjects'), (subject) => _.includes(subject.subName, 
+        (this.selectedSubject.subName === '数学(文)') ? '数学': this.selectedSubject.subName))
       })
     })
   }
