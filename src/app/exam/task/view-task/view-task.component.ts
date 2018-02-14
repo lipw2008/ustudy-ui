@@ -75,7 +75,11 @@ export class ViewTaskComponent implements OnInit {
       this.tasks.forEach((task) => {
         task.question = _.find(this.questions, { id: Number(task.questionId) });
         task.group = _.find(_.get(_.find(this.gradeTeachers, {gradeId: this.gradeId}), 'subjects'), (subject) => _.includes(subject.subName, 
-        (this.selectedSubject.subName === '数学(文)') ? '数学': this.selectedSubject.subName))
+        (this.selectedSubject.subName === '数学(文)') ? '数学': this.selectedSubject.subName));
+        // if no teachers under this subject, set the group to [], the question mark owner can not be set.
+        if(task.group === undefined) {
+          task.group = [];
+        }
       })
     })
   }
