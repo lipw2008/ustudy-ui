@@ -38,6 +38,10 @@ export class UnfinishedExamDetailsComponent implements OnInit {
       return
     }
     this.examId = this.route.snapshot.params.examId;
+    this.reload();
+  }
+
+  reload() {
     this._examService.getExamDetails(this.examId).then((data: any) => {
       for (const grade of data) {
         grade.subjects.forEach((subject) => {
@@ -68,7 +72,8 @@ export class UnfinishedExamDetailsComponent implements OnInit {
   publish(row, publish) {
     this._examService.release(row.egsId, publish).then((data) => {
       alert(`${publish ? '发布成绩' : '取消发布'}成功`);
-      row.status = publish ? '2' : '1'
+      row.status = publish ? '2' : '1';
+      this.reload();
     })
   }
 
