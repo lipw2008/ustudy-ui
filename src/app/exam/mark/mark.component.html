@@ -54,7 +54,7 @@
                         </div>
 					</div>
 				</div>
-				<!--<div class="panel-footer">
+				<div class="panel-footer">
 					<div class="online-marking-wrap" >
                     	<div class="control extra clearfix" data-toggle="buttons" style="bottom: 15px;left: 15px;">
                             <span class="control-drag"><i class="iconfont-optionvertical"></i></span>
@@ -70,7 +70,7 @@
                         	<a href="javascript:;" title="批注给分"><i class="iconfont-markgrade"></i></a>
                         </div>
 					</div>
-				</div>-->
+				</div>
                 <div class="panel-footer border">
                     <ng-container *ngFor="let question of statistics">
                         <div class="online-marking-statistics text-center">{{question.questionName}}题： 平均给分：<span>{{question.avgScore}}</span>/已阅题：<span>{{getNum(question.progress)}}</span></div>
