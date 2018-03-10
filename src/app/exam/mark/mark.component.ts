@@ -40,6 +40,9 @@ export class MarkComponent implements OnInit {
 		]
 	};
 
+	// exam info
+	egsId: string;
+
 	// mark type
 	markType: string;
 	composable: boolean = true;
@@ -155,6 +158,7 @@ export class MarkComponent implements OnInit {
     }
 
 	ngOnInit(): void {
+		this.egsId = this.route.snapshot.params.egsId;
 		this.markType = this.route.snapshot.params.markType;
 		if(this.route.snapshot.params.composable === 'true') {
 			this.composable = true;
@@ -784,7 +788,7 @@ export class MarkComponent implements OnInit {
 						//region.markImg = region.ansImg.slice(0, -4) + "_M_" + this.mark.teacherId + region.ansImg.slice(-4);
 					});
 				}
-				this._sharedService.makeRequest('POST', '/exam/marktask/paper/update/', JSON.stringify(group)).then((data: any) => {
+				this._sharedService.makeRequest('POST', `/exam/marktask/paper/update/${this.egsId}`, JSON.stringify(group)).then((data: any) => {
 					let message = "";
 					for (let group of this.mark.groups) {
 						if (group.paperSeq === this.curPage) {
