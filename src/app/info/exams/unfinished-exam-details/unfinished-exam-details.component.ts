@@ -77,6 +77,14 @@ export class UnfinishedExamDetailsComponent implements OnInit {
     })
   }
 
+  updateMarkSwitch(row, markSwitch) {
+    this._examService.updateMarkSwitch(row.egsId, markSwitch).then((data) => {
+      alert(`${markSwitch ? '启动阅卷' : '暂停阅卷'}成功`);
+      row.markSwitch = markSwitch;
+      this.reload();
+    })
+  }
+
   getAnswerPaperPercentage(row) {
     return Math.round(row.paperCount / row.studentCount * 10000) / 100 + '%'
   }

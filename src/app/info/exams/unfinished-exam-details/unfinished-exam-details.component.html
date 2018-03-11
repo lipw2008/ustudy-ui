@@ -91,7 +91,13 @@
           <span *ngIf="!row.taskDispatch"><a [routerLink]="['/taskassign', { examId: examId, gradeId: row.gradeId, subjectId: row.subjectId, subject: row.subjectName }]">未设置</a></span>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="阅卷" [flexGrow]="2" [cellClass]="'text-center'">
+      <ngx-datatable-column name="阅卷开关" [flexGrow]="1" [cellClass]="'text-center'">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <button class="btn btn-primary" *ngIf="row.markSwitch===true" (click)="updateMarkSwitch(row, false)">暂停阅卷</button>
+          <button class="btn btn-default" *ngIf="row.markSwitch===false" (click)="updateMarkSwitch(row, true)">启动阅卷</button>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="阅卷进度" [flexGrow]="2" [cellClass]="'text-center'">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div class="progress clear-margin-bottom">
             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
