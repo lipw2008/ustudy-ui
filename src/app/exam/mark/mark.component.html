@@ -46,7 +46,7 @@
                     </div>
 				</div>
 				<div #markPanel class="panel-body">
-					<div>
+					<div class="drag-boundary" [ngClass]="{ 'top-b': !edge?.top, 'bottom-b': !edge?.bottom, 'left-b': !edge?.left, 'right-b': !edge?.right }" #markBounds>
                         <div #markContainer style="overflow-x: auto; overflow-y: auto">
                             <mark-canvas [score]="score" [(answer)]="answer" [questionName]="questionName" [isHidden]="isHidden" [(editMode)]="editMode"></mark-canvas>
                             <mark-canvas [score]="score2" [(answer)]="answer2" [questionName]="questionName" [isHidden]="isHidden2" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
@@ -54,9 +54,9 @@
                         </div>
 					</div>
 				</div>
-				<div class="panel-footer">
-					<div class="online-marking-wrap" >
-                    	<div class="control extra clearfix" data-toggle="buttons" style="bottom: 15px;left: 15px;">
+				<div class="panel-footer" >
+					<div class="online-marking-wrap">
+                    	<div ngDraggable class="control extra clearfix drag-block" data-toggle="buttons" style="bottom: 15px;left: 15px;" (edge)="checkEdge($event)" [bounds]="markBounds" [inBounds]="inBounds">
                             <span class="control-drag"><i class="iconfont-optionvertical"></i></span>
                         	<a (click)='addBestAnswer()' title="标注优秀"><i class="iconfont-bestanswer"></i></a>
                         	<a (click)='addFAQ()' title="标注FAQ"><i class="iconfont-faq"></i></a>

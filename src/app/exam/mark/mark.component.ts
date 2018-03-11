@@ -153,6 +153,14 @@ export class MarkComponent implements OnInit {
 	isHidden2: boolean = true;
 	isHidden3: boolean = true;
 
+	inBounds = true;
+	edge = {
+		top: true,
+		bottom: true,
+		left: true,
+		right: true
+	};
+
     constructor(private _sharedService: SharedService, private _markService: MarkService, private renderer: Renderer2, private route: ActivatedRoute, private router: Router) {
 
     }
@@ -948,6 +956,10 @@ export class MarkComponent implements OnInit {
 
 	getTotal(rawData): string {
 		return this._markService.getTotal(rawData);
+	}
+
+	checkEdge(event) {
+		this.edge = event;
 	}
 
 }
