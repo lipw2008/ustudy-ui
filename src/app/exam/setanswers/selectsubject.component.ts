@@ -32,8 +32,14 @@ export class SelectSubjectComponent implements OnInit {
   }
 
   loadExams() {
-    this._sharedService.makeRequest('GET', '/api/exams/0', '').then((data: any) => {
+    this._sharedService.makeRequest('GET', '/api/allexams', '').then((data: any) => {
       if (data.success) {
+        for (let exam of data.data) {
+          //only show the unfinished exams
+          if (exam.status != '2') {
+            this.exams.push(exam);
+          }
+        }
         this.exams = data.data;
         if(this.exams.length > 0) {
           this.examId = this.exams[0].id;
