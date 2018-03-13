@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, Renderer2, Input, OnChange
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from '../../shared.service';
 import { MarkComponent } from './mark.component';
-
+declare var $: any;
 @Component({
 	selector: 'mark-canvas',
     templateUrl: 'canvas.component.html'
@@ -22,6 +22,7 @@ export class CanvasComponent implements OnInit {
 	@ViewChild('markCanvas') markCanvas;
 
 	rootContainerElement: any;
+	markPanelElement: any;
 	container: any;
 	canvas: any;
 	ctx: any;
@@ -115,6 +116,7 @@ export class CanvasComponent implements OnInit {
 
 		this.container = this.parent.markContainer.nativeElement;
 		this.rootContainerElement = this.parent.rootContainer.nativeElement;
+		this.markPanelElement = this.parent.markPanel.nativeElement;
 
 		this.canvas = this.markCanvas.nativeElement;
 		this.ctx = this.canvas.getContext("2d");
@@ -316,6 +318,7 @@ export class CanvasComponent implements OnInit {
 		var t = this;
 		var x = (evt.offsetX == undefined || evt.offsetX == 0 ? evt.layerX: evt.offsetX);
 		var y = (evt.offsetY == undefined || evt.offsetY == 0 ? evt.layerY: evt.offsetY);
+		console.log("position in the mark panel - x: " + x + ", y: " + y);
 
 		switch(this.editMode) {
 			case 'Line':
@@ -346,10 +349,20 @@ export class CanvasComponent implements OnInit {
 				this.textbox.type = "text";
 				this.textbox.style.position = "absolute";
 				this.textbox.style.left = evt.clientX + "px";
-				this.textbox.style.top = evt.clientY + "px";
+				this.textbox.style.top = evt.clientY + document.scrollingElement.scrollTop + "px";
 				this.textbox.style.display = "inline";
 				this.textbox.setAttribute("autofocus", "");
+				this.textbox.setAttribute("initTop", evt.clientY + document.scrollingElement.scrollTop);
+				this.textbox.setAttribute("initScrollTop", this.markPanelElement.scrollTop);
 				let tEvt = evt;
+				this.renderer.listen(this.markPanelElement, 'scroll', (evt) => {
+					this.textbox.style.top = this.textbox.getAttribute("initTop") - (evt.target.scrollTop - this.textbox.getAttribute("initScrollTop")) + "px";
+					if (parseFloat(this.textbox.style.top.split("px")[0]) < 0) {
+						this.textbox.style.display = "none";
+					} else {
+						this.textbox.style.display = "inline";
+					}
+				});
 				this.renderer.listen(this.textbox, 'keyup', (evt) => {
     				if(evt.keyCode == 13) {
     					console.log(this.textbox.value);
@@ -395,7 +408,7 @@ export class CanvasComponent implements OnInit {
 				this.img.src = 'assets/images/icon-like.png';
 				break;
 			default:
-				console.log("x: " + evt.clientX + " y: " + evt.clientY);
+				console.log("postion in the whole screen - x: " + evt.clientX + " y: " + evt.clientY);
 				//Do Nothing
 		}
 	}
