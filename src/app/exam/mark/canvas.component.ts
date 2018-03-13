@@ -49,6 +49,9 @@ export class CanvasComponent implements OnInit {
 	// Input Text
 	textbox: any;
 
+	// Mark Score
+	scoreButton: any;
+
     constructor(private _sharedService: SharedService, private renderer: Renderer2, private route: ActivatedRoute,
 	@Inject(forwardRef(()=>MarkComponent)) public parent: MarkComponent) {
 
@@ -354,10 +357,15 @@ export class CanvasComponent implements OnInit {
 				this.textbox.setAttribute("autofocus", "");
 				this.textbox.setAttribute("initTop", evt.clientY + document.scrollingElement.scrollTop);
 				this.textbox.setAttribute("initScrollTop", this.markPanelElement.scrollTop);
+				this.textbox.setAttribute("initRelTop", y);
+				this.textbox.setAttribute("initClientY", evt.clientY);
 				let tEvt = evt;
 				this.renderer.listen(this.markPanelElement, 'scroll', (evt) => {
+					console.log(this.textbox.offsetHeight);
 					this.textbox.style.top = this.textbox.getAttribute("initTop") - (evt.target.scrollTop - this.textbox.getAttribute("initScrollTop")) + "px";
-					if (parseFloat(this.textbox.style.top.split("px")[0]) < 0) {
+					if (evt.target.scrollTop > this.textbox.getAttribute("initRelTop") ||
+						this.textbox.getAttribute("initScrollTop") - evt.target.scrollTop + this.textbox.offsetHeight > 
+						this.markPanelElement.clientHeight -  this.textbox.getAttribute("initClientY")) {
 						this.textbox.style.display = "none";
 					} else {
 						this.textbox.style.display = "inline";
@@ -407,6 +415,27 @@ export class CanvasComponent implements OnInit {
 				}
 				this.img.src = 'assets/images/icon-like.png';
 				break;
+			// case 'MarkScore':
+			// 	console.log("this.scoreButton:" + this.scoreButton);
+			// 	if (this.scoreButton !== undefined && this.scoreButton !== null) {
+			// 		//this.textbox.parentNode.removeChild(this.textbox);
+			// 	}
+			// 	this.scoreButton = document.createElement("button");
+			// 	this.scoreButton.type = "button";
+			// 	this.scoreButton.className = "btn btn-danger btn-circle"
+			// 	this.scoreButton.style.position = "absolute";
+			// 	this.scoreButton.style.left = evt.clientX + "px";
+			// 	this.scoreButton.style.top = evt.clientY + "px";
+			// 	this.scoreButton.style.display = "inline";
+			// 	this.renderer.listen(this.scoreButton, 'click', (evt) => {
+			// 		this.parent.setScore('6');
+			// 		console.log("mark score button is clicked");
+   //  			});
+			// 	this.rootContainerElement.appendChild(this.scoreButton);
+			// 	console.log(this.scoreButton);
+			// 	console.log("x: " + evt.clientX + " y: " + evt.clientY);
+			// 	// console.log(this.canvas.offsetLeft);
+			// 	break;
 			default:
 				console.log("postion in the whole screen - x: " + evt.clientX + " y: " + evt.clientY);
 				//Do Nothing
