@@ -354,6 +354,7 @@ export class CanvasComponent implements OnInit {
 				this.textbox.style.left = evt.clientX + "px";
 				this.textbox.style.top = evt.clientY + document.scrollingElement.scrollTop + "px";
 				this.textbox.style.display = "inline";
+				this.textbox.style.height = "26px";
 				this.textbox.setAttribute("autofocus", "");
 				this.textbox.setAttribute("initTop", evt.clientY + document.scrollingElement.scrollTop);
 				this.textbox.setAttribute("initScrollTop", this.markPanelElement.scrollTop);
@@ -364,8 +365,8 @@ export class CanvasComponent implements OnInit {
 					console.log(this.textbox.offsetHeight);
 					this.textbox.style.top = this.textbox.getAttribute("initTop") - (evt.target.scrollTop - this.textbox.getAttribute("initScrollTop")) + "px";
 					if (evt.target.scrollTop > this.textbox.getAttribute("initRelTop") ||
-						this.textbox.getAttribute("initScrollTop") - evt.target.scrollTop + this.textbox.offsetHeight > 
-						this.markPanelElement.clientHeight -  this.textbox.getAttribute("initClientY")) {
+						this.textbox.getAttribute("initScrollTop") - evt.target.scrollTop >
+						this.markPanelElement.clientHeight - (this.textbox.getAttribute("initRelTop") - this.textbox.getAttribute("initScrollTop")) - 26){
 						this.textbox.style.display = "none";
 					} else {
 						this.textbox.style.display = "inline";
