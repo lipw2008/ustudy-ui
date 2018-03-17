@@ -200,6 +200,7 @@ export class MarkComponent implements OnInit {
 			$(".progress-text").toggle();
 		}
 		);
+
 		this.reload();
 	}
 
@@ -605,6 +606,44 @@ export class MarkComponent implements OnInit {
 		this.focusQuestion.stepName = "";
 	}
 
+	// here the questionName can be either question name or step name. now only support question name for marking score.
+	setScoreByQuestion(questionName: string, score: string): void {
+		console.log("set score: questionName:" + questionName);
+		for (let group of this.mark.groups) {
+			if (group.paperSeq === this.curPage) {
+				if (questionName !== '') {
+					for(let paper of group.papers) {
+						if (paper.problemPaper === true) {
+							continue;
+						}
+						if (paper.steps.length === 0 && paper.questionName === questionName) {
+							if (score !== 'PROBLEM') {
+								paper.score = score;
+							} else {
+								paper.problemPaper = true;
+							}
+							this.updateFullScore();
+							break;
+						} else if (paper.steps.length > 0) {
+							for(let step of paper.steps) {
+								if (step.name === questionName) {
+									if (score !== 'PROBLEM') {
+										step.score = score;
+									} else {
+										paper.problemPaper = true;
+									}
+									this.updateFullScore();
+									break;
+								} 
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+
 	firstPage(): void {
 		this.curPage = 1;
 		this.firstPageEnabled = "disabled";
@@ -941,6 +980,23 @@ export class MarkComponent implements OnInit {
 		this.editMode = "QueerAnswer";
 	}
 
+	addMarkScore(): void {
+		console.log(this.questionName);
+		for (let group of this.mark.groups) {
+			if (group.paperSeq === this.curPage) {
+				if (this.questionName !== '') {
+					for(let paper of group.papers) {
+						if (paper.steps.length > 0 && paper.questionName === this.questionName) {
+							return;
+						}
+					}
+				}
+				break;
+			}
+		}
+		this.editMode = "MarkScore";
+	}
+	
 	addScore(): void {
 		this.editMode = "Score";
 	}

@@ -56,3 +56,57 @@
   width: 22%;
 	text-align: center;
 }
+
+.rightfd,
+.wrongfd,
+.plus_mark {
+  position: relative;
+}
+
+.plus_mark {
+  font-size: 42px;
+  color: #ff623e;
+}
+
+.rightfd i,
+.wrongfd i,
+.okfd i,
+.plus_mark i {
+  display: block;
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: url("assets/images/tool_icon0607.png") no-repeat 0 0;
+}
+
+.plus_mark i {
+  top: -3px;
+  right: -14px;
+  display: none;
+}
+
+.plus_mark em {
+  display: block;
+  position: absolute;
+  width: 18px;
+  height: 19px;
+  background: url("assets/images/tool_icon0607.png") no-repeat 0 0;
+}
+
+.plus_mark em.p {
+  display: none;
+  right: -14px;
+  top: 20px;
+  background-position: 0 -22px;
+}
+
+.plus_mark em.m {
+  display: none;
+  right: -14px;
+  top: 39px;
+  background-position: 0 -41px;
+}
+
+
+
+

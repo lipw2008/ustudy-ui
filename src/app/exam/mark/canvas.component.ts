@@ -50,7 +50,7 @@ export class CanvasComponent implements OnInit {
 	textbox: any;
 
 	// Mark Score
-	scoreButton: any;
+	scoreMarks = [];
 
     constructor(private _sharedService: SharedService, private renderer: Renderer2, private route: ActivatedRoute,
 	@Inject(forwardRef(()=>MarkComponent)) public parent: MarkComponent) {
@@ -130,6 +130,31 @@ export class CanvasComponent implements OnInit {
 
 
 		// Bind events
+		this.renderer.listen(this.markPanelElement, 'scroll', (evt) => {
+			if (this.textbox != undefined) {
+				console.log(this.textbox.offsetHeight);
+				this.textbox.style.top = this.textbox.getAttribute("initTop") - (evt.target.scrollTop - this.textbox.getAttribute("initScrollTop")) + "px";
+				if (evt.target.scrollTop > this.textbox.getAttribute("initRelTop") ||
+					this.textbox.getAttribute("initScrollTop") - evt.target.scrollTop >
+					this.markPanelElement.clientHeight - (this.textbox.getAttribute("initRelTop") - this.textbox.getAttribute("initScrollTop")) - 26){
+					this.textbox.style.display = "none";
+				} else {
+					this.textbox.style.display = "inline";
+				}
+			}
+			if (this.scoreMarks.length > 0) {
+				for (let sm of this.scoreMarks) {
+					sm.style.top = sm.getAttribute("initTop") - (evt.target.scrollTop - sm.getAttribute("initScrollTop")) + "px";
+					if (evt.target.scrollTop > sm.getAttribute("initRelTop") ||
+						sm.getAttribute("initScrollTop") - evt.target.scrollTop >
+						this.markPanelElement.clientHeight - (sm.getAttribute("initRelTop") - sm.getAttribute("initScrollTop")) - 38){
+						sm.style.display = "none";
+					} else {
+						sm.style.display = "inline";
+					}		
+				}
+			}
+		});
 
     	this.renderer.listen(this.canvas, 'mousedown', (evt) => {
     		this.mouseDown(evt);
@@ -358,20 +383,10 @@ export class CanvasComponent implements OnInit {
 				this.textbox.setAttribute("autofocus", "");
 				this.textbox.setAttribute("initTop", evt.clientY + document.scrollingElement.scrollTop);
 				this.textbox.setAttribute("initScrollTop", this.markPanelElement.scrollTop);
+				this.textbox.setAttribute("initRelLeft", x);
 				this.textbox.setAttribute("initRelTop", y);
 				this.textbox.setAttribute("initClientY", evt.clientY);
 				let tEvt = evt;
-				this.renderer.listen(this.markPanelElement, 'scroll', (evt) => {
-					console.log(this.textbox.offsetHeight);
-					this.textbox.style.top = this.textbox.getAttribute("initTop") - (evt.target.scrollTop - this.textbox.getAttribute("initScrollTop")) + "px";
-					if (evt.target.scrollTop > this.textbox.getAttribute("initRelTop") ||
-						this.textbox.getAttribute("initScrollTop") - evt.target.scrollTop >
-						this.markPanelElement.clientHeight - (this.textbox.getAttribute("initRelTop") - this.textbox.getAttribute("initScrollTop")) - 26){
-						this.textbox.style.display = "none";
-					} else {
-						this.textbox.style.display = "inline";
-					}
-				});
 				this.renderer.listen(this.textbox, 'keyup', (evt) => {
     				if(evt.keyCode == 13) {
     					console.log(this.textbox.value);
@@ -416,27 +431,68 @@ export class CanvasComponent implements OnInit {
 				}
 				this.img.src = 'assets/images/icon-like.png';
 				break;
-			// case 'MarkScore':
-			// 	console.log("this.scoreButton:" + this.scoreButton);
-			// 	if (this.scoreButton !== undefined && this.scoreButton !== null) {
-			// 		//this.textbox.parentNode.removeChild(this.textbox);
-			// 	}
-			// 	this.scoreButton = document.createElement("button");
-			// 	this.scoreButton.type = "button";
-			// 	this.scoreButton.className = "btn btn-danger btn-circle"
-			// 	this.scoreButton.style.position = "absolute";
-			// 	this.scoreButton.style.left = evt.clientX + "px";
-			// 	this.scoreButton.style.top = evt.clientY + "px";
-			// 	this.scoreButton.style.display = "inline";
-			// 	this.renderer.listen(this.scoreButton, 'click', (evt) => {
-			// 		this.parent.setScore('6');
-			// 		console.log("mark score button is clicked");
-   //  			});
-			// 	this.rootContainerElement.appendChild(this.scoreButton);
-			// 	console.log(this.scoreButton);
-			// 	console.log("x: " + evt.clientX + " y: " + evt.clientY);
-			// 	// console.log(this.canvas.offsetLeft);
-			// 	break;
+			case 'MarkScore':
+				let t = this;
+				let scoreMark = document.createElement("a");
+				scoreMark.insertAdjacentHTML("beforeend", '<span name="scoreVal">0</span><i name="annotationRemove"></i><em name="annotationAdd" class="p" ></em><em name="annotationMin" class="m" ></em>');
+				scoreMark.className = "plus_mark";
+				scoreMark.setAttribute("href", "javascript:void(0);");
+				scoreMark.style.position = "absolute";
+				scoreMark.style.left = evt.clientX + "px";
+				scoreMark.style.top = evt.clientY + document.scrollingElement.scrollTop + "px";
+				scoreMark.style.display = "inline";
+				scoreMark.setAttribute("initTop", evt.clientY + document.scrollingElement.scrollTop);
+				scoreMark.setAttribute("initScrollTop", this.markPanelElement.scrollTop);
+				scoreMark.setAttribute("initRelLeft", x);
+				scoreMark.setAttribute("initRelTop", y);
+				scoreMark.setAttribute("initClientY", evt.clientY);
+
+				$(scoreMark).on("mouseover", function(e) {
+					$(scoreMark).children("i").show();
+					$(scoreMark).children("em").show();
+				});
+				$(scoreMark).on("mouseout", function(e) {
+					$(scoreMark).children("i").hide();
+					$(scoreMark).children("em").hide();
+				});
+				$(scoreMark).children("[name='annotationRemove']").on("click", function(e) {
+					console.dir(e);
+					console.log("remove");
+					scoreMark.parentNode.removeChild(scoreMark);
+				});
+				$(scoreMark).children("[name='annotationAdd']").on("click", function(e) {
+					console.dir(e);
+					console.log("add");
+					console.dir($(scoreMark).children("[name='scoreVal']")[0]);
+					let oldScore = Number($(scoreMark).children("[name='scoreVal']")[0].innerText);
+					let newScore = ++oldScore + '';
+					$(scoreMark).children("[name='scoreVal']")[0].innerText = newScore;
+					let totalScore = 0;
+					for (let sm of t.scoreMarks) {
+						totalScore += Number($(sm).children("[name='scoreVal']")[0].innerText);
+					} 
+					t.parent.setScoreByQuestion(t.questionName, totalScore + '');
+				});
+				$(scoreMark).children("[name='annotationMin']").on("click", function(e) {
+					console.dir(e);
+					console.log("min");
+					console.dir($(scoreMark).children("[name='scoreVal']")[0]);
+					let oldScore = Number($(scoreMark).children("[name='scoreVal']")[0].innerText);
+					
+					if (oldScore === 0) return;
+
+					let newScore = --oldScore + '';
+					$(scoreMark).children("[name='scoreVal']")[0].innerText = newScore;
+					let totalScore = 0;
+					for (let sm of t.scoreMarks) {
+						totalScore += Number($(sm).children("[name='scoreVal']")[0].innerText);
+					} 
+					t.parent.setScoreByQuestion(t.questionName, totalScore + '');
+				});
+				this.rootContainerElement.appendChild(scoreMark);
+				this.scoreMarks.push(scoreMark);
+				console.log("markScore: " + scoreMark);
+				break;
 			default:
 				console.log("postion in the whole screen - x: " + evt.clientX + " y: " + evt.clientY);
 				//Do Nothing
@@ -678,6 +734,16 @@ export class CanvasComponent implements OnInit {
 		this.hCtx.font = '64px Arial';
 		this.hCtx.fillStyle = this.scoreStyle;
 		this.hCtx.fillText(this.score, 400, 64);
+
+		// add mark score to the canvas
+		if (this.scoreMarks.length > 0) {
+			for (let sm of this.scoreMarks) {
+				this.ctx.font = '32px Arial';
+				this.ctx.fillText($(sm).children("[name='scoreVal']")[0].innerText, sm.getAttribute("initRelLeft"), sm.getAttribute("initRelTop"));
+				sm.parentNode.removeChild(sm);
+			}
+			this.scoreMarks = [];
+		}
 
 		for (let region of this.answer.regions) {
 			this.setDataUrl(region);
