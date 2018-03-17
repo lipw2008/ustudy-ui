@@ -271,12 +271,12 @@ export class SetAnswersComponent implements OnInit {
       let _option = [];
 
       if (type === '判断题') {
-        _option.push({ name: 'Y', checked: true });
+        _option.push({ name: 'Y', checked: false });
         _option.push({ name: 'N', checked: false });
       } else {
         for (var i = 0; i < choiceNum; i++) {
           let checked = false;
-          if (i === 0) checked = true;
+          //if (i === 0) checked = true;
           _option.push({ name: this.selectOptions[i], checked: checked });
         }
       }
@@ -290,10 +290,10 @@ export class SetAnswersComponent implements OnInit {
         });
 
         if (!answersSeted) {
-          const answer = { quesno: j, type: objective.type, choiceNum: objective.choiceNum, options: _option, answer: 'A', branch: '不分科' };
-          if (type === '判断题') {
-            answer.answer = 'Y';
-          }
+          const answer = { quesno: j, type: objective.type, choiceNum: objective.choiceNum, options: _option, answer: '', branch: '不分科' };
+          // if (type === '判断题') {
+          //   answer.answer = 'Y';
+          // }
           this.objectiveAnswers.push(answer);
         }
       }
@@ -359,12 +359,12 @@ export class SetAnswersComponent implements OnInit {
       let _option = [];
 
       if (type === '判断题') {
-        _option.push({ name: 'Y', checked: true });
+        _option.push({ name: 'Y', checked: false });
         _option.push({ name: 'N', checked: false });
       } else {
         for (var i = 0; i < choiceNum; i++) {
           let checked = false;
-          if (i === 0) checked = true;
+          //if (i === 0) checked = true;
           _option.push({ name: this.selectOptions[i], checked: checked });
         }
       }
@@ -378,10 +378,10 @@ export class SetAnswersComponent implements OnInit {
         });
 
         if (!answersSeted) {
-          const answer = { quesno: j, type: type, choiceNum: choiceNum, options: _option, answer: 'A', branch: '不分科' };
-          if (type === '判断题') {
-            answer.answer = 'Y';
-          }
+          const answer = { quesno: j, type: type, choiceNum: choiceNum, options: _option, answer: '', branch: '不分科' };
+          // if (type === '判断题') {
+          //   answer.answer = 'Y';
+          // }
           this.objectiveAnswers.push(answer);
         }
       }
@@ -414,12 +414,12 @@ export class SetAnswersComponent implements OnInit {
       let _option = [];
 
       if (type === '判断题') {
-        _option.push({ name: 'Y', checked: true });
+        _option.push({ name: 'Y', checked: false });
         _option.push({ name: 'N', checked: false });
       } else {
         for (var i = 0; i < choiceNum; i++) {
           let checked = false;
-          if (i === 0) checked = true;
+          //if (i === 0) checked = true;
           _option.push({ name: this.selectOptions[i], checked: checked });
         }
       }
@@ -433,10 +433,10 @@ export class SetAnswersComponent implements OnInit {
         });
 
         if (!answersSeted) {
-          const answer = { quesno: j, type: type, choiceNum: choiceNum, options: _option, answer: 'A', branch: '不分科' };
-          if (type === '判断题') {
-            answer.answer = 'Y';
-          }
+          const answer = { quesno: j, type: type, choiceNum: choiceNum, options: _option, answer: '', branch: '不分科' };
+          // if (type === '判断题') {
+          //   answer.answer = 'Y';
+          // }
           this.objectiveAnswers.push(answer);
         }
       }
@@ -460,12 +460,12 @@ export class SetAnswersComponent implements OnInit {
 
     if (type === '判断题') {
       choiceNum = 2;
-      _option.push({ name: 'Y', checked: true });
+      _option.push({ name: 'Y', checked: false });
       _option.push({ name: 'N', checked: false });
     } else {
       for (var i = 0; i < choiceNum; i++) {
         let checked = false;
-        if (i === 0) checked = true;
+        //if (i === 0) checked = true;
         _option.push({ name: this.selectOptions[i], checked: checked });
       }
     }
@@ -478,11 +478,12 @@ export class SetAnswersComponent implements OnInit {
           objectiveAnswer['options'] = _option;
           objectiveAnswer['type'] = type;
           objectiveAnswer['choiceNum'] = choiceNum;
-          if (type === '判断题') {
-            objectiveAnswer['answer'] = 'Y';
-          } else {
-            objectiveAnswer['answer'] = 'A';
-          }
+          objectiveAnswer['answer'] = '';
+          // if (type === '判断题') {
+          //   objectiveAnswer['answer'] = 'Y';
+          // } else {
+          //   objectiveAnswer['answer'] = 'A';
+          // }
         }
       }
       answers.push(objectiveAnswer);
@@ -497,7 +498,7 @@ export class SetAnswersComponent implements OnInit {
       let _option = [];
       for (var i = 0; i < choiceNum; i++) {
         let checked = false;
-        if (i === 0) checked = true;
+        //if (i === 0) checked = true;
         _option.push({ name: this.selectOptions[i], checked: checked });
       }
       const answers = [];
@@ -506,7 +507,7 @@ export class SetAnswersComponent implements OnInit {
         for (var j = start; j <= end; j++) {
           if (objectiveAnswer.quesno === j) {
             objectiveAnswer['options'] = _option;
-            objectiveAnswer['answer'] = 'A';
+            objectiveAnswer['answer'] = '';
           }
         }
         answers.push(objectiveAnswer);
@@ -912,6 +913,22 @@ export class SetAnswersComponent implements OnInit {
         }
       }
     })
+
+    if(flag){
+      var quesnos = '';
+      this.objectiveAnswers.forEach(answer => {
+        if(answer.answer === ''){
+          flag = false;
+          if(quesnos !== ''){
+            quesnos += ',';
+          }
+          quesnos += answer.quesno;
+        }
+      })
+      if(!flag){
+        alert("客观题 " + quesnos + " 题标准答案未设置，请检查后再次提交！");
+      }
+    }
     
     if(!flag){
       return;

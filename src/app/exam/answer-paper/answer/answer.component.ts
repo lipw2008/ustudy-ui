@@ -46,7 +46,9 @@ export class AnswerComponent implements OnInit {
     this.gradeId = Number(this.route.snapshot.params.gradeId);
     this.subName = this.route.snapshot.params.subName;
     this.questionId = Number(this.route.snapshot.params.questionId);
-    this.questionList = JSON.parse(this.route.snapshot.params.questionList);
+    if(this.route.snapshot.params.questionList){
+      this.questionList = JSON.parse(this.route.snapshot.params.questionList);
+    }
     this.type = this.route.snapshot.params.type;
     if (this.type === 'class') {
       this.viewAnswerPaper = Boolean(this.route.snapshot.params.viewAnswerPaper);
