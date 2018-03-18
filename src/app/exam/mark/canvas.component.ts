@@ -14,6 +14,7 @@ export class CanvasComponent implements OnInit {
 	@Input() score: string;
 	@Input() questionName: string;
 	@Input() isHidden: boolean;
+	@Input() index: number;
 
 	curPaperImg: string = null;
 	isCanvasEnabled: boolean = true;
@@ -27,6 +28,10 @@ export class CanvasComponent implements OnInit {
 	canvas: any;
 	ctx: any;
 	imgData: any;
+
+	cvs1: any;
+	cvs2: any;
+	cvs3: any;
 
 	// color
 	penStyle = 'rgba(225, 0, 0, 1)';
@@ -120,6 +125,9 @@ export class CanvasComponent implements OnInit {
 		this.container = this.parent.markContainer.nativeElement;
 		this.rootContainerElement = this.parent.rootContainer.nativeElement;
 		this.markPanelElement = this.parent.markPanel.nativeElement;
+		this.cvs1 = this.parent.cvs1.canvas;
+		this.cvs2 = this.parent.cvs2.canvas;
+		this.cvs3 = this.parent.cvs3.canvas;
 
 		this.canvas = this.markCanvas.nativeElement;
 		this.ctx = this.canvas.getContext("2d");
@@ -346,6 +354,15 @@ export class CanvasComponent implements OnInit {
 		var t = this;
 		var x = (evt.offsetX == undefined || evt.offsetX == 0 ? evt.layerX: evt.offsetX);
 		var y = (evt.offsetY == undefined || evt.offsetY == 0 ? evt.layerY: evt.offsetY);
+
+		console.log(this.index + '');
+		if (this.index === 2) {
+			y += this.cvs1.clientHeight;
+		} else if (this.index === 3) {
+			y += this.cvs1.clientHeight;
+			y += this.cvs2.clientHeight;
+		}
+
 		console.log("position in the mark panel - x: " + x + ", y: " + y);
 
 		switch(this.editMode) {
@@ -459,6 +476,17 @@ export class CanvasComponent implements OnInit {
 					console.dir(e);
 					console.log("remove");
 					scoreMark.parentNode.removeChild(scoreMark);
+					for (var i = 0; i < t.scoreMarks.length; i++) {
+						if (t.scoreMarks[i] == scoreMark) {
+							t.scoreMarks.splice(i, 1);
+							break;
+						}
+					}
+					let totalScore = 0;
+					for (let sm of t.scoreMarks) {
+						totalScore += Number($(sm).children("[name='scoreVal']")[0].innerText);
+					} 
+					t.parent.setScoreByQuestion(t.questionName, totalScore + '');
 				});
 				$(scoreMark).children("[name='annotationAdd']").on("click", function(e) {
 					console.dir(e);
@@ -735,11 +763,14 @@ export class CanvasComponent implements OnInit {
 		this.hCtx.fillStyle = this.scoreStyle;
 		this.hCtx.fillText(this.score, 400, 64);
 
+		console.dir(this.scoreMarks);
 		// add mark score to the canvas
 		if (this.scoreMarks.length > 0) {
 			for (let sm of this.scoreMarks) {
 				this.ctx.font = '32px Arial';
 				this.ctx.fillText($(sm).children("[name='scoreVal']")[0].innerText, sm.getAttribute("initRelLeft"), sm.getAttribute("initRelTop"));
+				this.hCtx.font = '32px Arial';
+				this.hCtx.fillText($(sm).children("[name='scoreVal']")[0].innerText, sm.getAttribute("initRelLeft"), sm.getAttribute("initRelTop"));
 				sm.parentNode.removeChild(sm);
 			}
 			this.scoreMarks = [];

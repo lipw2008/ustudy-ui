@@ -48,9 +48,9 @@
 				<div #markPanel class="panel-body drag-boundary" [ngClass]="{ 'top-b': !edge?.top, 'bottom-b': !edge?.bottom, 'left-b': !edge?.left, 'right-b': !edge?.right }">
 					<div >
                         <div #markContainer style="overflow-x: auto; overflow-y: auto">
-                            <mark-canvas [score]="score" [(answer)]="answer" [questionName]="questionName" [isHidden]="isHidden" [(editMode)]="editMode"></mark-canvas>
-                            <mark-canvas [score]="score2" [(answer)]="answer2" [questionName]="questionName" [isHidden]="isHidden2" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas2Display}"></mark-canvas>
-                            <mark-canvas [score]="score3" [(answer)]="answer3" [questionName]="questionName" [isHidden]="isHidden3" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas3Display}"></mark-canvas>
+                            <mark-canvas #cvs1 [score]="score" [(answer)]="answer" [questionName]="questionName" [isHidden]="isHidden" [(editMode)]="editMode" [index]="index1"></mark-canvas>
+                            <mark-canvas #cvs2 [score]="score2" [(answer)]="answer2" [questionName]="questionName" [isHidden]="isHidden2" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas2Display}" [index]="index2"></mark-canvas>
+                            <mark-canvas #cvs3 [score]="score3" [(answer)]="answer3" [questionName]="questionName" [isHidden]="isHidden3" [(editMode)]="editMode" [ngStyle]="{'display': markCanvas3Display}" [index]="index3"></mark-canvas>
                         </div>
 					</div>
 				</div>

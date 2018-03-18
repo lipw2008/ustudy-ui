@@ -17,7 +17,9 @@ export class MarkComponent implements OnInit {
 	@ViewChild('markPanel') markPanel;
 	@ViewChild('markBarHeader') markBarHeader;
 	@ViewChild('markBarBody') markBarBody;
-
+	@ViewChild('cvs1') cvs1;
+	@ViewChild('cvs2') cvs2;
+	@ViewChild('cvs3') cvs3;
 
 	//request content
 	reqContent: any = {
@@ -152,6 +154,10 @@ export class MarkComponent implements OnInit {
 	isHidden: boolean = false;
 	isHidden2: boolean = true;
 	isHidden3: boolean = true;
+
+	index1: number = 1;
+	index2: number = 2;
+	index3: number = 3;
 
 	inBounds = true;
 	edge = {
@@ -622,7 +628,6 @@ export class MarkComponent implements OnInit {
 							} else {
 								paper.problemPaper = true;
 							}
-							this.updateFullScore();
 							break;
 						} else if (paper.steps.length > 0) {
 							for(let step of paper.steps) {
@@ -632,7 +637,6 @@ export class MarkComponent implements OnInit {
 									} else {
 										paper.problemPaper = true;
 									}
-									this.updateFullScore();
 									break;
 								} 
 							}
