@@ -354,6 +354,7 @@ export class CanvasComponent implements OnInit {
 		var t = this;
 		var x = (evt.offsetX == undefined || evt.offsetX == 0 ? evt.layerX: evt.offsetX);
 		var y = (evt.offsetY == undefined || evt.offsetY == 0 ? evt.layerY: evt.offsetY);
+		var canvasTop = y;
 
 		console.log(this.index + '');
 		if (this.index === 2) {
@@ -403,18 +404,19 @@ export class CanvasComponent implements OnInit {
 				this.textbox.setAttribute("initRelLeft", x);
 				this.textbox.setAttribute("initRelTop", y);
 				this.textbox.setAttribute("initClientY", evt.clientY);
+				this.textbox.setAttribute("canvasTop", canvasTop);
 				let tEvt = evt;
 				this.renderer.listen(this.textbox, 'keyup', (evt) => {
     				if(evt.keyCode == 13) {
     					console.log(this.textbox.value);
     					this.ctx.font = '36px serif';
     					this.ctx.fillStyle = this.penStyle;
-    					this.ctx.fillText(this.textbox.value, x, y + 36);
+    					this.ctx.fillText(this.textbox.value, x, canvasTop + 36);
 
 						//hidden canvas
     					this.hCtx.font = '36px serif';
     					this.hCtx.fillStyle = this.penStyle;
-    					this.hCtx.fillText(this.textbox.value, x, y + 36);
+    					this.hCtx.fillText(this.textbox.value, x, canvasTop + 36);
 
 						console.log(tEvt.layerX);
 						console.log(tEvt.offsetX);
@@ -463,6 +465,7 @@ export class CanvasComponent implements OnInit {
 				scoreMark.setAttribute("initRelLeft", x);
 				scoreMark.setAttribute("initRelTop", y);
 				scoreMark.setAttribute("initClientY", evt.clientY);
+				scoreMark.setAttribute("canvasTop", canvasTop);
 
 				$(scoreMark).on("mouseover", function(e) {
 					$(scoreMark).children("i").show();
@@ -768,9 +771,9 @@ export class CanvasComponent implements OnInit {
 		if (this.scoreMarks.length > 0) {
 			for (let sm of this.scoreMarks) {
 				this.ctx.font = '32px Arial';
-				this.ctx.fillText($(sm).children("[name='scoreVal']")[0].innerText, sm.getAttribute("initRelLeft"), sm.getAttribute("initRelTop"));
+				this.ctx.fillText($(sm).children("[name='scoreVal']")[0].innerText, sm.getAttribute("initRelLeft"), sm.getAttribute("canvasTop"));
 				this.hCtx.font = '32px Arial';
-				this.hCtx.fillText($(sm).children("[name='scoreVal']")[0].innerText, sm.getAttribute("initRelLeft"), sm.getAttribute("initRelTop"));
+				this.hCtx.fillText($(sm).children("[name='scoreVal']")[0].innerText, sm.getAttribute("initRelLeft"), sm.getAttribute("canvasTop"));
 				sm.parentNode.removeChild(sm);
 			}
 			this.scoreMarks = [];

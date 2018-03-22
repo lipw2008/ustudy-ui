@@ -432,12 +432,15 @@ export class MarkComponent implements OnInit {
 							paper.score = score;
 							break;
 						} else if (paper.steps.length > 0) {
+							let matched = false;
 							for(let step of paper.steps) {
 								if (step.name === this.focusQuestion.stepName) {
 									step.score = score;
+									matched = true;
 									break;
 								} 
 							}
+							if (matched === true) break;
 						}
 					}
 				} else {
@@ -451,14 +454,17 @@ export class MarkComponent implements OnInit {
 							this.focusQuestion.stepName = "";	
 							break;
 						} else if (paper.steps.length > 0) {
+							let matched = false;
 							for(let step of paper.steps) {
 								if (step.score === "") {
 									step.score = score;
 									this.focusQuestion.questionName = "";
 									this.focusQuestion.stepName = step.name;	
+									matched = true;
 									break;
 								}
 							}
+							if (matched === true) break;
 						}
 					}
 				}
@@ -564,6 +570,7 @@ export class MarkComponent implements OnInit {
 							this.updateFullScore();
 							break;
 						} else if (paper.steps.length > 0) {
+							let matched = false;
 							for(let step of paper.steps) {
 								if (step.name === this.focusQuestion.stepName) {
 									if (score !== 'PROBLEM') {
@@ -572,9 +579,11 @@ export class MarkComponent implements OnInit {
 										paper.problemPaper = true;
 									}
 									this.updateFullScore();
+									matched = true;
 									break;
 								} 
 							}
+							if (matched === true) break;
 						}
 					}
 				} else {
@@ -591,6 +600,7 @@ export class MarkComponent implements OnInit {
 							this.updateFullScore();
 							break;
 						} else if (paper.steps.length > 0) {
+							let matched = false;
 							for(let step of paper.steps) {
 								if (step.score === "") {
 									if (score !== 'PROBLEM') {
@@ -599,9 +609,11 @@ export class MarkComponent implements OnInit {
 										paper.problemPaper = true;
 									}
 									this.updateFullScore();
+									matched = true;
 									break;
 								}
 							}
+							if (matched === true) break;
 						}
 					}
 				}
@@ -630,6 +642,7 @@ export class MarkComponent implements OnInit {
 							}
 							break;
 						} else if (paper.steps.length > 0) {
+							let matched = false;
 							for(let step of paper.steps) {
 								if (step.name === questionName) {
 									if (score !== 'PROBLEM') {
@@ -637,9 +650,11 @@ export class MarkComponent implements OnInit {
 									} else {
 										paper.problemPaper = true;
 									}
+									matched = true;
 									break;
 								} 
 							}
+							if (matched === true) break;
 						}
 					}
 				}
@@ -859,6 +874,8 @@ export class MarkComponent implements OnInit {
 					//alert("修改成功");
 					this.nextPage();
 				}).catch((error: any) => {
+					this.focusQuestion.questionName = '';
+					this.focusQuestion.stepName = '';
 					console.log(error.status);
 					console.log(error.statusText);
 					alert("修改失败！");
