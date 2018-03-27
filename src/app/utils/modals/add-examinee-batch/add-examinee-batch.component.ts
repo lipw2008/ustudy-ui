@@ -51,6 +51,7 @@ export class AddExamineeBatchComponent implements OnInit {
           examinee.stuId = row[1];
           examinee.stuExamId = row[2];
           examinee.classId = this.findClass(row[3]);
+          examinee.className = row[3];
           this.examinees.push(examinee)
         })
       });
