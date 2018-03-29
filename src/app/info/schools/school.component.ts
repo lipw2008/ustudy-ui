@@ -17,6 +17,8 @@ export class SchoolComponent implements OnInit {
 
   types = ["初中", "完中", "九年制", "小学", "十二年制", "补习", "其他", "高中"];
 
+  hasBranch = false;
+
   constructor(private _schoolService: SchoolService, private _sharedService: SharedService) {
 
   }
@@ -31,6 +33,17 @@ export class SchoolComponent implements OnInit {
       //cache the list
       console.log("data: " + JSON.stringify(data));
       this.school = data;
+
+      for (let department of data.departments) {
+        for (let grade of department.grades) {
+          if (grade.gradeType === true) {
+            this.hasBranch = true;
+            break;
+          }
+        }
+        if (this.hasBranch === true) break;
+      }
+
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);

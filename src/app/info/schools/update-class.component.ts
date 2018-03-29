@@ -47,16 +47,18 @@ export class UpdateClassComponent implements OnInit {
     for (let subject of this.class.subjects) {
       delete subject.options;
     }
-    this._sharedService.makeRequest('POST', '/info/school/class/update/' + this.classId, JSON.stringify(this.class)).then((data: any) => {
+    this._sharedService.makeRequest('POST', '/info/school/class/update/', JSON.stringify(this.class)).then((data: any) => {
       alert("修改成功");
       //go back to the student list page
-      this.router.navigate(['class', { departmentName: this.departmentName, gradeId: this.gradeId }]);
+      //this.router.navigate(['class', { departmentName: this.departmentName, gradeId: this.gradeId }]);
+      this.router.navigate(['schoolDetails']);
     }).catch((error: any) => {
       console.log(error.status);
       console.log(error.statusText);
       alert("修改失败！");
       //go back to the student list page
-      this.router.navigate(['class', { departmentName: this.departmentName, gradeId: this.gradeId }]);
+      //this.router.navigate(['class', { departmentName: this.departmentName, gradeId: this.gradeId }]);
+      this.router.navigate(['schoolDetails']);
     });
   }
 
