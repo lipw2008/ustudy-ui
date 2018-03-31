@@ -40,7 +40,8 @@ export class UpdateClassComponent implements OnInit {
   cancel(event) {
     this.teachers = [];
     this._schoolService.resetPersistData();
-    this.router.navigate(['class', { departmentName: this.departmentName, gradeId: this.gradeId }]);
+    // this.router.navigate(['class', { departmentName: this.departmentName, gradeId: this.gradeId }]);
+    this.router.navigate(['schoolDetails']);
   }
 
   update(event) {
