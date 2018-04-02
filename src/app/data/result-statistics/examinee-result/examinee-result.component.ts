@@ -40,7 +40,7 @@ export class ExamineeResultComponent implements OnInit {
   ngOnInit() {
     this.examId = Number(this.route.snapshot.params.examId);
     const params = Object.create({});
-    params.finished = true;
+    params.finished = false; //TODO: set to true
     this.exams = this._examService.filterExams(params);
     this.exgrs = this._examService.filterExgr({});
     this._examService.getExamOptions().then((data) => {
@@ -91,6 +91,9 @@ export class ExamineeResultComponent implements OnInit {
     if (this.selectedBranch !== '全部') {
       params.branch = this.selectedBranch
     }
+    
+    if (this.selectedExam == undefined) return; // no exam is finished.
+
     this._dataService.getStudentResultList(this.selectedExam.id, params).then((data: any) => {
       this.temp = [...data];
       this.results = data;
@@ -107,7 +110,7 @@ export class ExamineeResultComponent implements OnInit {
 
   onClick(event, modal) {
     if (event.type === 'click') {
-      this._dataService.getExamineeDetails(event.row.examId, event.row.stuExamId).then((data) => {
+      this._dataService.getExamineeDetails(event.row.examId, event.row.exameeId).then((data) => {
         this.selectedExamineeDetails = data;
         modal.show()
       });

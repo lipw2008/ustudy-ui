@@ -99,16 +99,16 @@
             <strong>{{rowIndex + 1}}</strong>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column prop="stuExamNo" name="考号" [flexGrow]="1"
+        <ngx-datatable-column prop="exameeNO" name="考号" [flexGrow]="1"
                               headerClass="header-bordered"></ngx-datatable-column>
-        <ngx-datatable-column prop="name" name="姓名" [flexGrow]="1" headerClass="header-bordered"></ngx-datatable-column>
-        <ngx-datatable-column prop="schname" name="单位" [flexGrow]="1"
+        <ngx-datatable-column prop="exameeName" name="姓名" [flexGrow]="1" headerClass="header-bordered"></ngx-datatable-column>
+        <ngx-datatable-column prop="schName" name="单位" [flexGrow]="1"
                               headerClass="header-bordered"></ngx-datatable-column>
         <ngx-datatable-column name="成绩" [flexGrow]="6" headerClass="nopadding" cellClass="nopadding">
           <ng-template let-column="column" ngx-datatable-header-template>
             <div class="table-responsive" style="display: flex">
               <span *ngFor="let subject of resultHdr?.scores, let i = index" [ngStyle]="{width: subjectWidth}">
-                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th style="text-align: center;">{{subject.name}}</th></tr> </tbody> </table>
+                <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th style="text-align: center;">{{subject.subName}}</th></tr> </tbody> </table>
                 <table class="table table-bordered table-condensed" style="margin: 0px;"> <tbody> <tr><th style="text-align: center;">成绩</th><th style="text-align: center;">排名</th></tr> </tbody> </table>
               </span>
               <span [ngStyle]="{width: subjectWidth}">
