@@ -38,7 +38,24 @@ export class ViewTaskComponent implements OnInit {
       this.subjectTeachers = this._taskService.toggleGrade(this.gradeTeachers, null);
       this.teachers = this._taskService.subjectTeachersToTeachers(this.subjectTeachers);
     });
-    this._taskService.getMarkTasks(this.examId, this.gradeId, this.subjectId).then((data: any) => {
+    this._taskService.getExamSubjects(this.examId).then((data: any) => {
+      const gradesubjects = data;
+      this.gradesubjects = _.reduce(_.map(gradesubjects, 'subjects'), (res, i) => res.concat(i), []);
+      if (this.subjectId) {
+        for (const subject of this.gradesubjects) {
+          if (subject.subId === this.subjectId && subject.gradeId === this.gradeId && subject.examid === this.examId) {
+            this.selectedSubject = subject;
+          }
+        }
+      } else {
+        this.selectedSubject = _.first(gradesubjects)
+      }
+      this.setFiltetedTasks()
+    })
+  }
+
+  setFiltetedTasks() {
+    this._taskService.getMarkTasks(this.selectedSubject.examid, this.selectedSubject.gradeId, this.selectedSubject.subId).then((data: any) => {
       if (data === null) {
         data = []
       }
@@ -51,37 +68,20 @@ export class ViewTaskComponent implements OnInit {
         }
       });
       this.markTasks = data;
-      this._taskService.getExamSubjects(this.examId).then((data: any) => {
-        const gradesubjects = data;
-        this.gradesubjects = _.reduce(_.map(gradesubjects, 'subjects'), (res, i) => res.concat(i), []);
-        if (this.subjectId) {
-          for (const subject of this.gradesubjects) {
-            if (subject.subId === this.subjectId && subject.gradeId === this.gradeId && subject.examid === this.examId) {
-              this.selectedSubject = subject;
-            }
+      this._taskService.getQuestions(this.examId, null, this.selectedSubject.gradeId, this.selectedSubject.subId).then((data) => {
+        this.questions = data;
+        this.tasks = _.filter(this.markTasks, { gradeId: String(this.selectedSubject.gradeId), subjectId: String(this.selectedSubject.subId) });
+        this.tasks.forEach((task) => {
+          task.question = _.find(this.questions, { id: Number(task.questionId) });
+          task.group = _.find(_.get(_.find(this.gradeTeachers, {gradeId: this.gradeId}), 'subjects'), (subject) => _.includes(subject.subName, 
+          (this.selectedSubject.subName === '数学(文)') ? '数学': this.selectedSubject.subName));
+          // if no teachers under this subject, set the group to [], the question mark owner can not be set.
+          if(task.group === undefined) {
+            task.group = [];
           }
-        } else {
-          this.selectedSubject = _.first(gradesubjects)
-        }
-        this.setFiltetedTasks()
-      })
+        });
+      });
     });
-  }
-
-  setFiltetedTasks() {
-    this._taskService.getQuestions(this.examId, null, this.selectedSubject.gradeId, this.selectedSubject.subId).then((data) => {
-      this.questions = data;
-      this.tasks = _.filter(this.markTasks, { gradeId: String(this.selectedSubject.gradeId), subjectId: String(this.selectedSubject.subId) });
-      this.tasks.forEach((task) => {
-        task.question = _.find(this.questions, { id: Number(task.questionId) });
-        task.group = _.find(_.get(_.find(this.gradeTeachers, {gradeId: this.gradeId}), 'subjects'), (subject) => _.includes(subject.subName, 
-        (this.selectedSubject.subName === '数学(文)') ? '数学': this.selectedSubject.subName));
-        // if no teachers under this subject, set the group to [], the question mark owner can not be set.
-        if(task.group === undefined) {
-          task.group = [];
-        }
-      })
-    })
   }
 
   getTeachers(task: any) {
