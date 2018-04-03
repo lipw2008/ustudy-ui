@@ -203,6 +203,11 @@
 											<ng-container *ngIf="subjective.type === '填空题'">
 												<span class="input-group-addon clear-border clear-bg">分/题</span>
 											</ng-container>
+											<div class="input-group pull-right" *ngIf="subjective.type === '填空题'">
+												<a class="btn btn-link" (click)="setScore(subjective.id)">
+													<i class="glyphicon glyphicon-cog"></i>
+												</a>
+											</div>
 											<div class="input-group pull-right" *ngIf="subjective.type !== '填空题'">
 												<a class="btn btn-link" (click)="addOneSubjectiveRow(subjective.id)">
 													<i class="glyphicon glyphicon-plus" ></i>
@@ -346,5 +351,56 @@
 		</form>
 	</div>
 	<!-- 多选题答案得分设置 end -->
+	
+	<!-- 填空题得分设置 start -->
+	<div id="setScoreModal" tabindex="-1" role="dialog" style="display: none;overflow: hidden;position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1050;">
+			<form id="infoForm" method="post" class="form-horizontal" action="#">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeSetCompletionScoreModal()"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">填空题分值设置</h4>
+						</div>
+						<div class="modal-body">
+							<div class="panel-heading">
+								<h4 class="clear-margin"><strong>设置得分：</strong></h4>
+							</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<div class="col-sm-1 btn-toolbar"></div>
+									<div class="col-sm-11 btn-toolbar">
+										<table class="table table-hover table-bordered form-inline">
+											<thead>
+												<tr>
+													<th>题目</th>
+													<th>分值</th>
+												</tr>
+											</thead>
+											<tbody>
+												<ng-container *ngFor="let child of completions.child">
+													<tr>
+														<td>{{child.quesno}}</td>
+														<td>
+															<div class="extra" data-toggle="buttons">
+																<input type="number" class="form-control" id="setScore_{{completions.id}}_{{child.quesno}}" size="5" value="{{child.score}}" (change)="setCompletionScore(completions.id,child.quesno)" style="width:80px;">分
+															</div>
+														</td>
+													</tr>
+												</ng-container>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeSetCompletionScoreModal()">取消</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeSetCompletionScoreModal()">确定</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- 填空题得分设置 end -->
 </div>
 <!-- 内容 end -->

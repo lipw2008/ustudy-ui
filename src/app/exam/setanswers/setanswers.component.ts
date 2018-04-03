@@ -830,6 +830,47 @@ export class SetAnswersComponent implements OnInit {
         this.checkBoxScores.push({ size: i, seted: false, scores: scores_ });
       }
     }
+  }  
+
+  completions = {};
+
+  setScore(id) {
+    this.subjectives.forEach(element => {
+      if(element.id === id){
+        this.completions = element;
+      }
+    });
+    var childs = this.completions['child']
+    for(var i=0;i<childs.length-1;i++){
+      for(var j=i+1;j<childs.length;j++){
+        if(childs[i].quesno > childs[j].quesno){
+          var child = childs[i];
+          childs[i] = childs[j];          
+          childs[j] = child;
+        }
+      }
+    }
+    this.completions['child'] = childs
+    this.elementRef.nativeElement.querySelector('#setScoreModal').style.display = '';
+  }
+
+  setCompletionScore(completionId,quesno){
+    let score = Number(this.elementRef.nativeElement.querySelector('#setScore_' + completionId + '_' + quesno).value);
+    this.subjectives.forEach(element => {
+      if(element.id === completionId){
+        element['child'].forEach(child => {
+          if(child.quesno === quesno){
+            this.subjectiveScore -= child.score
+            child.score = score;
+            this.subjectiveScore += score
+          }
+        });
+      }
+    });
+  }
+
+  closeSetCompletionScoreModal(){
+    this.elementRef.nativeElement.querySelector('#setScoreModal').style.display = 'none';
   }
 
   closeCheckBoxModal() {
