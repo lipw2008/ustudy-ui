@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {DataService} from '../../data.service';
 import {ExamService} from '../../../exam/exam.service';
 import { sprintf } from 'sprintf-js';
@@ -57,7 +57,7 @@ export class ExamineeResultComponent implements OnInit {
         }
       }
       this.reload()
-    })
+    });
     this.exgrs.then((data) => {
       if (this.examId) {
         this.selectedExgr = _.find(data, {examId: this.examId});
@@ -91,13 +91,13 @@ export class ExamineeResultComponent implements OnInit {
     if (this.selectedBranch !== '全部') {
       params.branch = this.selectedBranch
     }
-    
-    if (this.selectedExam == undefined) return; // no exam is finished.
+
+    if (this.selectedExam === undefined) {return; } // no exam is finished.
 
     this._dataService.getStudentResultList(this.selectedExam.id, params).then((data: any) => {
       this.temp = [...data];
       this.results = data;
-      this.resultHdr = data[0];      
+      this.resultHdr = data[0];
       if (!this.resultHdr) {
         this.subjectWidth = sprintf('%.2f%%', 100);
         this.subjectWidth2 = sprintf('%.2f%%', 50);
