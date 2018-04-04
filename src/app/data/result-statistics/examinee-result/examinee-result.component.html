@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" xmlns:javascript="http://www.w3.org/1999/xhtml">
   <ol class="breadcrumb">
     <li><a href="#">首页</a></li>
     <li>数据中心</li>
@@ -145,7 +145,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">{{selectedExamineeDetails?.name}} ({{selectedExamineeDetails?.stuno}})</h4>
+        <h4 class="modal-title pull-left">{{selectedExamineeDetails?.exameeName}} ({{selectedExamineeDetails?.exameeNO}})</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="examineeResultDetails.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -153,24 +153,26 @@
       <div class="modal-body">
         <table class="table table-striped table-bordered table-condensed">
           <tbody>
-          <tr *ngFor="let subject of selectedExamineeDetails?.subjects">
+          <tr *ngFor="let subject of selectedExamineeDetails?.subScores">
             <td class="col-lg-1">{{subject.subName}}</td>
             <td class="col-lg-1">{{subject.score}}</td>
             <td class="col-lg-8 nopadding">
               <table class="table table-striped table-bordered table-condensed" style="margin: 0px;">
                 <tbody>
                 <tr>
-                  <td class="col-lg-2">客观题: {{subject.objScore}}</td>
+                  <td class="col-lg-2">客观题: {{subject.objscore}}</td>
                   <td class="col-lg-8">{{parseObjectives(subject)}}</td>
                 </tr>
                 <tr>
-                  <td class="col-lg-2">主观题: {{subject.subScore}}</td>
+                  <td class="col-lg-2">主观题: {{subject.subscore}}</td>
                   <td class="col-lg-8">{{parseSubjectives(subject)}}</td>
                 </tr>
                 </tbody>
               </table>
             </td>
-            <td><a [routerLink]="['/answers', {gradeId: selectedExamineeDetails?.gradeId, subjectId: subject.subId, examId: selectedExam?.id, type: 'class', viewAnswerPaper: true ,search: selectedExamineeDetails?.stuno}]">查看答题卡</a></td>
+            <td>
+              <a href="javascript:;"  alt="点击查看" class="img-thumbnail" (click)="viewPaper(viewAnswerTemplate, subject.markImg)">查看答题卡</a>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -181,3 +183,17 @@
     </div>
   </div>
 </div>
+
+<ng-template #viewAnswerTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">答案</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let url of selectedImgUrls">
+      <img [src]="url"  class="img-thumbnail">
+    </div>
+  </div>
+</ng-template>

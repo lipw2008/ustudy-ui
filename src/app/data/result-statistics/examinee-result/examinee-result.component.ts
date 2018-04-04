@@ -1,9 +1,10 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {DataService} from '../../data.service';
 import {ExamService} from '../../../exam/exam.service';
 import { sprintf } from 'sprintf-js';
 import * as _ from 'lodash';
 import {ActivatedRoute} from '@angular/router';
+import {BsModalRef, BsModalService} from "ngx-bootstrap";
 
 @Component({
   selector: 'app-examinee-result',
@@ -22,6 +23,7 @@ export class ExamineeResultComponent implements OnInit {
   selectedClass: any;
   results = [];
   text = '';
+  selectedImgUrls: Array<string>;
 
   columns = [
     { prop: 'name', name: '姓名' },
@@ -34,8 +36,10 @@ export class ExamineeResultComponent implements OnInit {
   selectedBranch = '全部';
   selectedExamineeDetails: any;
   examId: number;
+  paperModalRef: BsModalRef;
 
-  constructor(private _dataService: DataService, private _examService: ExamService, private route: ActivatedRoute) { }
+  constructor(private _dataService: DataService, private _examService: ExamService, private route: ActivatedRoute,
+              private modalService: BsModalService) { }
 
   ngOnInit() {
     this.examId = Number(this.route.snapshot.params.examId);
@@ -110,18 +114,28 @@ export class ExamineeResultComponent implements OnInit {
 
   onClick(event, modal) {
     if (event.type === 'click') {
-      this._dataService.getExamineeDetails(event.row.examId, event.row.exameeId).then((data) => {
+      this._dataService.getExamineeDetails(event.row.examId, event.row.exameeId).then((data: any) => {
         this.selectedExamineeDetails = data;
+        data.examId = event.row.examId;
         modal.show()
       });
     }
   }
 
   parseObjectives(subject) {
-    return _.map(_.filter(subject.objectives, (obj) => obj.score > 0), 'quesno').join('、 ')
+    return _.map(_.filter(subject.objQuesScore, (obj) => obj.score > 0), 'quesno').join('、 ')
   }
 
   parseSubjectives(subject) {
-    return _.map(subject.subjectives, (question: any) => `${question.quesno}题：${question.score}分`).join('; ')
+    return _.map(subject.subQuesScore, (question: any) => `${question.quesno}题：${question.score}分`).join('; ')
+  }
+
+  viewPaper(template: TemplateRef<any>, url) {
+    if (url && url !== 'NULL') {
+      this.selectedImgUrls = [url];
+      this.paperModalRef = this.modalService.show(template, {class: 'gray modal-lg'});
+    } else {
+      return;
+    }
   }
 }
