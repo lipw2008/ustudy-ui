@@ -47,7 +47,6 @@ export class UnfinishedExamDetailsComponent implements OnInit {
         grade.subjects.forEach((subject) => {
           subject.gradeId = grade.gradeId;
           subject.gradeName = grade.gradeName;
-          subject.studentCount = grade.studentCount;
         })
       }
       const subjects = _.concat.apply(this, _.map(data, 'subjects'));
