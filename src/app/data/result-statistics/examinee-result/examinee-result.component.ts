@@ -4,7 +4,7 @@ import {ExamService} from '../../../exam/exam.service';
 import { sprintf } from 'sprintf-js';
 import * as _ from 'lodash';
 import {ActivatedRoute} from '@angular/router';
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-examinee-result',
@@ -37,6 +37,7 @@ export class ExamineeResultComponent implements OnInit {
   selectedExamineeDetails: any;
   examId: number;
   paperModalRef: BsModalRef;
+  subjectDetailModalRef: BsModalRef;
 
   constructor(private _dataService: DataService, private _examService: ExamService, private route: ActivatedRoute,
               private modalService: BsModalService) { }
@@ -77,17 +78,17 @@ export class ExamineeResultComponent implements OnInit {
     if (_.isObject(this.selectedGrade)) {
       params.gradeId = this.selectedGrade.id
     } else {
-      this.selectedGrade = ""
+      this.selectedGrade = ''
     }
     if (_.isObject(this.selectedSubject)) {
       params.subjectId = this.selectedSubject.id
     } else {
-      this.selectedSubject = ""
+      this.selectedSubject = ''
     }
     if (_.isObject(this.selectedClass)) {
       params.classId = this.selectedClass.id
     } else {
-      this.selectedClass = ""
+      this.selectedClass = ''
     }
     if (this.text) {
       params.text = this.text
@@ -137,5 +138,10 @@ export class ExamineeResultComponent implements OnInit {
     } else {
       return;
     }
+  }
+
+  viewSubjectDetail(template: TemplateRef<any>, subject) {
+    this.selectedSubject = subject;
+    this.subjectDetailModalRef = this.modalService.show(template, {class: 'gray modal-lg'});
   }
 }
