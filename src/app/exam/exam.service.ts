@@ -198,6 +198,18 @@ export class ExamService {
     })
   }
 
+  publishMark(egsId) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('POST', `/api/examsubject/papers/${egsId}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })    
+  }
+
   updateMarkSwitch(egsId, markSwitch) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('POST', `/api/examsubject/markswitch/${egsId}/${markSwitch}`, '').then((data: any) => {
