@@ -626,7 +626,7 @@ export class SetAnswersComponent implements OnInit {
   //-------------------------------Subjectives--------------------------------------
 
   subjectives = [
-    { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 }
+    { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 , remark: '' }
   ];
 
   subjectiveCount = 0;
@@ -653,7 +653,7 @@ export class SetAnswersComponent implements OnInit {
             if (!childs) {
               childs = [];
             }
-            let child = { quesno: 1, quesid: subjective.quesno, branch: '不分科', type: subjective.type, score: 1 };
+            let child = { id: 0 - new Date().getTime(), quesno: 1, quesid: subjective.quesno, branch: '不分科', type: subjective.type, score: 1 };
             child.quesno = childs.length + 1;
             child.branch = subjective.branch;
             childs.push(child);
@@ -663,7 +663,7 @@ export class SetAnswersComponent implements OnInit {
         });
       } else {
         const obj = this.subjectives[this.subjectives.length - 1];
-        const obj_ = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 };
+        const obj_ = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2 , remark: '' };
         if (obj['type'] === '填空题') obj_['startno'] = obj['endno'] + 1;
         else obj_['startno'] = obj['startno'] + 1;
         obj_['endno'] = obj_['startno'];
@@ -675,7 +675,7 @@ export class SetAnswersComponent implements OnInit {
       }
 
     } else {
-      const obj = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 1, branch: '不分科', score: 1 };
+      const obj = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 1, branch: '不分科', score: 1 , remark: '' };
       if (this.objectives.length > 0) {
         let objective = this.objectives[this.objectives.length - 1];
         obj.startno = objective.endno + 1;
@@ -685,6 +685,99 @@ export class SetAnswersComponent implements OnInit {
 
       this.subjectiveCount = 1;
       this.subjectiveScore = 1;
+    }
+  }
+
+  addOneSubjectiveStep(id, childId) {
+    if(this.subjectives.length > 0 && id !== 0){
+      this.subjectives.forEach(subjective => {
+        if (subjective.id === id) {
+          if(childId !== 0){
+            let childs = subjective['child'];
+            if(childs && childs.length>0){
+              const childs_ = [];
+              childs.forEach(child =>{
+                if (child.id === childId) {
+                  let steps = child.steps;
+                  if(!steps){
+                    steps = [];
+                  }
+                  if(steps.length > 0){
+                    for (let i = 0; i<steps.length; i++) {
+                      let step = steps[i];
+                      step.step = i+1;
+                    }
+                  }
+                  const step = { id: 0 - new Date().getTime(), quesno: child.quesno, type: child.type, branch: child.branch, score: 1 , 
+                    quesid: child.id, egsId: child.egsId, step: steps.length+1, remark: '' };
+                  
+                  steps.push(step);
+                  child.steps = steps;
+                }
+                childs_.push(child);
+              })
+              subjective['child'] = childs_;
+            }
+          }else{
+            let steps = subjective['step'];
+            if(!steps){
+              steps = [];
+            }
+            if(steps.length > 0){
+              for (let i = 0; i<steps.length; i++) {
+                let step = steps[i];
+                step.step = i+1;
+              }
+            }
+            const step = { id: 0 - new Date().getTime(), quesno: 0, type: subjective.type, branch: subjective.branch, score: 1 , 
+              quesid: subjective.id, egsId: subjective['examGradeSubId'], step: steps.length+1, remark: '' };
+            
+            steps.push(step);
+
+            subjective['step'] = steps;
+          }
+        }
+      })
+    }
+  }  
+
+  removeOneSubjectiveStep(id, childId, stepId) {
+    if(this.subjectives.length > 0 && id !== 0){
+      this.subjectives.forEach(subjective => {
+        if (subjective.id === id) {
+          if(childId !== 0){
+            subjective['child'].forEach(child =>{
+              if (child.id === childId) {
+                let steps = child.steps;
+                if(steps && steps.length > 0){
+                  const steps_ = [];
+                  steps.forEach(step => {
+                    if (step.id !== stepId) {
+                      step.step = steps_.length + 1;
+                      steps_.push(step);
+                    }
+                  });
+                  child['steps'] = steps_;
+                }
+              }
+            })
+          }else{
+            subjective['step'].forEach(step =>{
+              let steps = subjective['step'];
+              if(steps && steps.length > 0){
+                const steps_ = [];
+                steps.forEach(step => {
+                  if (step.id !== stepId) {
+                    step.step = steps_.length + 1;
+                    steps_.push(step);
+                  }
+                });
+                subjective['step'] = steps_;
+              }
+            })
+          }
+        }
+      })
     }
   }
 
@@ -719,82 +812,111 @@ export class SetAnswersComponent implements OnInit {
     this.subjectives = _subjectives;
   }
 
-  onSubjectiveValueChange(valueType, id, childId) {
+  onSubjectiveValueChange(valueType, id, childId, stepId) {
     this.subjectives.forEach(subjective => {
       if (subjective.id === id) {
-        if (childId > 0) {
+        if (childId !== 0) {
           let childs = subjective['child'];
           childs.forEach(child => {
-            if (child.quesno === childId) {
-              let value = this.elementRef.nativeElement.querySelector('#subjective_' + valueType + '_' + id + '_' + childId).value;
-              if (valueType === 'score') {
-                value = Number(value);
-                if (!value || value < 1) {
-                  value = child.score;
-                  this.elementRef.nativeElement.querySelector('#subjective_' + valueType + '_' + id + '_' + childId).value = value;
+            if (child.id === childId) {
+              let value = this.elementRef.nativeElement.querySelector('#subjective_' + valueType + '_' + id + '_' + childId + '_' + stepId).value;
+              if(stepId !== 0){
+                let steps = child['steps'];
+                steps.forEach(step => {
+                  if (step.id === stepId) {
+                    if (valueType === 'score') {
+                      value = Number(value);
+                      if (!value || value < 1) {
+                        value = step.score;
+                      }
+                    }
+                    step[valueType] = value;
+                  }
+                })
+              }else{
+                if (valueType === 'score') {
+                  value = Number(value);
+                  if (!value || value < 1) {
+                    value = child.score;
+                  }
                 }
+                child[valueType] = value;
               }
-              child[valueType] = value;
+              this.elementRef.nativeElement.querySelector('#subjective_' + valueType + '_' + id + '_' + childId + '_' + stepId).value = value;
             }
           });
         } else {
-
-          let value = this.elementRef.nativeElement.querySelector('#subjective_' + valueType + '_' + id).value;
-          if (valueType === 'start') {
-
-            this.subjectiveCount = this.subjectiveCount - (subjective.endno - subjective.startno + 1);
-            this.subjectiveScore = this.subjectiveScore - (subjective.endno - subjective.startno + 1) * subjective.score;
-
-            value = Number(value);
-            if (!value || value < 1) {
-              value = subjective.startno;
-            } else if (value > subjective.endno) {
-              value = subjective.endno;
+          let value = this.elementRef.nativeElement.querySelector('#subjective_' + valueType + '_' + id + '_' + childId + '_' + stepId).value;
+          
+          if(stepId !== 0){
+            let steps = subjective['step'];
+            steps.forEach(step => {
+              if (step.id === stepId) {
+                if (valueType === 'score') {
+                  value = Number(value);
+                  if (!value || value < 1) {
+                    value = step.score;
+                  }
+                }
+                step[valueType] = value;
+              }
+            })
+          }else{
+            if (valueType === 'start') {  
+              this.subjectiveCount = this.subjectiveCount - (subjective.endno - subjective.startno + 1);
+              this.subjectiveScore = this.subjectiveScore - (subjective.endno - subjective.startno + 1) * subjective.score;
+  
+              value = Number(value);
+              if (!value || value < 1) {
+                value = subjective.startno;
+              } else if (value > subjective.endno) {
+                value = subjective.endno;
+              }
+  
+              subjective.startno = value;
+              subjective.quesno = value;
+              if (subjective.endno < subjective.startno) {
+                subjective.endno = subjective.startno;
+              }
+              
+              this.subjectiveCount = this.subjectiveCount + (subjective.endno - subjective.startno + 1);
+              this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * subjective.score;
+  
+            } else if (valueType === 'end') {
+  
+              this.subjectiveCount = this.subjectiveCount - (subjective.endno - subjective.startno + 1);
+              this.subjectiveScore = this.subjectiveScore - (subjective.endno - subjective.startno + 1) * subjective.score;
+  
+              value = Number(value);
+              if (!value || value < 1) {
+                value = subjective.endno;
+              } else if (value < subjective.startno) {
+                value = subjective.startno;
+              }
+              
+              subjective.endno = value;
+              if (subjective.endno < subjective.startno) {
+                subjective.startno = subjective.endno;
+                subjective.quesno = subjective.endno;
+              }
+              
+              this.subjectiveCount = this.subjectiveCount + (subjective.endno - subjective.startno + 1);
+              this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * subjective.score;
+              
+            } else if (valueType === 'type') {
+              subjective[valueType] = value;
+            } else if (valueType === 'score') {
+              
+              value = Number(value);
+              if (!value || value < 1) {
+                value = subjective.score;
+              }
+              
+              this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * (value - subjective.score);
+              subjective[valueType] = value;
             }
-
-            subjective.startno = value;
-            subjective.quesno = value;
-            if (subjective.endno < subjective.startno) {
-              subjective.endno = subjective.startno;
-            }
-
-            this.subjectiveCount = this.subjectiveCount + (subjective.endno - subjective.startno + 1);
-            this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * subjective.score;
-
-          } else if (valueType === 'end') {
-
-            this.subjectiveCount = this.subjectiveCount - (subjective.endno - subjective.startno + 1);
-            this.subjectiveScore = this.subjectiveScore - (subjective.endno - subjective.startno + 1) * subjective.score;
-
-            value = Number(value);
-            if (!value || value < 1) {
-              value = subjective.endno;
-            } else if (value < subjective.startno) {
-              value = subjective.startno;
-            }
-
-            subjective.endno = value;
-            if (subjective.endno < subjective.startno) {
-              subjective.startno = subjective.endno;
-              subjective.quesno = subjective.endno;
-            }
-
-            this.subjectiveCount = this.subjectiveCount + (subjective.endno - subjective.startno + 1);
-            this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * subjective.score;
-
-          } else if (valueType === 'type') {
-            subjective[valueType] = value;
-          } else if (valueType === 'score') {
-
-            value = Number(value);
-            if (!value || value < 1) {
-              value = subjective.score;
-            }
-
-            this.subjectiveScore = this.subjectiveScore + (subjective.endno - subjective.startno + 1) * (value - subjective.score);
-            subjective[valueType] = value;
           }
-          this.elementRef.nativeElement.querySelector('#subjective_' + valueType + '_' + id).value = value;
+          this.elementRef.nativeElement.querySelector('#subjective_' + valueType + '_' + id + '_' + childId + '_' + stepId).value = value;
         }
       }
     });
@@ -832,22 +954,24 @@ export class SetAnswersComponent implements OnInit {
     }
   }  
 
-  completions = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2,
-  child: [{quesno: 0, score: 0}] };
+  completions = {}
+  //completions = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2,
+  //child: [{quesno: 0, score: 0}] };
 
   setScore(id) {
     this.subjectives.forEach(element => {
       if(element.id === id){
-        this.completions.id = element.id;
-        this.completions.quesno = element.quesno;
-        this.completions.type = element.type;
-        this.completions.startno = element.startno;
-        this.completions.endno = element.endno;
-        this.completions.branch = element.branch;
-        this.completions.score = element.score;
+        this.completions = element;
+        // this.completions.id = element.id;
+        // this.completions.quesno = element.quesno;
+        // this.completions.type = element.type;
+        // this.completions.startno = element.startno;
+        // this.completions.endno = element.endno;
+        // this.completions.branch = element.branch;
+        // this.completions.score = element.score;
       }
     });
-    var childs// = this.completions['child']
+    var childs = this.completions['child']
     for(var i=0;i<childs.length-1;i++){
       for(var j=i+1;j<childs.length;j++){
         if(childs[i].quesno > childs[j].quesno){
@@ -878,6 +1002,83 @@ export class SetAnswersComponent implements OnInit {
 
   closeSetCompletionScoreModal(){
     this.elementRef.nativeElement.querySelector('#setScoreModal').style.display = 'none';
+  }
+
+  comment  = {subjective:0,child:0,step:0,text:''}
+
+  addRemark(subjectiveId,childId,stepId){
+    if(subjectiveId != 0){
+      this.comment.subjective = subjectiveId;
+      this.comment.child = childId;
+      this.comment.step = stepId;
+      this.subjectives.forEach(element => {
+        if(element.id === subjectiveId){
+          if(childId === 0){
+            if(stepId === 0){
+              this.comment.text = element.remark;
+            }else{
+              element['step'].forEach(step => {
+                if(step.id === stepId){
+                  this.comment.text = step.remark;
+                }
+              })
+            }
+          }else{
+            element['child'].forEach(child => {
+              if(child.id === childId){
+                if(stepId === 0){
+                  this.comment.text = child.remark;
+                }else{
+                  child['steps'].forEach(step => {
+                    if(step.id === stepId){
+                      this.comment.text = step.remark;
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      });  
+    }
+    this.elementRef.nativeElement.querySelector('#setCommentModal').style.display = '';
+  }
+
+  closeSetCommentModal(type){
+    if(this.comment.subjective !==0 && type === 1){
+      var text = this.elementRef.nativeElement.querySelector('#setComment_' + this.comment.subjective + '_' + this.comment.child + '_' + this.comment.step).value;
+      this.subjectives.forEach(element => {
+        if(element.id === this.comment.subjective){
+          if(this.comment.child === 0){
+            if(this.comment.step === 0){
+              element.remark = text;
+            }else{
+              element['step'].forEach(step => {
+                if(step.id === this.comment.step){
+                  step.remark = text;
+                }
+              })
+            }
+          }else{
+            element['child'].forEach(child => {
+              if(child.id === this.comment.child){
+                if(this.comment.step === 0){
+                  child.remark = text;
+                }else{
+                  child['steps'].forEach(step => {
+                    if(step.id === this.comment.step){
+                      step.remark = text;
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      });  
+    }
+    console.log(JSON.stringify(this.subjectives));
+    this.elementRef.nativeElement.querySelector('#setCommentModal').style.display = 'none';
   }
 
   closeCheckBoxModal() {
