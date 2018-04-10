@@ -76,6 +76,13 @@ export class UnfinishedExamDetailsComponent implements OnInit {
     })
   }
 
+  publishMark(egsId) {
+    this._examService.publishMark(egsId).then((data) => {
+      alert('发布批注成功');
+      this.reload();
+    })
+  }
+
   updateMarkSwitch(row, markSwitch) {
     this._examService.updateMarkSwitch(row.egsId, markSwitch).then((data) => {
       alert(`${markSwitch ? '启动阅卷' : '暂停阅卷'}成功`);

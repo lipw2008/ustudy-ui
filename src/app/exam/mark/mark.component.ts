@@ -67,6 +67,9 @@ export class MarkComponent implements OnInit {
 		stepName: ""
 	}
 
+	// paint switch
+	enablePaint = false;
+
 	// page controller
 	curPage: number = 1;
 	pageCount: number = 0; 
