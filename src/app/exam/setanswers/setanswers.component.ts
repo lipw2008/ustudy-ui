@@ -1007,6 +1007,7 @@ export class SetAnswersComponent implements OnInit {
   comment  = {subjective:0,child:0,step:0,text:''}
 
   addRemark(subjectiveId,childId,stepId){
+
     if(subjectiveId != 0){
       this.comment.subjective = subjectiveId;
       this.comment.child = childId;
@@ -1015,11 +1016,19 @@ export class SetAnswersComponent implements OnInit {
         if(element.id === subjectiveId){
           if(childId === 0){
             if(stepId === 0){
-              this.comment.text = element.remark;
+              if(element.remark && element.remark != null){
+                this.comment.text = element.remark;
+              }else{
+                this.comment.text = '';
+              }
             }else{
               element['step'].forEach(step => {
                 if(step.id === stepId){
-                  this.comment.text = step.remark;
+                  if(step.remark && step.remark != null){
+                    this.comment.text = step.remark;
+                  }else{
+                    this.comment.text = '';
+                  }
                 }
               })
             }
@@ -1027,11 +1036,19 @@ export class SetAnswersComponent implements OnInit {
             element['child'].forEach(child => {
               if(child.id === childId){
                 if(stepId === 0){
-                  this.comment.text = child.remark;
+                  if(child.remark && child.remark != null){
+                    this.comment.text = child.remark;
+                  }else{
+                    this.comment.text = '';
+                  }
                 }else{
                   child['steps'].forEach(step => {
                     if(step.id === stepId){
-                      this.comment.text = step.remark;
+                      if(step.remark && step.remark != null){
+                        this.comment.text = step.remark;
+                      }else{
+                        this.comment.text = '';
+                      }
                     }
                   })
                 }
@@ -1041,12 +1058,13 @@ export class SetAnswersComponent implements OnInit {
         }
       });  
     }
+    this.elementRef.nativeElement.querySelector('#qes_comment').value = this.comment.text;
     this.elementRef.nativeElement.querySelector('#setCommentModal').style.display = '';
   }
 
   closeSetCommentModal(type){
     if(this.comment.subjective !==0 && type === 1){
-      var text = this.elementRef.nativeElement.querySelector('#setComment_' + this.comment.subjective + '_' + this.comment.child + '_' + this.comment.step).value;
+      var text = this.elementRef.nativeElement.querySelector('#qes_comment').value;
       this.subjectives.forEach(element => {
         if(element.id === this.comment.subjective){
           if(this.comment.child === 0){
@@ -1077,7 +1095,6 @@ export class SetAnswersComponent implements OnInit {
         }
       });  
     }
-    console.log(JSON.stringify(this.subjectives));
     this.elementRef.nativeElement.querySelector('#setCommentModal').style.display = 'none';
   }
 
@@ -1149,10 +1166,33 @@ export class SetAnswersComponent implements OnInit {
     this.subjectives.forEach(subjective => {
       if (subjective.type !== '填空题') {
         var childs = subjective["child"];
+        var score = subjective.score;
         if(flag && childs && childs.length > 0){
-          var score = subjective.score;
-          var totalScore = 0;
+          var childTotalScore = 0;
           childs.forEach(sc =>{
+            var childScore = sc["score"];
+            childTotalScore += sc["score"];
+            var steps = sc["steps"];
+            if(flag && steps && steps.length > 0){
+              var totalScore = 0;
+              steps.forEach(sc_ =>{
+                totalScore += sc_["score"];
+              })
+              if(childScore !== totalScore){
+                alert(subjective.type + "第 " + subjective.quesno + "." + sc.quesno + " 题分数设置有误，请检查后再次提交！");
+                flag = false;
+              }
+            }
+          })
+          if(flag && score !== childTotalScore){
+            alert(subjective.type + "第 " + subjective.quesno + " 题分数设置有误，请检查后再次提交！");
+            flag = false;
+          }
+        }
+        var steps = subjective["step"];
+        if(flag && steps && steps.length > 0){
+          var totalScore = 0;
+          steps.forEach(sc =>{
             totalScore += sc["score"];
           })
           if(score !== totalScore){
