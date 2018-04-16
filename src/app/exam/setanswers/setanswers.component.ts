@@ -954,9 +954,8 @@ export class SetAnswersComponent implements OnInit {
     }
   }  
 
-  completions = {}
-  //completions = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2,
-  //child: [{quesno: 0, score: 0}] };
+  //completions = {}
+  completions = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2, remark:'' };
 
   setScore(id) {
     this.subjectives.forEach(element => {
