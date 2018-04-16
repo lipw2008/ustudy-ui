@@ -955,19 +955,20 @@ export class SetAnswersComponent implements OnInit {
   }  
 
   //completions = {}
-  completions = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2, remark:'' };
+  completions = { id: 0 - new Date().getTime(), quesno: 0, type: '填空题', startno: 1, endno: 10, branch: '不分科', score: 2, remark:'',child:[] };
 
   setScore(id) {
     this.subjectives.forEach(element => {
       if(element.id === id){
-        this.completions = element;
-        // this.completions.id = element.id;
-        // this.completions.quesno = element.quesno;
-        // this.completions.type = element.type;
-        // this.completions.startno = element.startno;
-        // this.completions.endno = element.endno;
-        // this.completions.branch = element.branch;
-        // this.completions.score = element.score;
+        //this.completions = element;
+        this.completions.id = element.id;
+        this.completions.quesno = element.quesno;
+        this.completions.type = element.type;
+        this.completions.startno = element.startno;
+        this.completions.endno = element.endno;
+        this.completions.branch = element.branch;
+        this.completions.score = element.score;        
+        this.completions.child = element['child'];
       }
     });
     var childs = this.completions['child']
