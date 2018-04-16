@@ -967,8 +967,18 @@ export class SetAnswersComponent implements OnInit {
         this.completions.startno = element.startno;
         this.completions.endno = element.endno;
         this.completions.branch = element.branch;
-        this.completions.score = element.score;        
-        this.completions.child = element['child'];
+        this.completions.score = element.score;
+        if(element['child'] === null){
+          var childs = [];
+          for(var i=element.startno;i<=element.endno;i++){
+            var child = { id: 0 - new Date().getTime(), quesno: i, quesid: element.id, branch: element.branch, type: element.type, score: element.score };
+            childs.push(child);
+          }
+          this.completions.child = childs;
+          element['child'] = childs;
+        }else{
+          this.completions.child = element['child'];
+        }
       }
     });
     var childs = this.completions['child']
