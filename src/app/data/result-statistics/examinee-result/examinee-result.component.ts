@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {DataService} from '../../data.service';
 import {ExamService} from '../../../exam/exam.service';
+import { SharedService } from '../../../shared.service';
 import { sprintf } from 'sprintf-js';
 import * as _ from 'lodash';
 import {ActivatedRoute} from '@angular/router';
@@ -40,7 +41,7 @@ export class ExamineeResultComponent implements OnInit {
   subjectDetailModalRef: BsModalRef;
 
   constructor(private _dataService: DataService, private _examService: ExamService, private route: ActivatedRoute,
-              private modalService: BsModalService) { }
+              private modalService: BsModalService, private _sharedService: SharedService) { }
 
   ngOnInit() {
     this.examId = Number(this.route.snapshot.params.examId);
@@ -132,8 +133,15 @@ export class ExamineeResultComponent implements OnInit {
   }
 
   viewPaper(template: TemplateRef<any>, url) {
+    console.log(url);
     if (url && url !== 'NULL') {
-      this.selectedImgUrls = [url];
+      let imgs = url.split(',');
+      let urls = [];
+      for (let img of imgs) {
+        urls.push(this._sharedService.getImgUrl(img, ''));
+      }
+      this.selectedImgUrls = urls;
+      console.log(this.selectedImgUrls);
       this.paperModalRef = this.modalService.show(template, {class: 'gray modal-lg'});
     } else {
       return;
