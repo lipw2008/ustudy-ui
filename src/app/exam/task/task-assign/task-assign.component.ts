@@ -50,7 +50,7 @@ export class TaskAssignComponent implements OnInit {
   gradeTeachers = [];
   subjectTeachers = [];
   ownerId: any;
-  scoreDiff: Number;
+  scoreDiff = 5;
 
   constructor(private _taskService: TaskService, private route: ActivatedRoute, private router: Router, private _location: Location) { }
 
