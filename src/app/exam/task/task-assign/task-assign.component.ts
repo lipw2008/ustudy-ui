@@ -96,6 +96,7 @@ export class TaskAssignComponent implements OnInit {
           this.selectedTeacherIds = _.clone(this.withTeachersIds);
           this.withFinalTeachersIds = data.finalMarkTeachersIds;
           this.timeLimit = Number(data.timeLimit);
+          this.scoreDiff = Number(data.scorediff);
           this.ownerId = data.ownerId;
         })
       }
