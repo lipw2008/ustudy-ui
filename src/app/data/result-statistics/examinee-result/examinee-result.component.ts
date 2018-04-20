@@ -135,7 +135,7 @@ export class ExamineeResultComponent implements OnInit {
   viewPaper(template: TemplateRef<any>, url) {
     console.log(url);
     if (url && url !== 'NULL') {
-      let imgs = url.split(',');
+      let imgs = url.split(';');
       let urls = [];
       for (let img of imgs) {
         urls.push(this._sharedService.getImgUrl(img, ''));
