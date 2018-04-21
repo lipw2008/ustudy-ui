@@ -126,7 +126,7 @@
                     <div *ngIf="displayScoreBoard === true && toNum(fullScore) < 20 && composable === true" class="panel-body border clear-border-top ">
                         <div class="extra margin-top margin-left clearfix" data-toggle="buttons">
                             <a *ngFor="let score of scoreList" (click)="setScore(score)" class="btn btn-default btn-block btn-online-marking-score pull-left">{{score}}</a>
-                            <a (click)="setScore('PROBLEM')" class="btn btn-default pull-right">问题卷</a>
+                            <!-- <a (click)="setScore('PROBLEM')" class="btn btn-default pull-right">问题卷</a> -->
                         </div>
                     </div>
                     <div *ngIf="displayScoreBoard === true && composable === false" class="panel-body border clear-border-top ">
