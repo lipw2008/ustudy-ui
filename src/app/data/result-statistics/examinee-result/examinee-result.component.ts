@@ -45,9 +45,8 @@ export class ExamineeResultComponent implements OnInit {
 
   ngOnInit() {
     this.examId = Number(this.route.snapshot.params.examId);
-    const params = Object.create({});
-    params.finished = false; //TODO: set to true
-    this.exams = this._examService.filterExams(params);
+    this.exams = this._examService.getAllExams();
+
     this.exgrs = this._examService.filterExgr({});
     this._examService.getExamOptions().then((data) => {
       this.examOptions = data;
