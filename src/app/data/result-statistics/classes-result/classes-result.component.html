@@ -28,7 +28,7 @@
         <div class="col-sm-12 col-lg-12">
           <form id="editExamForm" method="post" class="form-inline" action="#">
             <div class="input-group">
-              <select class="form-control" [(ngModel)]="selectedExam" name="selectedExam">
+              <select class="form-control" [(ngModel)]="selectedExam" name="selectedExam" (change)="reload()">
                 <option *ngFor="let exam of exams | async, let i = index" [selected]="i==0" [ngValue]="exam">
                   {{exam.examName}}
                 </option>

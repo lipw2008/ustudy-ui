@@ -25,7 +25,7 @@
     <div role="tabpanel" class="tab-pane active" id="finishedExam" *ngIf="tab==='examinee'">
       <div class="row">
         <div class="col-sm-4">
-          <select class="form-control" [(ngModel)]="selectedExam">
+          <select class="form-control" [(ngModel)]="selectedExam" (change)="reload()">
             <option *ngFor="let exam of exams | async, let i = index" [selected]="i==0" [ngValue]="exam">
               {{exam.examName}}
             </option>
