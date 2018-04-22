@@ -245,6 +245,18 @@ export class ExamService {
     })
   }
 
+  calScore(examId: any) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('POST', `/api/score/publish/${examId}/${true}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
   getMissingExaminees(egsId, gradeId) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET', `/api/students/miss/${egsId}/${gradeId}`, '').then((data: any) => {
