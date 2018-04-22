@@ -60,21 +60,6 @@ export class SetAnswersComponent implements OnInit {
 
     this.loaAlldSubjects();
 
-    this.allsubjects.forEach(subject => {
-      if (this.subjectId === subject.id) {
-        if (subject.type === '1' || subject.type === '2') {
-          this.issynthesize = true;
-          this.allsubjects.forEach(subject_ => {
-            if (subject.type === '1' && subject_.type === '3') {
-              this.subjects.push(subject_);
-            } else if (subject.type === '2' && subject_.type === '4') {
-              this.subjects.push(subject_);
-            }
-          })
-        }
-      }
-    });
-
     if (this.seted) {
       this.getQuesAnswers(this.egsId, this.examId, this.gradeId, this.subjectId);
     }
@@ -182,6 +167,20 @@ export class SetAnswersComponent implements OnInit {
     this._sharedService.makeRequest('GET', '/api/subjects', '').then((data: any) => {
       if (data.success) {
         this.allsubjects = data.data;
+        this.allsubjects.forEach(subject => {
+          if (Number(this.subjectId) === subject.id) {
+            if (subject.type === '1' || subject.type === '2') {
+              this.issynthesize = true;
+              this.allsubjects.forEach(subject_ => {
+                if (subject.type === '1' && subject_.type === '3') {
+                  this.subjects.push(subject_);
+                } else if (subject.type === '2' && subject_.type === '4') {
+                  this.subjects.push(subject_);
+                }
+              })
+            }
+          }
+        });
       }
     }).catch((error: any) => {
       console.log(error.status);
