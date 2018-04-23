@@ -28,23 +28,28 @@ export class SetAnswersComponent implements OnInit {
 
   allsubjects = [];
 
+  // subject answers displayed in the UI
   subjects = [
     { id: 0, name: '不分科' }
   ];
 
   selectOptions = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-
+  
+  // object answers displayed in the UI
   objectives = [
     // {id:1, quesno:0, startno:1,endno:2,type:'单选题',choiceNum:4,score:1},
     // {id:2, quesno:0, startno:3,endno:4,type:'多选题',choiceNum:6,score:1},
     // {id:3, quesno:0, startno:5,endno:6,type:'判断题',choiceNum:2,score:1}
   ];
 
+  // answers that will be submitted to server side
   objectiveAnswers = [];
 
   radioScore = 0;
   checkboxScore = 0;
   judgmentScore = 0;
+
+  // object full score
   objectiveScore = 0;
 
   constructor(private _sharedService: SharedService, public fb: FormBuilder, private elementRef: ElementRef, private route: ActivatedRoute, private router: Router) {
@@ -56,14 +61,9 @@ export class SetAnswersComponent implements OnInit {
     this.examId = this.route.snapshot.params.examId;
     this.gradeId = this.route.snapshot.params.gradeId;
     this.subjectId = this.route.snapshot.params.subjectId;
-    this.seted = this.route.snapshot.params.seted;
 
     this.loaAlldSubjects();
-
-    if (this.seted) {
-      this.getQuesAnswers(this.egsId, this.examId, this.gradeId, this.subjectId);
-    }
-
+    this.getQuesAnswers(this.egsId, this.examId, this.gradeId, this.subjectId);
   }
 
   resetOptions() {
@@ -116,15 +116,15 @@ export class SetAnswersComponent implements OnInit {
         objective.startno = objective.quesno;
         objective.endno = objective.quesno;
       }
-      objectives_.push(objective);
       this.addAnswers(objective);
+      // TODO: revise multiselect questions
       this.setDefaultCheckBoxScore(objective);
+      objectives_.push(objective);
     });
     this.objectives = objectives_;
 
     var subjectives_ = [];
     this.subjectives.forEach(subjective => {
-      subjective.branch = '不分科';
       if (subjective.type !== '填空题') {
         if (subjective.quesno !== 0) {
           subjective.startno = subjective.quesno;
@@ -137,10 +137,11 @@ export class SetAnswersComponent implements OnInit {
               subjective.quesno = subjective.startno;
               subjectives_.push(subjective);
             } else {
+              // TODO: why doing this?
               const start = subjective.startno;
               const end = subjective.endno;
               for (var i = start; i <= end; i++) {
-                var obj = '{"id":' + new Date().getTime() + ',"type":"' + subjective.type + '","startno":' + i + ',"endno":' + i + ',"quesno":' + i + ',"branch":"不分科","score":' + subjective.score + '}';
+                var obj = '{"id":' + new Date().getTime() + ',"type":"' + subjective.type + '","startno":' + i + ',"endno":' + i + ',"quesno":' + i + ',"branch":' + subjective.branch + ',"score":' + subjective.score + '}';
                 subjectives_.push(JSON.parse(obj));
               }
             }
@@ -151,6 +152,7 @@ export class SetAnswersComponent implements OnInit {
           }
         }
       } else {
+        // TODO: how does this happen?
         if (subjective.startno === 0 || subjective.endno === 0) {
           subjective.startno = subjective.quesno;
           subjective.endno = subjective.quesno;
@@ -201,12 +203,12 @@ export class SetAnswersComponent implements OnInit {
           if (type === '单选题' || type === '多选题' || type === '判断题') {
             this.objectives.push(quesAnswer);
           } else {
-            quesAnswer.branch = '不分科';
             this.subjectives.push(quesAnswer);
           }
         });
 
         this.objectiveAnswers = data.refAnswers;
+        // TODO: revise the multiselect checkboxes
         this.checkBoxScores = data.checkBoxScores;
 
         this.resetDatas();
@@ -237,18 +239,19 @@ export class SetAnswersComponent implements OnInit {
 
   removeOneRow(id) {
     const _objectives = [];
-    for (var i = 0; i < this.objectives.length; i++) {
+    for (let i = 0; i < this.objectives.length; i++) {
       const objective = this.objectives[i];
       if (objective && objective['id'] !== id) {
         _objectives.push(objective);
       } else {
-        this.removeAnswers(objective)
+        this.removeAnswers(objective);
         this.removeScore(objective);
       }
     }
     this.objectives = _objectives;
   }
 
+  // prepare objective answers based on data returned from server side
   addAnswers(objective) {
 
     let type = objective['type'];
@@ -263,7 +266,16 @@ export class SetAnswersComponent implements OnInit {
         end = objective['quesno'];
       }
       let score = objective['score'];
-      let totalScore = (end - start + 1) * score;
+      // the sub questions can have different scores
+      let totalScore = 0;
+      let children = objective['child'];
+      if (children !== null && children.length > 0) {
+        for (let child of children) {
+          totalScore += child.score;
+        }
+      } else {
+        totalScore = (end - start + 1) * score;
+      }
       this.objectiveScore = this.objectiveScore + totalScore;
 
       let choiceNum = objective.choiceNum;
@@ -273,14 +285,13 @@ export class SetAnswersComponent implements OnInit {
         _option.push({ name: 'Y', checked: false });
         _option.push({ name: 'N', checked: false });
       } else {
-        for (var i = 0; i < choiceNum; i++) {
+        for (let i = 0; i < choiceNum; i++) {
           let checked = false;
-          //if (i === 0) checked = true;
           _option.push({ name: this.selectOptions[i], checked: checked });
         }
       }
 
-      for (var j = start; j <= end; j++) {
+      for (let j = start; j <= end; j++) {
         var answersSeted = false;
         this.objectiveAnswers.forEach(objectiveAnswer => {
           if (objectiveAnswer.quesno === j) {
@@ -289,10 +300,7 @@ export class SetAnswersComponent implements OnInit {
         });
 
         if (!answersSeted) {
-          const answer = { quesno: j, type: objective.type, choiceNum: objective.choiceNum, options: _option, answer: '', branch: '不分科' };
-          // if (type === '判断题') {
-          //   answer.answer = 'Y';
-          // }
+          const answer = { quesno: j, type: objective.type, choiceNum: objective.choiceNum, options: _option, answer: '', branch: objective.branch };
           this.objectiveAnswers.push(answer);
         }
       }
@@ -317,9 +325,10 @@ export class SetAnswersComponent implements OnInit {
     let start = objective['startno'];
     let end = objective['endno'];
     let type = objective['type'];
-    for (var j = 0; j < this.objectiveAnswers.length; j++) {
+    for (let j = 0; j < this.objectiveAnswers.length; j++) {
       const answer = this.objectiveAnswers[j];
       const quesno = answer['quesno'];
+      //TODO: if startno != endno, the quesno is always 0.
       if (!(quesno >= start && quesno <= end && answer['type'] === type)) {
         answers.push(answer);
       }
@@ -1116,6 +1125,8 @@ export class SetAnswersComponent implements OnInit {
 
   setDefaultCheckBoxScore(objective) {
     if (objective.type === 2) {
+      console.log('!!! question type is 2');
+      console.dir(objective);
       this.checkBoxScores = [];
       let optionSize = objective['choiceNum'];
 
