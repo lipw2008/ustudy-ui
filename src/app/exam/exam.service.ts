@@ -32,8 +32,19 @@ export class ExamService {
         resolve(data.data)
       })
     })
-  }  
-  
+  } 
+
+  getAllExams() {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('GET', '/api/allexams', '').then((data: any) => {
+        if (!data.data) {
+          reject('no data');
+        }
+        resolve(data.data)
+      })
+    })
+  }
+
   filterExgr(params) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('GET', '/api/exam/exgr/', params).then((data: any) => {
@@ -225,6 +236,18 @@ export class ExamService {
   cancelPublish(examId: any) {
     return new Promise((resolve, reject) => {
       this._sharedService.makeRequest('POST', `/api/score/publish/${examId}/${false}`, '').then((data: any) => {
+        if (data.success) {
+          resolve(data.data)
+        } else {
+          reject()
+        }
+      })
+    })
+  }
+
+  calScore(examId: any) {
+    return new Promise((resolve, reject) => {
+      this._sharedService.makeRequest('POST', `/api/score/publish/${examId}/${true}`, '').then((data: any) => {
         if (data.success) {
           resolve(data.data)
         } else {
